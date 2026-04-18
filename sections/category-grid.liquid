@@ -1,0 +1,367 @@
+<section id="kategorien" class="sw-catgrid full-width">
+  <div class="container">
+
+    <div class="sw-catgrid__header">
+      <div>
+        <span class="eyebrow">05 &middot; {{ section.settings.eyebrow }}</span>
+        <h2 class="display sw-catgrid__headline">
+          {{ section.settings.headline }} <em class="sw-catgrid__headline-em">{{ section.settings.headline_italic }}</em><br>{{ section.settings.headline_suffix }}
+        </h2>
+      </div>
+      <p class="sw-catgrid__sub">{{ section.settings.subtext }}</p>
+    </div>
+
+    <div class="sw-catgrid__grid">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'category' -%}
+          {%- assign cat_url = block.settings.collection.url | default: block.settings.url | default: '#' -%}
+          <a href="{{ cat_url }}" class="sw-catgrid__card" {{ block.shopify_attributes }}>
+
+            <div class="sw-catgrid__card-top">
+              <div class="sw-catgrid__icon" aria-hidden="true">
+                {%- case block.settings.icon -%}
+                  {%- when 'panel' -%}
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+                    </svg>
+                  {%- when 'inverter' -%}
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/>
+                    </svg>
+                  {%- when 'battery' -%}
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="1" y="6" width="18" height="12" rx="2"/><path d="M23 13v-2"/><line x1="6" y1="12" x2="10" y2="12"/>
+                    </svg>
+                  {%- when 'plug' -%}
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M18 6L6 18"/><path d="M7 12l-3 3 3 3 3-3"/><path d="M12 7l3-3 3 3-3 3"/>
+                    </svg>
+                  {%- when 'sun' -%}
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/>
+                    </svg>
+                  {%- else -%}
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="2" y="3" width="20" height="14" rx="2"/>
+                    </svg>
+                {%- endcase -%}
+              </div>
+              <svg class="sw-catgrid__arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/>
+              </svg>
+            </div>
+
+            <h3 class="display sw-catgrid__name">{{ block.settings.name }}</h3>
+
+            <div class="sw-catgrid__meta">
+              <div class="sw-catgrid__meta-row">
+                <span class="mono sw-catgrid__count">
+                  {%- if block.settings.collection != blank -%}
+                    {{ block.settings.collection.products_count }} Modelle
+                  {%- else -%}
+                    {{ block.settings.count_label }}
+                  {%- endif -%}
+                </span>
+                <span class="mono sw-catgrid__from">
+                  {%- if block.settings.collection != blank and block.settings.collection.products.first != blank -%}
+                    ab {{ block.settings.collection.products.first.price | money }}
+                  {%- else -%}
+                    {{ block.settings.from_label }}
+                  {%- endif -%}
+                </span>
+              </div>
+              {%- if block.settings.brands != blank -%}
+                <div class="mono sw-catgrid__brands">{{ block.settings.brands }}</div>
+              {%- endif -%}
+            </div>
+
+          </a>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+  </div>
+</section>
+
+{% stylesheet %}
+.sw-catgrid {
+  padding: var(--s-6) 0;
+  background: var(--bg-warm);
+}
+
+.sw-catgrid__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 40px;
+  margin-bottom: var(--s-5);
+  flex-wrap: wrap;
+}
+
+.sw-catgrid__headline {
+  font-size: clamp(40px, 5vw, 72px);
+  margin-top: 18px;
+  line-height: 1;
+  color: var(--ink);
+}
+
+.sw-catgrid__headline-em {
+  font-style: italic;
+  color: var(--accent-deep);
+}
+
+.sw-catgrid__sub {
+  color: var(--ink-soft);
+  max-width: 380px;
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Grid */
+.sw-catgrid__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+/* Card */
+.sw-catgrid__card {
+  display: block;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.sw-catgrid__card:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+  box-shadow: 0 8px 24px oklch(0.22 0.02 150 / 0.07);
+}
+
+.sw-catgrid__card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 40px;
+}
+
+.sw-catgrid__icon {
+  width: 48px;
+  height: 48px;
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.sw-catgrid__arrow {
+  color: var(--ink-mute);
+  transition: color 0.2s;
+}
+
+.sw-catgrid__card:hover .sw-catgrid__arrow {
+  color: var(--accent-deep);
+}
+
+.sw-catgrid__name {
+  font-size: 28px;
+  line-height: 1;
+  margin: 0;
+  color: var(--ink);
+}
+
+.sw-catgrid__meta {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--line);
+}
+
+.sw-catgrid__meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+}
+
+.sw-catgrid__count {
+  color: var(--ink-mute);
+  letter-spacing: 0.03em;
+}
+
+.sw-catgrid__from {
+  color: var(--accent-deep);
+  font-weight: 500;
+}
+
+.sw-catgrid__brands {
+  font-size: 10px;
+  color: var(--ink-mute);
+  margin-top: 12px;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+}
+
+@media (max-width: 960px) {
+  .sw-catgrid__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 540px) {
+  .sw-catgrid__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sw-catgrid__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Category Grid",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Einzelkomponenten"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "Oder"
+    },
+    {
+      "type": "text",
+      "id": "headline_italic",
+      "label": "Headline italic part",
+      "default": "selbst"
+    },
+    {
+      "type": "text",
+      "id": "headline_suffix",
+      "label": "Headline suffix (after line break)",
+      "default": "zusammenstellen."
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "Für Selbstmonteure und erfahrene Planer: alle Komponenten einzeln, mit Lagerbestand in Echtzeit."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "panel",    "label": "Solar panel" },
+            { "value": "inverter", "label": "Inverter" },
+            { "value": "battery",  "label": "Battery" },
+            { "value": "plug",     "label": "Plug / Wallbox" },
+            { "value": "sun",      "label": "Sun" }
+          ],
+          "default": "panel"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Category name",
+          "default": "Module"
+        },
+        {
+          "type": "text",
+          "id": "count_label",
+          "label": "Count label (fallback if no collection)",
+          "default": "42 Modelle"
+        },
+        {
+          "type": "text",
+          "id": "from_label",
+          "label": "From price label (fallback if no collection)",
+          "default": "ab € 89"
+        },
+        {
+          "type": "text",
+          "id": "brands",
+          "label": "Brand list (mono, small)",
+          "default": "JA · Longi · Trina · Meyer Burger"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "URL (fallback if no collection)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Category Grid",
+      "blocks": [
+        {
+          "type": "category",
+          "settings": {
+            "icon": "panel",
+            "name": "Module",
+            "count_label": "42 Modelle",
+            "from_label": "ab \u20AC 89",
+            "brands": "JA \u00B7 Longi \u00B7 Trina \u00B7 Meyer Burger"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "icon": "inverter",
+            "name": "Wechselrichter",
+            "count_label": "28 Modelle",
+            "from_label": "ab \u20AC 690",
+            "brands": "Fronius \u00B7 Huawei \u00B7 SMA \u00B7 Goodwe"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "icon": "battery",
+            "name": "Speicher",
+            "count_label": "18 Modelle",
+            "from_label": "ab \u20AC 2.490",
+            "brands": "BYD \u00B7 Huawei \u00B7 Fronius \u00B7 Pylontech"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "icon": "plug",
+            "name": "Wallbox & Zubeh\u00F6r",
+            "count_label": "60+ Artikel",
+            "from_label": "ab \u20AC 49",
+            "brands": "go-e \u00B7 KEBA \u00B7 Wallbe \u00B7 Victron"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

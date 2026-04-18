@@ -1,0 +1,524 @@
+<section id="rechner" class="sw-calc">
+  <div class="container">
+
+    <div class="sw-calc__intro">
+      <span class="eyebrow">03 &middot; Amortisationsrechner</span>
+      <h2 class="display sw-calc__headline">
+        {{ section.settings.headline }}<br>
+        <em class="sw-calc__italic">{{ section.settings.headline_italic }}</em>?
+      </h2>
+      <p class="sw-calc__sub">{{ section.settings.description }}</p>
+    </div>
+
+    <div class="sw-calc__card" data-calculator>
+
+      {%- comment -%} Left: Inputs {%- endcomment -%}
+      <div class="sw-calc__inputs">
+
+        {%- comment -%} Slider: annual consumption {%- endcomment -%}
+        <div class="sw-calc__slider-group">
+          <div class="sw-calc__slider-header">
+            <label for="sw-slider-consumption" class="sw-calc__slider-label">Jährlicher Stromverbrauch</label>
+            <div class="sw-calc__slider-value">
+              <span class="display" data-val="consumption">4.500</span>
+              <span class="mono sw-calc__slider-unit">kWh / Jahr</span>
+            </div>
+          </div>
+          <div class="sw-calc__track">
+            <div class="sw-calc__fill" data-fill="consumption" style="width: 50%"></div>
+            <input
+              id="sw-slider-consumption"
+              type="range"
+              min="1500" max="12000" step="100" value="4500"
+              data-input="consumption"
+              class="sw-calc__range"
+              aria-label="Jährlicher Stromverbrauch"
+            >
+            <div class="sw-calc__thumb" aria-hidden="true" style="left: calc(50% - 10px)"></div>
+          </div>
+          <p class="mono sw-calc__hint">Ø 4-Personen-Haushalt: 4.500 kWh</p>
+        </div>
+
+        {%- comment -%} Slider: roof size {%- endcomment -%}
+        <div class="sw-calc__slider-group">
+          <div class="sw-calc__slider-header">
+            <label for="sw-slider-roof" class="sw-calc__slider-label">Nutzbare Dachfläche</label>
+            <div class="sw-calc__slider-value">
+              <span class="display" data-val="roof">55</span>
+              <span class="mono sw-calc__slider-unit">m²</span>
+            </div>
+          </div>
+          <div class="sw-calc__track">
+            <div class="sw-calc__fill" data-fill="roof" style="width: 22%"></div>
+            <input
+              id="sw-slider-roof"
+              type="range"
+              min="15" max="200" step="1" value="55"
+              data-input="roof"
+              class="sw-calc__range"
+              aria-label="Nutzbare Dachfläche"
+            >
+            <div class="sw-calc__thumb" aria-hidden="true" style="left: calc(22% - 10px)"></div>
+          </div>
+          <p class="mono sw-calc__hint">Nach Süden/Ost/West — ohne Verschattung</p>
+        </div>
+
+        {%- comment -%} Toggles: extra consumption {%- endcomment -%}
+        <div class="sw-calc__toggles-group">
+          <p class="mono sw-calc__toggles-label">Zusätzlicher Verbrauch</p>
+          <div class="sw-calc__toggles">
+            <button
+              type="button"
+              class="sw-calc__toggle"
+              data-toggle="ev"
+              aria-pressed="false"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 2v10M12 12l-4 6h8l-4 6"/>
+              </svg>
+              <div>
+                <div class="sw-calc__toggle-label">E-Auto</div>
+                <div class="mono sw-calc__toggle-sub">+3.000 kWh</div>
+              </div>
+            </button>
+            <button
+              type="button"
+              class="sw-calc__toggle"
+              data-toggle="hp"
+              aria-pressed="false"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+              </svg>
+              <div>
+                <div class="sw-calc__toggle-label">Wärmepumpe</div>
+                <div class="mono sw-calc__toggle-sub">+4.000 kWh</div>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <a
+          href="#pakete"
+          class="btn btn-primary sw-calc__cta"
+          data-calc-cta
+          data-href="#pakete"
+        >
+          Passendes Paket anzeigen
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+
+      </div>
+
+      {%- comment -%} Right: Results {%- endcomment -%}
+      <div class="sw-calc__results">
+        <svg class="sw-calc__sun-bg" width="320" height="320" viewBox="0 0 100 100" aria-hidden="true">
+          <circle cx="50" cy="50" r="40" fill="var(--sun)"/>
+        </svg>
+
+        <p class="mono sw-calc__results-label">Dein System</p>
+        <div class="sw-calc__system-grid">
+          <div class="sw-calc__metric">
+            <div class="display sw-calc__metric-val"><span data-out="kwp">4.7</span></div>
+            <span class="sw-calc__metric-unit">kWp</span>
+            <p class="mono sw-calc__metric-label">Empfohlene Anlagengröße</p>
+          </div>
+          <div class="sw-calc__metric">
+            <div class="display sw-calc__metric-val"><span data-out="yield">4.935</span></div>
+            <span class="sw-calc__metric-unit">kWh</span>
+            <p class="mono sw-calc__metric-label">Jährlicher Ertrag</p>
+          </div>
+        </div>
+
+        <hr class="sw-calc__divider">
+
+        <p class="mono sw-calc__results-label">Deine Ersparnis</p>
+        <div class="sw-calc__saving">
+          <span class="display sw-calc__saving-num" data-out="saving">1.420</span>
+          <span class="sw-calc__saving-unit">pro Jahr</span>
+        </div>
+
+        <div class="sw-calc__bottom-grid">
+          <div class="sw-calc__metric sw-calc__metric--small">
+            <div class="display sw-calc__metric-val" data-out="cost">&euro;&nbsp;4.324</div>
+            <p class="mono sw-calc__metric-label">Systempreis (ca.)</p>
+          </div>
+          <div class="sw-calc__metric sw-calc__metric--small">
+            <div class="display sw-calc__metric-val"><span data-out="payback">3.0</span></div>
+            <span class="sw-calc__metric-unit">Jahre</span>
+            <p class="mono sw-calc__metric-label">Amortisation</p>
+          </div>
+          <div class="sw-calc__metric sw-calc__metric--small">
+            <div class="display sw-calc__metric-val"><span data-out="co2">2.221</span></div>
+            <span class="sw-calc__metric-unit">kg CO₂</span>
+            <p class="mono sw-calc__metric-label">gespart / Jahr</p>
+          </div>
+        </div>
+
+        <div class="sw-calc__ust-bar">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+          <span class="mono">0&nbsp;% USt &middot; Nullsteuersatz in Österreich bis 20 kWp</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script src="{{ 'calculator.js' | asset_url }}" defer></script>
+
+{% stylesheet %}
+.sw-calc {
+  padding: var(--s-6) 0;
+}
+
+.sw-calc__intro {
+  text-align: center;
+  margin-bottom: var(--s-5);
+}
+
+.sw-calc__headline {
+  font-size: clamp(40px, 5vw, 72px);
+  margin-top: 18px;
+  line-height: 1;
+}
+
+.sw-calc__italic {
+  font-style: italic;
+  color: var(--accent-deep);
+}
+
+.sw-calc__sub {
+  color: var(--ink-soft);
+  font-size: 16px;
+  max-width: 540px;
+  margin: 18px auto 0;
+  line-height: 1.6;
+}
+
+/* Card layout */
+.sw-calc__card {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+}
+
+/* Inputs panel */
+.sw-calc__inputs {
+  padding: 40px 44px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* Slider */
+.sw-calc__slider-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 10px;
+}
+
+.sw-calc__slider-label {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.sw-calc__slider-value {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.sw-calc__slider-value .display {
+  font-size: 26px;
+  line-height: 1;
+}
+
+.sw-calc__slider-unit {
+  font-size: 11px;
+  color: var(--ink-mute);
+}
+
+.sw-calc__track {
+  position: relative;
+  height: 8px;
+  background: var(--line-soft);
+  border-radius: 999px;
+}
+
+.sw-calc__fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background: var(--accent-deep);
+  border-radius: 999px;
+  pointer-events: none;
+  will-change: width;
+}
+
+.sw-calc__range {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  opacity: 0;
+  cursor: pointer;
+  margin: 0;
+  height: 100%;
+}
+
+.sw-calc__thumb {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid var(--accent-deep);
+  box-shadow: 0 1px 4px oklch(0 0 0 / 0.18);
+  pointer-events: none;
+  will-change: left;
+}
+
+.sw-calc__hint {
+  font-size: 10px;
+  color: var(--ink-mute);
+  margin: 8px 0 0;
+  letter-spacing: 0.02em;
+}
+
+/* Toggles */
+.sw-calc__toggles-label {
+  font-size: 11px;
+  color: var(--ink-mute);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0 0 12px;
+}
+
+.sw-calc__toggles {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.sw-calc__toggle {
+  padding: 10px 14px;
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  font-family: var(--font-sans);
+}
+
+.sw-calc__toggle--active,
+.sw-calc__toggle[aria-pressed="true"] {
+  background: var(--accent-deep);
+  color: var(--accent-ink);
+  border-color: var(--accent-deep);
+}
+
+.sw-calc__toggle-label {
+  font-size: 13px;
+  font-weight: 500;
+  text-align: left;
+}
+
+.sw-calc__toggle-sub {
+  font-size: 10px;
+  opacity: 0.7;
+  text-align: left;
+}
+
+.sw-calc__cta {
+  justify-content: center;
+  margin-top: 8px;
+}
+
+/* Results panel */
+.sw-calc__results {
+  background: var(--bg-dark);
+  padding: 40px 44px;
+  color: oklch(0.95 0.01 90);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.sw-calc__sun-bg {
+  position: absolute;
+  right: -60px;
+  top: -60px;
+  opacity: 0.12;
+  pointer-events: none;
+  max-width: none;
+}
+
+.sw-calc__results-label {
+  font-size: 11px;
+  color: oklch(0.70 0.04 150);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 0 0 20px;
+  position: relative;
+}
+
+.sw-calc__system-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  position: relative;
+  margin-bottom: 32px;
+}
+
+.sw-calc__metric {
+  position: relative;
+}
+
+.sw-calc__metric-val {
+  display: inline;
+  font-size: 40px;
+  line-height: 1;
+  color: oklch(0.96 0.01 90);
+}
+
+.sw-calc__metric--small .sw-calc__metric-val {
+  font-size: 26px;
+}
+
+.sw-calc__metric-unit {
+  font-size: 13px;
+  color: oklch(0.75 0.02 150);
+  margin-left: 4px;
+}
+
+.sw-calc__metric--small .sw-calc__metric-unit {
+  font-size: 11px;
+}
+
+.sw-calc__metric-label {
+  font-size: 10px;
+  color: oklch(0.70 0.04 150);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 6px 0 0;
+}
+
+.sw-calc__divider {
+  border: none;
+  border-top: 1px dashed oklch(0.40 0.03 150);
+  margin: 0 0 28px;
+}
+
+.sw-calc__saving {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+
+.sw-calc__saving-num {
+  font-family: var(--font-display);
+  font-size: 72px;
+  line-height: 0.9;
+  color: var(--sun);
+}
+
+.sw-calc__saving-num::before {
+  content: '\20AC\00A0';
+}
+
+.sw-calc__saving-unit {
+  font-size: 16px;
+  color: oklch(0.80 0.02 150);
+}
+
+.sw-calc__bottom-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.sw-calc__ust-bar {
+  padding: 14px 16px;
+  background: oklch(0.30 0.04 155);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+  letter-spacing: 0.03em;
+  color: oklch(0.90 0.02 140);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .sw-calc__card {
+    grid-template-columns: 1fr;
+  }
+  .sw-calc__results {
+    padding: 40px 44px;
+  }
+  .sw-calc__bottom-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 520px) {
+  .sw-calc__inputs,
+  .sw-calc__results {
+    padding: 28px 24px;
+  }
+  .sw-calc__saving-num {
+    font-size: 52px;
+  }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Calculator",
+  "settings": [
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "Was bringt Solar auf"
+    },
+    {
+      "type": "text",
+      "id": "headline_italic",
+      "label": "Headline italic part",
+      "default": "deinem Dach"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Drei Schieberegler. Keine E-Mail, kein Anruf. Einfach ein ehrliches Bild der Zahlen."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Calculator"
+    }
+  ]
+}
+{% endschema %}

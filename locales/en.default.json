@@ -42,6 +42,15 @@
     "password": "Password",
     "enter": "Enter"
   },
+  "general": {
+    "header": "Main navigation",
+    "cart": "Cart",
+    "items": "items",
+    "onboarding": {
+      "product_title": "Example product title",
+      "product_vendor": "Example vendor"
+    }
+  },
   "search": {
     "title": "Search",
     "placeholder": "Search articles, pages, or products",

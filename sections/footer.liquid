@@ -1,40 +1,236 @@
-<footer>
-  <div class="footer__copyright">
-    &copy;
-    {{ 'now' | date: '%Y' }}
-    {{ shop.name | link_to: routes.root_url }}, {{ powered_by_link }}
-  </div>
+<footer class="sw-footer full-width">
+  <div class="container">
 
-  <div class="footer__links">
-    {% for link in section.settings.menu.links %}
-      {{ link.title | link_to: link.url }}
-    {% endfor %}
-  </div>
+    {%- comment -%} Main columns {%- endcomment -%}
+    <div class="sw-footer__cols">
 
-  <div class="footer__payment">
-    {% if section.settings.show_payment_icons %}
-      {% for type in shop.enabled_payment_types %}
-        {{ type | payment_type_svg_tag }}
-      {% endfor %}
-    {% endif %}
+      {%- comment -%} Brand column {%- endcomment -%}
+      <div class="sw-footer__brand">
+        <a href="{{ routes.root_url }}" class="sw-footer__logo" aria-label="{{ shop.name }}">
+          <div class="sw-footer__logo-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <circle cx="12" cy="12" r="4"/>
+              <path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <span class="display sw-footer__logo-name">{{ shop.name }}</span>
+        </a>
+        <p class="sw-footer__tagline">{{ section.settings.tagline }}</p>
+        <div class="sw-footer__flags" aria-label="Liefergebiete: Österreich und Deutschland">
+          <span class="sw-footer__flag" title="Österreich">🇦🇹</span>
+          <span class="sw-footer__flag" title="Deutschland">🇩🇪</span>
+        </div>
+      </div>
+
+      {%- comment -%} Link groups {%- endcomment -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'link_group' -%}
+          <div class="sw-footer__col" {{ block.shopify_attributes }}>
+            <div class="mono sw-footer__col-title">{{ block.settings.title }}</div>
+            {%- if block.settings.menu != blank -%}
+              <ul class="sw-footer__links">
+                {%- for link in block.settings.menu.links -%}
+                  <li><a href="{{ link.url }}" class="sw-footer__link">{{ link.title }}</a></li>
+                {%- endfor -%}
+              </ul>
+            {%- elsif block.settings.custom_links != blank -%}
+              <ul class="sw-footer__links">
+                {%- assign rows = block.settings.custom_links | newline_to_br | split: '<br />' -%}
+                {%- for row in rows -%}
+                  {%- assign row = row | strip -%}
+                  {%- if row != blank -%}
+                    <li><span class="sw-footer__link">{{ row }}</span></li>
+                  {%- endif -%}
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+
+    </div>
+
+    {%- comment -%} Bottom bar {%- endcomment -%}
+    <div class="sw-footer__bottom">
+      <div class="mono sw-footer__copy">
+        &copy; {{ 'now' | date: '%Y' }} {{ section.settings.legal_name }}
+      </div>
+      <div class="sw-footer__legal-links">
+        {%- if section.settings.menu_legal != blank -%}
+          {%- for link in section.settings.menu_legal.links -%}
+            <a href="{{ link.url }}" class="sw-footer__legal-link">{{ link.title }}</a>
+          {%- endfor -%}
+        {%- endif -%}
+        {%- if section.settings.show_payment_icons -%}
+          <div class="sw-footer__payment">
+            {%- for type in shop.enabled_payment_types -%}
+              {{ type | payment_type_svg_tag }}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
   </div>
 </footer>
 
 {% stylesheet %}
-  footer {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 2rem;
+.sw-footer {
+  padding: var(--s-6) 0 var(--s-4);
+  background: var(--bg);
+  border-top: 1px solid var(--line-soft);
+}
+
+/* Main grid */
+.sw-footer__cols {
+  display: grid;
+  grid-template-columns: 1.5fr repeat(4, 1fr);
+  gap: 40px;
+  margin-bottom: var(--s-5);
+}
+
+/* Brand column */
+.sw-footer__logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: inherit;
+  margin-bottom: 16px;
+}
+
+.sw-footer__logo-icon {
+  width: 36px;
+  height: 36px;
+  background: var(--accent-deep);
+  color: var(--sun);
+  border-radius: 12px 12px 12px 2px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.sw-footer__logo-name {
+  font-size: 26px;
+  color: var(--ink);
+}
+
+.sw-footer__tagline {
+  font-size: 13px;
+  color: var(--ink-soft);
+  max-width: 300px;
+  line-height: 1.6;
+  margin: 0 0 20px;
+}
+
+.sw-footer__flags {
+  display: flex;
+  gap: 6px;
+}
+
+.sw-footer__flag {
+  font-size: 20px;
+  line-height: 1;
+}
+
+/* Link columns */
+.sw-footer__col-title {
+  font-size: 11px;
+  color: var(--ink-mute);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 18px;
+}
+
+.sw-footer__links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sw-footer__link {
+  font-size: 13px;
+  color: var(--ink-soft);
+  text-decoration: none;
+  transition: color 0.15s;
+  cursor: pointer;
+}
+
+a.sw-footer__link:hover {
+  color: var(--accent-deep);
+}
+
+/* Bottom bar */
+.sw-footer__bottom {
+  border-top: 1px solid var(--line);
+  padding-top: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.sw-footer__copy {
+  font-size: 12px;
+  color: var(--ink-mute);
+  letter-spacing: 0.03em;
+}
+
+.sw-footer__legal-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.sw-footer__legal-link {
+  font-size: 12px;
+  color: var(--ink-mute);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.sw-footer__legal-link:hover {
+  color: var(--ink-soft);
+}
+
+.sw-footer__payment {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.sw-footer__payment svg {
+  height: 20px;
+  width: auto;
+  opacity: 0.5;
+}
+
+@media (max-width: 1024px) {
+  .sw-footer__cols {
+    grid-template-columns: 1fr 1fr 1fr;
   }
-  footer a {
-    text-decoration: none;
-    color: var(--color-foreground);
+
+  .sw-footer__brand {
+    grid-column: 1 / -1;
   }
-  footer .footer__links,
-  footer .footer__payment {
-    display: flex;
-    gap: 1rem;
+}
+
+@media (max-width: 600px) {
+  .sw-footer__cols {
+    grid-template-columns: 1fr 1fr;
   }
+
+  .sw-footer__bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}
 {% endstylesheet %}
 
 {% schema %}
@@ -42,15 +238,87 @@
   "name": "t:general.footer",
   "settings": [
     {
+      "type": "textarea",
+      "id": "tagline",
+      "label": "Brand tagline",
+      "default": "Unabh\u00E4ngiger Solar-Fachhandel aus Wiener Neustadt. Versand in ganz \u00D6sterreich, Bayern & S\u00FCddeutschland."
+    },
+    {
+      "type": "text",
+      "id": "legal_name",
+      "label": "Legal name (for copyright)",
+      "default": "Sonnwerk Solar GmbH \u00B7 FN 123456a \u00B7 UID ATU12345678"
+    },
+    {
       "type": "link_list",
-      "id": "menu",
-      "label": "t:labels.menu"
+      "id": "menu_legal",
+      "label": "Legal links menu (Impressum, AGB, etc.)"
     },
     {
       "type": "checkbox",
       "id": "show_payment_icons",
       "label": "t:labels.show_payment_icons",
       "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "link_group",
+      "name": "Link group",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Column title",
+          "default": "Links"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu (optional)"
+        },
+        {
+          "type": "textarea",
+          "id": "custom_links",
+          "label": "Custom text links (one per line, no URL)",
+          "info": "Fallback when no menu is assigned — useful for contact info."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Footer",
+      "blocks": [
+        {
+          "type": "link_group",
+          "settings": {
+            "title": "Shop",
+            "custom_links": "Komplettpakete\nModule\nWechselrichter\nSpeicher\nWallboxen\nZubeh\u00F6r"
+          }
+        },
+        {
+          "type": "link_group",
+          "settings": {
+            "title": "Service",
+            "custom_links": "Dach-Pr\u00FCfung\nMontagepartner\nFinanzierung\nF\u00F6rderungen AT\nLieferung\nReklamation"
+          }
+        },
+        {
+          "type": "link_group",
+          "settings": {
+            "title": "Wissen",
+            "custom_links": "Amortisationsrechner\nDIY-Videos\nTechnik-Blog\nGlossar\nDownloads"
+          }
+        },
+        {
+          "type": "link_group",
+          "settings": {
+            "title": "Kontakt",
+            "custom_links": "+43 1 234 56 78\nhallo@sonnwerk.at\nMo\u2013Fr 8\u201318 Uhr\nWiener Neustadt\nShowroom Wien"
+          }
+        }
+      ]
     }
   ]
 }

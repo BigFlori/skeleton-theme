@@ -1,0 +1,396 @@
+<section id="pakete" class="sw-packages">
+  <div class="container">
+
+    <div class="sw-packages__header">
+      <div>
+        <span class="eyebrow">01 &middot; Komplettpakete</span>
+        <h2 class="display sw-packages__headline">
+          Vier Pakete.<br>
+          <em class="sw-packages__italic">Ein Klick</em> zum Dach.
+        </h2>
+      </div>
+      <p class="sw-packages__sub">
+        {{ section.settings.description }}
+      </p>
+    </div>
+
+    <div class="sw-packages__grid">
+      {%- assign products_shown = 0 -%}
+      {%- if section.settings.collection != blank -%}
+        {%- for product in section.settings.collection.products limit: 4 -%}
+          {%- render 'package-card', product: product, col_index: forloop.index0 -%}
+          {%- assign products_shown = products_shown | plus: 1 -%}
+        {%- endfor -%}
+      {%- endif -%}
+
+      {%- comment -%} Fallback placeholder cards in the theme editor {%- endcomment -%}
+      {%- if products_shown == 0 -%}
+        {%- for i in (1..4) -%}
+          <article class="sw-pkg-card sw-pkg-card--placeholder">
+            <div class="sw-pkg-card__preview" aria-hidden="true">
+              <svg width="100%" height="100%" viewBox="0 0 240 100" preserveAspectRatio="none">
+                {%- assign cols = i | times: 2 | plus: 2 -%}
+                {%- for c in (1..cols) -%}
+                  {%- assign px = c | minus: 1 | times: 20 | plus: 12 -%}
+                  <rect x="{{ px }}" y="16" width="16" height="18" fill="oklch(0.25 0.05 230)" stroke="oklch(0.40 0.05 230)" stroke-width="0.5"/>
+                  <rect x="{{ px }}" y="38" width="16" height="18" fill="oklch(0.25 0.05 230)" stroke="oklch(0.40 0.05 230)" stroke-width="0.5"/>
+                  <rect x="{{ px }}" y="60" width="16" height="18" fill="oklch(0.25 0.05 230)" stroke="oklch(0.40 0.05 230)" stroke-width="0.5"/>
+                {%- endfor -%}
+              </svg>
+            </div>
+            <h3 class="display sw-pkg-card__name">{{ 'general.onboarding.product_title' | t }}</h3>
+            <p class="mono sw-pkg-card__roof">{{ 'general.onboarding.product_vendor' | t }}</p>
+            <div class="sw-pkg-card__footer">
+              <div class="sw-pkg-card__price-row">
+                <span class="display sw-pkg-card__price">€ 0.000</span>
+              </div>
+              <button class="btn btn-primary sw-pkg-card__atc" disabled>In den Warenkorb</button>
+            </div>
+          </article>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Configurator promo strip {%- endcomment -%}
+    {%- if section.settings.configurator_text != blank -%}
+      <div class="sw-packages__promo">
+        <div class="sw-packages__promo-left">
+          <div class="sw-packages__promo-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/>
+            </svg>
+          </div>
+          <div>
+            <p class="sw-packages__promo-title">{{ section.settings.configurator_text }}</p>
+            <p class="mono sw-packages__promo-sub">{{ section.settings.configurator_sub }}</p>
+          </div>
+        </div>
+        <a href="{{ section.settings.configurator_url }}" class="btn sw-packages__promo-btn">
+          Zum Konfigurator
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% stylesheet %}
+.sw-packages {
+  padding: var(--s-6) 0;
+}
+
+.sw-packages__header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-4);
+  align-items: end;
+  margin-bottom: var(--s-5);
+}
+
+.sw-packages__headline {
+  font-size: clamp(40px, 5vw, 72px);
+  margin-top: 18px;
+  line-height: 1;
+}
+
+.sw-packages__italic {
+  font-style: italic;
+  color: var(--accent-deep);
+}
+
+.sw-packages__sub {
+  color: var(--ink-soft);
+  font-size: 16px;
+  max-width: 480px;
+  justify-self: end;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* 4-column card grid */
+.sw-packages__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+/* ── Package card ── */
+.sw-pkg-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  position: relative;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.sw-pkg-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+  box-shadow: 0 20px 40px -20px oklch(0.22 0.025 155 / 0.2);
+}
+
+/* Badge */
+.sw-pkg-card__badge {
+  position: absolute;
+  top: -10px;
+  left: 22px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-weight: 500;
+  background: var(--ink);
+  color: var(--bg);
+}
+
+.sw-pkg-card__badge--meistgewählt {
+  background: var(--sun);
+  color: var(--ink);
+}
+
+/* Panel preview */
+.sw-pkg-card__preview {
+  height: 100px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--accent-soft), oklch(0.88 0.03 130));
+  margin-bottom: 18px;
+  position: relative;
+  overflow: hidden;
+}
+
+.sw-pkg-card__preview svg {
+  max-width: none;
+  height: 100%;
+}
+
+.sw-pkg-card__kwp-chip {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  font-size: 10px;
+  color: var(--accent-deep);
+  background: oklch(0.98 0.01 90 / 0.9);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* Card content */
+.sw-pkg-card__name {
+  font-size: 30px;
+  line-height: 1;
+  margin: 0;
+}
+
+.sw-pkg-card__roof {
+  font-size: 11px;
+  color: var(--ink-mute);
+  margin: 6px 0 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Specs */
+.sw-pkg-card__specs {
+  margin-top: 16px;
+  font-size: 13px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.sw-pkg-card__spec {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 8px;
+}
+
+.sw-pkg-card__spec dt {
+  font-size: 10px;
+  color: var(--ink-mute);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding-top: 2px;
+}
+
+.sw-pkg-card__spec dd {
+  color: var(--ink);
+  line-height: 1.35;
+  margin: 0;
+}
+
+/* Footer */
+.sw-pkg-card__footer {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--line);
+}
+
+.sw-pkg-card__price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.sw-pkg-card__price {
+  font-size: 34px;
+  color: var(--ink);
+}
+
+.sw-pkg-card__old-price {
+  font-size: 12px;
+  color: var(--ink-mute);
+  text-decoration: line-through;
+}
+
+.sw-pkg-card__vat {
+  font-size: 10px;
+  color: var(--ink-mute);
+  margin: 2px 0 0;
+}
+
+.sw-pkg-card__form {
+  margin-top: 14px;
+}
+
+.sw-pkg-card__atc {
+  width: 100%;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.sw-pkg-card__details {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin-top: 4px;
+  font-size: 13px;
+  padding: 8px;
+}
+
+/* Promo strip */
+.sw-packages__promo {
+  margin-top: var(--s-4);
+  background: var(--accent-soft);
+  border-radius: var(--radius-lg);
+  padding: 22px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.sw-packages__promo-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.sw-packages__promo-icon {
+  width: 40px;
+  height: 40px;
+  background: var(--accent-deep);
+  color: var(--sun);
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.sw-packages__promo-title {
+  font-size: 15px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.sw-packages__promo-sub {
+  font-size: 11px;
+  color: var(--ink-soft);
+  margin: 2px 0 0;
+}
+
+.sw-packages__promo-btn {
+  background: var(--sun);
+  color: var(--ink);
+  font-weight: 600;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.sw-packages__promo-btn:hover {
+  background: var(--ink);
+  color: var(--accent-ink);
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+  .sw-packages__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .sw-packages__header {
+    grid-template-columns: 1fr;
+  }
+  .sw-packages__sub {
+    justify-self: start;
+  }
+  .sw-packages__grid {
+    grid-template-columns: 1fr;
+  }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Featured Packages",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Packages collection"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Section description",
+      "default": "Von unseren Technikern kuratiert \u2014 Module, Wechselrichter und Montagesystem aufeinander abgestimmt. Kein R\u00e4tselraten, kein Fehlkauf. Alle Preise inkl. 0\u00a0% USt. (Nullsteuersatz \u00d6sterreich)."
+    },
+    {
+      "type": "header",
+      "content": "Configurator strip"
+    },
+    {
+      "type": "text",
+      "id": "configurator_text",
+      "label": "Promo title",
+      "default": "Passt nichts perfekt? Konfigurator starten."
+    },
+    {
+      "type": "text",
+      "id": "configurator_sub",
+      "label": "Promo subtitle",
+      "default": "In 4 Schritten zum eigenen Paket \u2014 mit Montage oder DIY"
+    },
+    {
+      "type": "url",
+      "id": "configurator_url",
+      "label": "Configurator link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Packages"
+    }
+  ]
+}
+{% endschema %}

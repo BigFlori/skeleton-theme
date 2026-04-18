@@ -14,5 +14,46 @@
     --color-background: {{ settings.background_color }};
     --color-foreground: {{ settings.foreground_color }};
     --style-border-radius-inputs: {{ settings.input_corner_radius }}px;
+
+    /* ── Sonnwerk Design Tokens ── */
+
+    /* Colors */
+    --ink:         oklch(0.22 0.02 150);
+    --ink-soft:    oklch(0.38 0.015 150);
+    --ink-mute:    oklch(0.55 0.012 150);
+    --line:        oklch(0.88 0.012 120);
+    --line-soft:   oklch(0.93 0.01 120);
+
+    --bg:          oklch(0.975 0.012 90);
+    --bg-warm:     oklch(0.955 0.018 85);
+    --bg-card:     oklch(0.99 0.006 90);
+    --bg-dark:     oklch(0.22 0.025 155);
+
+    --accent:      oklch(0.42 0.09 155);
+    --accent-deep: oklch(0.32 0.08 155);
+    --accent-soft: oklch(0.92 0.04 150);
+    --accent-ink:  oklch(0.98 0.01 90);
+
+    --sun:         oklch(0.80 0.15 82);
+    --sun-soft:    oklch(0.93 0.07 85);
+
+    /* Typography */
+    --font-display: 'Crimson Pro', Georgia, serif;
+    --font-sans:    'Geist', system-ui, sans-serif;
+    --font-mono:    'Geist Mono', 'Courier New', monospace;
+
+    /* Spacing */
+    --s-1: 6px;
+    --s-2: 12px;
+    --s-3: 24px;
+    --s-4: 40px;
+    --s-5: 72px;
+    --s-6: 120px;
+    --s-7: 180px;
+
+    /* Radii */
+    --radius:    14px;
+    --radius-lg: 22px;
+    --radius-xl: 32px;
   }
 {% endstyle %}

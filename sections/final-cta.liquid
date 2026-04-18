@@ -1,0 +1,214 @@
+<section class="sw-final-cta full-width">
+  <div class="container">
+    <div class="sw-final-cta__card">
+
+      {%- comment -%} Decorative sun SVG {%- endcomment -%}
+      <svg class="sw-final-cta__sun" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+        <circle cx="50" cy="50" r="40" fill="var(--sun)"/>
+        {%- for i in (0..11) -%}
+          {%- assign angle_deg = i | times: 30 -%}
+          {%- assign angle_rad = angle_deg | times: 0.017453 -%}
+          {%- comment -%} Liquid can't do trig — use pre-computed ray endpoints {%- endcomment -%}
+        {%- endfor -%}
+        <line x1="94" y1="50"  x2="105" y2="50"  stroke="var(--sun)" stroke-width="1.5"/>
+        <line x1="50" y1="6"   x2="50"  y2="-5"  stroke="var(--sun)" stroke-width="1.5"/>
+        <line x1="6"  y1="50"  x2="-5"  y2="50"  stroke="var(--sun)" stroke-width="1.5"/>
+        <line x1="50" y1="94"  x2="50"  y2="105" stroke="var(--sun)" stroke-width="1.5"/>
+        <line x1="80" y1="80"  x2="88"  y2="88"  stroke="var(--sun)" stroke-width="1.5"/>
+        <line x1="20" y1="20"  x2="12"  y2="12"  stroke="var(--sun)" stroke-width="1.5"/>
+        <line x1="80" y1="20"  x2="88"  y2="12"  stroke="var(--sun)" stroke-width="1.5"/>
+        <line x1="20" y1="80"  x2="12"  y2="88"  stroke="var(--sun)" stroke-width="1.5"/>
+        <line x1="91" y1="26"  x2="100" y2="21"  stroke="var(--sun)" stroke-width="1.5"/>
+        <line x1="74" y1="9"   x2="79"  y2="0"   stroke="var(--sun)" stroke-width="1.5"/>
+        <line x1="26" y1="9"   x2="21"  y2="0"   stroke="var(--sun)" stroke-width="1.5"/>
+        <line x1="9"  y1="26"  x2="0"   y2="21"  stroke="var(--sun)" stroke-width="1.5"/>
+      </svg>
+
+      <div class="sw-final-cta__body">
+        <div class="sw-final-cta__left">
+          <span class="eyebrow sw-final-cta__eyebrow">{{ section.settings.eyebrow }}</span>
+          <h2 class="display sw-final-cta__headline">
+            {{- section.settings.headline | newline_to_br -}}
+          </h2>
+        </div>
+        <div class="sw-final-cta__right">
+          <p class="sw-final-cta__sub">{{ section.settings.subtext }}</p>
+          <div class="sw-final-cta__actions">
+            <a href="{{ section.settings.cta_primary_url | default: '#pakete' }}" class="btn sw-final-cta__btn-sun">
+              {{ section.settings.cta_primary_text }}
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </a>
+            <a href="{{ section.settings.cta_ghost_url | default: '#rechner' }}" class="btn sw-final-cta__btn-ghost">
+              {{ section.settings.cta_ghost_text }}
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+.sw-final-cta {
+  padding: var(--s-6) 0 0;
+}
+
+.sw-final-cta__card {
+  background: var(--bg-dark);
+  border-radius: var(--radius-xl);
+  padding: clamp(40px, 7vw, 96px);
+  color: oklch(0.96 0.01 90);
+  position: relative;
+  overflow: hidden;
+}
+
+.sw-final-cta__sun {
+  position: absolute;
+  right: -80px;
+  bottom: -120px;
+  width: 480px;
+  height: 480px;
+  opacity: 0.18;
+  pointer-events: none;
+}
+
+.sw-final-cta__body {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 60px;
+  align-items: end;
+  position: relative;
+}
+
+.sw-final-cta__eyebrow {
+  color: oklch(0.75 0.04 150);
+}
+
+.sw-final-cta__headline {
+  font-size: clamp(48px, 7vw, 112px);
+  line-height: 0.96;
+  margin-top: 18px;
+  color: oklch(0.96 0.01 90);
+}
+
+.sw-final-cta__sub {
+  font-size: 16px;
+  color: oklch(0.80 0.02 150);
+  max-width: 380px;
+  line-height: 1.55;
+  margin: 0 0 28px;
+}
+
+.sw-final-cta__actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Sun CTA button */
+.sw-final-cta__btn-sun {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 24px;
+  background: var(--sun);
+  color: var(--ink);
+  border-radius: var(--radius);
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.sw-final-cta__btn-sun:hover {
+  background: oklch(0.86 0.17 82);
+  transform: translateY(-1px);
+}
+
+/* Ghost button (dark bg variant) */
+.sw-final-cta__btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 24px;
+  background: transparent;
+  color: oklch(0.95 0.01 90);
+  border: 1px solid oklch(0.40 0.03 150);
+  border-radius: var(--radius);
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.sw-final-cta__btn-ghost:hover {
+  border-color: oklch(0.55 0.04 150);
+  background: oklch(0.28 0.03 155);
+}
+
+@media (max-width: 800px) {
+  .sw-final-cta__body {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Final CTA",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Letzte Frage"
+    },
+    {
+      "type": "textarea",
+      "id": "headline",
+      "label": "Headline (use newlines for line breaks)",
+      "default": "Worauf\nwartest\ndu noch?"
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "Jede Woche ohne Anlage sind etwa \u20AC\u00A032 Strom, die du dem Netzbetreiber schenkst. Das muss nicht sein."
+    },
+    {
+      "type": "text",
+      "id": "cta_primary_text",
+      "label": "Primary CTA text",
+      "default": "Paket w\u00E4hlen"
+    },
+    {
+      "type": "url",
+      "id": "cta_primary_url",
+      "label": "Primary CTA URL"
+    },
+    {
+      "type": "text",
+      "id": "cta_ghost_text",
+      "label": "Ghost CTA text",
+      "default": "Erst rechnen"
+    },
+    {
+      "type": "url",
+      "id": "cta_ghost_url",
+      "label": "Ghost CTA URL"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Final CTA"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,117 @@
+{%- comment -%}
+  Renders a single package product card.
+  Parameters:
+    - product: the Shopify product object
+    - col_index: 0-based index for panel preview column count
+{%- endcomment -%}
+
+{%- liquid
+  assign badge      = product.metafields.sonnwerk.badge.value
+  assign kwp        = product.metafields.sonnwerk.kwp.value
+  assign modules    = product.metafields.sonnwerk.modules.value
+  assign inverter   = product.metafields.sonnwerk.inverter.value
+  assign roof_area  = product.metafields.sonnwerk.roof_area.value
+  assign yield_kwh  = product.metafields.sonnwerk.yearly_yield.value
+  assign payback    = product.metafields.sonnwerk.payback_years.value
+
+  assign panel_cols = 3
+  if col_index == 1
+    assign panel_cols = 6
+  elsif col_index == 2
+    assign panel_cols = 8
+  elsif col_index == 3
+    assign panel_cols = 11
+  endif
+
+  assign first_variant = product.selected_or_first_available_variant
+  assign has_compare = false
+  if product.compare_at_price > product.price
+    assign has_compare = true
+  endif
+-%}
+
+<article class="sw-pkg-card{% if badge == 'Meistgewählt' %} sw-pkg-card--featured{% endif %}">
+
+  {%- if badge != blank -%}
+    <div class="sw-pkg-card__badge sw-pkg-card__badge--{{ badge | downcase | replace: ' ', '-' }} mono">
+      {{ badge }}
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} Mini panel preview {%- endcomment -%}
+  <div class="sw-pkg-card__preview" aria-hidden="true">
+    <svg width="100%" height="100%" viewBox="0 0 240 100" preserveAspectRatio="none">
+      {%- for c in (1..panel_cols) -%}
+        {%- assign px = c | minus: 1 | times: 20 | plus: 12 -%}
+        <rect x="{{ px }}" y="16" width="16" height="18" fill="oklch(0.25 0.05 230)" stroke="oklch(0.40 0.05 230)" stroke-width="0.5"/>
+        <rect x="{{ px }}" y="38" width="16" height="18" fill="oklch(0.25 0.05 230)" stroke="oklch(0.40 0.05 230)" stroke-width="0.5"/>
+        <rect x="{{ px }}" y="60" width="16" height="18" fill="oklch(0.25 0.05 230)" stroke="oklch(0.40 0.05 230)" stroke-width="0.5"/>
+      {%- endfor -%}
+    </svg>
+    {%- if kwp != blank -%}
+      <span class="mono sw-pkg-card__kwp-chip">{{ kwp }} kWp</span>
+    {%- endif -%}
+  </div>
+
+  <h3 class="display sw-pkg-card__name">{{ product.title }}</h3>
+  {%- if roof_area != blank -%}
+    <p class="mono sw-pkg-card__roof">{{ roof_area }}</p>
+  {%- endif -%}
+
+  <dl class="sw-pkg-card__specs">
+    {%- if modules != blank -%}
+      <div class="sw-pkg-card__spec">
+        <dt class="mono">Modul</dt>
+        <dd>{{ modules }}</dd>
+      </div>
+    {%- endif -%}
+    {%- if inverter != blank -%}
+      <div class="sw-pkg-card__spec">
+        <dt class="mono">Wechselrichter</dt>
+        <dd>{{ inverter }}</dd>
+      </div>
+    {%- endif -%}
+    {%- if yield_kwh != blank -%}
+      <div class="sw-pkg-card__spec">
+        <dt class="mono">Ertrag</dt>
+        <dd>~{{ yield_kwh }} kWh/Jahr</dd>
+      </div>
+    {%- endif -%}
+    {%- if payback != blank -%}
+      <div class="sw-pkg-card__spec">
+        <dt class="mono">Amortisation</dt>
+        <dd>{{ payback }} Jahre</dd>
+      </div>
+    {%- endif -%}
+  </dl>
+
+  <div class="sw-pkg-card__footer">
+    <div class="sw-pkg-card__price-row">
+      <span class="display sw-pkg-card__price">{{ first_variant.price | money_without_trailing_zeros }}</span>
+      {%- if has_compare -%}
+        <span class="mono sw-pkg-card__old-price">{{ first_variant.compare_at_price | money_without_trailing_zeros }}</span>
+      {%- endif -%}
+    </div>
+    <p class="mono sw-pkg-card__vat">inkl. 0 % USt &middot; + Montage ab &euro;&nbsp;1.490</p>
+
+    <form action="{{ routes.cart_add_url }}" method="post" class="sw-pkg-card__form">
+      <input type="hidden" name="id" value="{{ first_variant.id }}">
+      <input type="hidden" name="quantity" value="1">
+      <input type="hidden" name="properties[_package]" value="{{ product.handle }}">
+      <button type="submit" class="btn btn-primary sw-pkg-card__atc">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        In den Warenkorb
+      </button>
+    </form>
+
+    <a href="{{ product.url }}" class="btn btn-ghost sw-pkg-card__details">
+      Details ansehen
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M7 17L17 7M7 7h10v10"/>
+      </svg>
+    </a>
+  </div>
+
+</article>

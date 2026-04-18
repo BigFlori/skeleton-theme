@@ -1,0 +1,346 @@
+<section id="faq" class="sw-faq full-width">
+  <div class="container sw-faq__layout">
+
+    {%- comment -%} Left sticky column {%- endcomment -%}
+    <div class="sw-faq__sticky">
+      <span class="eyebrow">06 &middot; {{ section.settings.eyebrow }}</span>
+      <h2 class="display sw-faq__headline">
+        {{ section.settings.headline_line1 }}<br>
+        {{ section.settings.headline_line2 }}<br>
+        <em class="sw-faq__headline-em">{{ section.settings.headline_italic }}</em>
+      </h2>
+      <p class="sw-faq__sub">{{ section.settings.subtext }}</p>
+      {%- if section.settings.phone != blank -%}
+        <a href="tel:{{ section.settings.phone | remove: ' ' }}" class="sw-faq__phone-cta btn btn-secondary">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.73a16 16 0 0 0 6 6l.94-.94a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+          </svg>
+          {{ section.settings.phone }}
+        </a>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Right accordion {%- endcomment -%}
+    <div class="sw-faq__list" id="sw-faq-list">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'item' -%}
+          <div class="sw-faq__item" {{ block.shopify_attributes }}>
+            <button
+              class="sw-faq__trigger"
+              aria-expanded="false"
+              aria-controls="sw-faq-answer-{{ block.id }}"
+              type="button"
+            >
+              <span class="sw-faq__question">{{ block.settings.question }}</span>
+              <span class="sw-faq__toggle-icon" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+                </svg>
+              </span>
+            </button>
+            <div
+              class="sw-faq__answer"
+              id="sw-faq-answer-{{ block.id }}"
+              role="region"
+            >
+              <div class="sw-faq__answer-inner">{{ block.settings.answer }}</div>
+            </div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+  </div>
+</section>
+
+{% stylesheet %}
+.sw-faq {
+  padding: var(--s-6) 0;
+}
+
+.sw-faq__layout {
+  display: grid;
+  grid-template-columns: 0.7fr 1.3fr;
+  gap: var(--s-5);
+  align-items: start;
+}
+
+/* Sticky left */
+.sw-faq__sticky {
+  position: sticky;
+  top: 100px;
+}
+
+.sw-faq__headline {
+  font-size: clamp(36px, 4.5vw, 64px);
+  margin-top: 18px;
+  line-height: 1.05;
+  color: var(--ink);
+}
+
+.sw-faq__headline-em {
+  font-style: italic;
+  color: var(--accent-deep);
+}
+
+.sw-faq__sub {
+  color: var(--ink-soft);
+  font-size: 15px;
+  margin-top: 22px;
+  max-width: 320px;
+  line-height: 1.6;
+}
+
+.sw-faq__phone-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 18px;
+  padding: 10px 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+  text-decoration: none;
+  background: transparent;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.sw-faq__phone-cta:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+/* Accordion */
+.sw-faq__item {
+  border-bottom: 1px solid var(--line);
+}
+
+.sw-faq__item:first-child {
+  border-top: 1px solid var(--line);
+}
+
+.sw-faq__trigger {
+  width: 100%;
+  padding: 24px 4px;
+  background: transparent;
+  border: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  cursor: pointer;
+  text-align: left;
+  color: var(--ink);
+  font-family: var(--font-sans);
+}
+
+.sw-faq__question {
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.3;
+  flex: 1;
+}
+
+.sw-faq__toggle-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  color: var(--ink);
+  background: transparent;
+  transition: transform 0.25s ease, background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.sw-faq__item--open .sw-faq__toggle-icon {
+  transform: rotate(45deg);
+  background: var(--accent-deep);
+  color: var(--accent-ink);
+  border-color: var(--accent-deep);
+}
+
+/* Answer panel */
+.sw-faq__answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+}
+
+.sw-faq__answer-inner {
+  font-size: 15px;
+  color: var(--ink-soft);
+  line-height: 1.65;
+  padding-bottom: 28px;
+  padding-right: 60px;
+}
+
+.sw-faq__answer-inner p {
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  .sw-faq__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .sw-faq__sticky {
+    position: static;
+  }
+}
+
+@media (max-width: 540px) {
+  .sw-faq__answer-inner {
+    padding-right: 0;
+  }
+}
+{% endstylesheet %}
+
+<script>
+(function () {
+  var list = document.getElementById('sw-faq-list');
+  if (!list) return;
+
+  var items = list.querySelectorAll('.sw-faq__item');
+
+  items.forEach(function (item) {
+    var trigger = item.querySelector('.sw-faq__trigger');
+    var answer  = item.querySelector('.sw-faq__answer');
+    var inner   = item.querySelector('.sw-faq__answer-inner');
+
+    trigger.addEventListener('click', function () {
+      var isOpen = item.classList.contains('sw-faq__item--open');
+
+      /* close all */
+      items.forEach(function (el) {
+        el.classList.remove('sw-faq__item--open');
+        el.querySelector('.sw-faq__trigger').setAttribute('aria-expanded', 'false');
+        el.querySelector('.sw-faq__answer').style.maxHeight = '0';
+      });
+
+      /* open clicked if it was closed */
+      if (!isOpen) {
+        item.classList.add('sw-faq__item--open');
+        trigger.setAttribute('aria-expanded', 'true');
+        answer.style.maxHeight = inner.scrollHeight + 'px';
+      }
+    });
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "FAQ",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Häufige Fragen"
+    },
+    {
+      "type": "text",
+      "id": "headline_line1",
+      "label": "Headline line 1",
+      "default": "Ehrliche"
+    },
+    {
+      "type": "text",
+      "id": "headline_line2",
+      "label": "Headline line 2",
+      "default": "Antworten."
+    },
+    {
+      "type": "text",
+      "id": "headline_italic",
+      "label": "Headline italic line (accent color)",
+      "default": "Keine Verkaufs\u00ADfloskeln."
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "Etwas nicht dabei? Ruf uns einfach an \u2014 ein Techniker, kein Callcenter."
+    },
+    {
+      "type": "text",
+      "id": "phone",
+      "label": "Phone number",
+      "default": "+43 1 234 56 78"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "FAQ item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Frage"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Antwort auf die Frage.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ",
+      "blocks": [
+        {
+          "type": "item",
+          "settings": {
+            "question": "Lohnt sich eine PV-Anlage bei den aktuellen Strompreisen \u00FCberhaupt noch?",
+            "answer": "<p>Ja \u2014 und zwar deutlicher als je zuvor. Die Strompreise in \u00D6sterreich liegen auch nach dem Peak 2023 bei durchschnittlich 34 Cent/kWh f\u00FCr Haushalte. Bei einem typischen 10-kWp-System mit 60\u00A0% Eigenverbrauch amortisiert sich die Anlage nach 6\u2013 8 Jahren. Der Nullsteuersatz (0\u00A0% USt bis 20\u00A0kWp) verk\u00FCrzt das zus\u00E4tzlich.</p>"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "question": "Ich verstehe die Technik nicht. Kann ich trotzdem bestellen?",
+            "answer": "<p>Genau daf\u00FCr sind unsere Komplettpakete da. Module, Wechselrichter, Montagesystem und Kabel sind vorab aufeinander abgestimmt \u2014 du musst nichts berechnen. Bei der kostenlosen Dach-Pr\u00FCfung gehen unsere Techniker dein Foto durch und best\u00E4tigen (oder passen an), was passt.</p>"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "question": "Was passiert, wenn in 8 Jahren ein Wechselrichter ausf\u00E4llt?",
+            "answer": "<p>Dann wickeln wir die Garantie f\u00FCr dich ab \u2014 nicht du mit einem Hersteller irgendwo in Asien. Wir haben 25 Jahre Produktgarantie auf Module und 10\u201312 Jahre auf Wechselrichter (verl\u00E4ngerbar auf 20). Ersatzger\u00E4te kommen in der Regel innerhalb einer Woche aus unserem Lager.</p>"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "question": "Liefert ihr nach Deutschland?",
+            "answer": "<p>Ja, Lieferung nach Deutschland ist m\u00F6glich \u2014 allerdings mit 3\u20135 Werktagen zus\u00E4tzlicher Transitzeit und DE-Umsatzsteuersatz. Wenn du in grenznahen Bundesl\u00E4ndern wohnst, fragst du am besten direkt \u00FCber das Formular an.</p>"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "question": "Was brauche ich von meinem Netzbetreiber?",
+            "answer": "<p>Eine Anmeldung der Erzeugungsanlage \u2014 das machst entweder du selbst oder wir \u00FCbernehmen es f\u00FCr \u20AC\u00A0190 pauschal. Ben\u00F6tigt werden Z\u00E4hlpunktnummer, Wechselrichter-Datenblatt und eine Konformit\u00E4tserkl\u00E4rung. Bei Anlagen bis 20\u00A0kWp ist der Prozess in \u00D6sterreich seit 2023 stark vereinfacht.</p>"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "question": "Kann ich die Module selbst montieren?",
+            "answer": "<p>Die mechanische Montage ja \u2014 viele unserer Kund*innen machen das als Wochenendprojekt zu zweit. Den elektrischen Anschluss ans Hausnetz muss aber in \u00D6sterreich und Deutschland eine konzessionierte Elektrofachkraft durchf\u00FChren. Wir vermitteln Elektriker, die nur den Schlussanschluss \u00FCbernehmen, ab \u20AC\u00A0490.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

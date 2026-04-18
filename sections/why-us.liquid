@@ -1,0 +1,379 @@
+<section id="warum" class="sw-why full-width">
+  <div class="container">
+    <div class="sw-why__grid">
+
+      {%- comment -%} Left sticky column {%- endcomment -%}
+      <div class="sw-why__sticky">
+        <span class="eyebrow">04 &middot; {{ section.settings.eyebrow }}</span>
+        <h2 class="display sw-why__headline">
+          {{ section.settings.headline }}<br>
+          <em class="sw-why__headline-em">{{ section.settings.headline_italic }}</em>
+        </h2>
+        <p class="sw-why__sub">{{ section.settings.subtext }}</p>
+
+        {%- if section.settings.review_quote != blank -%}
+          <div class="sw-why__review">
+            <div class="sw-why__stars" aria-label="5 von 5 Sternen">
+              {%- for i in (1..5) -%}
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+              {%- endfor -%}
+            </div>
+            <blockquote class="display sw-why__quote">
+              &bdquo;{{ section.settings.review_quote }}&ldquo;
+            </blockquote>
+            <div class="sw-why__reviewer">
+              {%- if section.settings.reviewer_image != blank -%}
+                <img
+                  src="{{ section.settings.reviewer_image | image_url: width: 64 }}"
+                  alt="{{ section.settings.reviewer_name }}"
+                  width="32" height="32"
+                  class="sw-why__avatar"
+                  loading="lazy"
+                >
+              {%- else -%}
+                <div class="sw-why__avatar-ph" aria-hidden="true"></div>
+              {%- endif -%}
+              <div>
+                <div class="sw-why__reviewer-name">{{ section.settings.reviewer_name }}</div>
+                <div class="mono sw-why__reviewer-meta">{{ section.settings.reviewer_meta }}</div>
+              </div>
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Right USP grid {%- endcomment -%}
+      <div class="sw-why__usps">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'usp' -%}
+            <div class="sw-why__usp" {{ block.shopify_attributes }}>
+              <div class="sw-why__usp-icon" aria-hidden="true">
+                {%- case block.settings.icon -%}
+                  {%- when 'leaf' -%}
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+                    </svg>
+                  {%- when 'truck' -%}
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="1" y="3" width="15" height="13"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
+                    </svg>
+                  {%- when 'shield' -%}
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    </svg>
+                  {%- when 'tools' -%}
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/>
+                    </svg>
+                  {%- when 'star' -%}
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                  {%- else -%}
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>
+                    </svg>
+                {%- endcase -%}
+              </div>
+              <h3 class="sw-why__usp-title">{{ block.settings.title }}</h3>
+              <p class="sw-why__usp-desc">{{ block.settings.description }}</p>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+.sw-why {
+  padding: var(--s-6) 0;
+}
+
+.sw-why__grid {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: var(--s-5);
+  align-items: start;
+}
+
+/* Sticky left column */
+.sw-why__sticky {
+  position: sticky;
+  top: 100px;
+}
+
+.sw-why__headline {
+  font-size: clamp(40px, 5vw, 72px);
+  margin-top: 18px;
+  line-height: 1;
+  color: var(--ink);
+}
+
+.sw-why__headline-em {
+  font-style: italic;
+  color: var(--accent-deep);
+}
+
+.sw-why__sub {
+  color: var(--ink-soft);
+  font-size: 16px;
+  margin-top: 20px;
+  max-width: 420px;
+  line-height: 1.55;
+}
+
+/* Review card */
+.sw-why__review {
+  margin-top: 40px;
+  padding: 24px;
+  background: var(--bg-warm);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line-soft);
+}
+
+.sw-why__stars {
+  display: flex;
+  gap: 2px;
+  color: var(--sun);
+  margin-bottom: 10px;
+}
+
+.sw-why__quote {
+  font-size: 20px;
+  line-height: 1.35;
+  color: var(--ink);
+  margin: 0;
+  font-style: normal;
+}
+
+.sw-why__quote em {
+  font-style: italic;
+  color: var(--accent-deep);
+}
+
+.sw-why__reviewer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.sw-why__avatar,
+.sw-why__avatar-ph {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+
+.sw-why__avatar-ph {
+  background: var(--line);
+}
+
+.sw-why__reviewer-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.sw-why__reviewer-meta {
+  font-size: 10px;
+  color: var(--ink-mute);
+}
+
+/* USP grid */
+.sw-why__usps {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.sw-why__usp {
+  padding: 32px;
+  background: var(--bg-card);
+  transition: background 0.2s;
+}
+
+.sw-why__usp-icon {
+  width: 48px;
+  height: 48px;
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 22px;
+}
+
+.sw-why__usp-title {
+  font-size: 20px;
+  font-weight: 500;
+  margin: 0 0 10px;
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+.sw-why__usp-desc {
+  font-size: 14px;
+  color: var(--ink-soft);
+  line-height: 1.55;
+  margin: 0;
+}
+
+@media (max-width: 960px) {
+  .sw-why__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sw-why__sticky {
+    position: static;
+  }
+}
+
+@media (max-width: 540px) {
+  .sw-why__usps {
+    grid-template-columns: 1fr;
+  }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Why Us",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Warum Sonnwerk"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "Kein Hersteller."
+    },
+    {
+      "type": "text",
+      "id": "headline_italic",
+      "label": "Headline italic part",
+      "default": "Dein Anwalt."
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "Andere Shops pushen eine Marke, weil sie Margen-Deals haben. Wir sitzen auf deiner Seite des Tisches — und sagen dir auch, wenn das billigere Modul das bessere ist."
+    },
+    {
+      "type": "header",
+      "content": "Review"
+    },
+    {
+      "type": "textarea",
+      "id": "review_quote",
+      "label": "Review quote",
+      "default": "Nach drei Angeboten waren die einzigen, die mir abrieten, die größere Anlage zu nehmen. Das hat Vertrauen geschaffen."
+    },
+    {
+      "type": "image_picker",
+      "id": "reviewer_image",
+      "label": "Reviewer avatar"
+    },
+    {
+      "type": "text",
+      "id": "reviewer_name",
+      "label": "Reviewer name",
+      "default": "Martin H."
+    },
+    {
+      "type": "text",
+      "id": "reviewer_meta",
+      "label": "Reviewer meta",
+      "default": "Einfamilienhaus · 9,6 kWp · Graz"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "usp",
+      "name": "USP",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "leaf",   "label": "Leaf" },
+            { "value": "truck",  "label": "Truck" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "tools",  "label": "Tools" },
+            { "value": "star",   "label": "Star" },
+            { "value": "sun",    "label": "Sun" }
+          ],
+          "default": "leaf"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "USP Titel"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Beschreibung des Vorteils."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Why Us",
+      "blocks": [
+        {
+          "type": "usp",
+          "settings": {
+            "icon": "leaf",
+            "title": "Marken\u00ADunabh\u00E4ngig",
+            "description": "Wir sind an keinen Hersteller gebunden \u2014 wir empfehlen das, was f\u00FCr dein Dach wirklich passt. 8 Wechselrichter-Marken im Lager."
+          }
+        },
+        {
+          "type": "usp",
+          "settings": {
+            "icon": "truck",
+            "title": "Versand aus \u00D6sterreich",
+            "description": "Zentrallager in Wiener Neustadt. Kein Zoll, keine 6-Wochen-Container-Lotterie. Paletten in 3\u20135 Werktagen bei dir."
+          }
+        },
+        {
+          "type": "usp",
+          "settings": {
+            "icon": "shield",
+            "title": "25 Jahre Garantie",
+            "description": "Auf Module wie Wechselrichter. Wir \u00FCbernehmen die Abwicklung \u2014 nicht du mit einem Hersteller in Shenzhen."
+          }
+        },
+        {
+          "type": "usp",
+          "settings": {
+            "icon": "tools",
+            "title": "DIY oder Monteur",
+            "description": "Montage-Videos f\u00FCr Eigenleistung. Oder wir vermitteln zertifizierte Elektriker aus deinem Bezirk zum Fixpreis."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,305 @@
+<section id="ablauf" class="sw-hiw full-width">
+  <div class="container">
+
+    <div class="sw-hiw__header">
+      <div>
+        <span class="eyebrow sw-hiw__eyebrow">02 &middot; So einfach geht&rsquo;s</span>
+        <h2 class="display sw-hiw__headline">
+          {{ section.settings.headline }}<br>
+          <em class="sw-hiw__italic">{{ section.settings.headline_italic }}</em>.
+        </h2>
+      </div>
+      <p class="sw-hiw__sub">{{ section.settings.description }}</p>
+    </div>
+
+    <div class="sw-hiw__steps">
+      {%- for block in section.blocks -%}
+        <div class="sw-hiw__step{% unless forloop.last %} sw-hiw__step--divider{% endunless %}" {{ block.shopify_attributes }}>
+          <div class="sw-hiw__step-top">
+            <span class="mono sw-hiw__step-num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+            <span class="mono sw-hiw__time-chip">{{ block.settings.time }}</span>
+          </div>
+
+          <div class="sw-hiw__icon-box" aria-hidden="true">
+            {%- case block.settings.icon -%}
+              {%- when 'panel' -%}
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+                </svg>
+              {%- when 'shield' -%}
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+              {%- when 'truck' -%}
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="1" y="3" width="15" height="13"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
+                </svg>
+              {%- when 'tools' -%}
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/>
+                </svg>
+              {%- when 'sun' -%}
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/>
+                </svg>
+              {%- else -%}
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>
+                </svg>
+            {%- endcase -%}
+          </div>
+
+          <h3 class="sw-hiw__step-title">{{ block.settings.title }}</h3>
+          <p class="sw-hiw__step-desc">{{ block.settings.description }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+
+  </div>
+</section>
+
+{% stylesheet %}
+.sw-hiw {
+  padding: var(--s-6) 0;
+  background: var(--bg-dark);
+  color: oklch(0.92 0.01 90);
+}
+
+.sw-hiw__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 40px;
+  margin-bottom: var(--s-5);
+  flex-wrap: wrap;
+}
+
+.sw-hiw__eyebrow {
+  color: oklch(0.75 0.04 150);
+}
+
+.sw-hiw__headline {
+  font-size: clamp(40px, 5vw, 72px);
+  margin-top: 18px;
+  line-height: 1;
+  color: oklch(0.95 0.01 90);
+}
+
+.sw-hiw__italic {
+  font-style: italic;
+  color: var(--sun);
+}
+
+.sw-hiw__sub {
+  color: oklch(0.75 0.015 150);
+  max-width: 380px;
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Steps grid */
+.sw-hiw__steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid oklch(0.35 0.02 150);
+}
+
+.sw-hiw__step {
+  padding: 28px 24px 28px 0;
+}
+
+.sw-hiw__step:first-child {
+  padding-left: 0;
+}
+
+.sw-hiw__step:not(:first-child) {
+  padding-left: 24px;
+}
+
+.sw-hiw__step--divider {
+  border-right: 1px solid oklch(0.35 0.02 150);
+}
+
+.sw-hiw__step-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.sw-hiw__step-num {
+  font-size: 11px;
+  color: oklch(0.65 0.04 150);
+  letter-spacing: 0.1em;
+}
+
+.sw-hiw__time-chip {
+  font-size: 10px;
+  color: var(--sun);
+  background: oklch(0.30 0.04 155);
+  padding: 3px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.03em;
+}
+
+.sw-hiw__icon-box {
+  width: 44px;
+  height: 44px;
+  background: oklch(0.30 0.04 155);
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  color: var(--sun);
+  margin-bottom: 20px;
+}
+
+.sw-hiw__step-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: oklch(0.96 0.01 90);
+  margin: 0 0 8px;
+  line-height: 1.25;
+}
+
+.sw-hiw__step-desc {
+  font-size: 13px;
+  color: oklch(0.75 0.015 150);
+  line-height: 1.55;
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  .sw-hiw__steps {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .sw-hiw__step--divider:nth-child(2) {
+    border-right: none;
+  }
+  .sw-hiw__step:nth-child(n+3) {
+    border-top: 1px solid oklch(0.35 0.02 150);
+  }
+}
+
+@media (max-width: 540px) {
+  .sw-hiw__steps {
+    grid-template-columns: 1fr;
+  }
+  .sw-hiw__step--divider {
+    border-right: none;
+    border-bottom: 1px solid oklch(0.35 0.02 150);
+  }
+  .sw-hiw__step:not(:first-child) {
+    padding-left: 0;
+    border-top: none;
+  }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "How It Works",
+  "settings": [
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "Vom Klick bis zum"
+    },
+    {
+      "type": "text",
+      "id": "headline_italic",
+      "label": "Headline italic part",
+      "default": "ersten Sonnenstrahl"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Du musst kein Elektriker sein. Wir haben den Prozess so simpel gemacht, dass die meisten Kund*innen ihr System innerhalb von zwei Wochen am Netz haben."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "panel",  "label": "Solar panel" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "truck",  "label": "Truck" },
+            { "value": "tools",  "label": "Tools" },
+            { "value": "sun",    "label": "Sun" }
+          ],
+          "default": "sun"
+        },
+        {
+          "type": "text",
+          "id": "time",
+          "label": "Time chip",
+          "default": "< 24 Std"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Step title",
+          "default": "Schritt"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Step description",
+          "default": "Beschreibung des Schritts."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "How It Works",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "icon": "panel",
+            "time": "~5 Min",
+            "title": "Paket w\u00e4hlen oder konfigurieren",
+            "description": "Starte mit einem fertigen Paket oder stelle dir dein System selbst zusammen. Unsere Techniker pr\u00fcfen kostenlos."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "icon": "shield",
+            "time": "< 24 Std",
+            "title": "Kostenlose Dach-Pr\u00fcfung",
+            "description": "Foto & Adresse hochladen \u2014 wir rechnen Neigung, Verschattung und Ertrag innerhalb von 24 Stunden."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "icon": "truck",
+            "time": "3\u20135 Tage",
+            "title": "Lieferung aus Wr. Neustadt",
+            "description": "Versand innerhalb \u00d6sterreichs in 3\u20135 Werktagen. DE-Lieferung auf Anfrage. Palette direkt vor die T\u00fcr."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "icon": "tools",
+            "time": "1\u20132 Tage",
+            "title": "DIY oder Partnermontage",
+            "description": "Selbst anschlie\u00dfen mit unserem Videoguide \u2014 oder wir vermitteln zertifizierte Monteure in deiner Region."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

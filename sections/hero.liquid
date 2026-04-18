@@ -1,0 +1,344 @@
+{%- liquid
+  assign layout = section.settings.layout
+  assign eyebrow = section.settings.eyebrow
+  assign headline = section.settings.headline
+  assign headline_italic = section.settings.headline_italic
+  assign subcopy = section.settings.subcopy
+  assign cta_primary_text = section.settings.cta_primary_text
+  assign cta_primary_url = section.settings.cta_primary_url
+  assign cta_ghost_text = section.settings.cta_ghost_text
+  assign cta_ghost_url = section.settings.cta_ghost_url
+  assign chip_label = section.settings.chip_label
+  assign chip_detail = section.settings.chip_detail
+  assign chip_price = section.settings.chip_price
+-%}
+
+<section id="top" class="sw-hero sw-hero--{{ layout }}">
+  <div class="container{% if layout == 'centered' %} sw-hero__centered-wrap{% endif %}">
+
+    {%- if layout == 'split' or layout == 'left-heavy' -%}
+      {%- comment -%} SPLIT & LEFT-HEAVY: full-bleed headline first, then grid {%- endcomment -%}
+
+      {%- if layout == 'left-heavy' -%}
+        <span class="eyebrow">{{ eyebrow }}</span>
+        <h1 class="display sw-hero__headline sw-hero__headline--xl">
+          {{- headline }} <em class="sw-hero__italic">{{ headline_italic }}</em>.
+        </h1>
+      {%- endif -%}
+
+      <div class="sw-hero__grid">
+        <div class="sw-hero__content">
+          {%- if layout == 'split' -%}
+            <span class="eyebrow">{{ eyebrow }}</span>
+            <h1 class="display sw-hero__headline">
+              {{- headline }} <em class="sw-hero__italic">{{ headline_italic }}</em>.
+            </h1>
+          {%- endif -%}
+
+          <p class="sw-hero__sub">{{ subcopy }}</p>
+
+          <div class="sw-hero__ctas">
+            <a href="{{ cta_primary_url }}" class="btn btn-primary sw-hero__cta-primary">
+              {{ cta_primary_text }}
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
+            <a href="{{ cta_ghost_url }}" class="btn btn-ghost">
+              {{ cta_ghost_text }}
+            </a>
+          </div>
+
+          {%- render 'hero-metrics' -%}
+        </div>
+
+        <div class="sw-hero__visual-wrap">
+          {%- render 'hero-visual', chip_label: chip_label, chip_detail: chip_detail, chip_price: chip_price, size: layout -%}
+        </div>
+      </div>
+
+    {%- elsif layout == 'centered' -%}
+      {%- comment -%} CENTERED layout {%- endcomment -%}
+      <span class="eyebrow">{{ eyebrow }}</span>
+      <h1 class="display sw-hero__headline sw-hero__headline--centered">
+        {{- headline }} <em class="sw-hero__italic">{{ headline_italic }}</em>.
+      </h1>
+      <p class="sw-hero__sub sw-hero__sub--centered">{{ subcopy }}</p>
+      <div class="sw-hero__ctas sw-hero__ctas--centered">
+        <a href="{{ cta_primary_url }}" class="btn btn-primary sw-hero__cta-primary">
+          {{ cta_primary_text }}
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+        <a href="{{ cta_ghost_url }}" class="btn btn-ghost">{{ cta_ghost_text }}</a>
+      </div>
+      <div class="sw-hero__visual-wrap sw-hero__visual-wrap--full">
+        {%- render 'hero-visual', chip_label: chip_label, chip_detail: chip_detail, chip_price: chip_price, size: 'medium' -%}
+      </div>
+      {%- render 'hero-metrics' -%}
+
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% stylesheet %}
+/* ── Hero ── */
+.sw-hero {
+  padding-top: var(--s-5);
+  padding-bottom: var(--s-6);
+}
+
+.sw-hero__grid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: var(--s-5);
+  align-items: center;
+}
+
+.sw-hero--left-heavy .sw-hero__grid {
+  grid-template-columns: 1.2fr 1fr;
+  margin-top: var(--s-4);
+  align-items: end;
+}
+
+.sw-hero__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+}
+
+/* Headline */
+.sw-hero__headline {
+  font-size: clamp(48px, 7.5vw, 104px);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin: 0;
+}
+
+.sw-hero__headline--xl {
+  font-size: clamp(64px, 11vw, 168px);
+  line-height: 0.92;
+  letter-spacing: -0.025em;
+  margin-top: var(--s-3);
+  margin-bottom: 0;
+}
+
+.sw-hero__headline--centered {
+  font-size: clamp(56px, 9vw, 132px);
+  line-height: 0.96;
+  letter-spacing: -0.02em;
+  max-width: 14ch;
+}
+
+.sw-hero__italic {
+  font-style: italic;
+  color: var(--accent-deep);
+}
+
+/* Centered layout specifics */
+.sw-hero--centered .container {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-3);
+}
+
+.sw-hero__sub {
+  font-size: clamp(16px, 1.3vw, 19px);
+  color: var(--ink-soft);
+  max-width: 520px;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.sw-hero__sub--centered {
+  max-width: 620px;
+}
+
+/* CTAs */
+.sw-hero__ctas {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.sw-hero__ctas--centered {
+  margin-top: 8px;
+}
+
+.sw-hero__cta-primary {
+  font-size: 16px;
+  padding: 16px 26px;
+}
+
+/* Visual */
+.sw-hero__visual-wrap {
+  position: relative;
+}
+
+.sw-hero__visual-wrap--full {
+  width: 100%;
+  margin-top: var(--s-4);
+}
+
+/* Metrics strip */
+.sw-hero__metrics {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: var(--s-5);
+  margin-top: var(--s-4);
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--line);
+}
+
+.sw-hero__metric-num {
+  font-family: var(--font-display);
+  font-size: 36px;
+  line-height: 1;
+  color: var(--ink);
+}
+
+.sw-hero__metric-label {
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin-top: 6px;
+}
+
+.sw-hero__metric-sub {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--ink-mute);
+  margin-top: 2px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .sw-hero__grid,
+  .sw-hero--left-heavy .sw-hero__grid {
+    grid-template-columns: 1fr;
+  }
+  .sw-hero__visual-wrap {
+    order: -1;
+  }
+}
+
+@media (max-width: 600px) {
+  .sw-hero__metrics {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--s-4) var(--s-3);
+  }
+  .sw-hero__metrics > *:last-child {
+    grid-column: 1 / -1;
+  }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        { "value": "split",      "label": "Split (default)" },
+        { "value": "centered",   "label": "Centered" },
+        { "value": "left-heavy", "label": "Left-heavy (big type)" }
+      ],
+      "default": "split"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Austria · KWp-Marktplatz"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline (plain part)",
+      "default": "Die beste Sonne fürs"
+    },
+    {
+      "type": "text",
+      "id": "headline_italic",
+      "label": "Headline (italic accent word)",
+      "default": "eigene Dach"
+    },
+    {
+      "type": "textarea",
+      "id": "subcopy",
+      "label": "Sub-copy",
+      "default": "Wir verkaufen keine Marke — wir verkaufen die richtige. Komplettpakete von JA Solar, Longi, Fronius, Huawei und SMA. Versand aus Österreich, Lieferung in 3–5 Werktagen."
+    },
+    {
+      "type": "header",
+      "content": "Primary CTA"
+    },
+    {
+      "type": "text",
+      "id": "cta_primary_text",
+      "label": "Button text",
+      "default": "Solar-Bundle sichern"
+    },
+    {
+      "type": "url",
+      "id": "cta_primary_url",
+      "label": "Button URL"
+    },
+    {
+      "type": "header",
+      "content": "Ghost CTA"
+    },
+    {
+      "type": "text",
+      "id": "cta_ghost_text",
+      "label": "Button text",
+      "default": "Amortisation berechnen"
+    },
+    {
+      "type": "url",
+      "id": "cta_ghost_url",
+      "label": "Button URL"
+    },
+    {
+      "type": "header",
+      "content": "Floating spec chip"
+    },
+    {
+      "type": "text",
+      "id": "chip_label",
+      "label": "Chip label (mono)",
+      "default": "Paket \u201EFamilie M\u201D"
+    },
+    {
+      "type": "text",
+      "id": "chip_detail",
+      "label": "Chip detail line",
+      "default": "10,2 kWp · 24 Module · Fronius Symo"
+    },
+    {
+      "type": "text",
+      "id": "chip_price",
+      "label": "Chip price line",
+      "default": "€ 8.490 — sofort verfügbar"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero",
+      "settings": {
+        "layout": "split"
+      }
+    }
+  ]
+}
+{% endschema %}

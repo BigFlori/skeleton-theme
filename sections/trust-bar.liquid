@@ -1,0 +1,195 @@
+<section class="sw-trustbar full-width">
+  <div class="container sw-trustbar__inner">
+
+    <p class="mono sw-trustbar__label">
+      Autorisierter<br>Partner von
+    </p>
+
+    <div class="sw-trustbar__logos">
+      {%- for block in section.blocks -%}
+        {%- case block.settings.style -%}
+          {%- when 'sans-bold' -%}      {%- assign fw = 700 -%}{%- assign ff = 'sans' -%}
+          {%- when 'sans-semibold' -%}  {%- assign fw = 600 -%}{%- assign ff = 'sans' -%}
+          {%- when 'sans-light' -%}     {%- assign fw = 300 -%}{%- assign ff = 'sans' -%}
+          {%- when 'sans-black' -%}     {%- assign fw = 900 -%}{%- assign ff = 'sans' -%}
+          {%- when 'sans-condensed' -%} {%- assign fw = 500 -%}{%- assign ff = 'condensed' -%}
+          {%- when 'serif' -%}          {%- assign fw = 400 -%}{%- assign ff = 'serif' -%}
+          {%- else -%}                  {%- assign fw = 500 -%}{%- assign ff = 'sans' -%}
+        {%- endcase -%}
+
+        {%- if block.settings.logo != blank -%}
+          <a href="{{ block.settings.url | default: '#' }}" class="sw-trustbar__logo-link" {{ block.shopify_attributes }}>
+            <img
+              src="{{ block.settings.logo | image_url: width: 160 }}"
+              alt="{{ block.settings.name | escape }}"
+              width="80"
+              height="32"
+              loading="lazy"
+              class="sw-trustbar__logo-img"
+            >
+          </a>
+        {%- else -%}
+          <span
+            class="sw-trustbar__brand sw-trustbar__brand--{{ ff }}"
+            style="font-weight: {{ fw }};"
+            {{ block.shopify_attributes }}
+          >{{ block.settings.name }}</span>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+  </div>
+</section>
+
+{% stylesheet %}
+.sw-trustbar {
+  background: var(--bg-warm);
+  border-top: 1px solid var(--line-soft);
+  border-bottom: 1px solid var(--line-soft);
+  padding: var(--s-4) 0;
+}
+
+.sw-trustbar__inner {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--s-4);
+  align-items: center;
+}
+
+.sw-trustbar__label {
+  font-size: 11px;
+  color: var(--ink-mute);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.sw-trustbar__logos {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: clamp(20px, 3vw, 48px);
+  border-left: 1px solid var(--line);
+  padding-left: var(--s-4);
+}
+
+.sw-trustbar__brand {
+  font-size: 20px;
+  letter-spacing: -0.01em;
+  color: var(--ink-soft);
+  opacity: 0.75;
+  transition: opacity 0.2s ease;
+  cursor: default;
+  user-select: none;
+}
+
+.sw-trustbar__brand:hover {
+  opacity: 1;
+}
+
+.sw-trustbar__brand--sans {
+  font-family: var(--font-sans);
+  font-style: normal;
+}
+
+.sw-trustbar__brand--condensed {
+  font-family: var(--font-sans);
+  font-style: normal;
+  letter-spacing: -0.04em;
+}
+
+.sw-trustbar__brand--serif {
+  font-family: var(--font-display);
+  font-style: italic;
+}
+
+.sw-trustbar__logo-link {
+  display: block;
+  opacity: 0.65;
+  transition: opacity 0.2s ease;
+}
+
+.sw-trustbar__logo-link:hover {
+  opacity: 1;
+}
+
+.sw-trustbar__logo-img {
+  width: auto;
+  height: 28px;
+  object-fit: contain;
+  filter: grayscale(1);
+}
+
+@media (max-width: 640px) {
+  .sw-trustbar__inner {
+    grid-template-columns: 1fr;
+  }
+  .sw-trustbar__logos {
+    border-left: none;
+    padding-left: 0;
+    border-top: 1px solid var(--line);
+    padding-top: var(--s-3);
+  }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Trust Bar",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "brand",
+      "name": "Brand",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Brand name",
+          "default": "JA Solar"
+        },
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Logo (SVG/PNG) — optional"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link URL"
+        },
+        {
+          "type": "select",
+          "id": "style",
+          "label": "Text style (used when no logo)",
+          "options": [
+            { "value": "sans-bold",      "label": "Sans Bold" },
+            { "value": "sans-semibold",  "label": "Sans Semibold" },
+            { "value": "sans-light",     "label": "Sans Light" },
+            { "value": "sans-black",     "label": "Sans Black" },
+            { "value": "sans-condensed", "label": "Sans Condensed" },
+            { "value": "serif",          "label": "Serif Italic" }
+          ],
+          "default": "sans-bold"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Trust Bar",
+      "blocks": [
+        { "type": "brand", "settings": { "name": "JA Solar",  "style": "sans-bold" } },
+        { "type": "brand", "settings": { "name": "Longi",     "style": "serif" } },
+        { "type": "brand", "settings": { "name": "Fronius",   "style": "sans-semibold" } },
+        { "type": "brand", "settings": { "name": "Huawei",    "style": "sans-light" } },
+        { "type": "brand", "settings": { "name": "SMA",       "style": "sans-black" } },
+        { "type": "brand", "settings": { "name": "Goodwe",    "style": "sans-condensed" } },
+        { "type": "brand", "settings": { "name": "BYD",       "style": "sans-bold" } },
+        { "type": "brand", "settings": { "name": "Victron",   "style": "serif" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

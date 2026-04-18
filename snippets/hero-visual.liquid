@@ -1,0 +1,164 @@
+{%- liquid
+  assign visual_size = size | default: 'large'
+  assign visual_height = '620px'
+  if visual_size == 'medium'
+    assign visual_height = '420px'
+  endif
+-%}
+
+<div class="sw-hero-visual" style="height: min({{ visual_height }}, 72vh);">
+
+  {%- comment -%} SVG roof scene — replace with real image via section settings later {%- endcomment -%}
+  <svg class="sw-hero-visual__svg" width="100%" height="100%" viewBox="0 0 800 620" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs>
+      <linearGradient id="sw-sky" x1="0" x2="0" y1="0" y2="1">
+        <stop offset="0" stop-color="oklch(0.75 0.08 85)"/>
+        <stop offset="0.3" stop-color="oklch(0.62 0.08 70)"/>
+        <stop offset="1" stop-color="oklch(0.35 0.06 260)"/>
+      </linearGradient>
+      <linearGradient id="sw-roof" x1="0" x2="1" y1="0" y2="1">
+        <stop offset="0" stop-color="oklch(0.30 0.03 220)"/>
+        <stop offset="1" stop-color="oklch(0.18 0.02 220)"/>
+      </linearGradient>
+      <linearGradient id="sw-panel" x1="0" x2="1" y1="0" y2="1">
+        <stop offset="0" stop-color="oklch(0.22 0.05 240)"/>
+        <stop offset="0.5" stop-color="oklch(0.30 0.06 240)"/>
+        <stop offset="1" stop-color="oklch(0.18 0.04 240)"/>
+      </linearGradient>
+    </defs>
+
+    {%- comment -%} Sky {%- endcomment -%}
+    <rect width="800" height="360" fill="url(#sw-sky)"/>
+
+    {%- comment -%} Sun {%- endcomment -%}
+    <circle cx="600" cy="140" r="48" fill="oklch(0.92 0.14 85)" opacity="0.85"/>
+    <circle cx="600" cy="140" r="80" fill="oklch(0.92 0.14 85)" opacity="0.18"/>
+
+    {%- comment -%} Mountain silhouette {%- endcomment -%}
+    <path d="M0 340 L120 240 L220 300 L340 200 L460 280 L580 220 L700 290 L800 260 L800 360 L0 360 Z" fill="oklch(0.22 0.03 180)" opacity="0.7"/>
+
+    {%- comment -%} Roof surface {%- endcomment -%}
+    <path d="M0 360 L800 360 L800 620 L0 620 Z" fill="url(#sw-roof)"/>
+
+    {%- comment -%} Solar panel grid (5 rows × 8 columns) {%- endcomment -%}
+    {%- for row in (0..4) -%}
+      {%- for col in (0..7) -%}
+        {%- assign px = col | times: 92 | plus: 40 -%}
+        {%- assign py = row | times: 44 | plus: 390 -%}
+        <rect x="{{ px }}" y="{{ py }}" width="84" height="38" fill="url(#sw-panel)" stroke="oklch(0.15 0.02 220)" stroke-width="1"/>
+        <line x1="{{ px | plus: 21 }}" y1="{{ py }}" x2="{{ px | plus: 21 }}" y2="{{ py | plus: 38 }}" stroke="oklch(0.15 0.02 220)" stroke-width="0.5"/>
+        <line x1="{{ px | plus: 42 }}" y1="{{ py }}" x2="{{ px | plus: 42 }}" y2="{{ py | plus: 38 }}" stroke="oklch(0.15 0.02 220)" stroke-width="0.5"/>
+        <line x1="{{ px | plus: 63 }}" y1="{{ py }}" x2="{{ px | plus: 63 }}" y2="{{ py | plus: 38 }}" stroke="oklch(0.15 0.02 220)" stroke-width="0.5"/>
+      {%- endfor -%}
+    {%- endfor -%}
+  </svg>
+
+  {%- comment -%} Floating spec chip — bottom left {%- endcomment -%}
+  <div class="sw-hero-visual__chip">
+    <div class="sw-hero-visual__chip-icon" aria-hidden="true">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+      </svg>
+    </div>
+    <div>
+      <div class="mono sw-hero-visual__chip-label">{{ chip_label }}</div>
+      <div class="sw-hero-visual__chip-detail">{{ chip_detail }}</div>
+      <div class="mono sw-hero-visual__chip-price">{{ chip_price }}</div>
+    </div>
+  </div>
+
+  {%- comment -%} Versand seal — top right {%- endcomment -%}
+  <div class="sw-hero-visual__seal">
+    <svg width="14" height="11" viewBox="0 0 16 12" aria-hidden="true">
+      <rect width="16" height="4" fill="#ED2939"/>
+      <rect y="4" width="16" height="4" fill="#fff"/>
+      <rect y="8" width="16" height="4" fill="#ED2939"/>
+    </svg>
+    <span class="mono">Versand aus Österreich</span>
+  </div>
+
+</div>
+
+{% stylesheet %}
+.sw-hero-visual {
+  position: relative;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  background: var(--bg-dark);
+  width: 100%;
+}
+
+.sw-hero-visual__svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  max-width: none;
+}
+
+/* Floating spec chip */
+.sw-hero-visual__chip {
+  position: absolute;
+  left: 24px;
+  bottom: 24px;
+  background: oklch(0.98 0.01 90 / 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 16px 20px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  max-width: 340px;
+}
+
+.sw-hero-visual__chip-icon {
+  width: 44px;
+  height: 44px;
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.sw-hero-visual__chip-label {
+  font-size: 10px;
+  color: var(--ink-mute);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.sw-hero-visual__chip-detail {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink);
+  margin-top: 2px;
+}
+
+.sw-hero-visual__chip-price {
+  font-size: 11px;
+  color: var(--accent-deep);
+  margin-top: 3px;
+}
+
+/* Seal */
+.sw-hero-visual__seal {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: oklch(0.98 0.01 90 / 0.95);
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 11px;
+  color: var(--ink);
+  letter-spacing: 0.03em;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+{% endstylesheet %}
