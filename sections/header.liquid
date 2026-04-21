@@ -33,35 +33,45 @@
     {%- comment -%} Right actions {%- endcomment -%}
     <div class="sw-nav__actions">
 
-      {%- comment -%} Language / market switcher {%- endcomment -%}
-      {%- if localization.available_countries.size > 1 or localization.available_languages.size > 1 -%}
-        {%- form 'localization', class: 'sw-nav__locale-form' -%}
-          <input type="hidden" name="return_to" value="{{ request.path }}">
-          <button type="button" class="btn btn-ghost sw-nav__locale-btn" aria-haspopup="listbox">
-            {%- if localization.country.iso_code == 'AT' -%}
-              <svg width="16" height="12" viewBox="0 0 16 12" aria-hidden="true">
-                <rect width="16" height="4" fill="#ED2939"/>
-                <rect y="4" width="16" height="4" fill="#fff"/>
-                <rect y="8" width="16" height="4" fill="#ED2939"/>
+      {%- comment -%} Language switcher {%- endcomment -%}
+      {%- if localization.available_languages.size > 1 -%}
+        <div class="sw-nav__locale-wrapper">
+          {%- form 'localization', class: 'sw-nav__locale-form' -%}
+            <input type="hidden" name="return_to" value="{{ request.path }}">
+            <button type="button" class="btn btn-ghost sw-nav__locale-btn" aria-haspopup="listbox" aria-expanded="false" data-locale-btn>
+              {%- case localization.language.iso_code -%}
+                {%- when 'de' -%}
+                  <svg width="16" height="12" viewBox="0 0 16 12" aria-hidden="true"><rect width="16" height="4" fill="#ED2939"/><rect y="4" width="16" height="4" fill="#fff"/><rect y="8" width="16" height="4" fill="#ED2939"/></svg>
+                {%- when 'en' -%}
+                  <svg width="16" height="12" viewBox="0 0 16 12" aria-hidden="true"><rect width="16" height="12" fill="#012169"/><path d="M0,0 L16,12 M16,0 L0,12" stroke="#fff" stroke-width="2.4"/><path d="M0,0 L16,12 M16,0 L0,12" stroke="#C8102E" stroke-width="1.6"/><path d="M8,0 V12 M0,6 H16" stroke="#fff" stroke-width="4"/><path d="M8,0 V12 M0,6 H16" stroke="#C8102E" stroke-width="2.4"/></svg>
+                {%- when 'hu' -%}
+                  <svg width="16" height="12" viewBox="0 0 16 12" aria-hidden="true"><rect width="16" height="4" fill="#CE2939"/><rect y="4" width="16" height="4" fill="#fff"/><rect y="8" width="16" height="4" fill="#477050"/></svg>
+                {%- else -%}
+                  <svg width="16" height="12" viewBox="0 0 16 12" aria-hidden="true"><rect width="16" height="12" fill="#eee"/><text x="8" y="9" text-anchor="middle" font-size="8" fill="#666">{{ localization.language.iso_code | upcase | slice: 0, 2 }}</text></svg>
+              {%- endcase -%}
+              <span>{{ localization.language.iso_code | upcase | slice: 0, 2 }}</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                <path d="M6 9l6 6 6-6"/>
               </svg>
-            {%- endif -%}
-            <span>{{ localization.language.iso_code | upcase | slice: 0, 2 }}</span>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-              <path d="M6 9l6 6 6-6"/>
-            </svg>
-          </button>
-        {%- endform -%}
+            </button>
+            <ul class="sw-nav__locale-dropdown" role="listbox" data-locale-dropdown>
+              {%- for language in localization.available_languages -%}
+                {%- assign is_active = false -%}
+                {%- if language.iso_code == localization.language.iso_code -%}
+                  {%- assign is_active = true -%}
+                {%- endif -%}
+                <li role="option" aria-selected="{{ is_active }}">
+                  <button type="submit" name="locale_code" value="{{ language.iso_code }}" class="sw-nav__locale-option{% if is_active %} is-active{% endif %}">
+                    {{ language.endonym_name }}
+                  </button>
+                </li>
+              {%- endfor -%}
+            </ul>
+          {%- endform -%}
+        </div>
       {%- else -%}
         <div class="btn btn-ghost sw-nav__locale-btn" aria-hidden="true">
-          <svg width="16" height="12" viewBox="0 0 16 12" aria-hidden="true">
-            <rect width="16" height="4" fill="#ED2939"/>
-            <rect y="4" width="16" height="4" fill="#fff"/>
-            <rect y="8" width="16" height="4" fill="#ED2939"/>
-          </svg>
-          <span>DE</span>
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-            <path d="M6 9l6 6 6-6"/>
-          </svg>
+          <span>{{ localization.language.iso_code | upcase | slice: 0, 2 }}</span>
         </div>
       {%- endif -%}
 
@@ -72,7 +82,7 @@
           <line x1="3" y1="6" x2="21" y2="6"/>
           <path d="M16 10a4 4 0 01-8 0"/>
         </svg>
-        <span class="hide-mobile">Warenkorb</span>
+        <span class="hide-mobile">{{ 'general.cart' | t }}</span>
         {%- if cart.item_count > 0 -%}
           <span class="sw-nav__badge mono" aria-label="{{ cart.item_count }} {{ 'general.items' | t }}">{{ cart.item_count }}</span>
         {%- endif -%}
@@ -185,10 +195,58 @@
   display: contents;
 }
 
+.sw-nav__locale-wrapper {
+  position: relative;
+}
+
 .sw-nav__locale-btn {
   font-size: 13px;
   gap: 6px;
   padding: 8px 12px;
+}
+
+.sw-nav__locale-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 140px;
+  background: oklch(0.99 0.008 90);
+  border: 1px solid var(--line-soft);
+  border-radius: 10px;
+  padding: 6px;
+  list-style: none;
+  margin: 0;
+  box-shadow: 0 8px 24px oklch(0 0 0 / 0.08);
+  z-index: 50;
+}
+
+.sw-nav__locale-wrapper.is-open .sw-nav__locale-dropdown {
+  display: block;
+}
+
+.sw-nav__locale-option {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 8px 12px;
+  font-size: 13px;
+  color: var(--ink-soft);
+  border-radius: 7px;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.sw-nav__locale-option:hover {
+  background: oklch(0.93 0.015 90);
+  color: var(--ink);
+}
+
+.sw-nav__locale-option.is-active {
+  color: var(--ink);
+  font-weight: 500;
 }
 
 .sw-nav__cart {
@@ -205,6 +263,27 @@
   border-radius: 999px;
 }
 {% endstylesheet %}
+
+{% javascript %}
+document.addEventListener('DOMContentLoaded', function () {
+  const wrapper = document.querySelector('.sw-nav__locale-wrapper');
+  if (!wrapper) return;
+
+  const btn = wrapper.querySelector('[data-locale-btn]');
+
+  btn.addEventListener('click', function () {
+    const open = wrapper.classList.toggle('is-open');
+    btn.setAttribute('aria-expanded', open);
+  });
+
+  document.addEventListener('click', function (e) {
+    if (!wrapper.contains(e.target)) {
+      wrapper.classList.remove('is-open');
+      btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+});
+{% endjavascript %}
 
 {% schema %}
 {

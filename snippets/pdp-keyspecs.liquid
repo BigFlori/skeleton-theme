@@ -1,0 +1,22 @@
+{%- assign keyspecs = product.metafields.custom.datasheet.value.keyspecs.value -%}
+
+<section class="pdp-keyspecs full-width">
+  <div class="container">
+    <div class="pdp-keyspecs__grid">
+      {%- for spec in keyspecs -%}
+        <div class="pdp-keyspecs__item">
+          <div class="pdp-keyspecs__val">
+            <span class="pdp-keyspecs__num display">{{ spec.value }}</span>
+            {%- if spec.unit != blank -%}
+              <span class="pdp-keyspecs__unit mono">{{ spec.unit }}</span>
+            {%- endif -%}
+          </div>
+          <div style="font-size:13px;font-weight:500;margin-top:12px;">{{ spec.label }}</div>
+          {%- if spec.sub != blank -%}
+            <div class="mono" style="font-size:10px;color:var(--ink-mute);margin-top:3px;">{{ spec.sub }}</div>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>

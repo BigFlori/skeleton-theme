@@ -1,0 +1,20 @@
+<nav class="pdp-breadcrumb full-width" aria-label="Breadcrumb">
+  <div class="container">
+    <ol class="pdp-breadcrumb__list">
+      <li><a href="{{ routes.root_url }}">{{ 'pdp.breadcrumb.shop' | t }}</a></li>
+      <li><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></li>
+      {%- if collection -%}
+        <li><a href="{{ collection.url }}">{{ collection.title }}</a></li>
+        <li><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></li>
+      {%- else -%}
+        <li><a href="{{ routes.collections_url }}">{{ 'pdp.breadcrumb.modules' | t }}</a></li>
+        <li><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></li>
+      {%- endif -%}
+      {%- if product.vendor != blank -%}
+        <li><a href="{{ product.vendor | url_for_vendor }}">{{ product.vendor }}</a></li>
+        <li><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></li>
+      {%- endif -%}
+      <li><span style="color:var(--ink);">{{ product.metafields.custom.model_number | default: product.title }}</span></li>
+    </ol>
+  </div>
+</nav>

@@ -1,0 +1,101 @@
+<section class="pdp-datasheet full-width" id="datenblatt">
+  <div class="container">
+    <div class="pdp-datasheet__grid">
+      <div class="pdp-datasheet__sticky">
+        <span class="eyebrow">{{ 'pdp.datasheet.eyebrow' | t }}</span>
+        <h2 class="display" style="font-size:clamp(40px,5vw,68px);margin-top:16px;line-height:1;">
+          {{ 'pdp.datasheet.heading_line1' | t }}<br>
+          {{ 'pdp.datasheet.heading_line2' | t }}<br>
+          <em style="color:var(--accent-deep);">{{ 'pdp.datasheet.heading_em' | t }}</em>
+        </h2>
+        <p style="color:var(--ink-soft);font-size:14px;margin-top:20px;max-width:340px;line-height:1.55;">
+          {{ 'pdp.datasheet.description' | t }}
+        </p>
+      </div>
+
+      {%- assign datasheet = product.metafields.custom.datasheet.value -%}
+
+      <div class="pdp-datasheet__accordion" id="pdp-accordion">
+
+        {%- if datasheet != blank -%}
+
+          {%- assign acc_sections = "spec_electrical|pdp.datasheet.section_electrical|bolt,spec_mechanical|pdp.datasheet.section_mechanical|panel,spec_certificates|pdp.datasheet.section_certificates|shield,spec_environment|pdp.datasheet.section_environment|leaf" | split: "," -%}
+
+          {%- for acc in acc_sections -%}
+            {%- assign parts = acc | split: "|" -%}
+            {%- assign field_key = parts[0] -%}
+            {%- assign acc_title = parts[1] -%}
+            {%- assign acc_icon = parts[2] -%}
+            {%- assign rows = datasheet[field_key].value -%}
+
+            {%- if rows != blank -%}
+              <div class="pdp-accordion-item{% if forloop.first %} is-open{% endif %}">
+                <button type="button" class="pdp-accordion-item__trigger" data-accordion-trigger>
+                  <div class="pdp-accordion-item__icon">
+                    {%- if acc_icon == "bolt" -%}
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/></svg>
+                    {%- elsif acc_icon == "panel" -%}
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="13" rx="1"/><path d="M3 8h18M3 13h18M9 4v13M15 4v13"/></svg>
+                    {%- elsif acc_icon == "shield" -%}
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg>
+                    {%- elsif acc_icon == "leaf" -%}
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 3c0 9-6 15-15 15a9 9 0 0 1 0-18c4 0 8 1 15 3z"/><path d="M3 21c4-7 9-11 15-13"/></svg>
+                    {%- endif -%}
+                  </div>
+                  <span style="flex:1;">{{ acc_title | t }}</span>
+                  <span class="mono" style="font-size:11px;color:var(--ink-mute);">{{ rows.size }} {{ 'pdp.datasheet.entries' | t }}</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="pdp-accordion-item__body">
+                  <div class="pdp-accordion-item__rows">
+                    {%- for row in rows -%}
+                      <div class="pdp-accordion-item__row">
+                        <span style="font-size:13px;color:var(--ink-soft);">{{ row.label }}</span>
+                        <span class="mono" style="font-size:13px;font-weight:500;">{{ row.value }}</span>
+                      </div>
+                    {%- endfor -%}
+                  </div>
+                </div>
+              </div>
+            {%- endif -%}
+
+          {%- endfor -%}
+
+          <!-- Downloads -->
+          {%- assign downloads = datasheet.downloads.value -%}
+          {%- if downloads != blank -%}
+            <div class="pdp-accordion-item">
+              <button type="button" class="pdp-accordion-item__trigger" data-accordion-trigger>
+                <div class="pdp-accordion-item__icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M8 7h9v9"/></svg>
+                </div>
+                <span style="flex:1;">{{ 'pdp.datasheet.downloads' | t }}</span>
+                <span class="mono" style="font-size:11px;color:var(--ink-mute);">{{ downloads.size }} {{ 'pdp.datasheet.entries' | t }}</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+              <div class="pdp-accordion-item__body">
+                <div class="pdp-accordion-item__rows">
+                  {%- for dl in downloads -%}
+                    <div class="pdp-accordion-item__row">
+                      <span style="font-size:13px;color:var(--ink-soft);">{{ dl.label }}</span>
+                      <span class="mono" style="font-size:13px;font-weight:500;">{{ dl.size }}</span>
+                      <a href="{{ dl.url | default: '#' }}" class="btn btn-ghost" style="font-size:11px;padding:4px 8px;" target="_blank" rel="noopener">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M8 7h9v9"/></svg>
+                      </a>
+                    </div>
+                  {%- endfor -%}
+                </div>
+              </div>
+            </div>
+          {%- endif -%}
+
+        {%- else -%}
+          <div style="padding:40px 24px;text-align:center;color:var(--ink-mute);">
+            <p class="mono" style="font-size:13px;">{{ 'pdp.datasheet.no_datasheet' | t }}</p>
+          </div>
+        {%- endif -%}
+
+      </div>
+    </div>
+  </div>
+</section>

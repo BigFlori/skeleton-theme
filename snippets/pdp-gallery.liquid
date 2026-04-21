@@ -1,0 +1,89 @@
+{%- assign datasheet = product.metafields.custom.datasheet.value -%}
+{%- assign tech_badge = datasheet.tech_badge | default: section.settings.tech_badge -%}
+{%- assign pdf_url = datasheet.pdf_url | default: section.settings.datasheet_url -%}
+<div class="pdp-gallery-sticky">
+  <div>
+    <!-- Main image -->
+    <div class="pdp-gallery__main">
+      {%- if product.images.size > 0 -%}
+        <img
+          id="pdp-main-img"
+          src="{{ product.images[0] | image_url: width: 800 }}"
+          alt="{{ product.images[0].alt | default: product.title | escape }}"
+          width="800" height="800"
+          loading="eager"
+          class="pdp-gallery__img"
+        >
+      {%- else -%}
+        <div style="width:100%;height:100%;display:grid;place-items:center;padding:20px;">
+          <svg viewBox="0 0 400 400" width="100%" height="100%">
+            <rect x="60" y="40" width="280" height="320" rx="6" fill="oklch(0.15 0.02 220)" stroke="oklch(0.35 0.04 220)" stroke-width="2"/>
+            <rect x="70" y="50" width="260" height="300" rx="3" fill="oklch(0.20 0.04 240)"/>
+          </svg>
+        </div>
+      {%- endif -%}
+
+      <div class="pdp-gallery__badges">
+        {%- if tech_badge != blank -%}
+          <span class="pdp-gallery__badge pdp-gallery__badge--dark">{{ tech_badge }}</span>
+        {%- endif -%}
+        {%- if current_variant.available -%}
+          <span class="pdp-gallery__badge pdp-gallery__badge--sun">{{ 'pdp.gallery.in_stock' | t }}</span>
+        {%- else -%}
+          <span class="pdp-gallery__badge" style="background:oklch(0.92 0.06 30);color:var(--ink);">{{ 'pdp.gallery.sold_out' | t }}</span>
+        {%- endif -%}
+      </div>
+
+      <div class="pdp-gallery__label mono" id="pdp-gallery-label">
+        01 / {{ product.images.size | at_least: 1 | prepend: "0" | slice: -2, 2 }}
+      </div>
+
+      <button class="pdp-gallery__zoom" type="button" aria-label="{{ 'pdp.gallery.zoom_label' | t }}" id="pdp-zoom-btn">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+        {{ 'pdp.gallery.zoom' | t }}
+      </button>
+    </div>
+
+    <!-- Thumbnails -->
+    {%- if product.images.size > 1 -%}
+      <div class="pdp-gallery__thumbs">
+        {%- for image in product.images limit: 5 -%}
+          <button
+            class="pdp-gallery__thumb{% if forloop.first %} is-active{% endif %}"
+            type="button"
+            data-idx="{{ forloop.index0 }}"
+            data-src="{{ image | image_url: width: 800 }}"
+            data-alt="{{ image.alt | default: product.title | escape }}"
+            data-label="{{ image.alt | default: forloop.index }}"
+            aria-label="{% if image.alt != blank %}{{ image.alt | escape }}{% else %}{{ forloop.index }}{% endif %}"
+          >
+            <img
+              src="{{ image | image_url: width: 160 }}"
+              alt="{{ image.alt | default: product.title | escape }}"
+              width="160" height="160" loading="lazy"
+            >
+          </button>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    <!-- Downloads strip -->
+    <div class="pdp-gallery__downloads">
+      <div class="pdp-gallery__dl-info">
+        <div class="pdp-gallery__dl-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg>
+        </div>
+        <div>
+          <div style="font-size:13px;font-weight:500;">{{ 'pdp.gallery.datasheet_title' | t }}</div>
+          <div class="mono" style="font-size:10px;color:var(--ink-mute);margin-top:2px;">{{ 'pdp.gallery.datasheet_certs' | t }}</div>
+        </div>
+      </div>
+      {%- if pdf_url != blank -%}
+        <a href="{{ pdf_url }}" class="btn btn-ghost" style="font-size:13px;" target="_blank" rel="noopener">
+          {{ 'pdp.gallery.download' | t }}
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M8 7h9v9"/></svg>
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</div>

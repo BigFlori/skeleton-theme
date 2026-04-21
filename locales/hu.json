@@ -1,0 +1,142 @@
+{
+  "404": {
+    "title": "404",
+    "not_found": "Az oldal nem található.",
+    "back_to_shopping": "Vissza a vásárláshoz"
+  },
+  "blog": {
+    "article_comments": "Hozzászólások",
+    "article_metadata_html": "{{ date }} – {{ author }}",
+    "comment_form_body": "Hozzászólás",
+    "comment_form_email": "E-mail",
+    "comment_form_name": "Név",
+    "comment_form_submit": "Küldés",
+    "comment_form_title": "Hozzászólás írása"
+  },
+  "cart": {
+    "checkout": "Pénztár",
+    "title": "Kosár",
+    "update": "Frissítés",
+    "remove": "Eltávolítás"
+  },
+  "customers": {
+    "login": {
+      "email": "E-mail",
+      "password": "Jelszó",
+      "submit": "Bejelentkezés",
+      "title": "Bejelentkezés"
+    }
+  },
+  "collections": {
+    "title": "Kollekciók"
+  },
+  "gift_card": {
+    "add_to_apple_wallet": "Hozzáadás az Apple Wallethez",
+    "card": "Ajándékkártya",
+    "expired": "Ez az ajándékkártya lejárt",
+    "expires_on": "Lejár: {{ expires_on }}",
+    "use_at_checkout": "Használd ezt az ajándékkártyát a pénztárnál"
+  },
+  "password": {
+    "title": "Ez az üzlet privát",
+    "password": "Jelszó",
+    "enter": "Belépés"
+  },
+  "general": {
+    "header": "Főnavigáció",
+    "cart": "Kosár",
+    "items": "termék",
+    "onboarding": {
+      "product_title": "Példa termék neve",
+      "product_vendor": "Példa gyártó"
+    }
+  },
+  "search": {
+    "title": "Keresés",
+    "placeholder": "Cikkek, oldalak vagy termékek keresése",
+    "submit": "Keresés",
+    "no_results_html": "Nincs találat: {{ terms }}",
+    "results_for_html": "{{ count }} találat: {{ terms }}"
+  },
+  "pdp": {
+    "breadcrumb": {
+      "shop": "Üzlet",
+      "modules": "Modulok"
+    },
+    "gallery": {
+      "in_stock": "KÉSZLETEN",
+      "sold_out": "ELFOGYOTT",
+      "zoom": "Nagyítás",
+      "zoom_label": "Kép nagyítása",
+      "datasheet_title": "Adatlap & Tanúsítványok",
+      "datasheet_certs": "PDF · TÜV, IEC 61215, IEC 61730",
+      "download": "Letöltés"
+    },
+    "buy": {
+      "reviews_abbr": "ért.",
+      "per_piece": "/ db · 0% ÁFA",
+      "kwp_price": "€ {{ price }} / kWp · Mennyiségi kedvezmény 5 db-tól",
+      "add_to_cart": "Kosárba · {{ price }}",
+      "unavailable": "Nem elérhető",
+      "check_compat": "Inverter kompatibilitás ellenőrzése",
+      "in_stock_label": "Készleten",
+      "shipping_days": "Szállítás 2–4 munkanapon belül",
+      "ships_from": "Szállítás AT-ból",
+      "warehouse": "Bécsi Újhely raktár",
+      "warranty": "25 év garancia",
+      "warranty_sub": "Termék + teljesítmény",
+      "returns": "14 napos visszaküldés",
+      "returns_sub": "Új árura · sértetlen állapotban",
+      "bulk_title": "50+ db: Nagykereskedelmi ár igénylése",
+      "bulk_sub": "Válasz 4 órán belül · H–P",
+      "contact": "Kapcsolat →"
+    },
+    "qty": {
+      "label": {
+        "one": "Mennyiség · 1 modul ({{ kwp }} kWp)",
+        "other": "Mennyiség · {{ count }} modul ({{ kwp }} kWp)"
+      },
+      "unit": "db",
+      "discount_badge": "–{{ percent }}% mennyiségi kedvezmény aktív"
+    },
+    "compat": {
+      "eyebrow": "Összeillő?",
+      "heading_pre": "Kompatibilitás",
+      "heading_mid": "az",
+      "heading_em": "invertereiddel.",
+      "description": "Válaszd ki a tervezett inverteredet — kiszámítjuk a feszültséget, a stringeket és a túlméretezést.",
+      "module_values": "Modul értékek · Vmp {{ vmp }} V · Voc {{ voc }} V · Imp {{ imp }} A · Isc {{ isc }} A",
+      "select_label": "Inverter kiválasztása",
+      "mppt": "MPPT-követők",
+      "max_modules": "Max modul / string",
+      "total_capacity": "Összes kapacitás",
+      "independent": "független",
+      "modules_theoretical": "Modul elmél.",
+      "calc_note": "A számítás a leggyakoribb string konfigurációra vonatkozik",
+      "full_datasheet": "Teljes adatlap",
+      "perfect": "Tökéletes méretezés",
+      "slight_over": "Megfelelő — enyhe túlméretezés",
+      "under_loaded": "Megfelelő — inverter nincs kihasználva",
+      "too_many": "Túl sok modul ehhez az inverterhez",
+      "summary": "{{ count }} × {{ power }} W = {{ kwp }} kWp · Inverter AC {{ inverter_kw }} kW · Optimum ≈ {{ optimal }} modul"
+    },
+    "datasheet": {
+      "eyebrow": "Teljes műszaki adatok",
+      "heading_line1": "Minden ami",
+      "heading_line2": "az",
+      "heading_em": "adatlapon van.",
+      "description": "Nincsenek marketing számok. Közvetlenül a hivatalos gyártói adatlapból átvéve.",
+      "entries": "bejegyzés",
+      "section_electrical": "Elektromos értékek (STC)",
+      "section_mechanical": "Mechanikai értékek",
+      "section_certificates": "Tanúsítványok & Szabványok",
+      "section_environment": "Üzemi & Környezeti feltételek",
+      "downloads": "Letöltések",
+      "no_datasheet": "Nincs adatlap hozzárendelve. Kérjük rendelj hozzá egyet a Shopify Adminban a Termék → Metamezők alatt."
+    },
+    "toast": {
+      "added": "{{ count }} × {{ title }} a kosárban",
+      "error_prefix": "Hiba: "
+    }
+  }
+}

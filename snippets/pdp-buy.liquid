@@ -1,0 +1,183 @@
+{%- assign datasheet = product.metafields.custom.datasheet.value -%}
+{%- form 'product', product, id: 'pdp-form', novalidate: 'novalidate' -%}
+  <input type="hidden" name="id" id="pdp-variant-id" value="{{ current_variant.id }}">
+  <input type="hidden" name="quantity" id="pdp-qty-input" value="1">
+
+  <div class="pdp-buy">
+    <!-- Title -->
+    <div>
+      <div class="pdp-buy__header-meta">
+        <span class="mono" style="font-size:10px;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.08em;">
+          {{ product.vendor }}{% if product.metafields.custom.model_number != blank %} · {{ product.metafields.custom.model_number }}{% endif %}
+        </span>
+        <span style="width:4px;height:4px;border-radius:4px;background:var(--line);display:inline-block;"></span>
+        <div style="display:flex;align-items:center;gap:4px;">
+          <div class="pdp-buy__stars">
+            {%- for i in (1..5) -%}
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.8 6.2 20.9l1.1-6.5L2.6 9.8l6.5-.9z"/></svg>
+            {%- endfor -%}
+          </div>
+          <span class="mono" style="font-size:10px;color:var(--ink-mute);">{{ datasheet.rating | default: section.settings.rating | default: 4.8 | replace: '.', ',' }} · {{ datasheet.review_count | default: section.settings.review_count | default: '127' }} {{ 'pdp.buy.reviews_abbr' | t }}</span>
+        </div>
+      </div>
+      <h1 class="display" style="font-size:clamp(38px,4.5vw,58px);letter-spacing:-.02em;">{{ product.title }}</h1>
+      {%- if product.description != blank -%}
+        <p style="font-size:15px;color:var(--ink-soft);margin-top:14px;line-height:1.55;max-width:48ch;">
+          {{ product.description | strip_html | truncatewords: 35 }}
+        </p>
+      {%- endif -%}
+    </div>
+
+    <!-- Price -->
+    <div class="pdp-buy__price-block">
+      <div class="pdp-buy__price-row">
+        <span class="pdp-buy__price-main" id="pdp-price-display">{{ current_variant.price | money_without_trailing_zeros }}</span>
+        <span class="pdp-buy__price-original mono" id="pdp-price-original" style="display:none;">{{ current_variant.price | money_without_trailing_zeros }}</span>
+        <span class="mono" style="font-size:12px;color:var(--ink-mute);">{{ 'pdp.buy.per_piece' | t }}</span>
+      </div>
+      <div class="mono" style="font-size:11px;color:var(--ink-mute);margin-top:6px;" id="pdp-price-kwp">&nbsp;</div>
+    </div>
+
+    <!-- Variants -->
+    {%- unless product.has_only_default_variant -%}
+      {%- for option in product.options_with_values -%}
+        <div>
+          <label class="mono" style="font-size:11px;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:10px;">
+            {{ option.name }}
+          </label>
+          <div class="pdp-buy__swatches">
+            {%- for value in option.values -%}
+              {%- if value.swatch.color != blank -%}
+                {%- assign swatch_color = value.swatch.color -%}
+              {%- else -%}
+                {%- assign swatch_color = "oklch(0.82 0.005 240)" -%}
+                {%- assign value_lower = value | downcase -%}
+                {%- if value_lower == "all black" or value_lower == "schwarz" or value_lower == "fekete" or value_lower == "black" -%}
+                  {%- assign swatch_color = "oklch(0.15 0.005 240)" -%}
+                {%- elsif value_lower == "kék" or value_lower == "blau" or value_lower == "blue" -%}
+                  {%- assign swatch_color = "oklch(0.45 0.18 260)" -%}
+                {%- elsif value_lower == "weiß" or value_lower == "weiss" or value_lower == "fehér" or value_lower == "white" -%}
+                  {%- assign swatch_color = "oklch(0.97 0.005 240)" -%}
+                {%- elsif value_lower == "silber" or value_lower == "silver" or value_lower == "ezüst" -%}
+                  {%- assign swatch_color = "oklch(0.75 0.01 240)" -%}
+                {%- endif -%}
+              {%- endif -%}
+              {%- assign is_active = false -%}
+              {%- if current_variant.options contains value -%}{%- assign is_active = true -%}{%- endif -%}
+              <button
+                type="button"
+                class="pdp-buy__swatch-btn{% if is_active %} is-active{% endif %}"
+                data-option-pos="{{ option.position }}"
+                data-value="{{ value | escape }}"
+                data-pdp-swatch
+              >
+                <span class="pdp-buy__swatch-dot" style="background:{{ swatch_color }};"></span>
+                <span style="font-size:13px;font-weight:{% if is_active %}500{% else %}400{% endif %};">{{ value }}</span>
+              </button>
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    {%- endunless -%}
+
+    <!-- Quantity -->
+    <div>
+      <label class="mono" style="font-size:11px;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:10px;" id="pdp-qty-label">
+        {{ 'pdp.qty.label' | t: count: 1, kwp: section.settings.module_power | default: '0,43' }}
+      </label>
+      <div class="pdp-buy__qty-wrap">
+        <div class="pdp-buy__stepper">
+          <button type="button" class="pdp-buy__stepper-btn" id="pdp-qty-down" aria-label="-">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14"/></svg>
+          </button>
+          <span class="pdp-buy__stepper-val" id="pdp-qty-display">1</span>
+          <button type="button" class="pdp-buy__stepper-btn" id="pdp-qty-up" aria-label="+">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+        </div>
+        <div class="pdp-buy__qty-presets">
+          <button type="button" class="pdp-buy__qty-preset" data-preset="5">5 {{ 'pdp.qty.unit' | t }}</button>
+          <button type="button" class="pdp-buy__qty-preset" data-preset="10">10 {{ 'pdp.qty.unit' | t }}</button>
+          <button type="button" class="pdp-buy__qty-preset" data-preset="24">24 {{ 'pdp.qty.unit' | t }}</button>
+        </div>
+      </div>
+      <div class="pdp-buy__discount-badge" id="pdp-discount-badge" style="display:none;"></div>
+    </div>
+
+    <!-- CTAs -->
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <button
+        type="submit"
+        class="btn btn-primary"
+        id="pdp-atc-btn"
+        style="justify-content:center;font-size:16px;padding:18px 22px;"
+        {%- unless current_variant.available -%}disabled aria-disabled="true"{%- endunless -%}
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="9" cy="20" r="1.2"/><circle cx="17" cy="20" r="1.2"/><path d="M3 4h2l2.5 11.5a2 2 0 0 0 2 1.5h7.5a2 2 0 0 0 2-1.5L21 8H6"/></svg>
+        <span id="pdp-atc-label">
+          {%- if current_variant.available -%}
+            {{ 'pdp.buy.add_to_cart' | t: price: current_variant.price | money_without_trailing_zeros }}
+          {%- else -%}
+            {{ 'pdp.buy.unavailable' | t }}
+          {%- endif -%}
+        </span>
+      </button>
+      <a href="#kompatibilitaet" class="btn btn-secondary" style="justify-content:center;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 10l3-3m0 0v2m0-2h-2M16 14l-3 3m0 0v-2m0 2h2"/></svg>
+        {{ 'pdp.buy.check_compat' | t }}
+      </a>
+    </div>
+
+    <!-- Trust strip -->
+    <div class="pdp-buy__trust">
+      <div class="pdp-trust-item">
+        <div class="pdp-trust-item__icon">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6h11v10H3zM14 9h4l3 4v3h-7zM7 19a2 2 0 1 1 0-4 2 2 0 0 1 0 4zM17 19a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/></svg>
+        </div>
+        <div>
+          <div style="font-size:12px;font-weight:500;">{{ 'pdp.buy.in_stock_label' | t }}</div>
+          <div class="mono" style="font-size:10px;color:var(--ink-mute);margin-top:1px;">{{ 'pdp.buy.shipping_days' | t }}</div>
+        </div>
+      </div>
+      <div class="pdp-trust-item">
+        <div class="pdp-trust-item__icon" style="background:transparent;">
+          <svg width="20" height="14" viewBox="0 0 24 16" aria-label="Österreich"><rect width="24" height="5.33" fill="#ED2939"/><rect y="5.33" width="24" height="5.33" fill="#fff"/><rect y="10.66" width="24" height="5.33" fill="#ED2939"/></svg>
+        </div>
+        <div>
+          <div style="font-size:12px;font-weight:500;">{{ 'pdp.buy.ships_from' | t }}</div>
+          <div class="mono" style="font-size:10px;color:var(--ink-mute);margin-top:1px;">{{ 'pdp.buy.warehouse' | t }}</div>
+        </div>
+      </div>
+      <div class="pdp-trust-item">
+        <div class="pdp-trust-item__icon">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg>
+        </div>
+        <div>
+          <div style="font-size:12px;font-weight:500;">{{ 'pdp.buy.warranty' | t }}</div>
+          <div class="mono" style="font-size:10px;color:var(--ink-mute);margin-top:1px;">{{ 'pdp.buy.warranty_sub' | t }}</div>
+        </div>
+      </div>
+      <div class="pdp-trust-item">
+        <div class="pdp-trust-item__icon">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12l5 5L20 6"/></svg>
+        </div>
+        <div>
+          <div style="font-size:12px;font-weight:500;">{{ 'pdp.buy.returns' | t }}</div>
+          <div class="mono" style="font-size:10px;color:var(--ink-mute);margin-top:1px;">{{ 'pdp.buy.returns_sub' | t }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bulk contact -->
+    <div class="pdp-buy__bulk-cta">
+      <div class="pdp-buy__bulk-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 4h4l2 5-2 1a11 11 0 0 0 5 5l1-2 5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>
+      </div>
+      <div style="font-size:13px;flex:1;">
+        <div style="font-weight:500;">{{ 'pdp.buy.bulk_title' | t }}</div>
+        <div class="mono" style="font-size:11px;color:var(--ink-mute);margin-top:2px;">{{ 'pdp.buy.bulk_sub' | t }}</div>
+      </div>
+      <a href="{{ pages[section.settings.contact_page].url | default: '/pages/contact' }}" class="btn btn-ghost" style="font-size:12px;padding:6px 10px;">{{ 'pdp.buy.contact' | t }}</a>
+    </div>
+  </div>
+{%- endform -%}

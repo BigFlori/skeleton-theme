@@ -57,5 +57,86 @@
     "submit": "Search",
     "no_results_html": "No results found for {{ terms }}",
     "results_for_html": "{{ count }} results found for {{ terms }}"
+  },
+  "pdp": {
+    "breadcrumb": {
+      "shop": "Shop",
+      "modules": "Modules"
+    },
+    "gallery": {
+      "in_stock": "IN STOCK",
+      "sold_out": "SOLD OUT",
+      "zoom": "Zoom",
+      "zoom_label": "Zoom image",
+      "datasheet_title": "Datasheet & Certificates",
+      "datasheet_certs": "PDF · TÜV, IEC 61215, IEC 61730",
+      "download": "Download"
+    },
+    "buy": {
+      "reviews_abbr": "Rev.",
+      "per_piece": "/ piece · incl. 0% VAT",
+      "kwp_price": "€ {{ price }} / kWp · Volume pricing from 5 units",
+      "add_to_cart": "Add to cart · {{ price }}",
+      "unavailable": "Unavailable",
+      "check_compat": "Check compatibility with my inverter",
+      "in_stock_label": "In stock",
+      "shipping_days": "Ships in 2–4 business days",
+      "ships_from": "Ships from AT",
+      "warehouse": "Wiener Neustadt warehouse",
+      "warranty": "25-year warranty",
+      "warranty_sub": "Product + performance",
+      "returns": "14-day returns",
+      "returns_sub": "New items only · undamaged",
+      "bulk_title": "50+ units: Request wholesale price",
+      "bulk_sub": "Reply within 4 hours · Mon–Fri",
+      "contact": "Contact →"
+    },
+    "qty": {
+      "label": {
+        "one": "Qty · 1 module ({{ kwp }} kWp)",
+        "other": "Qty · {{ count }} modules ({{ kwp }} kWp)"
+      },
+      "unit": "pcs",
+      "discount_badge": "–{{ percent }}% volume discount active"
+    },
+    "compat": {
+      "eyebrow": "Compatible?",
+      "heading_pre": "Compatibility",
+      "heading_mid": "with your",
+      "heading_em": "inverter.",
+      "description": "Choose the inverter you're planning — we'll calculate voltage, strings and oversizing.",
+      "module_values": "Module values · Vmp {{ vmp }} V · Voc {{ voc }} V · Imp {{ imp }} A · Isc {{ isc }} A",
+      "select_label": "Select inverter",
+      "mppt": "MPPT Trackers",
+      "max_modules": "Max modules / string",
+      "total_capacity": "Total capacity",
+      "independent": "independent",
+      "modules_theoretical": "Modules theor.",
+      "calc_note": "Calculation applies to the most common string configuration",
+      "full_datasheet": "Full datasheet",
+      "perfect": "Perfect sizing",
+      "slight_over": "Compatible — slight oversizing",
+      "under_loaded": "Compatible — inverter underloaded",
+      "too_many": "Too many modules for this inverter",
+      "summary": "{{ count }} × {{ power }} W = {{ kwp }} kWp · Inverter AC {{ inverter_kw }} kW · Optimum ≈ {{ optimal }} modules"
+    },
+    "datasheet": {
+      "eyebrow": "Full specifications",
+      "heading_line1": "Everything",
+      "heading_line2": "on the",
+      "heading_em": "datasheet.",
+      "description": "No marketing figures. Taken directly from the official manufacturer datasheet.",
+      "entries": "entries",
+      "section_electrical": "Electrical Values (STC)",
+      "section_mechanical": "Mechanical Values",
+      "section_certificates": "Certificates & Standards",
+      "section_environment": "Operating & Environmental Conditions",
+      "downloads": "Downloads",
+      "no_datasheet": "No datasheet linked. Please assign one in Shopify Admin under Product → Metafields."
+    },
+    "toast": {
+      "added": "{{ count }} × {{ title }} added to cart",
+      "error_prefix": "Error: "
+    }
   }
 }

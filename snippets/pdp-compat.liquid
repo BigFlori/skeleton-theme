@@ -1,0 +1,74 @@
+{%- assign datasheet = product.metafields.custom.datasheet.value -%}
+{%- assign vmp = datasheet.vmp | default: section.settings.vmp | default: 32.4 | replace: '.', ',' -%}
+{%- assign voc = datasheet.voc | default: section.settings.voc_display | default: 38.9 | replace: '.', ',' -%}
+{%- assign imp = datasheet.imp | default: section.settings.imp | default: 13.1 | replace: '.', ',' -%}
+{%- assign isc = datasheet.isc | default: section.settings.isc | default: 13.9 | replace: '.', ',' -%}
+
+<section class="pdp-compat full-width" id="kompatibilitaet">
+  <div class="container">
+    <div class="pdp-compat__grid">
+      <div>
+        <span class="eyebrow">{{ 'pdp.compat.eyebrow' | t }}</span>
+        <h2 class="display" style="font-size:clamp(40px,5vw,68px);margin-top:16px;line-height:1;">
+          {{ 'pdp.compat.heading_pre' | t }}<br>
+          {{ 'pdp.compat.heading_mid' | t }} <em style="color:var(--accent-deep);">{{ 'pdp.compat.heading_em' | t }}</em>
+        </h2>
+        <p style="color:var(--ink-soft);font-size:15px;margin-top:20px;max-width:400px;line-height:1.55;">
+          {{ 'pdp.compat.description' | t }}
+        </p>
+        <div class="mono" style="font-size:10px;color:var(--ink-mute);margin-top:24px;letter-spacing:.02em;">
+          {{ 'pdp.compat.module_values' | t: vmp: vmp, voc: voc, imp: imp, isc: isc }}
+        </div>
+      </div>
+
+      <div class="pdp-compat__card">
+        <label class="mono" style="font-size:11px;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:10px;" for="pdp-inverter-select">
+          {{ 'pdp.compat.select_label' | t }}
+        </label>
+        <select class="pdp-compat__select" id="pdp-inverter-select">
+          <option value="fronius-symo-10" data-mppts="2" data-vmax="1000" data-str-max="8" data-power="10000">Fronius Symo 10.0-3-M — 10 kW</option>
+          <option value="fronius-primo-4" data-mppts="2" data-vmax="600" data-str-max="6" data-power="4000">Fronius Primo 4.0-1 — 4 kW</option>
+          <option value="huawei-8" data-mppts="2" data-vmax="1100" data-str-max="10" data-power="8000">Huawei SUN2000-8KTL-M1 — 8 kW</option>
+          <option value="sma-5" data-mppts="2" data-vmax="1000" data-str-max="9" data-power="5000">SMA Tripower 5.0 — 5 kW</option>
+          <option value="goodwe-6" data-mppts="2" data-vmax="1000" data-str-max="8" data-power="6000">Goodwe GW6000-ES — 6 kW</option>
+        </select>
+
+        <div class="pdp-compat__verdict" id="pdp-compat-verdict" style="background:var(--accent-soft);">
+          <div class="pdp-compat__verdict-icon" id="pdp-compat-icon" style="background:var(--accent-deep);color:var(--accent-ink);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>
+          </div>
+          <div>
+            <div style="font-size:14px;font-weight:500;" id="pdp-compat-title">—</div>
+            <div class="mono" style="font-size:11px;color:var(--ink-soft);margin-top:3px;" id="pdp-compat-sub">—</div>
+          </div>
+        </div>
+
+        <div class="pdp-compat__cells">
+          <div class="pdp-compat__cell">
+            <div class="mono" style="font-size:10px;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.06em;">{{ 'pdp.compat.mppt' | t }}</div>
+            <div class="display" style="font-size:28px;margin-top:4px;line-height:1;" id="pdp-compat-mppts">—</div>
+            <div class="mono" style="font-size:10px;color:var(--ink-mute);margin-top:3px;">{{ 'pdp.compat.independent' | t }}</div>
+          </div>
+          <div class="pdp-compat__cell">
+            <div class="mono" style="font-size:10px;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.06em;">{{ 'pdp.compat.max_modules' | t }}</div>
+            <div class="display" style="font-size:28px;margin-top:4px;line-height:1;" id="pdp-compat-maxmod">—</div>
+            <div class="mono" style="font-size:10px;color:var(--ink-mute);margin-top:3px;" id="pdp-compat-voc-sub">—</div>
+          </div>
+          <div class="pdp-compat__cell">
+            <div class="mono" style="font-size:10px;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.06em;">{{ 'pdp.compat.total_capacity' | t }}</div>
+            <div class="display" style="font-size:28px;margin-top:4px;line-height:1;" id="pdp-compat-total">—</div>
+            <div class="mono" style="font-size:10px;color:var(--ink-mute);margin-top:3px;">{{ 'pdp.compat.modules_theoretical' | t }}</div>
+          </div>
+        </div>
+
+        <div style="margin-top:18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+          <div class="mono" style="font-size:10px;color:var(--ink-mute);">{{ 'pdp.compat.calc_note' | t }}</div>
+          <a href="#datenblatt" class="btn btn-ghost" style="font-size:12px;padding:6px 10px;">
+            {{ 'pdp.compat.full_datasheet' | t }}
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

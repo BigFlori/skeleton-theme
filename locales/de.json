@@ -1,0 +1,142 @@
+{
+  "404": {
+    "title": "404",
+    "not_found": "Seite nicht gefunden.",
+    "back_to_shopping": "Zurück zum Shop"
+  },
+  "blog": {
+    "article_comments": "Kommentare",
+    "article_metadata_html": "{{ date }} von {{ author }}",
+    "comment_form_body": "Kommentar",
+    "comment_form_email": "E-Mail",
+    "comment_form_name": "Name",
+    "comment_form_submit": "Absenden",
+    "comment_form_title": "Kommentar hinzufügen"
+  },
+  "cart": {
+    "checkout": "Zur Kasse",
+    "title": "Warenkorb",
+    "update": "Aktualisieren",
+    "remove": "Entfernen"
+  },
+  "customers": {
+    "login": {
+      "email": "E-Mail",
+      "password": "Passwort",
+      "submit": "Anmelden",
+      "title": "Anmelden"
+    }
+  },
+  "collections": {
+    "title": "Kollektionen"
+  },
+  "gift_card": {
+    "add_to_apple_wallet": "Zu Apple Wallet hinzufügen",
+    "card": "Geschenkkarte",
+    "expired": "Diese Geschenkkarte ist abgelaufen",
+    "expires_on": "Läuft ab am {{ expires_on }}",
+    "use_at_checkout": "Diese Geschenkkarte an der Kasse verwenden"
+  },
+  "password": {
+    "title": "Dieser Shop ist privat",
+    "password": "Passwort",
+    "enter": "Eingeben"
+  },
+  "general": {
+    "header": "Hauptnavigation",
+    "cart": "Warenkorb",
+    "items": "Artikel",
+    "onboarding": {
+      "product_title": "Beispiel-Produkttitel",
+      "product_vendor": "Beispiel-Hersteller"
+    }
+  },
+  "search": {
+    "title": "Suche",
+    "placeholder": "Artikel, Seiten oder Produkte suchen",
+    "submit": "Suchen",
+    "no_results_html": "Keine Ergebnisse für {{ terms }}",
+    "results_for_html": "{{ count }} Ergebnisse für {{ terms }}"
+  },
+  "pdp": {
+    "breadcrumb": {
+      "shop": "Shop",
+      "modules": "Module"
+    },
+    "gallery": {
+      "in_stock": "AUF LAGER",
+      "sold_out": "AUSVERKAUFT",
+      "zoom": "Zoomen",
+      "zoom_label": "Bild vergrößern",
+      "datasheet_title": "Datenblatt & Zertifikate",
+      "datasheet_certs": "PDF · TÜV, IEC 61215, IEC 61730",
+      "download": "Download"
+    },
+    "buy": {
+      "reviews_abbr": "Bew.",
+      "per_piece": "/ Stück · inkl. 0 % USt",
+      "kwp_price": "€ {{ price }} / kWp · Preis-Staffel ab 5 Stück",
+      "add_to_cart": "In den Warenkorb · {{ price }}",
+      "unavailable": "Nicht verfügbar",
+      "check_compat": "Kompatibilität mit meinem Inverter prüfen",
+      "in_stock_label": "Auf Lager",
+      "shipping_days": "Versand in 2–4 Werktagen",
+      "ships_from": "Versand aus AT",
+      "warehouse": "Wiener Neustadt Lager",
+      "warranty": "25 Jahre Garantie",
+      "warranty_sub": "Produkt + Leistung",
+      "returns": "14 Tage Rückgabe",
+      "returns_sub": "Für Neuware · unversehrt",
+      "bulk_title": "Ab 50 Stück: Großhandels­preis anfragen",
+      "bulk_sub": "Antwort binnen 4 Std · Mo–Fr",
+      "contact": "Kontakt →"
+    },
+    "qty": {
+      "label": {
+        "one": "Menge · 1 Modul ({{ kwp }} kWp)",
+        "other": "Menge · {{ count }} Module ({{ kwp }} kWp)"
+      },
+      "unit": "Stk",
+      "discount_badge": "–{{ percent }} % Mengenrabatt aktiv"
+    },
+    "compat": {
+      "eyebrow": "Passt es zusammen?",
+      "heading_pre": "Kompatibilität",
+      "heading_mid": "mit deinem",
+      "heading_em": "Inverter.",
+      "description": "Wähle den Wechselrichter, den du planst — wir rechnen dir Spannung, Strings und Überdimensionierung aus.",
+      "module_values": "Modul-Werte · Vmp {{ vmp }} V · Voc {{ voc }} V · Imp {{ imp }} A · Isc {{ isc }} A",
+      "select_label": "Wechselrichter wählen",
+      "mppt": "MPPT-Tracker",
+      "max_modules": "Max Module / String",
+      "total_capacity": "Gesamtkapazität",
+      "independent": "unabhängig",
+      "modules_theoretical": "Module theoret.",
+      "calc_note": "Rechnung gilt für die häufigste String-Konfiguration",
+      "full_datasheet": "Vollständiges Datenblatt",
+      "perfect": "Perfekte Dimensionierung",
+      "slight_over": "Passt — leichte Überdimensionierung",
+      "under_loaded": "Passt — Inverter nicht ausgelastet",
+      "too_many": "Zu viele Module für diesen Inverter",
+      "summary": "{{ count }} × {{ power }} W = {{ kwp }} kWp · Inverter-AC {{ inverter_kw }} kW · Optimum ≈ {{ optimal }} Module"
+    },
+    "datasheet": {
+      "eyebrow": "Vollständige Daten",
+      "heading_line1": "Alles was",
+      "heading_line2": "auf dem",
+      "heading_em": "Datenblatt steht.",
+      "description": "Keine Marketing-Zahlen. Direkt aus dem offiziellen Hersteller­datenblatt übernommen.",
+      "entries": "Einträge",
+      "section_electrical": "Elektrische Werte (STC)",
+      "section_mechanical": "Mechanische Werte",
+      "section_certificates": "Zertifikate & Normen",
+      "section_environment": "Einsatz & Umweltbedingungen",
+      "downloads": "Downloads",
+      "no_datasheet": "Kein Datenblatt verknüpft. Bitte im Shopify Admin unter Produkt → Metafelder ein Datenblatt zuweisen."
+    },
+    "toast": {
+      "added": "{{ count }} × {{ title }} im Warenkorb",
+      "error_prefix": "Fehler: "
+    }
+  }
+}
