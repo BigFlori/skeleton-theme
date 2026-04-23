@@ -269,6 +269,18 @@
       "headline_italic": "build it",
       "headline_suffix": "yourself.",
       "subtext": "For DIY enthusiasts and experienced planners: all components individually, with real-time stock availability."
+    },
+    "footer": {
+      "tagline": "Independent solar specialist from Wiener Neustadt. Shipping throughout Austria, Bavaria & southern Germany.",
+      "flags_label": "Delivery areas: Austria and Germany",
+      "col_1_title": "Shop",
+      "col_1_links": "Complete packages\nModules\nInverters\nStorage\nWallboxes\nAccessories",
+      "col_2_title": "Service",
+      "col_2_links": "Roof check\nInstallation partners\nFinancing\nGrants AT\nDelivery\nReturns",
+      "col_3_title": "Knowledge",
+      "col_3_links": "Payback calculator\nDIY videos\nTech blog\nGlossary\nDownloads",
+      "col_4_title": "Contact",
+      "col_4_links": "+43 1 234 56 78\nhallo@sonnwerk.at\nMon–Fri 8–18\nWiener Neustadt\nShowroom Vienna"
     }
   }
 }

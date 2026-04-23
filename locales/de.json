@@ -236,7 +236,7 @@
       "usp_3_description": "Auf Module wie Wechselrichter. Wir übernehmen die Abwicklung — nicht du mit einem Hersteller irgendwo in Asien.",
       "usp_4_title": "DIY oder Monteur",
       "usp_4_description": "Montage-Videos für Eigenleistung. Oder wir vermitteln zertifizierte Elektriker aus deinem Bezirk zum Fixpreis.",
-      "eyebrow":"Warum Sonnwerk",
+      "eyebrow": "Warum Sonnwerk",
       "headline": "Kein Hersteller.",
       "headline_italic": "Dein Anwalt.",
       "subtext": "Andere Shops pushen eine Marke, weil sie Margen-Deals haben. Wir sitzen auf deiner Seite des Tisches — und sagen dir auch, wenn das billigere Modul das bessere ist.",
@@ -269,6 +269,18 @@
       "subtext": "Jede Woche ohne Anlage sind etwa € 32 Strom, die du dem Netzbetreiber schenkst. Das muss nicht sein.",
       "cta_primary": "Paket wählen",
       "cta_ghost": "Erst rechnen"
+    },
+    "footer": {
+      "tagline": "Unabhängiger Solar-Fachhandel aus Wiener Neustadt. Versand in ganz Österreich, Bayern & Süddeutschland.",
+      "flags_label": "Liefergebiete: Österreich und Deutschland",
+      "col_1_title": "Shop",
+      "col_1_links": "Komplettpakete\nModule\nWechselrichter\nSpeicher\nWallboxen\nZubehör",
+      "col_2_title": "Service",
+      "col_2_links": "Dach-Prüfung\nMontagepartner\nFinanzierung\nFörderungen AT\nLieferung\nReklamation",
+      "col_3_title": "Wissen",
+      "col_3_links": "Amortisationsrechner\nDIY-Videos\nTechnik-Blog\nGlossar\nDownloads",
+      "col_4_title": "Kontakt",
+      "col_4_links": "+43 1 234 56 78\nhallo@sonnwerk.at\nMo–Fr 8–18 Uhr\nWiener Neustadt\nShowroom Wien"
     }
   }
 }

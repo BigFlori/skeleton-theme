@@ -236,7 +236,7 @@
       "usp_3_description": "Modulokra és inverterekre egyaránt. Mi intézzük a folyamatot — nem te egy shenzeni gyártóval.",
       "usp_4_title": "Barkácsolás vagy szerelő",
       "usp_4_description": "Szerelési videók saját elvégzéshez. Vagy megszervezzük a területedről a hitelesített villanyszerelőket fix áron.",
-      "eyebrow":"Miért Sonnwerk",
+      "eyebrow": "Miért Sonnwerk",
       "headline": "Nincs gyártó.",
       "headline_italic": "Az ügyvéded vagyunk.",
       "subtext": "Más boltok egy márkát tolnak, mert haszonkulcs-megállapodásuk van. Mi a te oldalad mellé ülünk — és akkor is megmondjuk, ha az olcsóbb modul a jobb.",
@@ -269,6 +269,18 @@
       "subtext": "Minden rendszer nélküli hét kb. € 32 villany, amit a hálózatnak ajándékozol. Ez nem kell.",
       "cta_primary": "Csomag választása",
       "cta_ghost": "Előbb számold ki"
+    },
+    "footer": {
+      "tagline": "Független napelemes szakkereskedő Bécsújhelyből. Szállítás egész Ausztriában, Bajorországban és Dél-Németországban.",
+      "flags_label": "Szállítási területek: Ausztria és Németország",
+      "col_1_title": "Bolt",
+      "col_1_links": "Komplett csomagok\nModulok\nInverterek\nTárolók\nWallboxok\nKiegészítők",
+      "col_2_title": "Szerviz",
+      "col_2_links": "Tetőellenőrzés\nSzerelőpartnerek\nFinanszírozás\nTámogatások AT\nSzállítás\nReklamáció",
+      "col_3_title": "Tudástár",
+      "col_3_links": "Megtérülésszámító\nBarkácsoló videók\nTechnika blog\nSzótár\nLetöltések",
+      "col_4_title": "Kapcsolat",
+      "col_4_links": "+43 1 234 56 78\nhallo@sonnwerk.at\nH–P 8–18 óra\nBécsújhely\nShowroom Bécs"
     }
   }
 }

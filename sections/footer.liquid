@@ -15,8 +15,8 @@
           </div>
           <span class="display sw-footer__logo-name">{{ shop.name }}</span>
         </a>
-        <p class="sw-footer__tagline">{{ section.settings.tagline }}</p>
-        <div class="sw-footer__flags" aria-label="Liefergebiete: Österreich und Deutschland">
+        <p class="sw-footer__tagline">{{ 'sections.footer.tagline' | t }}</p>
+        <div class="sw-footer__flags" aria-label="{{ 'sections.footer.flags_label' | t }}">
           <span class="sw-footer__flag" title="Österreich">🇦🇹</span>
           <span class="sw-footer__flag" title="Deutschland">🇩🇪</span>
         </div>
@@ -25,17 +25,18 @@
       {%- comment -%} Link groups {%- endcomment -%}
       {%- for block in section.blocks -%}
         {%- if block.type == 'link_group' -%}
+          {%- assign col_key = 'sections.footer.col_' | append: forloop.index -%}
           <div class="sw-footer__col" {{ block.shopify_attributes }}>
-            <div class="mono sw-footer__col-title">{{ block.settings.title }}</div>
+            <div class="mono sw-footer__col-title">{{ col_key | append: '_title' | t }}</div>
             {%- if block.settings.menu != blank -%}
               <ul class="sw-footer__links">
                 {%- for link in block.settings.menu.links -%}
                   <li><a href="{{ link.url }}" class="sw-footer__link">{{ link.title }}</a></li>
                 {%- endfor -%}
               </ul>
-            {%- elsif block.settings.custom_links != blank -%}
+            {%- else -%}
               <ul class="sw-footer__links">
-                {%- assign rows = block.settings.custom_links | newline_to_br | split: '<br />' -%}
+                {%- assign rows = col_key | append: '_links' | t | newline_to_br | split: '<br />' -%}
                 {%- for row in rows -%}
                   {%- assign row = row | strip -%}
                   {%- if row != blank -%}
