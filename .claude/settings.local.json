@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -c ' *)",
+      "Bash(powershell -Command ' *)",
+      "Bash(powershell -File \"c:/Users/Thurneer/Documents/Shopify/solar-theme/fix_de_locale.ps1\")",
+      "Bash(powershell -File \"c:/Users/Thurneer/Documents/Shopify/solar-theme/check_de_locale.ps1\")",
+      "Bash(node -e ' *)",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(list\\(d.keys\\(\\)\\), indent=2\\)\\)\")"
+    ]
+  }
+}

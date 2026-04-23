@@ -138,5 +138,102 @@
       "added": "{{ count }} × {{ title }} added to cart",
       "error_prefix": "Error: "
     }
+  },
+  "sections": {
+    "hero": {
+      "eyebrow": "Austria · KWp Marketplace",
+      "headline": "The best solar for your",
+      "headline_italic": "own roof",
+      "subcopy": "We don't sell a brand — we sell the right one. Complete packages from JA Solar, Longi, Fronius, Huawei and SMA. Shipped from Austria, delivered in 3–5 business days.",
+      "cta_primary": "Secure your solar bundle",
+      "cta_ghost": "Calculate payback",
+      "chip_label": "Package „Family M“",
+      "chip_detail": "10.2 kWp · 24 Modules · Fronius Symo",
+      "chip_price": "€ 8,490 — available now",
+      "seal_text": "Ships from Austria",
+      "metric_systems_label": "Systems installed",
+      "metric_systems_sub": "since 2019",
+      "metric_shipping_num": "3–5 Days",
+      "metric_shipping_label": "Ships from",
+      "metric_warranty_num": "25 Years",
+      "metric_warranty_label": "Product warranty",
+      "metric_warranty_sub": "on modules"
+    },
+    "trust_bar": {
+      "label": "Authorized\nPartner of"
+    },
+    "featured_packages": {
+      "eyebrow": "01 · Complete Packages",
+      "headline_1": "Four packages.",
+      "headline_italic": "One click",
+      "headline_2": "to your roof.",
+      "add_to_cart": "Add to cart",
+      "to_configurator": "To configurator",
+      "description": "Curated by our engineers — modules, inverters and mounting systems matched together. No guesswork, no wrong purchase. All prices incl. 0 % VAT (zero tax rate Austria).",
+      "configurator_text": "Nothing fits perfectly? Start the configurator.",
+      "configurator_sub": "4 steps to your own package — with installation or DIY"
+    },
+    "how_it_works": {
+      "eyebrow": "02 · How it works",
+      "headline": "From click to your",
+      "headline_italic": "first ray of sunshine",
+      "description": "You don't need to be an electrician. We've made the process so simple that most customers have their system up and running within two weeks."
+    },
+    "calculator": {
+      "eyebrow": "03 · Payback calculator",
+      "headline": "What does solar bring to",
+      "headline_italic": "your roof",
+      "description": "Three sliders. No email, no call. Just an honest picture of the numbers.",
+      "consumption_label": "Annual electricity consumption",
+      "consumption_unit": "kWh / year",
+      "consumption_hint": "Avg. 4-person household: 4,500 kWh",
+      "roof_label": "Usable roof area",
+      "roof_unit": "m²",
+      "roof_hint": "South / East / West facing — no shading",
+      "extra_label": "Additional consumption",
+      "toggle_ev": "EV",
+      "toggle_ev_sub": "+3,000 kWh",
+      "toggle_hp": "Heat pump",
+      "toggle_hp_sub": "+4,000 kWh",
+      "cta": "Show matching package",
+      "your_system": "Your system",
+      "recommended_size": "Recommended system size",
+      "annual_yield": "Annual yield",
+      "your_savings": "Your savings",
+      "per_year": "per year",
+      "system_cost": "System price (approx.)",
+      "payback": "Payback",
+      "saved_per_year": "saved / year",
+      "vat_note": "0 % VAT · Zero tax rate in Austria up to 20 kWp"
+    },
+    "why_us": {
+      "eyebrow": "Why Sonnwerk",
+      "headline": "No manufacturer.",
+      "headline_italic": "Your advocate.",
+      "subtext": "Other shops push a brand because they have margin deals. We sit on your side of the table — and we'll tell you when the cheaper module is the better one."
+    },
+    "faq": {
+      "eyebrow": "Frequently asked questions",
+      "headline_line1": "Honest",
+      "headline_line2": "Answers.",
+      "headline_italic": "No sales pitch.",
+      "subtext": "Something not covered? Just call us — a technician, not a call centre."
+    },
+    "final_cta": {
+      "eyebrow": "One last question",
+      "headline": "What are\nyou\nwaiting for?",
+      "subtext": "Every week without a system is about € 32 in electricity you're giving to the grid operator. It doesn't have to be that way.",
+      "cta_primary": "Choose a package",
+      "cta_ghost": "Calculate first"
+    },
+    "category_grid": {
+      "models": "models",
+      "from_price": "from {{ price }}",
+      "eyebrow": "Individual components",
+      "headline": "Or",
+      "headline_italic": "build it",
+      "headline_suffix": "yourself.",
+      "subtext": "For DIY enthusiasts and experienced planners: all components individually, with real-time stock availability."
+    }
   }
 }

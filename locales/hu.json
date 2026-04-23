@@ -138,5 +138,102 @@
       "added": "{{ count }} × {{ title }} a kosárban",
       "error_prefix": "Hiba: "
     }
+  },
+  "sections": {
+    "hero": {
+      "eyebrow": "Ausztria · KWp piacTér",
+      "headline": "A legjobb napelem a",
+      "headline_italic": "saját tetőre",
+      "subcopy": "Nem márkát adunk el — a megfelelőt adjuk. Teljes csomagok JA Solar, Longi, Fronius, Huawei és SMA. Szállítás Ausztriából, 3–5 munkanapon belül.",
+      "cta_primary": "Solar csomag biztosítása",
+      "cta_ghost": "Megtérülés számítása",
+      "chip_label": "Csomag „Família M“",
+      "chip_detail": "10,2 kWp · 24 modul · Fronius Symo",
+      "chip_price": "€ 8 490 — azonnal elérhető",
+      "metric_shipping_num": "3–5 nap",
+      "metric_warranty_num": "25 év",
+      "seal_text": "Szállítás Ausztriából",
+      "metric_systems_label": "Telepített rendszer",
+      "metric_systems_sub": "2019 óta",
+      "metric_shipping_label": "Szállítás innen",
+      "metric_warranty_label": "Termékgarancia",
+      "metric_warranty_sub": "modulokra"
+    },
+    "trust_bar": {
+      "label": "Engedélyezett\npartner"
+    },
+    "featured_packages": {
+      "eyebrow": "01 · Komplettpaketek",
+      "headline_1": "Négy csomag.",
+      "headline_italic": "Egy kattintás",
+      "headline_2": "a tetőre.",
+      "add_to_cart": "Kosárba",
+      "to_configurator": "A konfigurátorhoz",
+      "description": "Mérnökeink által válogatva — modulok, inverterek és tartószerkezetek összehangolva. Nincs találgatás, nincs rossz vásárlás. Minden ár 0% ÁFÁ-val (Ausztriában nullaadó-kulcs).",
+      "configurator_text": "Semmi sem illik tökéletesen? Indítsd el a konfigurátort.",
+      "configurator_sub": "4 lépés a saját csomagodhoz — szerelővel vagy barkácsolva"
+    },
+    "how_it_works": {
+      "eyebrow": "02 · Ilyen egyszerű",
+      "headline": "A kattintástól az első",
+      "headline_italic": "napsugárig",
+      "description": "Nem kell villamosmérnöknek lenned. A folyamatot annyira egyszerűvé tettük, hogy a legtöbb vásárló két héten belül üzembe helyezi a rendszerét."
+    },
+    "calculator": {
+      "eyebrow": "03 · Megtérülésszámító",
+      "consumption_label": "Éves áramfogyasztás",
+      "consumption_unit": "kWh / év",
+      "consumption_hint": "Átl. 4 fős háztartás: 4 500 kWh",
+      "roof_label": "Hasznosítható tetőterület",
+      "roof_unit": "m²",
+      "roof_hint": "Dél / Kelet / Nyugat néző — árnyék nélkül",
+      "extra_label": "Többletfogyasztás",
+      "toggle_ev": "Elektromos autó",
+      "toggle_ev_sub": "+3 000 kWh",
+      "toggle_hp": "Hőszivattyú",
+      "toggle_hp_sub": "+4 000 kWh",
+      "cta": "Megfelelő csomag mutatása",
+      "your_system": "A te rendszered",
+      "recommended_size": "Javasolt rendszerméret",
+      "annual_yield": "Éves termelés",
+      "your_savings": "A te megtakarításod",
+      "per_year": "évente",
+      "system_cost": "Rendszer ára (kb.)",
+      "payback": "Megtérülés",
+      "saved_per_year": "megtakarítva / év",
+      "vat_note": "0 % ÁFA · Ausztriában 20 kWp-ig nullaadó-kulcs",
+      "headline": "Mit hoz a napenergia a",
+      "headline_italic": "te tetődre",
+      "description": "Három csússzka. Nem kell e-mail, nincs telefonálás. Csak egy őszinte kép a számokról."
+    },
+    "category_grid": {
+      "models": "modell",
+      "from_price": "{{ price }}-tól",
+      "eyebrow": "Egyedi komponensek",
+      "headline": "Vagy",
+      "headline_italic": "építsd össze",
+      "headline_suffix": "saját magad.",
+      "subtext": "Saját szerelőknek és tapasztalt tervezőknek: minden komponens külön, valós idejű készletinformációkkal."
+    },
+    "why_us": {
+      "eyebrow": "Miért Sonnwerk",
+      "headline": "Nincs gyártó.",
+      "headline_italic": "Az ügyvéded vagyunk.",
+      "subtext": "Más boltok egy márkát tolnak, mert haszonkulcs-megállapodásuk van. Mi a te oldalad mellé ülünk — és akkor is megmondjuk, ha az olcsóbb modul a jobb."
+    },
+    "faq": {
+      "eyebrow": "Gyakran feltétett kérdések",
+      "headline_line1": "Őszinte",
+      "headline_line2": "Válaszok.",
+      "headline_italic": "Nincs értékesítési fogás.",
+      "subtext": "Nem találod, amit keresel? Csak hívj minket — technikus válaszol, nem call center."
+    },
+    "final_cta": {
+      "eyebrow": "Egy utolsó kérdés",
+      "headline": "Mire\nvársz\nmég?",
+      "subtext": "Minden rendszer nélküli hét kb. € 32 villany, amit a hálózatnak ajándékozol. Ez nem kell.",
+      "cta_primary": "Csomag választása",
+      "cta_ghost": "Előbb számold ki"
+    }
   }
 }

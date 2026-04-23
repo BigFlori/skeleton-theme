@@ -1,16 +1,16 @@
 {%- liquid
   assign layout = section.settings.layout
-  assign eyebrow = section.settings.eyebrow
-  assign headline = section.settings.headline
-  assign headline_italic = section.settings.headline_italic
-  assign subcopy = section.settings.subcopy
-  assign cta_primary_text = section.settings.cta_primary_text
+  assign eyebrow = 'sections.hero.eyebrow' | t
+  assign headline = 'sections.hero.headline' | t
+  assign headline_italic = 'sections.hero.headline_italic' | t
+  assign subcopy = 'sections.hero.subcopy' | t
+  assign cta_primary_text = 'sections.hero.cta_primary' | t
   assign cta_primary_url = section.settings.cta_primary_url
-  assign cta_ghost_text = section.settings.cta_ghost_text
+  assign cta_ghost_text = 'sections.hero.cta_ghost' | t
   assign cta_ghost_url = section.settings.cta_ghost_url
-  assign chip_label = section.settings.chip_label
-  assign chip_detail = section.settings.chip_detail
-  assign chip_price = section.settings.chip_price
+  assign chip_label = 'sections.hero.chip_label' | t
+  assign chip_detail = 'sections.hero.chip_detail' | t
+  assign chip_price = 'sections.hero.chip_price' | t
 -%}
 
 <section id="top" class="sw-hero sw-hero--{{ layout }}">
@@ -256,38 +256,8 @@
       "default": "split"
     },
     {
-      "type": "text",
-      "id": "eyebrow",
-      "label": "Eyebrow text",
-      "default": "Austria · KWp-Marktplatz"
-    },
-    {
-      "type": "text",
-      "id": "headline",
-      "label": "Headline (plain part)",
-      "default": "Die beste Sonne fürs"
-    },
-    {
-      "type": "text",
-      "id": "headline_italic",
-      "label": "Headline (italic accent word)",
-      "default": "eigene Dach"
-    },
-    {
-      "type": "textarea",
-      "id": "subcopy",
-      "label": "Sub-copy",
-      "default": "Wir verkaufen keine Marke — wir verkaufen die richtige. Komplettpakete von JA Solar, Longi, Fronius, Huawei und SMA. Versand aus Österreich, Lieferung in 3–5 Werktagen."
-    },
-    {
       "type": "header",
       "content": "Primary CTA"
-    },
-    {
-      "type": "text",
-      "id": "cta_primary_text",
-      "label": "Button text",
-      "default": "Solar-Bundle sichern"
     },
     {
       "type": "url",
@@ -299,37 +269,9 @@
       "content": "Ghost CTA"
     },
     {
-      "type": "text",
-      "id": "cta_ghost_text",
-      "label": "Button text",
-      "default": "Amortisation berechnen"
-    },
-    {
       "type": "url",
       "id": "cta_ghost_url",
       "label": "Button URL"
-    },
-    {
-      "type": "header",
-      "content": "Floating spec chip"
-    },
-    {
-      "type": "text",
-      "id": "chip_label",
-      "label": "Chip label (mono)",
-      "default": "Paket \u201EFamilie M\u201D"
-    },
-    {
-      "type": "text",
-      "id": "chip_detail",
-      "label": "Chip detail line",
-      "default": "10,2 kWp · 24 Module · Fronius Symo"
-    },
-    {
-      "type": "text",
-      "id": "chip_price",
-      "label": "Chip price line",
-      "default": "€ 8.490 — sofort verfügbar"
     }
   ],
   "presets": [

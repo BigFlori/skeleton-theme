@@ -57,14 +57,15 @@
               <div class="sw-catgrid__meta-row">
                 <span class="mono sw-catgrid__count">
                   {%- if block.settings.collection != blank -%}
-                    {{ block.settings.collection.products_count }} Modelle
+                    {{ block.settings.collection.products_count }} {{ 'sections.category_grid.models' | t }}
                   {%- else -%}
                     {{ block.settings.count_label }}
                   {%- endif -%}
                 </span>
                 <span class="mono sw-catgrid__from">
                   {%- if block.settings.collection != blank and block.settings.collection.products.first != blank -%}
-                    ab {{ block.settings.collection.products.first.price | money }}
+                    {%- assign first_price = block.settings.collection.products.first.price | money -%}
+                    {{ 'sections.category_grid.from_price' | t: price: first_price }}
                   {%- else -%}
                     {{ block.settings.from_label }}
                   {%- endif -%}
@@ -234,31 +235,31 @@
       "type": "text",
       "id": "eyebrow",
       "label": "Eyebrow",
-      "default": "Einzelkomponenten"
+      "default": "Individual components"
     },
     {
       "type": "text",
       "id": "headline",
       "label": "Headline",
-      "default": "Oder"
+      "default": "Or"
     },
     {
       "type": "text",
       "id": "headline_italic",
       "label": "Headline italic part",
-      "default": "selbst"
+      "default": "build"
     },
     {
       "type": "text",
       "id": "headline_suffix",
       "label": "Headline suffix (after line break)",
-      "default": "zusammenstellen."
+      "default": "your own."
     },
     {
       "type": "textarea",
       "id": "subtext",
       "label": "Subtext",
-      "default": "Für Selbstmonteure und erfahrene Planer: alle Komponenten einzeln, mit Lagerbestand in Echtzeit."
+      "default": "For self-installers and experienced planners: all components individually, with real-time stock levels."
     }
   ],
   "blocks": [
@@ -288,19 +289,19 @@
           "type": "text",
           "id": "name",
           "label": "Category name",
-          "default": "Module"
+          "default": "Modules"
         },
         {
           "type": "text",
           "id": "count_label",
           "label": "Count label (fallback if no collection)",
-          "default": "42 Modelle"
+          "default": "42 models"
         },
         {
           "type": "text",
           "id": "from_label",
           "label": "From price label (fallback if no collection)",
-          "default": "ab € 89"
+          "default": "from € 89"
         },
         {
           "type": "text",
@@ -324,9 +325,9 @@
           "type": "category",
           "settings": {
             "icon": "panel",
-            "name": "Module",
-            "count_label": "42 Modelle",
-            "from_label": "ab \u20AC 89",
+            "name": "Modules",
+            "count_label": "42 models",
+            "from_label": "from \u20AC 89",
             "brands": "JA \u00B7 Longi \u00B7 Trina \u00B7 Meyer Burger"
           }
         },
@@ -334,9 +335,9 @@
           "type": "category",
           "settings": {
             "icon": "inverter",
-            "name": "Wechselrichter",
-            "count_label": "28 Modelle",
-            "from_label": "ab \u20AC 690",
+            "name": "Inverters",
+            "count_label": "28 models",
+            "from_label": "from \u20AC 690",
             "brands": "Fronius \u00B7 Huawei \u00B7 SMA \u00B7 Goodwe"
           }
         },
@@ -344,9 +345,9 @@
           "type": "category",
           "settings": {
             "icon": "battery",
-            "name": "Speicher",
-            "count_label": "18 Modelle",
-            "from_label": "ab \u20AC 2.490",
+            "name": "Storage",
+            "count_label": "18 models",
+            "from_label": "from \u20AC 2,490",
             "brands": "BYD \u00B7 Huawei \u00B7 Fronius \u00B7 Pylontech"
           }
         },
@@ -354,9 +355,9 @@
           "type": "category",
           "settings": {
             "icon": "plug",
-            "name": "Wallbox & Zubeh\u00F6r",
-            "count_label": "60+ Artikel",
-            "from_label": "ab \u20AC 49",
+            "name": "Wallbox & Accessories",
+            "count_label": "60+ items",
+            "from_label": "from \u20AC 49",
             "brands": "go-e \u00B7 KEBA \u00B7 Wallbe \u00B7 Victron"
           }
         }

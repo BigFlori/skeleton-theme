@@ -4,15 +4,15 @@
       "type": "hero",
       "settings": {
         "layout": "split",
-        "eyebrow": "Austria \u00b7 KWp-Marktplatz",
-        "headline": "Die beste Sonne f\u00fcrs",
-        "headline_italic": "eigene Dach",
-        "subcopy": "Wir verkaufen keine Marke \u2014 wir verkaufen die richtige. Komplettpakete von JA Solar, Longi, Fronius, Huawei und SMA. Versand aus \u00d6sterreich, Lieferung in 3\u20135 Werktagen.",
-        "cta_primary_text": "Solar-Bundle sichern",
-        "cta_ghost_text": "Amortisation berechnen",
-        "chip_label": "Paket \u201EFamilie M\u201D",
-        "chip_detail": "10,2 kWp \u00b7 24 Module \u00b7 Fronius Symo",
-        "chip_price": "\u20ac 8.490 \u2014 sofort verf\u00fcgbar"
+        "eyebrow": "Austria \u00b7 KWp Marketplace",
+        "headline": "The best solar for your",
+        "headline_italic": "own roof",
+        "subcopy": "We don\u2019t sell a brand \u2014 we sell the right one. Complete packages from JA Solar, Longi, Fronius, Huawei and SMA. Shipped from Austria, delivered in 3\u20135 business days.",
+        "cta_primary_text": "Secure your solar bundle",
+        "cta_ghost_text": "Calculate payback",
+        "chip_label": "Package \u201EFamily M\u201C",
+        "chip_detail": "10.2 kWp \u00b7 24 Modules \u00b7 Fronius Symo",
+        "chip_price": "\u20ac 8,490 \u2014 available now"
       }
     },
     "trust-bar": {
@@ -33,9 +33,9 @@
     "featured-packages": {
       "type": "featured-packages",
       "settings": {
-        "description": "Von unseren Technikern kuratiert \u2014 Module, Wechselrichter und Montagesystem aufeinander abgestimmt. Kein R\u00e4tselraten, kein Fehlkauf. Alle Preise inkl. 0\u00a0% USt. (Nullsteuersatz \u00d6sterreich).",
-        "configurator_text": "Passt nichts perfekt? Konfigurator starten.",
-        "configurator_sub": "In 4 Schritten zum eigenen Paket \u2014 mit Montage oder DIY"
+        "description": "Curated by our engineers \u2014 modules, inverters and mounting systems matched together. No guesswork, no wrong purchase. All prices incl. 0\u00a0% VAT (zero tax rate Austria).",
+        "configurator_text": "Nothing fits perfectly? Start the configurator.",
+        "configurator_sub": "4 steps to your own package \u2014 with installation or DIY"
       }
     },
     "how-it-works": {
@@ -45,52 +45,52 @@
           "type": "step",
           "settings": {
             "icon": "panel",
-            "time": "~5 Min",
-            "title": "Paket w\u00e4hlen oder konfigurieren",
-            "description": "Starte mit einem fertigen Paket oder stelle dir dein System selbst zusammen. Unsere Techniker pr\u00fcfen kostenlos."
+            "time": "~5 min",
+            "title": "Choose or configure a package",
+            "description": "Start with a ready-made package or build your own system. Our engineers review it for free."
           }
         },
         "step-2": {
           "type": "step",
           "settings": {
             "icon": "shield",
-            "time": "< 24 Std",
-            "title": "Kostenlose Dach-Pr\u00fcfung",
-            "description": "Foto & Adresse hochladen \u2014 wir rechnen Neigung, Verschattung und Ertrag innerhalb von 24 Stunden."
+            "time": "< 24 hrs",
+            "title": "Free roof check",
+            "description": "Upload photo & address \u2014 we calculate tilt, shading and yield within 24 hours."
           }
         },
         "step-3": {
           "type": "step",
           "settings": {
             "icon": "truck",
-            "time": "3\u20135 Tage",
-            "title": "Lieferung aus Wr. Neustadt",
-            "description": "Versand innerhalb \u00d6sterreichs in 3\u20135 Werktagen. DE-Lieferung auf Anfrage. Palette direkt vor die T\u00fcr."
+            "time": "3\u20135 days",
+            "title": "Delivery from Wr. Neustadt",
+            "description": "Shipping within Austria in 3\u20135 business days. Germany delivery on request. Pallet delivered right to your door."
           }
         },
         "step-4": {
           "type": "step",
           "settings": {
             "icon": "tools",
-            "time": "1\u20132 Tage",
-            "title": "DIY oder Partnermontage",
-            "description": "Selbst anschlie\u00dfen mit unserem Videoguide \u2014 oder wir vermitteln zertifizierte Monteure in deiner Region."
+            "time": "1\u20132 days",
+            "title": "DIY or partner installation",
+            "description": "Connect it yourself with our video guide \u2014 or we arrange certified installers in your area."
           }
         }
       },
       "block_order": ["step-1", "step-2", "step-3", "step-4"],
       "settings": {
-        "headline": "Vom Klick bis zum",
-        "headline_italic": "ersten Sonnenstrahl",
-        "description": "Du musst kein Elektriker sein. Wir haben den Prozess so simpel gemacht, dass die meisten Kund*innen ihr System innerhalb von zwei Wochen am Netz haben."
+        "headline": "From click to your",
+        "headline_italic": "first ray of sunshine",
+        "description": "You don\u2019t need to be an electrician. We\u2019ve made the process so simple that most customers have their system up and running within two weeks."
       }
     },
     "calculator": {
       "type": "calculator",
       "settings": {
-        "headline": "Was bringt Solar auf",
-        "headline_italic": "deinem Dach",
-        "description": "Drei Schieberegler. Keine E-Mail, kein Anruf. Einfach ein ehrliches Bild der Zahlen."
+        "headline": "What does solar bring to",
+        "headline_italic": "your roof",
+        "description": "Three sliders. No email, no call. Just an honest picture of the numbers."
       }
     },
     "why-us": {
@@ -100,37 +100,45 @@
           "type": "usp",
           "settings": {
             "icon": "leaf",
-            "title": "Marken\u00ADunabh\u00E4ngig",
-            "description": "Wir sind an keinen Hersteller gebunden \u2014 wir empfehlen das, was f\u00FCr dein Dach wirklich passt. 8 Wechselrichter-Marken im Lager."
+            "title": "Brand-independent",
+            "description": "We\u2019re not tied to any manufacturer \u2014 we recommend what really fits your roof. 8 inverter brands in stock."
           }
         },
         "usp-2": {
           "type": "usp",
           "settings": {
             "icon": "truck",
-            "title": "Versand aus \u00D6sterreich",
-            "description": "Zentrallager in Wiener Neustadt. Kein Zoll, keine 6-Wochen-Container-Lotterie. Paletten in 3\u20135 Werktagen bei dir."
+            "title": "Ships from Austria",
+            "description": "Central warehouse in Wiener Neustadt. No customs, no 6-week container lottery. Pallets at your door in 3\u20135 business days."
           }
         },
         "usp-3": {
           "type": "usp",
           "settings": {
             "icon": "shield",
-            "title": "25 Jahre Garantie",
-            "description": "Auf Module wie Wechselrichter. Wir \u00FCbernehmen die Abwicklung \u2014 nicht du mit einem Hersteller in Shenzhen."
+            "title": "25-year warranty",
+            "description": "On modules and inverters. We handle the process \u2014 not you with a manufacturer in Shenzhen."
           }
         },
         "usp-4": {
           "type": "usp",
           "settings": {
             "icon": "tools",
-            "title": "DIY oder Monteur",
-            "description": "Montage-Videos f\u00FCr Eigenleistung. Oder wir vermitteln zertifizierte Elektriker aus deinem Bezirk zum Fixpreis."
+            "title": "DIY or installer",
+            "description": "Installation videos for self-assembly. Or we arrange certified electricians from your area at a fixed price."
           }
         }
       },
       "block_order": ["usp-1", "usp-2", "usp-3", "usp-4"],
-      "settings": {}
+      "settings": {
+        "eyebrow": "Why Sonnwerk",
+        "headline": "No manufacturer.",
+        "headline_italic": "Your advocate.",
+        "subtext": "Other shops push a brand because they have margin deals. We sit on your side of the table \u2014 and we\u2019ll tell you when the cheaper module is the better one.",
+        "review_quote": "After three quotes, they were the only ones who advised me against getting the bigger system. That built trust.",
+        "reviewer_name": "Martin H.",
+        "reviewer_meta": "Single-family home \u00b7 9.6 kWp \u00b7 Graz"
+      }
     },
     "category-grid": {
       "type": "category-grid",
@@ -139,40 +147,40 @@
           "type": "category",
           "settings": {
             "icon": "panel",
-            "name": "Module",
-            "count_label": "42 Modelle",
-            "from_label": "ab \u20AC 89",
-            "brands": "JA \u00B7 Longi \u00B7 Trina \u00B7 Meyer Burger"
+            "name": "Modules",
+            "count_label": "42 models",
+            "from_label": "from \u20ac 89",
+            "brands": "JA \u00b7 Longi \u00b7 Trina \u00b7 Meyer Burger"
           }
         },
         "cat-2": {
           "type": "category",
           "settings": {
             "icon": "inverter",
-            "name": "Wechselrichter",
-            "count_label": "28 Modelle",
-            "from_label": "ab \u20AC 690",
-            "brands": "Fronius \u00B7 Huawei \u00B7 SMA \u00B7 Goodwe"
+            "name": "Inverters",
+            "count_label": "28 models",
+            "from_label": "from \u20ac 690",
+            "brands": "Fronius \u00b7 Huawei \u00b7 SMA \u00b7 Goodwe"
           }
         },
         "cat-3": {
           "type": "category",
           "settings": {
             "icon": "battery",
-            "name": "Speicher",
-            "count_label": "18 Modelle",
-            "from_label": "ab \u20AC 2.490",
-            "brands": "BYD \u00B7 Huawei \u00B7 Fronius \u00B7 Pylontech"
+            "name": "Storage",
+            "count_label": "18 models",
+            "from_label": "from \u20ac 2,490",
+            "brands": "BYD \u00b7 Huawei \u00b7 Fronius \u00b7 Pylontech"
           }
         },
         "cat-4": {
           "type": "category",
           "settings": {
             "icon": "plug",
-            "name": "Wallbox & Zubeh\u00F6r",
-            "count_label": "60+ Artikel",
-            "from_label": "ab \u20AC 49",
-            "brands": "go-e \u00B7 KEBA \u00B7 Wallbe \u00B7 Victron"
+            "name": "Wallbox & Accessories",
+            "count_label": "60+ items",
+            "from_label": "from \u20ac 49",
+            "brands": "go-e \u00b7 KEBA \u00b7 Wallbe \u00b7 Victron"
           }
         }
       },
@@ -185,52 +193,65 @@
         "faq-1": {
           "type": "item",
           "settings": {
-            "question": "Lohnt sich eine PV-Anlage bei den aktuellen Strompreisen \u00FCberhaupt noch?",
-            "answer": "<p>Ja \u2014 und zwar deutlicher als je zuvor. Die Strompreise in \u00D6sterreich liegen auch nach dem Peak 2023 bei durchschnittlich 34 Cent/kWh f\u00FCr Haushalte. Bei einem typischen 10-kWp-System mit 60\u00A0% Eigenverbrauch amortisiert sich die Anlage nach 6\u20138 Jahren. Der Nullsteuersatz (0\u00A0% USt bis 20\u00A0kWp) verk\u00FCrzt das zus\u00E4tzlich.</p>"
+            "question": "Is a PV system still worth it at current electricity prices?",
+            "answer": "<p>Yes \u2014 more clearly than ever. Electricity prices in Austria remain at an average of 34 cents/kWh for households even after the 2023 peak. For a typical 10 kWp system with 60\u00a0% self-consumption, the system pays for itself in 6\u20138 years. The zero VAT rate (0\u00a0% up to 20\u00a0kWp) shortens that further.</p>"
           }
         },
         "faq-2": {
           "type": "item",
           "settings": {
-            "question": "Ich verstehe die Technik nicht. Kann ich trotzdem bestellen?",
-            "answer": "<p>Genau daf\u00FCr sind unsere Komplettpakete da. Module, Wechselrichter, Montagesystem und Kabel sind vorab aufeinander abgestimmt \u2014 du musst nichts berechnen.</p>"
+            "question": "I don\u2019t understand the technology. Can I still order?",
+            "answer": "<p>That\u2019s exactly what our complete packages are for. Modules, inverters, mounting system and cables are pre-matched \u2014 you don\u2019t need to calculate anything.</p>"
           }
         },
         "faq-3": {
           "type": "item",
           "settings": {
-            "question": "Was passiert, wenn in 8 Jahren ein Wechselrichter ausf\u00E4llt?",
-            "answer": "<p>Dann wickeln wir die Garantie f\u00FCr dich ab. Wir haben 25 Jahre Produktgarantie auf Module und 10\u201312 Jahre auf Wechselrichter (verl\u00E4ngerbar auf 20).</p>"
+            "question": "What happens if an inverter fails in 8 years?",
+            "answer": "<p>We handle the warranty for you. We offer 25-year product warranty on modules and 10\u201312 years on inverters (extendable to 20).</p>"
           }
         },
         "faq-4": {
           "type": "item",
           "settings": {
-            "question": "Liefert ihr nach Deutschland?",
-            "answer": "<p>Ja, Lieferung nach Deutschland ist m\u00F6glich \u2014 allerdings mit 3\u20135 Werktagen zus\u00E4tzlicher Transitzeit und DE-Umsatzsteuersatz.</p>"
+            "question": "Do you deliver to Germany?",
+            "answer": "<p>Yes, delivery to Germany is possible \u2014 with an additional 3\u20135 business days transit time and German VAT rate.</p>"
           }
         },
         "faq-5": {
           "type": "item",
           "settings": {
-            "question": "Was brauche ich von meinem Netzbetreiber?",
-            "answer": "<p>Eine Anmeldung der Erzeugungsanlage \u2014 das machst entweder du selbst oder wir \u00FCbernehmen es f\u00FCr \u20AC\u00A0190 pauschal.</p>"
+            "question": "What do I need from my grid operator?",
+            "answer": "<p>A registration of the generation system \u2014 either you do it yourself or we handle it for a flat fee of \u20ac\u00a0190.</p>"
           }
         },
         "faq-6": {
           "type": "item",
           "settings": {
-            "question": "Kann ich die Module selbst montieren?",
-            "answer": "<p>Die mechanische Montage ja. Den elektrischen Anschluss muss eine konzessionierte Elektrofachkraft durchf\u00FChren. Wir vermitteln Elektriker ab \u20AC\u00A0490.</p>"
+            "question": "Can I install the modules myself?",
+            "answer": "<p>The mechanical installation yes. The electrical connection must be carried out by a licensed electrician. We arrange electricians from \u20ac\u00a0490.</p>"
           }
         }
       },
       "block_order": ["faq-1", "faq-2", "faq-3", "faq-4", "faq-5", "faq-6"],
-      "settings": {}
+      "settings": {
+        "eyebrow": "Frequently asked questions",
+        "headline_line1": "Honest",
+        "headline_line2": "Answers.",
+        "headline_italic": "No sales pitch.",
+        "subtext": "Something not covered? Just call us \u2014 a technician, not a call centre.",
+        "phone": "+43 1 234 56 78"
+      }
     },
     "final-cta": {
       "type": "final-cta",
-      "settings": {}
+      "settings": {
+        "eyebrow": "One last question",
+        "headline": "What are\nyou\nwaiting for?",
+        "subtext": "Every week without a system is about \u20ac\u00a032 in electricity you\u2019re giving to the grid operator. It doesn\u2019t have to be that way.",
+        "cta_primary_text": "Choose a package",
+        "cta_ghost_text": "Calculate first"
+      }
     }
   },
   "order": [

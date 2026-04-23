@@ -2,12 +2,12 @@
   <div class="container">
 
     <div class="sw-calc__intro">
-      <span class="eyebrow">03 &middot; Amortisationsrechner</span>
+      <span class="eyebrow">{{ 'sections.calculator.eyebrow' | t }}</span>
       <h2 class="display sw-calc__headline">
-        {{ section.settings.headline }}<br>
-        <em class="sw-calc__italic">{{ section.settings.headline_italic }}</em>?
+        {{ 'sections.calculator.headline' | t }}<br>
+        <em class="sw-calc__italic">{{ 'sections.calculator.headline_italic' | t }}</em>?
       </h2>
-      <p class="sw-calc__sub">{{ section.settings.description }}</p>
+      <p class="sw-calc__sub">{{ 'sections.calculator.description' | t }}</p>
     </div>
 
     <div class="sw-calc__card" data-calculator>
@@ -18,10 +18,10 @@
         {%- comment -%} Slider: annual consumption {%- endcomment -%}
         <div class="sw-calc__slider-group">
           <div class="sw-calc__slider-header">
-            <label for="sw-slider-consumption" class="sw-calc__slider-label">Jährlicher Stromverbrauch</label>
+            <label for="sw-slider-consumption" class="sw-calc__slider-label">{{ 'sections.calculator.consumption_label' | t }}</label>
             <div class="sw-calc__slider-value">
               <span class="display" data-val="consumption">4.500</span>
-              <span class="mono sw-calc__slider-unit">kWh / Jahr</span>
+              <span class="mono sw-calc__slider-unit">{{ 'sections.calculator.consumption_unit' | t }}</span>
             </div>
           </div>
           <div class="sw-calc__track">
@@ -32,20 +32,20 @@
               min="1500" max="12000" step="100" value="4500"
               data-input="consumption"
               class="sw-calc__range"
-              aria-label="Jährlicher Stromverbrauch"
+              aria-label="{{ 'sections.calculator.consumption_label' | t }}"
             >
             <div class="sw-calc__thumb" aria-hidden="true" style="left: calc(50% - 10px)"></div>
           </div>
-          <p class="mono sw-calc__hint">Ø 4-Personen-Haushalt: 4.500 kWh</p>
+          <p class="mono sw-calc__hint">{{ 'sections.calculator.consumption_hint' | t }}</p>
         </div>
 
         {%- comment -%} Slider: roof size {%- endcomment -%}
         <div class="sw-calc__slider-group">
           <div class="sw-calc__slider-header">
-            <label for="sw-slider-roof" class="sw-calc__slider-label">Nutzbare Dachfläche</label>
+            <label for="sw-slider-roof" class="sw-calc__slider-label">{{ 'sections.calculator.roof_label' | t }}</label>
             <div class="sw-calc__slider-value">
               <span class="display" data-val="roof">55</span>
-              <span class="mono sw-calc__slider-unit">m²</span>
+              <span class="mono sw-calc__slider-unit">{{ 'sections.calculator.roof_unit' | t }}</span>
             </div>
           </div>
           <div class="sw-calc__track">
@@ -56,16 +56,16 @@
               min="15" max="200" step="1" value="55"
               data-input="roof"
               class="sw-calc__range"
-              aria-label="Nutzbare Dachfläche"
+              aria-label="{{ 'sections.calculator.roof_label' | t }}"
             >
             <div class="sw-calc__thumb" aria-hidden="true" style="left: calc(22% - 10px)"></div>
           </div>
-          <p class="mono sw-calc__hint">Nach Süden/Ost/West — ohne Verschattung</p>
+          <p class="mono sw-calc__hint">{{ 'sections.calculator.roof_hint' | t }}</p>
         </div>
 
         {%- comment -%} Toggles: extra consumption {%- endcomment -%}
         <div class="sw-calc__toggles-group">
-          <p class="mono sw-calc__toggles-label">Zusätzlicher Verbrauch</p>
+          <p class="mono sw-calc__toggles-label">{{ 'sections.calculator.extra_label' | t }}</p>
           <div class="sw-calc__toggles">
             <button
               type="button"
@@ -77,8 +77,8 @@
                 <path d="M12 2v10M12 12l-4 6h8l-4 6"/>
               </svg>
               <div>
-                <div class="sw-calc__toggle-label">E-Auto</div>
-                <div class="mono sw-calc__toggle-sub">+3.000 kWh</div>
+                <div class="sw-calc__toggle-label">{{ 'sections.calculator.toggle_ev' | t }}</div>
+                <div class="mono sw-calc__toggle-sub">{{ 'sections.calculator.toggle_ev_sub' | t }}</div>
               </div>
             </button>
             <button
@@ -91,8 +91,8 @@
                 <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
               </svg>
               <div>
-                <div class="sw-calc__toggle-label">Wärmepumpe</div>
-                <div class="mono sw-calc__toggle-sub">+4.000 kWh</div>
+                <div class="sw-calc__toggle-label">{{ 'sections.calculator.toggle_hp' | t }}</div>
+                <div class="mono sw-calc__toggle-sub">{{ 'sections.calculator.toggle_hp_sub' | t }}</div>
               </div>
             </button>
           </div>
@@ -104,7 +104,7 @@
           data-calc-cta
           data-href="#pakete"
         >
-          Passendes Paket anzeigen
+          {{ 'sections.calculator.cta' | t }}
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M5 12h14M12 5l7 7-7 7"/>
           </svg>
@@ -118,42 +118,42 @@
           <circle cx="50" cy="50" r="40" fill="var(--sun)"/>
         </svg>
 
-        <p class="mono sw-calc__results-label">Dein System</p>
+        <p class="mono sw-calc__results-label">{{ 'sections.calculator.your_system' | t }}</p>
         <div class="sw-calc__system-grid">
           <div class="sw-calc__metric">
             <div class="display sw-calc__metric-val"><span data-out="kwp">4.7</span></div>
             <span class="sw-calc__metric-unit">kWp</span>
-            <p class="mono sw-calc__metric-label">Empfohlene Anlagengröße</p>
+            <p class="mono sw-calc__metric-label">{{ 'sections.calculator.recommended_size' | t }}</p>
           </div>
           <div class="sw-calc__metric">
             <div class="display sw-calc__metric-val"><span data-out="yield">4.935</span></div>
             <span class="sw-calc__metric-unit">kWh</span>
-            <p class="mono sw-calc__metric-label">Jährlicher Ertrag</p>
+            <p class="mono sw-calc__metric-label">{{ 'sections.calculator.annual_yield' | t }}</p>
           </div>
         </div>
 
         <hr class="sw-calc__divider">
 
-        <p class="mono sw-calc__results-label">Deine Ersparnis</p>
+        <p class="mono sw-calc__results-label">{{ 'sections.calculator.your_savings' | t }}</p>
         <div class="sw-calc__saving">
           <span class="display sw-calc__saving-num" data-out="saving">1.420</span>
-          <span class="sw-calc__saving-unit">pro Jahr</span>
+          <span class="sw-calc__saving-unit">{{ 'sections.calculator.per_year' | t }}</span>
         </div>
 
         <div class="sw-calc__bottom-grid">
           <div class="sw-calc__metric sw-calc__metric--small">
             <div class="display sw-calc__metric-val" data-out="cost">&euro;&nbsp;4.324</div>
-            <p class="mono sw-calc__metric-label">Systempreis (ca.)</p>
+            <p class="mono sw-calc__metric-label">{{ 'sections.calculator.system_cost' | t }}</p>
           </div>
           <div class="sw-calc__metric sw-calc__metric--small">
             <div class="display sw-calc__metric-val"><span data-out="payback">3.0</span></div>
             <span class="sw-calc__metric-unit">Jahre</span>
-            <p class="mono sw-calc__metric-label">Amortisation</p>
+            <p class="mono sw-calc__metric-label">{{ 'sections.calculator.payback' | t }}</p>
           </div>
           <div class="sw-calc__metric sw-calc__metric--small">
             <div class="display sw-calc__metric-val"><span data-out="co2">2.221</span></div>
             <span class="sw-calc__metric-unit">kg CO₂</span>
-            <p class="mono sw-calc__metric-label">gespart / Jahr</p>
+            <p class="mono sw-calc__metric-label">{{ 'sections.calculator.saved_per_year' | t }}</p>
           </div>
         </div>
 
@@ -161,7 +161,7 @@
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
           </svg>
-          <span class="mono">0&nbsp;% USt &middot; Nullsteuersatz in Österreich bis 20 kWp</span>
+          <span class="mono">{{ 'sections.calculator.vat_note' | t }}</span>
         </div>
       </div>
 
@@ -500,19 +500,19 @@
       "type": "text",
       "id": "headline",
       "label": "Headline",
-      "default": "Was bringt Solar auf"
+      "default": "What does solar bring to"
     },
     {
       "type": "text",
       "id": "headline_italic",
       "label": "Headline italic part",
-      "default": "deinem Dach"
+      "default": "your roof"
     },
     {
       "type": "textarea",
       "id": "description",
       "label": "Description",
-      "default": "Drei Schieberegler. Keine E-Mail, kein Anruf. Einfach ein ehrliches Bild der Zahlen."
+      "default": "Three sliders. No email, no call. Just an honest picture of the numbers."
     }
   ],
   "presets": [

@@ -138,5 +138,102 @@
       "added": "{{ count }} × {{ title }} im Warenkorb",
       "error_prefix": "Fehler: "
     }
+  },
+  "sections": {
+    "hero": {
+      "eyebrow": "Austria · KWp-Marktplatz",
+      "headline": "Die beste Sonne fürs",
+      "headline_italic": "eigene Dach",
+      "subcopy": "Wir verkaufen keine Marke — wir verkaufen die richtige. Komplettpakete von JA Solar, Longi, Fronius, Huawei und SMA. Versand aus Österreich, Lieferung in 3–5 Werktagen.",
+      "cta_primary": "Solar-Bundle sichern",
+      "cta_ghost": "Amortisation berechnen",
+      "chip_label": "Paket „Familie M“",
+      "chip_detail": "10,2 kWp · 24 Module · Fronius Symo",
+      "chip_price": "€ 8.490 — sofort verfügbar",
+      "metric_shipping_num": "3–5 Tage",
+      "metric_warranty_num": "25 Jahre",
+      "seal_text": "Versand aus Österreich",
+      "metric_systems_label": "Anlagen verbaut",
+      "metric_systems_sub": "seit 2019",
+      "metric_shipping_label": "Versand aus",
+      "metric_warranty_label": "Produktgarantie",
+      "metric_warranty_sub": "auf Module"
+    },
+    "trust_bar": {
+      "label": "Autorisierter\nPartner von"
+    },
+    "featured_packages": {
+      "eyebrow": "01 · Komplettpakete",
+      "headline_1": "Vier Pakete.",
+      "headline_italic": "Ein Klick",
+      "headline_2": "zum Dach.",
+      "add_to_cart": "In den Warenkorb",
+      "to_configurator": "Zum Konfigurator",
+      "description": "Von unseren Technikern kuratiert — Module, Wechselrichter und Montagesystem aufeinander abgestimmt. Kein Rätselraten, kein Fehlkauf. Alle Preise inkl. 0 % USt. (Nullsteuersatz Österreich).",
+      "configurator_text": "Passt nichts perfekt? Konfigurator starten.",
+      "configurator_sub": "In 4 Schritten zum eigenen Paket — mit Montage oder DIY"
+    },
+    "how_it_works": {
+      "eyebrow": "02 · So einfach geht’s",
+      "headline": "Vom Klick bis zum",
+      "headline_italic": "ersten Sonnenstrahl",
+      "description": "Du musst kein Elektriker sein. Wir haben den Prozess so simpel gemacht, dass die meisten Kund*innen ihr System innerhalb von zwei Wochen am Netz haben."
+    },
+    "calculator": {
+      "eyebrow": "03 · Amortisationsrechner",
+      "consumption_label": "Jährlicher Stromverbrauch",
+      "consumption_unit": "kWh / Jahr",
+      "consumption_hint": "Ø 4-Personen-Haushalt: 4.500 kWh",
+      "roof_label": "Nutzbare Dachfläche",
+      "roof_unit": "m²",
+      "roof_hint": "Nach Süden/Ost/West — ohne Verschattung",
+      "extra_label": "Zusätzlicher Verbrauch",
+      "toggle_ev": "E-Auto",
+      "toggle_ev_sub": "+3.000 kWh",
+      "toggle_hp": "Wärmepumpe",
+      "toggle_hp_sub": "+4.000 kWh",
+      "cta": "Passendes Paket anzeigen",
+      "your_system": "Dein System",
+      "recommended_size": "Empfohlene Anlagengröße",
+      "annual_yield": "Jährlicher Ertrag",
+      "your_savings": "Deine Ersparnis",
+      "per_year": "pro Jahr",
+      "system_cost": "Systempreis (ca.)",
+      "payback": "Amortisation",
+      "saved_per_year": "gespart / Jahr",
+      "vat_note": "0 % USt · Nullsteuersatz in Österreich bis 20 kWp",
+      "headline": "Was bringt Solar auf",
+      "headline_italic": "deinem Dach",
+      "description": "Drei Schieberegler. Keine E-Mail, kein Anruf. Einfach ein ehrliches Bild der Zahlen."
+    },
+    "category_grid": {
+      "models": "Modelle",
+      "from_price": "ab {{ price }}",
+      "eyebrow": "Einzelkomponenten",
+      "headline": "Oder",
+      "headline_italic": "selbst",
+      "headline_suffix": "zusammenstellen.",
+      "subtext": "Für Selbstmonteure und erfahrene Planer: alle Komponenten einzeln, mit Lagerbestand in Echtzeit."
+    },
+    "why_us": {
+      "eyebrow": "Warum Sonnwerk",
+      "headline": "Kein Hersteller.",
+      "headline_italic": "Dein Anwalt.",
+      "subtext": "Andere Shops pushen eine Marke, weil sie Margen-Deals haben. Wir sitzen auf deiner Seite des Tisches — und sagen dir auch, wenn das billigere Modul das bessere ist."
+    },
+    "faq": {
+      "eyebrow": "Häufige Fragen",
+      "headline_line1": "Ehrliche",
+      "headline_line2": "Antworten.",
+      "headline_italic": "Keine Verkaufsfloskeln.",
+      "subtext": "Etwas nicht dabei? Ruf uns einfach an — ein Techniker, kein Callcenter."
+    },
+    "final_cta": {
+      "eyebrow": "Letzte Frage",
+      "headline": "Worauf\nwartest\ndu noch?",
+      "subtext": "Jede Woche ohne Anlage sind etwa € 32 Strom, die du dem Netzbetreiber schenkst. Das muss nicht sein.",
+      "cta_primary": "Paket wählen",
+      "cta_ghost": "Erst rechnen"
+    }
   }
 }

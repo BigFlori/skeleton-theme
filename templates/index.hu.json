@@ -1,0 +1,274 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "layout": "split",
+        "eyebrow": "Ausztria \u00b7 KWp-Piac",
+        "headline": "A legjobb napelemes megold\u00e1s a",
+        "headline_italic": "saj\u00e1t tet\u0151re",
+        "subcopy": "Nem m\u00e1rk\u00e1t \u00e1rulunk \u2014 a megfelel\u0151t \u00e1rulunk. Komplett csomagok JA Solar, Longi, Fronius, Huawei \u00e9s SMA term\u00e9kekb\u0151l. Sz\u00e1ll\u00edt\u00e1s Ausztri\u00e1b\u00f3l, kiszolg\u00e1l\u00e1s 3\u20135 munkanapon bel\u00fcl.",
+        "cta_primary_text": "Napelemes csomag biztos\u00edt\u00e1sa",
+        "cta_ghost_text": "Megt\u00e9r\u00fcl\u00e9s sz\u00e1m\u00edt\u00e1sa",
+        "chip_label": "\u201eCsal\u00e1d M\u201d csomag",
+        "chip_detail": "10,2 kWp \u00b7 24 modul \u00b7 Fronius Symo",
+        "chip_price": "\u20ac 8.490 \u2014 azonnal el\u00e9rhet\u0151"
+      }
+    },
+    "trust-bar": {
+      "type": "trust-bar",
+      "blocks": {
+        "ja-solar": { "type": "brand", "settings": { "name": "JA Solar",  "style": "sans-bold" } },
+        "longi":    { "type": "brand", "settings": { "name": "Longi",     "style": "serif" } },
+        "fronius":  { "type": "brand", "settings": { "name": "Fronius",   "style": "sans-semibold" } },
+        "huawei":   { "type": "brand", "settings": { "name": "Huawei",    "style": "sans-light" } },
+        "sma":      { "type": "brand", "settings": { "name": "SMA",       "style": "sans-black" } },
+        "goodwe":   { "type": "brand", "settings": { "name": "Goodwe",    "style": "sans-condensed" } },
+        "byd":      { "type": "brand", "settings": { "name": "BYD",       "style": "sans-bold" } },
+        "victron":  { "type": "brand", "settings": { "name": "Victron",   "style": "serif" } }
+      },
+      "block_order": ["ja-solar", "longi", "fronius", "huawei", "sma", "goodwe", "byd", "victron"],
+      "settings": {}
+    },
+    "featured-packages": {
+      "type": "featured-packages",
+      "settings": {
+        "description": "M\u00e9rn\u00f6keink \u00e1ltal v\u00e1logatva \u2014 modulok, inverterek \u00e9s tart\u00f3szerkezetek \u00f6sszehangolva. Nincs tal\u00e1lgat\u00e1s, nincs rossz v\u00e1s\u00e1rl\u00e1s. Minden \u00e1r 0% \u00c1F\u00c1-val (Ausztri\u00e1ban nullaad\u00f3-kulcs).",
+        "configurator_text": "Semmi sem illik t\u00f6k\u00e9letesen? Ind\u00edtsd el a konfigur\u00e1tort.",
+        "configurator_sub": "4 l\u00e9p\u00e9s a saj\u00e1t csomagodhoz \u2014 szerel\u0151vel vagy barkácsolva"
+      }
+    },
+    "how-it-works": {
+      "type": "how-it-works",
+      "blocks": {
+        "step-1": {
+          "type": "step",
+          "settings": {
+            "icon": "panel",
+            "time": "~5 perc",
+            "title": "Csomag v\u00e1laszt\u00e1sa vagy konfigur\u00e1l\u00e1sa",
+            "description": "Kezdj egy k\u00e9sz csomaggal vagy \u00e9p\u00edtsd \u00f6ssze saj\u00e1t rendszeredet. M\u00e9rn\u00f6keink ingyenesen ellen\u0151rzik."
+          }
+        },
+        "step-2": {
+          "type": "step",
+          "settings": {
+            "icon": "shield",
+            "time": "< 24 \u00f3ra",
+            "title": "Ingyenes tet\u0151ellen\u0151rz\u00e9s",
+            "description": "T\u00f6lts fel fot\u00f3t \u00e9s c\u00edmet \u2014 24 \u00f3r\u00e1n bel\u00fcl kisz\u00e1m\u00edtjuk a d\u0151l\u00e9ssz\u00f6get, \u00e1rny\u00e9kol\u00e1st \u00e9s termel\u00e9st."
+          }
+        },
+        "step-3": {
+          "type": "step",
+          "settings": {
+            "icon": "truck",
+            "time": "3\u20135 nap",
+            "title": "Sz\u00e1ll\u00edt\u00e1s Wr. Neustadtb\u00f3l",
+            "description": "Sz\u00e1ll\u00edt\u00e1s Ausztri\u00e1ban 3\u20135 munkanapon bel\u00fcl. N\u00e9metorsz\u00e1gi sz\u00e1ll\u00edt\u00e1s ig\u00e9ny szerint. Raklap egyenesen az ajt\u00f3d el\u00e9."
+          }
+        },
+        "step-4": {
+          "type": "step",
+          "settings": {
+            "icon": "tools",
+            "time": "1\u20132 nap",
+            "title": "Barkácsolás vagy partnermontázs",
+            "description": "K\u00f6sd be saj\u00e1t magad vide\u00f3s \u00fatmutat\u00f3nkkal \u2014 vagy megszervezz\u00fck a ter\u00fcleteden l\u00e9v\u0151 hiteles\u00edtett szerel\u0151ket."
+          }
+        }
+      },
+      "block_order": ["step-1", "step-2", "step-3", "step-4"],
+      "settings": {
+        "headline": "A kattint\u00e1st\u00f3l az els\u0151",
+        "headline_italic": "napsug\u00e1rig",
+        "description": "Nem kell villamosmérn\u00f6knek lenned. A folyamatot annyira egyszer\u0171v\u00e9 tett\u00fck, hogy a legt\u00f6bb v\u00e1s\u00e1rl\u00f3 k\u00e9t h\u00e9ten bel\u00fcl \u00fczzembe helyezi a rendszer\u00e9t."
+      }
+    },
+    "calculator": {
+      "type": "calculator",
+      "settings": {
+        "headline": "Mit hoz a napenergia a",
+        "headline_italic": "te tet\u0151dre",
+        "description": "H\u00e1rom cs\u00fasszka. Nem kell e-mail, nincs telefon\u00e1l\u00e1s. Csak egy \u0151szinte k\u00e9p a sz\u00e1mokr\u00f3l."
+      }
+    },
+    "why-us": {
+      "type": "why-us",
+      "blocks": {
+        "usp-1": {
+          "type": "usp",
+          "settings": {
+            "icon": "leaf",
+            "title": "M\u00e1rkaf\u00fcggetlen",
+            "description": "Nem k\u00f6t\u0151d\u00fcnk egyetlen gy\u00e1rt\u00f3hoz sem \u2014 azt aj\u00e1nljuk, ami igaz\u00e1n illik a tet\u0151dre. 8 inverter-m\u00e1rka rakt\u00e1ron."
+          }
+        },
+        "usp-2": {
+          "type": "usp",
+          "settings": {
+            "icon": "truck",
+            "title": "Sz\u00e1ll\u00edt\u00e1s Ausztri\u00e1b\u00f3l",
+            "description": "K\u00f6zponti rakt\u00e1r B\u00e9cs\u00fajhelyen. Nincs v\u00e1m, nincs 6 hetes kont\u00e9ner-lott\u00f3. Raklapok az ajt\u00f3dn\u00e1l 3\u20135 munkanapon bel\u00fcl."
+          }
+        },
+        "usp-3": {
+          "type": "usp",
+          "settings": {
+            "icon": "shield",
+            "title": "25 \u00e9v garancia",
+            "description": "Modulokra \u00e9s inverterekre egyar\u00e1nt. Mi int\u00e9zz\u00fck a folyamatot \u2014 nem te egy shenzeni gy\u00e1rt\u00f3val."
+          }
+        },
+        "usp-4": {
+          "type": "usp",
+          "settings": {
+            "icon": "tools",
+            "title": "Barkácsolás vagy szerel\u0151",
+            "description": "Szerel\u00e9si vide\u00f3k saj\u00e1t elvégzéshez. Vagy megszervezz\u00fck a ter\u00fcletedr\u0151l a hiteles\u00edtett villanyszerel\u0151ket fix \u00e1ron."
+          }
+        }
+      },
+      "block_order": ["usp-1", "usp-2", "usp-3", "usp-4"],
+      "settings": {
+        "eyebrow": "Mi\u00e9rt Sonnwerk",
+        "headline": "Nincs gy\u00e1rt\u00f3.",
+        "headline_italic": "Az \u00fcggyv\u00e9ded vagyunk.",
+        "subtext": "M\u00e1s boltok egy m\u00e1rk\u00e1t tolnak, mert haszonkulcs-meg\u00e1llapod\u00e1suk van. Mi a te oldalad mell\u00e9 \u00fcl\u00fcnk \u2014 \u00e9s akkor is megmondjuk, ha az olcs\u00f3bb modul a jobb.",
+        "review_quote": "H\u00e1rom aj\u00e1nlat ut\u00e1n \u0151k voltak az egyedüliek, akik lebeszéltek a nagyobb rendszerr\u0151l. Ez bizalmat keltett.",
+        "reviewer_name": "Martin H.",
+        "reviewer_meta": "Csal\u00e1di h\u00e1z \u00b7 9,6 kWp \u00b7 Graz"
+      }
+    },
+    "category-grid": {
+      "type": "category-grid",
+      "blocks": {
+        "cat-1": {
+          "type": "category",
+          "settings": {
+            "icon": "panel",
+            "name": "Modulok",
+            "count_label": "42 modell",
+            "from_label": "\u20ac 89-t\u0151l",
+            "brands": "JA \u00b7 Longi \u00b7 Trina \u00b7 Meyer Burger"
+          }
+        },
+        "cat-2": {
+          "type": "category",
+          "settings": {
+            "icon": "inverter",
+            "name": "Inverterek",
+            "count_label": "28 modell",
+            "from_label": "\u20ac 690-t\u0151l",
+            "brands": "Fronius \u00b7 Huawei \u00b7 SMA \u00b7 Goodwe"
+          }
+        },
+        "cat-3": {
+          "type": "category",
+          "settings": {
+            "icon": "battery",
+            "name": "T\u00e1rol\u00f3k",
+            "count_label": "18 modell",
+            "from_label": "\u20ac 2.490-t\u0151l",
+            "brands": "BYD \u00b7 Huawei \u00b7 Fronius \u00b7 Pylontech"
+          }
+        },
+        "cat-4": {
+          "type": "category",
+          "settings": {
+            "icon": "plug",
+            "name": "Wallbox \u00e9s Kieg\u00e9sz\u00edt\u0151k",
+            "count_label": "60+ term\u00e9k",
+            "from_label": "\u20ac 49-t\u0151l",
+            "brands": "go-e \u00b7 KEBA \u00b7 Wallbe \u00b7 Victron"
+          }
+        }
+      },
+      "block_order": ["cat-1", "cat-2", "cat-3", "cat-4"],
+      "settings": {
+        "eyebrow": "Egyedi komponensek",
+        "headline": "Vagy",
+        "headline_italic": "\u00e9p\u00edtsd \u00f6ssze",
+        "headline_suffix": "saj\u00e1t magad.",
+        "subtext": "Saj\u00e1t szerel\u0151knek \u00e9s tapasztalt tervez\u0151knek: minden komponens k\u00fcl\u00f6n, val\u00f3s idej\u0171 k\u00e9szletinform\u00e1ci\u00f3kkal."
+      }
+    },
+    "faq": {
+      "type": "faq",
+      "blocks": {
+        "faq-1": {
+          "type": "item",
+          "settings": {
+            "question": "Megéri egy napelemes rendszer a jelenlegi villanyszámlák mellett?",
+            "answer": "<p>Igen \u2014 és egyre inkább. Az \u00e1ramárak Ausztriában a 2023-as cs\u00facsot k\u00f6vet\u0151en is átlagosan 34 cent/kWh k\u00f6r\u00fcl maradnak a h\u00e1ztartások sz\u00e1m\u00e1ra. Egy tipikus 10 kWp-es rendszerrel, 60\u00a0% saj\u00e1t fogyaszt\u00e1ssal 6\u20138 \u00e9v alatt térül meg. A nullaad\u00f3-kulcs (0\u00a0% \u00c1FA 20\u00a0kWp-ig) ezt tov\u00e1bb cs\u00f6kkenti.</p>"
+          }
+        },
+        "faq-2": {
+          "type": "item",
+          "settings": {
+            "question": "Nem értek a technikához. Megrendelhetem így is?",
+            "answer": "<p>Pontosan erre valók a komplett csomagjaink. A modulok, inverterek, tart\u00f3szerkezet \u00e9s kábelek el\u0151re összehangolva \u2014 neked semmit sem kell kiszámolni. Az ingyenes tet\u0151ellen\u0151rzés sor\u00e1n mérnökeink \u00e1tnézik a fotódat és megerősítik (vagy módosítják), ami illik.</p>"
+          }
+        },
+        "faq-3": {
+          "type": "item",
+          "settings": {
+            "question": "Mi t\u00f6rt\u00e9nik, ha 8 \u00e9v m\u00falva meghibásodik az inverter?",
+            "answer": "<p>Mi int\u00e9zz\u00fck a garanci\u00e1t helyetted \u2014 nem te egy valahol Ázsiában l\u00e9v\u0151 gy\u00e1rt\u00f3val. 25 \u00e9v term\u00e9kgaranciát adunk a modulokra \u00e9s 10\u201312 \u00e9vet az inverterekre (20-ra meghosszabbítható). A cserekész\u00fcl\u00e9kek általában egy h\u00e9ten bel\u00fcl \u00e9rkeznek a rakt\u00e1runkb\u00f3l.</p>"
+          }
+        },
+        "faq-4": {
+          "type": "item",
+          "settings": {
+            "question": "Szállítotok Magyarországra is?",
+            "answer": "<p>Igen, Magyarországra is szállítunk \u2014 3\u20135 munkanappal hosszabb átfutási idővel és magyar ÁFA-kulccsal. A részletekért kérdezz közvetlenül az \u0171rlapon keresztül.</p>"
+          }
+        },
+        "faq-5": {
+          "type": "item",
+          "settings": {
+            "question": "Mit kell intéznem a hálózati szolgáltatónál?",
+            "answer": "<p>A termelő berendezés bejelentését \u2014 ezt vagy te intézed, vagy mi vállaljuk el \u20ac\u00a0190 átalányáron. Szükséges: mérőpontszám, inverter adatlap és megfelelőségi nyilatkozat.</p>"
+          }
+        },
+        "faq-6": {
+          "type": "item",
+          "settings": {
+            "question": "Felszerelhetem a modulokat saját magam?",
+            "answer": "<p>A mechanikai szerelést igen \u2014 sok vásárlónk hétvégi projektként csinálja párban. Az elektromos csatlakozást azonban engedéllyel rendelkező villanyszerelőnek kell elvégeznie. Villanyszerelőket szervezünk \u20ac\u00a0490-től.</p>"
+          }
+        }
+      },
+      "block_order": ["faq-1", "faq-2", "faq-3", "faq-4", "faq-5", "faq-6"],
+      "settings": {
+        "eyebrow": "Gyakran felt\u00e9tett k\u00e9rd\u00e9sek",
+        "headline_line1": "\u0150szinte",
+        "headline_line2": "V\u00e1laszok.",
+        "headline_italic": "Nincs \u00e9rt\u00e9kes\u00edt\u00e9si fog\u00e1s.",
+        "subtext": "Nem tal\u00e1lod, amit keresel? Csak h\u00edvj minket \u2014 technikus v\u00e1laszol, nem call center.",
+        "phone": "+43 1 234 56 78"
+      }
+    },
+    "final-cta": {
+      "type": "final-cta",
+      "settings": {
+        "eyebrow": "Egy utols\u00f3 k\u00e9rd\u00e9s",
+        "headline": "Mire\nv\u00e1rsz\nm\u00e9g?",
+        "subtext": "Minden rendszer n\u00e9lk\u00fcli h\u00e9t kb. \u20ac\u00a032 villany, amit a h\u00e1l\u00f3zatnak aj\u00e1nd\u00e9kozol. Ez nem kell.",
+        "cta_primary_text": "Csomag v\u00e1laszt\u00e1sa",
+        "cta_ghost_text": "El\u0151bb sz\u00e1mold ki"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "trust-bar",
+    "featured-packages",
+    "how-it-works",
+    "calculator",
+    "why-us",
+    "category-grid",
+    "faq",
+    "final-cta"
+  ]
+}

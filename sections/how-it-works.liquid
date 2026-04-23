@@ -3,7 +3,7 @@
 
     <div class="sw-hiw__header">
       <div>
-        <span class="eyebrow sw-hiw__eyebrow">02 &middot; So einfach geht&rsquo;s</span>
+        <span class="eyebrow sw-hiw__eyebrow">{{ 'sections.how_it_works.eyebrow' | t }}</span>
         <h2 class="display sw-hiw__headline">
           {{ section.settings.headline }}<br>
           <em class="sw-hiw__italic">{{ section.settings.headline_italic }}</em>.
@@ -204,19 +204,19 @@
       "type": "text",
       "id": "headline",
       "label": "Headline",
-      "default": "Vom Klick bis zum"
+      "default": "From click to your"
     },
     {
       "type": "text",
       "id": "headline_italic",
       "label": "Headline italic part",
-      "default": "ersten Sonnenstrahl"
+      "default": "first ray of sunshine"
     },
     {
       "type": "textarea",
       "id": "description",
       "label": "Description",
-      "default": "Du musst kein Elektriker sein. Wir haben den Prozess so simpel gemacht, dass die meisten Kund*innen ihr System innerhalb von zwei Wochen am Netz haben."
+      "default": "You don\u2019t need to be an electrician. We\u2019ve made the process so simple that most customers have their system up and running within two weeks."
     }
   ],
   "blocks": [
@@ -241,19 +241,19 @@
           "type": "text",
           "id": "time",
           "label": "Time chip",
-          "default": "< 24 Std"
+          "default": "< 24 hrs"
         },
         {
           "type": "text",
           "id": "title",
           "label": "Step title",
-          "default": "Schritt"
+          "default": "Step"
         },
         {
           "type": "textarea",
           "id": "description",
           "label": "Step description",
-          "default": "Beschreibung des Schritts."
+          "default": "Description of this step."
         }
       ]
     }
@@ -267,35 +267,35 @@
           "settings": {
             "icon": "panel",
             "time": "~5 Min",
-            "title": "Paket w\u00e4hlen oder konfigurieren",
-            "description": "Starte mit einem fertigen Paket oder stelle dir dein System selbst zusammen. Unsere Techniker pr\u00fcfen kostenlos."
+            "title": "Choose or configure a package",
+            "description": "Start with a ready-made package or build your own system. Our engineers review it for free."
           }
         },
         {
           "type": "step",
           "settings": {
             "icon": "shield",
-            "time": "< 24 Std",
-            "title": "Kostenlose Dach-Pr\u00fcfung",
-            "description": "Foto & Adresse hochladen \u2014 wir rechnen Neigung, Verschattung und Ertrag innerhalb von 24 Stunden."
+            "time": "< 24 hrs",
+            "title": "Free roof check",
+            "description": "Upload photo & address \u2014 we calculate tilt, shading and yield within 24 hours."
           }
         },
         {
           "type": "step",
           "settings": {
             "icon": "truck",
-            "time": "3\u20135 Tage",
-            "title": "Lieferung aus Wr. Neustadt",
-            "description": "Versand innerhalb \u00d6sterreichs in 3\u20135 Werktagen. DE-Lieferung auf Anfrage. Palette direkt vor die T\u00fcr."
+            "time": "3\u20135 days",
+            "title": "Delivery from Wr. Neustadt",
+            "description": "Shipping within Austria in 3\u20135 business days. Germany delivery on request. Pallet delivered right to your door."
           }
         },
         {
           "type": "step",
           "settings": {
             "icon": "tools",
-            "time": "1\u20132 Tage",
-            "title": "DIY oder Partnermontage",
-            "description": "Selbst anschlie\u00dfen mit unserem Videoguide \u2014 oder wir vermitteln zertifizierte Monteure in deiner Region."
+            "time": "1\u20132 days",
+            "title": "DIY or partner installation",
+            "description": "Connect it yourself with our video guide \u2014 or we arrange certified installers in your area."
           }
         }
       ]
