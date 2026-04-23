@@ -26,22 +26,22 @@
 
       <div class="sw-final-cta__body">
         <div class="sw-final-cta__left">
-          <span class="eyebrow sw-final-cta__eyebrow">{{ section.settings.eyebrow }}</span>
+          <span class="eyebrow sw-final-cta__eyebrow">{{ 'sections.final_cta.eyebrow' | t }}</span>
           <h2 class="display sw-final-cta__headline">
-            {{- section.settings.headline | newline_to_br -}}
+            {{- 'sections.final_cta.headline' | t | newline_to_br -}}
           </h2>
         </div>
         <div class="sw-final-cta__right">
-          <p class="sw-final-cta__sub">{{ section.settings.subtext }}</p>
+          <p class="sw-final-cta__sub">{{ 'sections.final_cta.subtext' | t }}</p>
           <div class="sw-final-cta__actions">
             <a href="{{ section.settings.cta_primary_url | default: '#pakete' }}" class="btn sw-final-cta__btn-sun">
-              {{ section.settings.cta_primary_text }}
+              {{ 'sections.final_cta.cta_primary' | t }}
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
               </svg>
             </a>
             <a href="{{ section.settings.cta_ghost_url | default: '#rechner' }}" class="btn sw-final-cta__btn-ghost">
-              {{ section.settings.cta_ghost_text }}
+              {{ 'sections.final_cta.cta_ghost' | t }}
             </a>
           </div>
         </div>
@@ -165,39 +165,9 @@
   "name": "Final CTA",
   "settings": [
     {
-      "type": "text",
-      "id": "eyebrow",
-      "label": "Eyebrow",
-      "default": "One last question"
-    },
-    {
-      "type": "textarea",
-      "id": "headline",
-      "label": "Headline (use newlines for line breaks)",
-      "default": "What are\nyou\nwaiting for?"
-    },
-    {
-      "type": "textarea",
-      "id": "subtext",
-      "label": "Subtext",
-      "default": "Every week without a system is about \u20AC\u00A032 in electricity you\u2019re giving to the grid operator. It doesn\u2019t have to be that way."
-    },
-    {
-      "type": "text",
-      "id": "cta_primary_text",
-      "label": "Primary CTA text",
-      "default": "Choose a package"
-    },
-    {
       "type": "url",
       "id": "cta_primary_url",
       "label": "Primary CTA URL"
-    },
-    {
-      "type": "text",
-      "id": "cta_ghost_text",
-      "label": "Ghost CTA text",
-      "default": "Calculate first"
     },
     {
       "type": "url",

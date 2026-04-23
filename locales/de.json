@@ -177,7 +177,19 @@
       "eyebrow": "02 · So einfach geht’s",
       "headline": "Vom Klick bis zum",
       "headline_italic": "ersten Sonnenstrahl",
-      "description": "Du musst kein Elektriker sein. Wir haben den Prozess so simpel gemacht, dass die meisten Kund*innen ihr System innerhalb von zwei Wochen am Netz haben."
+      "description": "Du musst kein Elektriker sein. Wir haben den Prozess so simpel gemacht, dass die meisten Kund*innen ihr System innerhalb von zwei Wochen am Netz haben.",
+      "step_1_time": "~5 Min",
+      "step_1_title": "Paket wählen oder konfigurieren",
+      "step_1_description": "Starte mit einem fertigen Paket oder stelle dir dein System selbst zusammen. Unsere Techniker prüfen kostenlos.",
+      "step_2_time": "< 24 Std",
+      "step_2_title": "Kostenlose Dach-Prüfung",
+      "step_2_description": "Foto & Adresse hochladen — wir rechnen Neigung, Verschattung und Ertrag innerhalb von 24 Stunden.",
+      "step_3_time": "3–5 Tage",
+      "step_3_title": "Lieferung aus Wr. Neustadt",
+      "step_3_description": "Versand innerhalb Österreichs in 3–5 Werktagen. DE-Lieferung auf Anfrage. Palette direkt vor die Tür.",
+      "step_4_time": "1–2 Tage",
+      "step_4_title": "DIY oder Partnermontage",
+      "step_4_description": "Selbst anschließen mit unserem Videoguide — oder wir vermitteln zertifizierte Monteure in deiner Region."
     },
     "calculator": {
       "eyebrow": "03 · Amortisationsrechner",
@@ -216,17 +228,40 @@
       "subtext": "Für Selbstmonteure und erfahrene Planer: alle Komponenten einzeln, mit Lagerbestand in Echtzeit."
     },
     "why_us": {
-      "eyebrow": "Warum Sonnwerk",
+      "usp_1_title": "Marken­unabhängig",
+      "usp_1_description": "Wir sind an keinen Hersteller gebunden — wir empfehlen das, was für dein Dach wirklich passt. 8 Wechselrichter-Marken im Lager.",
+      "usp_2_title": "Versand aus Österreich",
+      "usp_2_description": "Zentrallager in Wiener Neustadt. Kein Zoll, keine 6-Wochen-Container-Lotterie. Paletten in 3–5 Werktagen bei dir.",
+      "usp_3_title": "25 Jahre Garantie",
+      "usp_3_description": "Auf Module wie Wechselrichter. Wir übernehmen die Abwicklung — nicht du mit einem Hersteller irgendwo in Asien.",
+      "usp_4_title": "DIY oder Monteur",
+      "usp_4_description": "Montage-Videos für Eigenleistung. Oder wir vermitteln zertifizierte Elektriker aus deinem Bezirk zum Fixpreis.",
+      "eyebrow":"Warum Sonnwerk",
       "headline": "Kein Hersteller.",
       "headline_italic": "Dein Anwalt.",
-      "subtext": "Andere Shops pushen eine Marke, weil sie Margen-Deals haben. Wir sitzen auf deiner Seite des Tisches — und sagen dir auch, wenn das billigere Modul das bessere ist."
+      "subtext": "Andere Shops pushen eine Marke, weil sie Margen-Deals haben. Wir sitzen auf deiner Seite des Tisches — und sagen dir auch, wenn das billigere Modul das bessere ist.",
+      "review_quote": "Nach drei Angeboten waren die einzigen, die mir abrieten, die größere Anlage zu nehmen. Das hat Vertrauen geschaffen.",
+      "reviewer_name": "Martin H.",
+      "reviewer_meta": "Einfamilienhaus · 9,6 kWp · Graz"
     },
     "faq": {
       "eyebrow": "Häufige Fragen",
       "headline_line1": "Ehrliche",
       "headline_line2": "Antworten.",
       "headline_italic": "Keine Verkaufsfloskeln.",
-      "subtext": "Etwas nicht dabei? Ruf uns einfach an — ein Techniker, kein Callcenter."
+      "subtext": "Etwas nicht dabei? Ruf uns einfach an — ein Techniker, kein Callcenter.",
+      "faq_1_question": "Lohnt sich eine PV-Anlage bei den aktuellen Strompreisen überhaupt noch?",
+      "faq_1_answer": "<p>Ja — und zwar deutlicher als je zuvor. Die Strompreise in Österreich liegen auch nach dem Peak 2023 bei durchschnittlich 34 Cent/kWh für Haushalte. Bei einem typischen 10-kWp-System mit 60 % Eigenverbrauch amortisiert sich die Anlage nach 6–8 Jahren. Der Nullsteuersatz (0 % USt bis 20 kWp) verkürzt das zusätzlich.</p>",
+      "faq_2_question": "Ich verstehe die Technik nicht. Kann ich trotzdem bestellen?",
+      "faq_2_answer": "<p>Genau dafür sind unsere Komplettpakete da. Module, Wechselrichter, Montagesystem und Kabel sind vorab aufeinander abgestimmt — du musst nichts berechnen. Bei der kostenlosen Dach-Prüfung gehen unsere Techniker dein Foto durch und bestätigen (oder passen an), was passt.</p>",
+      "faq_3_question": "Was passiert, wenn in 8 Jahren ein Wechselrichter ausfällt?",
+      "faq_3_answer": "<p>Dann wickeln wir die Garantie für dich ab — nicht du mit einem Hersteller irgendwo in Asien. Wir haben 25 Jahre Produktgarantie auf Module und 10–12 Jahre auf Wechselrichter (verlängerbar auf 20). Ersatzgeräte kommen in der Regel innerhalb einer Woche aus unserem Lager.</p>",
+      "faq_4_question": "Liefert ihr nach Deutschland?",
+      "faq_4_answer": "<p>Ja, Lieferung nach Deutschland ist möglich — allerdings mit 3–5 Werktagen zusätzlicher Transitzeit und DE-Umsatzsteuersatz. Wenn du in grenznahen Bundesländern wohnst, fragst du am besten direkt über das Formular an.</p>",
+      "faq_5_question": "Was brauche ich von meinem Netzbetreiber?",
+      "faq_5_answer": "<p>Eine Anmeldung der Erzeugungsanlage — das machst entweder du selbst oder wir übernehmen es für € 190 pauschal. Benötigt werden Zählpunktnummer, Wechselrichter-Datenblatt und eine Konformitätserklärung. Bei Anlagen bis 20 kWp ist der Prozess in Österreich seit 2023 stark vereinfacht.</p>",
+      "faq_6_question": "Kann ich die Module selbst montieren?",
+      "faq_6_answer": "<p>Die mechanische Montage ja — viele unserer Kund*innen machen das als Wochenendprojekt zu zweit. Den elektrischen Anschluss ans Hausnetz muss aber in Österreich und Deutschland eine konzessionierte Elektrofachkraft durchführen. Wir vermitteln Elektriker, die nur den Schlussanschluss übernehmen, ab € 490.</p>"
     },
     "final_cta": {
       "eyebrow": "Letzte Frage",

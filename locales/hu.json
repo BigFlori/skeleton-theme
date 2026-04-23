@@ -177,7 +177,19 @@
       "eyebrow": "02 · Ilyen egyszerű",
       "headline": "A kattintástól az első",
       "headline_italic": "napsugárig",
-      "description": "Nem kell villamosmérnöknek lenned. A folyamatot annyira egyszerűvé tettük, hogy a legtöbb vásárló két héten belül üzembe helyezi a rendszerét."
+      "description": "Nem kell villamosmérnöknek lenned. A folyamatot annyira egyszerűvé tettük, hogy a legtöbb vásárló két héten belül üzembe helyezi a rendszerét.",
+      "step_1_time": "~5 perc",
+      "step_1_title": "Csomag választása vagy konfigurálása",
+      "step_1_description": "Kezdj egy kész csomaggal vagy építsd össze saját rendszeredet. Mérnökeink ingyenesen ellenőrzik.",
+      "step_2_time": "< 24 óra",
+      "step_2_title": "Ingyenes tetőellenőrzés",
+      "step_2_description": "Tölts fel fotót és címet — 24 órán belül kiszámítjuk a dőlésszöget, árnyékolást és termelést.",
+      "step_3_time": "3–5 nap",
+      "step_3_title": "Szállítás Wr. Neustadtból",
+      "step_3_description": "Szállítás Ausztriában 3–5 munkanapon belül. Németországi szállítás igény szerint. Raklap egyenesen az ajtód elé.",
+      "step_4_time": "1–2 nap",
+      "step_4_title": "Barkácsolás vagy partnermontázs",
+      "step_4_description": "Kösd be saját magad videós útmutatónkkal — vagy megszervezzük a területeden lévő hitelesített szerelőket."
     },
     "calculator": {
       "eyebrow": "03 · Megtérülésszámító",
@@ -216,17 +228,40 @@
       "subtext": "Saját szerelőknek és tapasztalt tervezőknek: minden komponens külön, valós idejű készletinformációkkal."
     },
     "why_us": {
-      "eyebrow": "Miért Sonnwerk",
+      "usp_1_title": "Márkafüggetlen",
+      "usp_1_description": "Nem kötődünk egyetlen gyártóhoz sem — azt ajánljuk, ami igazán illik a tetődre. 8 inverter-márka raktáron.",
+      "usp_2_title": "Szállítás Ausztriából",
+      "usp_2_description": "Központi raktár Bécsújhelyen. Nincs vám, nincs 6 hetes konténer-lottó. Raklapok az ajtódnál 3–5 munkanapon belül.",
+      "usp_3_title": "25 év garancia",
+      "usp_3_description": "Modulokra és inverterekre egyaránt. Mi intézzük a folyamatot — nem te egy shenzeni gyártóval.",
+      "usp_4_title": "Barkácsolás vagy szerelő",
+      "usp_4_description": "Szerelési videók saját elvégzéshez. Vagy megszervezzük a területedről a hitelesített villanyszerelőket fix áron.",
+      "eyebrow":"Miért Sonnwerk",
       "headline": "Nincs gyártó.",
       "headline_italic": "Az ügyvéded vagyunk.",
-      "subtext": "Más boltok egy márkát tolnak, mert haszonkulcs-megállapodásuk van. Mi a te oldalad mellé ülünk — és akkor is megmondjuk, ha az olcsóbb modul a jobb."
+      "subtext": "Más boltok egy márkát tolnak, mert haszonkulcs-megállapodásuk van. Mi a te oldalad mellé ülünk — és akkor is megmondjuk, ha az olcsóbb modul a jobb.",
+      "review_quote": "Három ajánlat után ők voltak az egyedüliek, akik lebeszéltek a nagyobb rendszerről. Ez bizalmat keltett.",
+      "reviewer_name": "Martin H.",
+      "reviewer_meta": "Családi ház · 9,6 kWp · Graz"
     },
     "faq": {
       "eyebrow": "Gyakran feltétett kérdések",
       "headline_line1": "Őszinte",
       "headline_line2": "Válaszok.",
       "headline_italic": "Nincs értékesítési fogás.",
-      "subtext": "Nem találod, amit keresel? Csak hívj minket — technikus válaszol, nem call center."
+      "subtext": "Nem találod, amit keresel? Csak hívj minket — technikus válaszol, nem call center.",
+      "faq_1_question": "Megéri egy napelemes rendszer a jelenlegi villanyszámlák mellett?",
+      "faq_1_answer": "<p>Igen — és egyre inkább. Az áramárak Ausztriában a 2023-as csúcsot követően is átlagosan 34 cent/kWh körül maradnak a háztartások számára. Egy tipikus 10 kWp-es rendszerrel, 60 % saját fogyasztással 6–8 év alatt térül meg. A nullaadó-kulcs (0 % ÁFA 20 kWp-ig) ezt tovább csökkenti.</p>",
+      "faq_2_question": "Nem értek a technikához. Megrendelhetem így is?",
+      "faq_2_answer": "<p>Pontosan erre valók a komplett csomagjaink. A modulok, inverterek, tartószerkezet és kábelek előre összehangolva — neked semmit sem kell kiszámolni. Az ingyenes tetőellenőrzés során mérnökeink átnézik a fotódat és megerősítik (vagy módosítják), ami illik.</p>",
+      "faq_3_question": "Mi történik, ha 8 év múlva meghibásodik az inverter?",
+      "faq_3_answer": "<p>Mi intézzük a garanciát helyetted — nem te egy valahol Ázsiában lévő gyártóval. 25 év termékgaranciát adunk a modulokra és 10–12 évet az inverterekre (20-ra meghosszabbítható). A cserekészülékek általában egy héten belül érkeznek a raktárunkból.</p>",
+      "faq_4_question": "Szállítotok Magyarországra is?",
+      "faq_4_answer": "<p>Igen, Magyarországra is szállítunk — 3–5 munkanappal hosszabb átfutási idővel és magyar ÁFA-kulccsal. A részletekért kérdezz közvetlenül az űrlapon keresztül.</p>",
+      "faq_5_question": "Mit kell intéznem a hálózati szolgáltatónál?",
+      "faq_5_answer": "<p>A termelő berendezés bejelentését — ezt vagy te intézed, vagy mi vállaljuk el € 190 átalányáron. Szükséges: mérőpontszám, inverter adatlap és megfelelőségi nyilatkozat.</p>",
+      "faq_6_question": "Felszerelhetem a modulokat saját magam?",
+      "faq_6_answer": "<p>A mechanikai szerelést igen — sok vásárlónk hétvégi projektként csinálja párban. Az elektromos csatlakozást azonban engedéllyel rendelkező villanyszerelőnek kell elvégeznie. Villanyszerelőket szervezünk € 490-től.</p>"
     },
     "final_cta": {
       "eyebrow": "Egy utolsó kérdés",

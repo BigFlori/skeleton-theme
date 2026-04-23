@@ -177,7 +177,19 @@
       "eyebrow": "02 · How it works",
       "headline": "From click to your",
       "headline_italic": "first ray of sunshine",
-      "description": "You don't need to be an electrician. We've made the process so simple that most customers have their system up and running within two weeks."
+      "description": "You don't need to be an electrician. We've made the process so simple that most customers have their system up and running within two weeks.",
+      "step_1_time": "~5 min",
+      "step_1_title": "Choose or configure a package",
+      "step_1_description": "Start with a ready-made package or build your own system. Our engineers review it for free.",
+      "step_2_time": "< 24 hrs",
+      "step_2_title": "Free roof check",
+      "step_2_description": "Upload photo & address — we calculate tilt, shading and yield within 24 hours.",
+      "step_3_time": "3–5 days",
+      "step_3_title": "Delivery from Wr. Neustadt",
+      "step_3_description": "Shipping within Austria in 3–5 business days. Germany delivery on request. Pallet delivered right to your door.",
+      "step_4_time": "1–2 days",
+      "step_4_title": "DIY or partner installation",
+      "step_4_description": "Connect it yourself with our video guide — or we arrange certified installers in your area."
     },
     "calculator": {
       "eyebrow": "03 · Payback calculator",
@@ -207,17 +219,40 @@
       "vat_note": "0 % VAT · Zero tax rate in Austria up to 20 kWp"
     },
     "why_us": {
-      "eyebrow": "Why Sonnwerk",
+      "usp_1_title": "Brand-independent",
+      "usp_1_description": "We're not tied to any manufacturer — we recommend what really fits your roof. 8 inverter brands in stock.",
+      "usp_2_title": "Ships from Austria",
+      "usp_2_description": "Central warehouse in Wiener Neustadt. No customs, no 6-week container lottery. Pallets at your door in 3–5 business days.",
+      "usp_3_title": "25-year warranty",
+      "usp_3_description": "On modules and inverters. We handle the process — not you with a manufacturer in Shenzhen.",
+      "usp_4_title": "DIY or installer",
+      "usp_4_description": "Installation videos for self-assembly. Or we arrange certified electricians from your area at a fixed price.",
+      "eyebrow":"Why Sonnwerk",
       "headline": "No manufacturer.",
       "headline_italic": "Your advocate.",
-      "subtext": "Other shops push a brand because they have margin deals. We sit on your side of the table — and we'll tell you when the cheaper module is the better one."
+      "subtext": "Other shops push a brand because they have margin deals. We sit on your side of the table — and we'll tell you when the cheaper module is the better one.",
+      "review_quote": "After three quotes, they were the only ones who advised me against getting the bigger system. That built trust.",
+      "reviewer_name": "Martin H.",
+      "reviewer_meta": "Single-family home · 9.6 kWp · Graz"
     },
     "faq": {
       "eyebrow": "Frequently asked questions",
       "headline_line1": "Honest",
       "headline_line2": "Answers.",
       "headline_italic": "No sales pitch.",
-      "subtext": "Something not covered? Just call us — a technician, not a call centre."
+      "subtext": "Something not covered? Just call us — a technician, not a call centre.",
+      "faq_1_question": "Is a PV system still worth it at current electricity prices?",
+      "faq_1_answer": "<p>Yes — more clearly than ever. Electricity prices in Austria remain at an average of 34 cents/kWh for households even after the 2023 peak. For a typical 10 kWp system with 60 % self-consumption, the system pays for itself in 6–8 years. The zero VAT rate (0 % up to 20 kWp) shortens that further.</p>",
+      "faq_2_question": "I don't understand the technology. Can I still order?",
+      "faq_2_answer": "<p>That's exactly what our complete packages are for. Modules, inverters, mounting system and cables are pre-matched — you don't need to calculate anything.</p>",
+      "faq_3_question": "What happens if an inverter fails in 8 years?",
+      "faq_3_answer": "<p>We handle the warranty for you. We offer 25-year product warranty on modules and 10–12 years on inverters (extendable to 20).</p>",
+      "faq_4_question": "Do you deliver to Germany?",
+      "faq_4_answer": "<p>Yes, delivery to Germany is possible — with an additional 3–5 business days transit time and German VAT rate.</p>",
+      "faq_5_question": "What do I need from my grid operator?",
+      "faq_5_answer": "<p>A registration of the generation system — either you do it yourself or we handle it for a flat fee of € 190.</p>",
+      "faq_6_question": "Can I install the modules myself?",
+      "faq_6_answer": "<p>The mechanical installation yes. The electrical connection must be carried out by a licensed electrician. We arrange electricians from € 490.</p>"
     },
     "final_cta": {
       "eyebrow": "One last question",

@@ -3,12 +3,12 @@
 
     <div class="sw-catgrid__header">
       <div>
-        <span class="eyebrow">05 &middot; {{ section.settings.eyebrow }}</span>
+        <span class="eyebrow">05 &middot; {{ 'sections.category_grid.eyebrow' | t }}</span>
         <h2 class="display sw-catgrid__headline">
-          {{ section.settings.headline }} <em class="sw-catgrid__headline-em">{{ section.settings.headline_italic }}</em><br>{{ section.settings.headline_suffix }}
+          {{ 'sections.category_grid.headline' | t }} <em class="sw-catgrid__headline-em">{{ 'sections.category_grid.headline_italic' | t }}</em><br>{{ 'sections.category_grid.headline_suffix' | t }}
         </h2>
       </div>
-      <p class="sw-catgrid__sub">{{ section.settings.subtext }}</p>
+      <p class="sw-catgrid__sub">{{ 'sections.category_grid.subtext' | t }}</p>
     </div>
 
     <div class="sw-catgrid__grid">
@@ -230,38 +230,7 @@
 {% schema %}
 {
   "name": "Category Grid",
-  "settings": [
-    {
-      "type": "text",
-      "id": "eyebrow",
-      "label": "Eyebrow",
-      "default": "Individual components"
-    },
-    {
-      "type": "text",
-      "id": "headline",
-      "label": "Headline",
-      "default": "Or"
-    },
-    {
-      "type": "text",
-      "id": "headline_italic",
-      "label": "Headline italic part",
-      "default": "build"
-    },
-    {
-      "type": "text",
-      "id": "headline_suffix",
-      "label": "Headline suffix (after line break)",
-      "default": "your own."
-    },
-    {
-      "type": "textarea",
-      "id": "subtext",
-      "label": "Subtext",
-      "default": "For self-installers and experienced planners: all components individually, with real-time stock levels."
-    }
-  ],
+  "settings": [],
   "blocks": [
     {
       "type": "category",

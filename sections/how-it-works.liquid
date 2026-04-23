@@ -5,19 +5,20 @@
       <div>
         <span class="eyebrow sw-hiw__eyebrow">{{ 'sections.how_it_works.eyebrow' | t }}</span>
         <h2 class="display sw-hiw__headline">
-          {{ section.settings.headline }}<br>
-          <em class="sw-hiw__italic">{{ section.settings.headline_italic }}</em>.
+          {{ 'sections.how_it_works.headline' | t }}<br>
+          <em class="sw-hiw__italic">{{ 'sections.how_it_works.headline_italic' | t }}</em>.
         </h2>
       </div>
-      <p class="sw-hiw__sub">{{ section.settings.description }}</p>
+      <p class="sw-hiw__sub">{{ 'sections.how_it_works.description' | t }}</p>
     </div>
 
     <div class="sw-hiw__steps">
       {%- for block in section.blocks -%}
+        {%- assign step_key = 'sections.how_it_works.step_' | append: forloop.index -%}
         <div class="sw-hiw__step{% unless forloop.last %} sw-hiw__step--divider{% endunless %}" {{ block.shopify_attributes }}>
           <div class="sw-hiw__step-top">
             <span class="mono sw-hiw__step-num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
-            <span class="mono sw-hiw__time-chip">{{ block.settings.time }}</span>
+            <span class="mono sw-hiw__time-chip">{{ step_key | append: '_time' | t }}</span>
           </div>
 
           <div class="sw-hiw__icon-box" aria-hidden="true">
@@ -49,8 +50,8 @@
             {%- endcase -%}
           </div>
 
-          <h3 class="sw-hiw__step-title">{{ block.settings.title }}</h3>
-          <p class="sw-hiw__step-desc">{{ block.settings.description }}</p>
+          <h3 class="sw-hiw__step-title">{{ step_key | append: '_title' | t }}</h3>
+          <p class="sw-hiw__step-desc">{{ step_key | append: '_description' | t }}</p>
         </div>
       {%- endfor -%}
     </div>
@@ -199,26 +200,7 @@
 {% schema %}
 {
   "name": "How It Works",
-  "settings": [
-    {
-      "type": "text",
-      "id": "headline",
-      "label": "Headline",
-      "default": "From click to your"
-    },
-    {
-      "type": "text",
-      "id": "headline_italic",
-      "label": "Headline italic part",
-      "default": "first ray of sunshine"
-    },
-    {
-      "type": "textarea",
-      "id": "description",
-      "label": "Description",
-      "default": "You don\u2019t need to be an electrician. We\u2019ve made the process so simple that most customers have their system up and running within two weeks."
-    }
-  ],
+  "settings": [],
   "blocks": [
     {
       "type": "step",
@@ -229,11 +211,26 @@
           "id": "icon",
           "label": "Icon",
           "options": [
-            { "value": "panel",  "label": "Solar panel" },
-            { "value": "shield", "label": "Shield" },
-            { "value": "truck",  "label": "Truck" },
-            { "value": "tools",  "label": "Tools" },
-            { "value": "sun",    "label": "Sun" }
+            {
+              "value": "panel",
+              "label": "Solar panel"
+            },
+            {
+              "value": "shield",
+              "label": "Shield"
+            },
+            {
+              "value": "truck",
+              "label": "Truck"
+            },
+            {
+              "value": "tools",
+              "label": "Tools"
+            },
+            {
+              "value": "sun",
+              "label": "Sun"
+            }
           ],
           "default": "sun"
         },
@@ -277,25 +274,25 @@
             "icon": "shield",
             "time": "< 24 hrs",
             "title": "Free roof check",
-            "description": "Upload photo & address \u2014 we calculate tilt, shading and yield within 24 hours."
+            "description": "Upload photo & address — we calculate tilt, shading and yield within 24 hours."
           }
         },
         {
           "type": "step",
           "settings": {
             "icon": "truck",
-            "time": "3\u20135 days",
+            "time": "3–5 days",
             "title": "Delivery from Wr. Neustadt",
-            "description": "Shipping within Austria in 3\u20135 business days. Germany delivery on request. Pallet delivered right to your door."
+            "description": "Shipping within Austria in 3–5 business days. Germany delivery on request. Pallet delivered right to your door."
           }
         },
         {
           "type": "step",
           "settings": {
             "icon": "tools",
-            "time": "1\u20132 days",
+            "time": "1–2 days",
             "title": "DIY or partner installation",
-            "description": "Connect it yourself with our video guide \u2014 or we arrange certified installers in your area."
+            "description": "Connect it yourself with our video guide — or we arrange certified installers in your area."
           }
         }
       ]

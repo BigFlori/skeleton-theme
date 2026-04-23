@@ -3,40 +3,84 @@
     "hero": {
       "type": "hero",
       "settings": {
-        "layout": "split",
-        "eyebrow": "Austria \u00b7 KWp-Marktplatz",
-        "headline": "Die beste Sonne f\u00fcrs",
-        "headline_italic": "eigene Dach",
-        "subcopy": "Wir verkaufen keine Marke \u2014 wir verkaufen die richtige. Komplettpakete von JA Solar, Longi, Fronius, Huawei und SMA. Versand aus \u00d6sterreich, Lieferung in 3\u20135 Werktagen.",
-        "cta_primary_text": "Solar-Bundle sichern",
-        "cta_ghost_text": "Amortisation berechnen",
-        "chip_label": "Paket \u201eFamilie M\u201d",
-        "chip_detail": "10,2 kWp \u00b7 24 Module \u00b7 Fronius Symo",
-        "chip_price": "\u20ac 8.490 \u2014 sofort verf\u00fcgbar"
+        "layout": "split"
       }
     },
     "trust-bar": {
       "type": "trust-bar",
       "blocks": {
-        "ja-solar": { "type": "brand", "settings": { "name": "JA Solar",  "style": "sans-bold" } },
-        "longi":    { "type": "brand", "settings": { "name": "Longi",     "style": "serif" } },
-        "fronius":  { "type": "brand", "settings": { "name": "Fronius",   "style": "sans-semibold" } },
-        "huawei":   { "type": "brand", "settings": { "name": "Huawei",    "style": "sans-light" } },
-        "sma":      { "type": "brand", "settings": { "name": "SMA",       "style": "sans-black" } },
-        "goodwe":   { "type": "brand", "settings": { "name": "Goodwe",    "style": "sans-condensed" } },
-        "byd":      { "type": "brand", "settings": { "name": "BYD",       "style": "sans-bold" } },
-        "victron":  { "type": "brand", "settings": { "name": "Victron",   "style": "serif" } }
+        "ja-solar": {
+          "type": "brand",
+          "settings": {
+            "name": "JA Solar",
+            "style": "sans-bold"
+          }
+        },
+        "longi": {
+          "type": "brand",
+          "settings": {
+            "name": "Longi",
+            "style": "serif"
+          }
+        },
+        "fronius": {
+          "type": "brand",
+          "settings": {
+            "name": "Fronius",
+            "style": "sans-semibold"
+          }
+        },
+        "huawei": {
+          "type": "brand",
+          "settings": {
+            "name": "Huawei",
+            "style": "sans-light"
+          }
+        },
+        "sma": {
+          "type": "brand",
+          "settings": {
+            "name": "SMA",
+            "style": "sans-black"
+          }
+        },
+        "goodwe": {
+          "type": "brand",
+          "settings": {
+            "name": "Goodwe",
+            "style": "sans-condensed"
+          }
+        },
+        "byd": {
+          "type": "brand",
+          "settings": {
+            "name": "BYD",
+            "style": "sans-bold"
+          }
+        },
+        "victron": {
+          "type": "brand",
+          "settings": {
+            "name": "Victron",
+            "style": "serif"
+          }
+        }
       },
-      "block_order": ["ja-solar", "longi", "fronius", "huawei", "sma", "goodwe", "byd", "victron"],
+      "block_order": [
+        "ja-solar",
+        "longi",
+        "fronius",
+        "huawei",
+        "sma",
+        "goodwe",
+        "byd",
+        "victron"
+      ],
       "settings": {}
     },
     "featured-packages": {
       "type": "featured-packages",
-      "settings": {
-        "description": "Von unseren Technikern kuratiert \u2014 Module, Wechselrichter und Montagesystem aufeinander abgestimmt. Kein R\u00e4tselraten, kein Fehlkauf. Alle Preise inkl. 0\u00a0% USt. (Nullsteuersatz \u00d6sterreich).",
-        "configurator_text": "Passt nichts perfekt? Konfigurator starten.",
-        "configurator_sub": "In 4 Schritten zum eigenen Paket \u2014 mit Montage oder DIY"
-      }
+      "settings": {}
     },
     "how-it-works": {
       "type": "how-it-works",
@@ -46,8 +90,8 @@
           "settings": {
             "icon": "panel",
             "time": "~5 Min",
-            "title": "Paket w\u00e4hlen oder konfigurieren",
-            "description": "Starte mit einem fertigen Paket oder stelle dir dein System selbst zusammen. Unsere Techniker pr\u00fcfen kostenlos."
+            "title": "Paket wählen oder konfigurieren",
+            "description": "Starte mit einem fertigen Paket oder stelle dir dein System selbst zusammen. Unsere Techniker prüfen kostenlos."
           }
         },
         "step-2": {
@@ -55,43 +99,40 @@
           "settings": {
             "icon": "shield",
             "time": "< 24 Std",
-            "title": "Kostenlose Dach-Pr\u00fcfung",
-            "description": "Foto & Adresse hochladen \u2014 wir rechnen Neigung, Verschattung und Ertrag innerhalb von 24 Stunden."
+            "title": "Kostenlose Dach-Prüfung",
+            "description": "Foto & Adresse hochladen — wir rechnen Neigung, Verschattung und Ertrag innerhalb von 24 Stunden."
           }
         },
         "step-3": {
           "type": "step",
           "settings": {
             "icon": "truck",
-            "time": "3\u20135 Tage",
+            "time": "3–5 Tage",
             "title": "Lieferung aus Wr. Neustadt",
-            "description": "Versand innerhalb \u00d6sterreichs in 3\u20135 Werktagen. DE-Lieferung auf Anfrage. Palette direkt vor die T\u00fcr."
+            "description": "Versand innerhalb Österreichs in 3–5 Werktagen. DE-Lieferung auf Anfrage. Palette direkt vor die Tür."
           }
         },
         "step-4": {
           "type": "step",
           "settings": {
             "icon": "tools",
-            "time": "1\u20132 Tage",
+            "time": "1–2 Tage",
             "title": "DIY oder Partnermontage",
-            "description": "Selbst anschlie\u00dfen mit unserem Videoguide \u2014 oder wir vermitteln zertifizierte Monteure in deiner Region."
+            "description": "Selbst anschließen mit unserem Videoguide — oder wir vermitteln zertifizierte Monteure in deiner Region."
           }
         }
       },
-      "block_order": ["step-1", "step-2", "step-3", "step-4"],
-      "settings": {
-        "headline": "Vom Klick bis zum",
-        "headline_italic": "ersten Sonnenstrahl",
-        "description": "Du musst kein Elektriker sein. Wir haben den Prozess so simpel gemacht, dass die meisten Kund*innen ihr System innerhalb von zwei Wochen am Netz haben."
-      }
+      "block_order": [
+        "step-1",
+        "step-2",
+        "step-3",
+        "step-4"
+      ],
+      "settings": {}
     },
     "calculator": {
       "type": "calculator",
-      "settings": {
-        "headline": "Was bringt Solar auf",
-        "headline_italic": "deinem Dach",
-        "description": "Drei Schieberegler. Keine E-Mail, kein Anruf. Einfach ein ehrliches Bild der Zahlen."
-      }
+      "settings": {}
     },
     "why-us": {
       "type": "why-us",
@@ -100,16 +141,16 @@
           "type": "usp",
           "settings": {
             "icon": "leaf",
-            "title": "Marken\u00adunabh\u00e4ngig",
-            "description": "Wir sind an keinen Hersteller gebunden \u2014 wir empfehlen das, was f\u00fcr dein Dach wirklich passt. 8 Wechselrichter-Marken im Lager."
+            "title": "Marken­unabhängig",
+            "description": "Wir sind an keinen Hersteller gebunden — wir empfehlen das, was für dein Dach wirklich passt. 8 Wechselrichter-Marken im Lager."
           }
         },
         "usp-2": {
           "type": "usp",
           "settings": {
             "icon": "truck",
-            "title": "Versand aus \u00d6sterreich",
-            "description": "Zentrallager in Wiener Neustadt. Kein Zoll, keine 6-Wochen-Container-Lotterie. Paletten in 3\u20135 Werktagen bei dir."
+            "title": "Versand aus Österreich",
+            "description": "Zentrallager in Wiener Neustadt. Kein Zoll, keine 6-Wochen-Container-Lotterie. Paletten in 3–5 Werktagen bei dir."
           }
         },
         "usp-3": {
@@ -117,7 +158,7 @@
           "settings": {
             "icon": "shield",
             "title": "25 Jahre Garantie",
-            "description": "Auf Module wie Wechselrichter. Wir \u00fcbernehmen die Abwicklung \u2014 nicht du mit einem Hersteller in Shenzhen."
+            "description": "Auf Module wie Wechselrichter. Wir übernehmen die Abwicklung — nicht du mit einem Hersteller in Shenzhen."
           }
         },
         "usp-4": {
@@ -125,20 +166,17 @@
           "settings": {
             "icon": "tools",
             "title": "DIY oder Monteur",
-            "description": "Montage-Videos f\u00fcr Eigenleistung. Oder wir vermitteln zertifizierte Elektriker aus deinem Bezirk zum Fixpreis."
+            "description": "Montage-Videos für Eigenleistung. Oder wir vermitteln zertifizierte Elektriker aus deinem Bezirk zum Fixpreis."
           }
         }
       },
-      "block_order": ["usp-1", "usp-2", "usp-3", "usp-4"],
-      "settings": {
-        "eyebrow": "Warum Sonnwerk",
-        "headline": "Kein Hersteller.",
-        "headline_italic": "Dein Anwalt.",
-        "subtext": "Andere Shops pushen eine Marke, weil sie Margen-Deals haben. Wir sitzen auf deiner Seite des Tisches \u2014 und sagen dir auch, wenn das billigere Modul das bessere ist.",
-        "review_quote": "Nach drei Angeboten waren die einzigen, die mir abrieten, die gr\u00f6\u00dfere Anlage zu nehmen. Das hat Vertrauen geschaffen.",
-        "reviewer_name": "Martin H.",
-        "reviewer_meta": "Einfamilienhaus \u00b7 9,6 kWp \u00b7 Graz"
-      }
+      "block_order": [
+        "usp-1",
+        "usp-2",
+        "usp-3",
+        "usp-4"
+      ],
+      "settings": {}
     },
     "category-grid": {
       "type": "category-grid",
@@ -149,8 +187,8 @@
             "icon": "panel",
             "name": "Module",
             "count_label": "42 Modelle",
-            "from_label": "ab \u20ac 89",
-            "brands": "JA \u00b7 Longi \u00b7 Trina \u00b7 Meyer Burger"
+            "from_label": "ab € 89",
+            "brands": "JA · Longi · Trina · Meyer Burger"
           }
         },
         "cat-2": {
@@ -159,8 +197,8 @@
             "icon": "inverter",
             "name": "Wechselrichter",
             "count_label": "28 Modelle",
-            "from_label": "ab \u20ac 690",
-            "brands": "Fronius \u00b7 Huawei \u00b7 SMA \u00b7 Goodwe"
+            "from_label": "ab € 690",
+            "brands": "Fronius · Huawei · SMA · Goodwe"
           }
         },
         "cat-3": {
@@ -169,29 +207,28 @@
             "icon": "battery",
             "name": "Speicher",
             "count_label": "18 Modelle",
-            "from_label": "ab \u20ac 2.490",
-            "brands": "BYD \u00b7 Huawei \u00b7 Fronius \u00b7 Pylontech"
+            "from_label": "ab € 2.490",
+            "brands": "BYD · Huawei · Fronius · Pylontech"
           }
         },
         "cat-4": {
           "type": "category",
           "settings": {
             "icon": "plug",
-            "name": "Wallbox & Zubeh\u00f6r",
+            "name": "Wallbox & Zubehör",
             "count_label": "60+ Artikel",
-            "from_label": "ab \u20ac 49",
-            "brands": "go-e \u00b7 KEBA \u00b7 Wallbe \u00b7 Victron"
+            "from_label": "ab € 49",
+            "brands": "go-e · KEBA · Wallbe · Victron"
           }
         }
       },
-      "block_order": ["cat-1", "cat-2", "cat-3", "cat-4"],
-      "settings": {
-        "eyebrow": "Einzelkomponenten",
-        "headline": "Oder",
-        "headline_italic": "selbst",
-        "headline_suffix": "zusammenstellen.",
-        "subtext": "F\u00fcr Selbstmonteure und erfahrene Planer: alle Komponenten einzeln, mit Lagerbestand in Echtzeit."
-      }
+      "block_order": [
+        "cat-1",
+        "cat-2",
+        "cat-3",
+        "cat-4"
+      ],
+      "settings": {}
     },
     "faq": {
       "type": "faq",
@@ -199,65 +236,61 @@
         "faq-1": {
           "type": "item",
           "settings": {
-            "question": "Lohnt sich eine PV-Anlage bei den aktuellen Strompreisen \u00fcberhaupt noch?",
-            "answer": "<p>Ja \u2014 und zwar deutlicher als je zuvor. Die Strompreise in \u00d6sterreich liegen auch nach dem Peak 2023 bei durchschnittlich 34 Cent/kWh f\u00fcr Haushalte. Bei einem typischen 10-kWp-System mit 60\u00a0% Eigenverbrauch amortisiert sich die Anlage nach 6\u20138 Jahren. Der Nullsteuersatz (0\u00a0% USt bis 20\u00a0kWp) verk\u00fcrzt das zus\u00e4tzlich.</p>"
+            "question": "Lohnt sich eine PV-Anlage bei den aktuellen Strompreisen überhaupt noch?",
+            "answer": "<p>Ja — und zwar deutlicher als je zuvor. Die Strompreise in Österreich liegen auch nach dem Peak 2023 bei durchschnittlich 34 Cent/kWh für Haushalte. Bei einem typischen 10-kWp-System mit 60 % Eigenverbrauch amortisiert sich die Anlage nach 6–8 Jahren. Der Nullsteuersatz (0 % USt bis 20 kWp) verkürzt das zusätzlich.</p>"
           }
         },
         "faq-2": {
           "type": "item",
           "settings": {
             "question": "Ich verstehe die Technik nicht. Kann ich trotzdem bestellen?",
-            "answer": "<p>Genau daf\u00fcr sind unsere Komplettpakete da. Module, Wechselrichter, Montagesystem und Kabel sind vorab aufeinander abgestimmt \u2014 du musst nichts berechnen. Bei der kostenlosen Dach-Pr\u00fcfung gehen unsere Techniker dein Foto durch und best\u00e4tigen (oder passen an), was passt.</p>"
+            "answer": "<p>Genau dafür sind unsere Komplettpakete da. Module, Wechselrichter, Montagesystem und Kabel sind vorab aufeinander abgestimmt — du musst nichts berechnen. Bei der kostenlosen Dach-Prüfung gehen unsere Techniker dein Foto durch und bestätigen (oder passen an), was passt.</p>"
           }
         },
         "faq-3": {
           "type": "item",
           "settings": {
-            "question": "Was passiert, wenn in 8 Jahren ein Wechselrichter ausf\u00e4llt?",
-            "answer": "<p>Dann wickeln wir die Garantie f\u00fcr dich ab \u2014 nicht du mit einem Hersteller irgendwo in Asien. Wir haben 25 Jahre Produktgarantie auf Module und 10\u201312 Jahre auf Wechselrichter (verl\u00e4ngerbar auf 20). Ersatzger\u00e4te kommen in der Regel innerhalb einer Woche aus unserem Lager.</p>"
+            "question": "Was passiert, wenn in 8 Jahren ein Wechselrichter ausfällt?",
+            "answer": "<p>Dann wickeln wir die Garantie für dich ab — nicht du mit einem Hersteller irgendwo in Asien. Wir haben 25 Jahre Produktgarantie auf Module und 10–12 Jahre auf Wechselrichter (verlängerbar auf 20). Ersatzgeräte kommen in der Regel innerhalb einer Woche aus unserem Lager.</p>"
           }
         },
         "faq-4": {
           "type": "item",
           "settings": {
             "question": "Liefert ihr nach Deutschland?",
-            "answer": "<p>Ja, Lieferung nach Deutschland ist m\u00f6glich \u2014 allerdings mit 3\u20135 Werktagen zus\u00e4tzlicher Transitzeit und DE-Umsatzsteuersatz. Wenn du in grenznahen Bundesl\u00e4ndern wohnst, fragst du am besten direkt \u00fcber das Formular an.</p>"
+            "answer": "<p>Ja, Lieferung nach Deutschland ist möglich — allerdings mit 3–5 Werktagen zusätzlicher Transitzeit und DE-Umsatzsteuersatz. Wenn du in grenznahen Bundesländern wohnst, fragst du am besten direkt über das Formular an.</p>"
           }
         },
         "faq-5": {
           "type": "item",
           "settings": {
             "question": "Was brauche ich von meinem Netzbetreiber?",
-            "answer": "<p>Eine Anmeldung der Erzeugungsanlage \u2014 das machst entweder du selbst oder wir \u00fcbernehmen es f\u00fcr \u20ac\u00a0190 pauschal. Ben\u00f6tigt werden Z\u00e4hlpunktnummer, Wechselrichter-Datenblatt und eine Konformit\u00e4tserkl\u00e4rung. Bei Anlagen bis 20\u00a0kWp ist der Prozess in \u00d6sterreich seit 2023 stark vereinfacht.</p>"
+            "answer": "<p>Eine Anmeldung der Erzeugungsanlage — das machst entweder du selbst oder wir übernehmen es für € 190 pauschal. Benötigt werden Zählpunktnummer, Wechselrichter-Datenblatt und eine Konformitätserklärung. Bei Anlagen bis 20 kWp ist der Prozess in Österreich seit 2023 stark vereinfacht.</p>"
           }
         },
         "faq-6": {
           "type": "item",
           "settings": {
             "question": "Kann ich die Module selbst montieren?",
-            "answer": "<p>Die mechanische Montage ja \u2014 viele unserer Kund*innen machen das als Wochenendprojekt zu zweit. Den elektrischen Anschluss ans Hausnetz muss aber in \u00d6sterreich und Deutschland eine konzessionierte Elektrofachkraft durchf\u00fchren. Wir vermitteln Elektriker, die nur den Schlussanschluss \u00fcbernehmen, ab \u20ac\u00a0490.</p>"
+            "answer": "<p>Die mechanische Montage ja — viele unserer Kund*innen machen das als Wochenendprojekt zu zweit. Den elektrischen Anschluss ans Hausnetz muss aber in Österreich und Deutschland eine konzessionierte Elektrofachkraft durchführen. Wir vermitteln Elektriker, die nur den Schlussanschluss übernehmen, ab € 490.</p>"
           }
         }
       },
-      "block_order": ["faq-1", "faq-2", "faq-3", "faq-4", "faq-5", "faq-6"],
+      "block_order": [
+        "faq-1",
+        "faq-2",
+        "faq-3",
+        "faq-4",
+        "faq-5",
+        "faq-6"
+      ],
       "settings": {
-        "eyebrow": "H\u00e4ufige Fragen",
-        "headline_line1": "Ehrliche",
-        "headline_line2": "Antworten.",
-        "headline_italic": "Keine Verkaufsfloskeln.",
-        "subtext": "Etwas nicht dabei? Ruf uns einfach an \u2014 ein Techniker, kein Callcenter.",
         "phone": "+43 1 234 56 78"
       }
     },
     "final-cta": {
       "type": "final-cta",
-      "settings": {
-        "eyebrow": "Letzte Frage",
-        "headline": "Worauf\nwartest\ndu noch?",
-        "subtext": "Jede Woche ohne Anlage sind etwa \u20ac\u00a032 Strom, die du dem Netzbetreiber schenkst. Das muss nicht sein.",
-        "cta_primary_text": "Paket w\u00e4hlen",
-        "cta_ghost_text": "Erst rechnen"
-      }
+      "settings": {}
     }
   },
   "order": [

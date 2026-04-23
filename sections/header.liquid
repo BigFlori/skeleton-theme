@@ -37,7 +37,9 @@
       {%- if localization.available_languages.size > 1 -%}
         <div class="sw-nav__locale-wrapper">
           {%- form 'localization', class: 'sw-nav__locale-form' -%}
-            <input type="hidden" name="return_to" value="{{ request.path }}">
+            {%- assign return_path = request.path | remove_first: routes.root_url -%}
+            {%- if return_path == blank -%}{%- assign return_path = '/' -%}{%- endif -%}
+            <input type="hidden" name="return_to" value="{{ return_path }}">
             <button type="button" class="btn btn-ghost sw-nav__locale-btn" aria-haspopup="listbox" aria-expanded="false" data-locale-btn>
               {%- case localization.language.iso_code -%}
                 {%- when 'de' -%}

@@ -4,50 +4,49 @@
 
       {%- comment -%} Left sticky column {%- endcomment -%}
       <div class="sw-why__sticky">
-        <span class="eyebrow">04 &middot; {{ section.settings.eyebrow }}</span>
+        <span class="eyebrow">04 &middot; {{ 'sections.why_us.eyebrow' | t }}</span>
         <h2 class="display sw-why__headline">
-          {{ section.settings.headline }}<br>
-          <em class="sw-why__headline-em">{{ section.settings.headline_italic }}</em>
+          {{ 'sections.why_us.headline' | t }}<br>
+          <em class="sw-why__headline-em">{{ 'sections.why_us.headline_italic' | t }}</em>
         </h2>
-        <p class="sw-why__sub">{{ section.settings.subtext }}</p>
+        <p class="sw-why__sub">{{ 'sections.why_us.subtext' | t }}</p>
 
-        {%- if section.settings.review_quote != blank -%}
-          <div class="sw-why__review">
-            <div class="sw-why__stars" aria-label="5 von 5 Sternen">
-              {%- for i in (1..5) -%}
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                </svg>
-              {%- endfor -%}
-            </div>
-            <blockquote class="display sw-why__quote">
-              &bdquo;{{ section.settings.review_quote }}&ldquo;
-            </blockquote>
-            <div class="sw-why__reviewer">
-              {%- if section.settings.reviewer_image != blank -%}
-                <img
-                  src="{{ section.settings.reviewer_image | image_url: width: 64 }}"
-                  alt="{{ section.settings.reviewer_name }}"
-                  width="32" height="32"
-                  class="sw-why__avatar"
-                  loading="lazy"
-                >
-              {%- else -%}
-                <div class="sw-why__avatar-ph" aria-hidden="true"></div>
-              {%- endif -%}
-              <div>
-                <div class="sw-why__reviewer-name">{{ section.settings.reviewer_name }}</div>
-                <div class="mono sw-why__reviewer-meta">{{ section.settings.reviewer_meta }}</div>
-              </div>
+        <div class="sw-why__review">
+          <div class="sw-why__stars" aria-label="5 von 5 Sternen">
+            {%- for i in (1..5) -%}
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+            {%- endfor -%}
+          </div>
+          <blockquote class="display sw-why__quote">
+            &bdquo;{{ 'sections.why_us.review_quote' | t }}&ldquo;
+          </blockquote>
+          <div class="sw-why__reviewer">
+            {%- if section.settings.reviewer_image != blank -%}
+              <img
+                src="{{ section.settings.reviewer_image | image_url: width: 64 }}"
+                alt="{{ 'sections.why_us.reviewer_name' | t }}"
+                width="32" height="32"
+                class="sw-why__avatar"
+                loading="lazy"
+              >
+            {%- else -%}
+              <div class="sw-why__avatar-ph" aria-hidden="true"></div>
+            {%- endif -%}
+            <div>
+              <div class="sw-why__reviewer-name">{{ 'sections.why_us.reviewer_name' | t }}</div>
+              <div class="mono sw-why__reviewer-meta">{{ 'sections.why_us.reviewer_meta' | t }}</div>
             </div>
           </div>
-        {%- endif -%}
+        </div>
       </div>
 
       {%- comment -%} Right USP grid {%- endcomment -%}
       <div class="sw-why__usps">
         {%- for block in section.blocks -%}
           {%- if block.type == 'usp' -%}
+            {%- assign usp_key = 'sections.why_us.usp_' | append: forloop.index -%}
             <div class="sw-why__usp" {{ block.shopify_attributes }}>
               <div class="sw-why__usp-icon" aria-hidden="true">
                 {%- case block.settings.icon -%}
@@ -77,8 +76,8 @@
                     </svg>
                 {%- endcase -%}
               </div>
-              <h3 class="sw-why__usp-title">{{ block.settings.title }}</h3>
-              <p class="sw-why__usp-desc">{{ block.settings.description }}</p>
+              <h3 class="sw-why__usp-title">{{ usp_key | append: '_title' | t }}</h3>
+              <p class="sw-why__usp-desc">{{ usp_key | append: '_description' | t }}</p>
             </div>
           {%- endif -%}
         {%- endfor -%}
@@ -251,55 +250,9 @@
   "name": "Why Us",
   "settings": [
     {
-      "type": "text",
-      "id": "eyebrow",
-      "label": "Eyebrow",
-      "default": "Why Sonnwerk"
-    },
-    {
-      "type": "text",
-      "id": "headline",
-      "label": "Headline",
-      "default": "No manufacturer."
-    },
-    {
-      "type": "text",
-      "id": "headline_italic",
-      "label": "Headline italic part",
-      "default": "Your advocate."
-    },
-    {
-      "type": "textarea",
-      "id": "subtext",
-      "label": "Subtext",
-      "default": "Other shops push a brand because they have margin deals. We sit on your side of the table \u2014 and we\u2019ll tell you when the cheaper module is the better one."
-    },
-    {
-      "type": "header",
-      "content": "Review"
-    },
-    {
-      "type": "textarea",
-      "id": "review_quote",
-      "label": "Review quote",
-      "default": "After three quotes, they were the only ones who advised me against getting the bigger system. That built trust."
-    },
-    {
       "type": "image_picker",
       "id": "reviewer_image",
       "label": "Reviewer avatar"
-    },
-    {
-      "type": "text",
-      "id": "reviewer_name",
-      "label": "Reviewer name",
-      "default": "Martin H."
-    },
-    {
-      "type": "text",
-      "id": "reviewer_meta",
-      "label": "Reviewer meta",
-      "default": "Single-family home · 9.6 kWp · Graz"
     }
   ],
   "blocks": [
@@ -312,12 +265,30 @@
           "id": "icon",
           "label": "Icon",
           "options": [
-            { "value": "leaf",   "label": "Leaf" },
-            { "value": "truck",  "label": "Truck" },
-            { "value": "shield", "label": "Shield" },
-            { "value": "tools",  "label": "Tools" },
-            { "value": "star",   "label": "Star" },
-            { "value": "sun",    "label": "Sun" }
+            {
+              "value": "leaf",
+              "label": "Leaf"
+            },
+            {
+              "value": "truck",
+              "label": "Truck"
+            },
+            {
+              "value": "shield",
+              "label": "Shield"
+            },
+            {
+              "value": "tools",
+              "label": "Tools"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            },
+            {
+              "value": "sun",
+              "label": "Sun"
+            }
           ],
           "default": "leaf"
         },
@@ -345,7 +316,7 @@
           "settings": {
             "icon": "leaf",
             "title": "Brand-independent",
-            "description": "We\u2019re not tied to any manufacturer \u2014 we recommend what really fits your roof. 8 inverter brands in stock."
+            "description": "We’re not tied to any manufacturer — we recommend what really fits your roof. 8 inverter brands in stock."
           }
         },
         {
@@ -353,7 +324,7 @@
           "settings": {
             "icon": "truck",
             "title": "Ships from Austria",
-            "description": "Central warehouse in Wiener Neustadt. No customs, no 6-week container lottery. Pallets at your door in 3\u20135 business days."
+            "description": "Central warehouse in Wiener Neustadt. No customs, no 6-week container lottery. Pallets at your door in 3–5 business days."
           }
         },
         {
@@ -361,7 +332,7 @@
           "settings": {
             "icon": "shield",
             "title": "25-year warranty",
-            "description": "On modules and inverters. We handle the process \u2014 not you with a manufacturer in Shenzhen."
+            "description": "On modules and inverters. We handle the process — not you with a manufacturer in Shenzhen."
           }
         },
         {

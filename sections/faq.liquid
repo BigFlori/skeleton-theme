@@ -3,13 +3,13 @@
 
     {%- comment -%} Left sticky column {%- endcomment -%}
     <div class="sw-faq__sticky">
-      <span class="eyebrow">06 &middot; {{ section.settings.eyebrow }}</span>
+      <span class="eyebrow">06 &middot; {{ 'sections.faq.eyebrow' | t }}</span>
       <h2 class="display sw-faq__headline">
-        {{ section.settings.headline_line1 }}<br>
-        {{ section.settings.headline_line2 }}<br>
-        <em class="sw-faq__headline-em">{{ section.settings.headline_italic }}</em>
+        {{ 'sections.faq.headline_line1' | t }}<br>
+        {{ 'sections.faq.headline_line2' | t }}<br>
+        <em class="sw-faq__headline-em">{{ 'sections.faq.headline_italic' | t }}</em>
       </h2>
-      <p class="sw-faq__sub">{{ section.settings.subtext }}</p>
+      <p class="sw-faq__sub">{{ 'sections.faq.subtext' | t }}</p>
       {%- if section.settings.phone != blank -%}
         <a href="tel:{{ section.settings.phone | remove: ' ' }}" class="sw-faq__phone-cta btn btn-secondary">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -24,6 +24,7 @@
     <div class="sw-faq__list" id="sw-faq-list">
       {%- for block in section.blocks -%}
         {%- if block.type == 'item' -%}
+          {%- assign faq_key = 'sections.faq.faq_' | append: forloop.index -%}
           <div class="sw-faq__item" {{ block.shopify_attributes }}>
             <button
               class="sw-faq__trigger"
@@ -31,7 +32,7 @@
               aria-controls="sw-faq-answer-{{ block.id }}"
               type="button"
             >
-              <span class="sw-faq__question">{{ block.settings.question }}</span>
+              <span class="sw-faq__question">{{ faq_key | append: '_question' | t }}</span>
               <span class="sw-faq__toggle-icon" aria-hidden="true">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
@@ -43,7 +44,7 @@
               id="sw-faq-answer-{{ block.id }}"
               role="region"
             >
-              <div class="sw-faq__answer-inner">{{ block.settings.answer }}</div>
+              <div class="sw-faq__answer-inner">{{ faq_key | append: '_answer' | t }}</div>
             </div>
           </div>
         {%- endif -%}
@@ -238,36 +239,6 @@
   "settings": [
     {
       "type": "text",
-      "id": "eyebrow",
-      "label": "Eyebrow",
-      "default": "Frequently asked questions"
-    },
-    {
-      "type": "text",
-      "id": "headline_line1",
-      "label": "Headline line 1",
-      "default": "Honest"
-    },
-    {
-      "type": "text",
-      "id": "headline_line2",
-      "label": "Headline line 2",
-      "default": "Answers."
-    },
-    {
-      "type": "text",
-      "id": "headline_italic",
-      "label": "Headline italic line (accent color)",
-      "default": "No sales pitch."
-    },
-    {
-      "type": "textarea",
-      "id": "subtext",
-      "label": "Subtext",
-      "default": "Something not covered? Just call us \u2014 a technician, not a call centre."
-    },
-    {
-      "type": "text",
       "id": "phone",
       "label": "Phone number",
       "default": "+43 1 234 56 78"
@@ -301,42 +272,42 @@
           "type": "item",
           "settings": {
             "question": "Is a PV system still worth it at current electricity prices?",
-            "answer": "<p>Yes \u2014 more clearly than ever. Electricity prices in Austria remain at an average of 34 cents/kWh for households even after the 2023 peak. For a typical 10 kWp system with 60\u00A0% self-consumption, the system pays for itself in 6\u20138 years. The zero VAT rate (0\u00A0% up to 20\u00A0kWp) shortens that further.</p>"
+            "answer": "<p>Yes — more clearly than ever. Electricity prices in Austria remain at an average of 34 cents/kWh for households even after the 2023 peak. For a typical 10 kWp system with 60 % self-consumption, the system pays for itself in 6–8 years. The zero VAT rate (0 % up to 20 kWp) shortens that further.</p>"
           }
         },
         {
           "type": "item",
           "settings": {
-            "question": "I don\u2019t understand the technology. Can I still order?",
-            "answer": "<p>That\u2019s exactly what our complete packages are for. Modules, inverters, mounting system and cables are pre-matched \u2014 you don\u2019t need to calculate anything. During the free roof check, our engineers go through your photo and confirm (or adjust) what fits.</p>"
+            "question": "I don’t understand the technology. Can I still order?",
+            "answer": "<p>That’s exactly what our complete packages are for. Modules, inverters, mounting system and cables are pre-matched — you don’t need to calculate anything. During the free roof check, our engineers go through your photo and confirm (or adjust) what fits.</p>"
           }
         },
         {
           "type": "item",
           "settings": {
             "question": "What happens if an inverter fails in 8 years?",
-            "answer": "<p>We handle the warranty for you \u2014 not you with a manufacturer somewhere in Asia. We offer 25-year product warranty on modules and 10\u201312 years on inverters (extendable to 20). Replacement units typically ship from our warehouse within one week.</p>"
+            "answer": "<p>We handle the warranty for you — not you with a manufacturer somewhere in Asia. We offer 25-year product warranty on modules and 10–12 years on inverters (extendable to 20). Replacement units typically ship from our warehouse within one week.</p>"
           }
         },
         {
           "type": "item",
           "settings": {
             "question": "Do you deliver to Germany?",
-            "answer": "<p>Yes, delivery to Germany is possible \u2014 with an additional 3\u20135 business days transit time and German VAT rate. If you live in border states, it\u2019s best to enquire directly via the form.</p>"
+            "answer": "<p>Yes, delivery to Germany is possible — with an additional 3–5 business days transit time and German VAT rate. If you live in border states, it’s best to enquire directly via the form.</p>"
           }
         },
         {
           "type": "item",
           "settings": {
             "question": "What do I need from my grid operator?",
-            "answer": "<p>A registration of the generation system \u2014 either you do it yourself or we handle it for a flat fee of \u20AC\u00A0190. You\u2019ll need the meter point number, inverter datasheet and a declaration of conformity. For systems up to 20\u00A0kWp in Austria, the process has been greatly simplified since 2023.</p>"
+            "answer": "<p>A registration of the generation system — either you do it yourself or we handle it for a flat fee of € 190. You’ll need the meter point number, inverter datasheet and a declaration of conformity. For systems up to 20 kWp in Austria, the process has been greatly simplified since 2023.</p>"
           }
         },
         {
           "type": "item",
           "settings": {
             "question": "Can I install the modules myself?",
-            "answer": "<p>The mechanical installation yes \u2014 many of our customers do it as a weekend project in pairs. However, the electrical connection to the household grid must be carried out by a licensed electrician in Austria and Germany. We arrange electricians who only handle the final connection from \u20AC\u00A0490.</p>"
+            "answer": "<p>The mechanical installation yes — many of our customers do it as a weekend project in pairs. However, the electrical connection to the household grid must be carried out by a licensed electrician in Austria and Germany. We arrange electricians who only handle the final connection from € 490.</p>"
           }
         }
       ]
