@@ -1,0 +1,584 @@
+<section class="sw-contact-grid full-width">
+  <div class="container sw-contact-grid__inner">
+
+    {%- comment -%} Left: contact form {%- endcomment -%}
+    <div class="sw-contact-form-wrap">
+
+      {%- form 'contact' -%}
+        <div class="sw-contact-form">
+
+          {%- comment -%} Section heading {%- endcomment -%}
+          <div class="sw-contact-form__header">
+            <div class="mono sw-contact-form__step">01 · {{ 'sections.contact_form.step' | t }}</div>
+            <h2 class="display sw-contact-form__title">{{ 'sections.contact_form.title' | t }}</h2>
+          </div>
+
+          {%- comment -%} Success state {%- endcomment -%}
+          {%- if form.posted_successfully? -%}
+            <div class="sw-contact-form__success" role="alert">
+              {%- render 'icon', icon: 'check' -%}
+              <span>{{ 'sections.contact_form.success' | t }}</span>
+            </div>
+          {%- endif -%}
+
+          {%- comment -%} Inline errors {%- endcomment -%}
+          {%- if form.errors -%}
+            <div class="sw-contact-form__errors" role="alert">
+              {{ form.errors | default_errors }}
+            </div>
+          {%- endif -%}
+
+          {%- comment -%} Name + Email row {%- endcomment -%}
+          <div class="sw-contact-form__row">
+            <div class="sw-field">
+              <label for="ContactFormName" class="sw-field__label">
+                {{ 'sections.contact_form.field_name' | t }}
+                <span class="sw-field__required" aria-hidden="true">*</span>
+              </label>
+              <input
+                id="ContactFormName"
+                type="text"
+                name="contact[name]"
+                class="sw-field__input"
+                value="{{ form.name }}"
+                placeholder="{{ 'sections.contact_form.placeholder_name' | t }}"
+                autocomplete="name"
+                required
+              >
+            </div>
+            <div class="sw-field">
+              <label for="ContactFormEmail" class="sw-field__label">
+                {{ 'sections.contact_form.field_email' | t }}
+                <span class="sw-field__required" aria-hidden="true">*</span>
+              </label>
+              <input
+                id="ContactFormEmail"
+                type="email"
+                name="contact[email]"
+                class="sw-field__input"
+                value="{{ form.email }}"
+                placeholder="{{ 'sections.contact_form.placeholder_email' | t }}"
+                autocomplete="email"
+                required
+              >
+            </div>
+          </div>
+
+          {%- comment -%} Phone + Topic row {%- endcomment -%}
+          <div class="sw-contact-form__row">
+            <div class="sw-field">
+              <label for="ContactFormPhone" class="sw-field__label">
+                {{ 'sections.contact_form.field_phone' | t }}
+                <span class="sw-field__optional">{{ 'sections.contact_form.optional' | t }}</span>
+              </label>
+              <input
+                id="ContactFormPhone"
+                type="tel"
+                name="contact[phone]"
+                class="sw-field__input"
+                value="{{ form.phone }}"
+                placeholder="{{ 'sections.contact_form.placeholder_phone' | t }}"
+                autocomplete="tel"
+              >
+            </div>
+            <div class="sw-field">
+              <label for="ContactFormTopic" class="sw-field__label">
+                {{ 'sections.contact_form.field_topic' | t }}
+              </label>
+              <select id="ContactFormTopic" name="contact[topic]" class="sw-field__input sw-field__select">
+                <option value="general">{{ 'sections.contact_form.topic_general' | t }}</option>
+                <option value="quote">{{ 'sections.contact_form.topic_quote' | t }}</option>
+                <option value="compat">{{ 'sections.contact_form.topic_compat' | t }}</option>
+                <option value="installer">{{ 'sections.contact_form.topic_installer' | t }}</option>
+                <option value="warranty">{{ 'sections.contact_form.topic_warranty' | t }}</option>
+                <option value="b2b">{{ 'sections.contact_form.topic_b2b' | t }}</option>
+              </select>
+            </div>
+          </div>
+
+          {%- comment -%} Message {%- endcomment -%}
+          <div class="sw-field">
+            <label for="ContactFormBody" class="sw-field__label">
+              {{ 'sections.contact_form.field_message' | t }}
+              <span class="sw-field__required" aria-hidden="true">*</span>
+            </label>
+            <textarea
+              id="ContactFormBody"
+              name="contact[body]"
+              class="sw-field__input sw-field__textarea"
+              placeholder="{{ 'sections.contact_form.placeholder_message' | t }}"
+              rows="5"
+              required
+            >{{ form.body }}</textarea>
+          </div>
+
+          {%- comment -%} Footer: privacy note + submit {%- endcomment -%}
+          <div class="sw-contact-form__footer">
+            <p class="mono sw-contact-form__privacy">{{ 'sections.contact_form.privacy_note' | t }}</p>
+            <button type="submit" class="btn btn-primary sw-contact-form__submit">
+              {{ 'sections.contact_form.submit' | t }}
+              {%- render 'icon', icon: 'arrow-right', size: 15 -%}
+            </button>
+          </div>
+
+        </div>
+      {%- endform -%}
+    </div>
+
+    {%- comment -%} Right: info sidebar {%- endcomment -%}
+    <aside class="sw-contact-info">
+
+      {%- comment -%} Phone card — pulled from Shopify Admin › Settings › Store details {%- endcomment -%}
+      {%- if shop.phone != blank -%}
+        <a href="tel:{{ shop.phone | remove: ' ' }}" class="sw-contact-info__card">
+      {%- else -%}
+        <div class="sw-contact-info__card sw-contact-info__card--missing">
+      {%- endif -%}
+          <div class="sw-contact-info__icon" aria-hidden="true">
+            {%- render 'icon', icon: 'phone' -%}
+          </div>
+          <div class="sw-contact-info__body">
+            <div class="mono sw-contact-info__label">{{ 'sections.contact_form.info_call' | t }}</div>
+            {%- if shop.phone != blank -%}
+              <div class="display sw-contact-info__value" id="sw-phone-display" data-raw="{{ shop.phone | escape }}">{{ shop.phone }}</div>
+              <div class="sw-contact-info__sub">{{ 'sections.contact_form.phone_hours' | t }}</div>
+            {%- else -%}
+              <div class="mono sw-contact-info__missing">{{ 'sections.contact_form.not_set_phone' | t }}</div>
+            {%- endif -%}
+          </div>
+          {%- if shop.phone != blank -%}
+            {%- render 'icon', icon: 'arrow-external', size: 18, css_class: 'sw-contact-info__arrow' -%}
+          {%- endif -%}
+      {%- if shop.phone != blank -%}
+        </a>
+      {%- else -%}
+        </div>
+      {%- endif -%}
+
+      {%- comment -%} Email card — pulled from Shopify Admin › Settings › Store details {%- endcomment -%}
+      {%- if shop.email != blank -%}
+        <a href="mailto:{{ shop.email }}" class="sw-contact-info__card">
+      {%- else -%}
+        <div class="sw-contact-info__card sw-contact-info__card--missing">
+      {%- endif -%}
+          <div class="sw-contact-info__icon" aria-hidden="true">
+            {%- render 'icon', icon: 'globe' -%}
+          </div>
+          <div class="sw-contact-info__body">
+            <div class="mono sw-contact-info__label">{{ 'sections.contact_form.info_email' | t }}</div>
+            {%- if shop.email != blank -%}
+              <div class="display sw-contact-info__value">{{ shop.email }}</div>
+              <div class="sw-contact-info__sub">{{ 'sections.contact_form.email_sub' | t }}</div>
+            {%- else -%}
+              <div class="mono sw-contact-info__missing">{{ 'sections.contact_form.not_set_email' | t }}</div>
+            {%- endif -%}
+          </div>
+          {%- if shop.email != blank -%}
+            {%- render 'icon', icon: 'arrow-external', size: 18, css_class: 'sw-contact-info__arrow' -%}
+          {%- endif -%}
+      {%- if shop.email != blank -%}
+        </a>
+      {%- else -%}
+        </div>
+      {%- endif -%}
+
+      {%- comment -%} Address card — pulled from Shopify Admin › Settings › Store details {%- endcomment -%}
+      {%- liquid
+        assign shop_address1 = shop.address.address1
+        assign shop_city     = shop.address.city
+        assign shop_zip      = shop.address.zip
+        assign shop_country  = shop.address.country
+        if shop_address1 != blank or shop_city != blank or shop_zip != blank
+          assign has_address = true
+        else
+          assign has_address = false
+        endif
+        assign shop_location_line = ''
+        if shop_zip != blank
+          assign shop_location_line = shop_zip
+        endif
+        if shop_city != blank
+          assign shop_location_line = shop_location_line | append: ' ' | append: shop_city | strip
+        endif
+        if shop_country != blank
+          assign shop_location_line = shop_location_line | append: ', ' | append: shop_country
+        endif
+      -%}
+      {%- if has_address and section.settings.maps_url != blank -%}
+        <a href="{{ section.settings.maps_url }}" class="sw-contact-info__card" target="_blank" rel="noopener">
+      {%- else -%}
+        <div class="sw-contact-info__card{% unless has_address %} sw-contact-info__card--missing{% endunless %}">
+      {%- endif -%}
+          <div class="sw-contact-info__icon" aria-hidden="true">
+            {%- render 'icon', icon: 'warehouse' -%}
+          </div>
+          <div class="sw-contact-info__body">
+            <div class="mono sw-contact-info__label">{{ 'sections.contact_form.info_warehouse' | t }}</div>
+            {%- if has_address -%}
+              <div class="display sw-contact-info__value">{{ shop_address1 | default: shop_city }}</div>
+              <div class="sw-contact-info__sub">
+                {%- if shop_location_line != blank -%}{{ shop_location_line }} ·&nbsp;{%- endif -%}
+                {{ 'sections.contact_form.address_appointment' | t }}
+              </div>
+            {%- else -%}
+              <div class="mono sw-contact-info__missing">{{ 'sections.contact_form.not_set_address' | t }}</div>
+            {%- endif -%}
+          </div>
+          {%- if has_address and section.settings.maps_url != blank -%}
+            {%- render 'icon', icon: 'arrow-external', size: 18, css_class: 'sw-contact-info__arrow' -%}
+          {%- endif -%}
+      {%- if has_address and section.settings.maps_url != blank -%}
+        </a>
+      {%- else -%}
+        </div>
+      {%- endif -%}
+
+    </aside>
+  </div>
+</section>
+
+{% stylesheet %}
+.sw-contact-grid {
+  padding-top: var(--s-4);
+  padding-bottom: var(--s-6);
+}
+
+.sw-contact-grid__inner {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: var(--s-5);
+  align-items: start;
+}
+
+/* ── Form card ── */
+.sw-contact-form {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  padding: clamp(28px, 4vw, 48px);
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.sw-contact-form__header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sw-contact-form__step {
+  font-size: 11px;
+  color: var(--ink-mute);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.sw-contact-form__title {
+  font-size: 38px;
+  line-height: 1.05;
+}
+
+.sw-contact-form__success {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 18px;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  color: var(--accent-deep);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.sw-contact-form__errors {
+  padding: 14px 18px;
+  background: oklch(0.96 0.04 25);
+  border: 1px solid oklch(0.75 0.14 25);
+  border-radius: var(--radius);
+  color: oklch(0.40 0.16 25);
+  font-size: 14px;
+}
+
+.sw-contact-form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.sw-contact-form__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.sw-contact-form__privacy {
+  font-size: 11px;
+  color: var(--ink-mute);
+  max-width: 320px;
+  line-height: 1.5;
+}
+
+/* ── Field ── */
+.sw-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sw-field__label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-mute);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.sw-field__required {
+  color: oklch(0.55 0.20 25);
+}
+
+.sw-field__optional {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  text-transform: none;
+  letter-spacing: 0;
+  opacity: 0.6;
+}
+
+.sw-field__input {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-size: 15px;
+  color: var(--ink);
+  font-family: var(--font-sans);
+  width: 100%;
+  transition: border-color 0.2s, background 0.2s;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.sw-field__input:focus {
+  outline: none;
+  border-color: var(--accent-deep);
+  background: var(--bg);
+}
+
+.sw-field__textarea {
+  resize: vertical;
+  min-height: 130px;
+  line-height: 1.5;
+}
+
+.sw-field__select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 38px;
+  cursor: pointer;
+}
+
+/* ── Info sidebar ── */
+.sw-contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: sticky;
+  top: 100px;
+}
+
+.sw-contact-info__card {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  padding: 22px 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.sw-contact-info__card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.sw-contact-info__icon {
+  width: 44px;
+  height: 44px;
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.sw-contact-info__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.sw-contact-info__label {
+  font-size: 10px;
+  color: var(--ink-mute);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.sw-contact-info__missing {
+  font-size: 11px;
+  color: var(--sun);
+  margin-top: 6px;
+  line-height: 1.4;
+  background: oklch(0.55 0.12 82 / 0.12);
+  border-radius: 6px;
+  padding: 6px 10px;
+}
+
+.sw-contact-info__card--missing {
+  opacity: 0.75;
+  cursor: default;
+  border-style: dashed;
+}
+
+.sw-contact-info__value {
+  font-size: 20px;
+  margin-top: 4px;
+  line-height: 1.2;
+  word-break: break-word;
+}
+
+.sw-contact-info__sub {
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin-top: 5px;
+}
+
+.sw-contact-info__arrow {
+  color: var(--ink-mute);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .sw-contact-grid__inner {
+    grid-template-columns: 1fr;
+  }
+
+  .sw-contact-info {
+    position: static;
+  }
+
+  .sw-contact-info__card {
+    align-items: center;
+  }
+}
+
+@media (max-width: 560px) {
+  .sw-contact-form__row {
+    grid-template-columns: 1fr;
+  }
+
+  .sw-contact-form__footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .sw-contact-form__submit {
+    width: 100%;
+    justify-content: center;
+  }
+}
+{% endstylesheet %}
+
+<script>
+(function () {
+  var el = document.getElementById('sw-phone-display');
+  if (!el) return;
+
+  var raw = el.dataset.raw || el.textContent;
+  el.textContent = formatHunPhone(raw);
+
+  function formatHunPhone(raw) {
+    var digits = raw.replace(/[^\d]/g, '');
+
+    // Normalize 06... prefix to +36
+    if (raw.match(/^06/)) {
+      digits = '36' + digits.slice(2);
+    } else if (raw.match(/^\+36/)) {
+      digits = '36' + digits.slice(2); // re-use already stripped version
+    } else {
+      // Not a Hungarian number — return original
+      return raw;
+    }
+
+    // At this point digits starts with "36"
+    var local = digits.slice(2); // strip country code
+
+    // Budapest landline: starts with 1, 8 local digits → +36 1 XXX XXXX
+    if (local.charAt(0) === '1' && local.length === 8) {
+      return '+36 1 ' + local.slice(1, 4) + ' ' + local.slice(4);
+    }
+
+    // Mobile (20/30/31/50/70) or other 2-digit prefix: 9 local digits → +36 XX XXX XXXX
+    if (local.length === 9) {
+      return '+36 ' + local.slice(0, 2) + ' ' + local.slice(2, 5) + ' ' + local.slice(5);
+    }
+
+    // Other landline: 2-digit area code, 6 digits total → +36 XX XXX XXX
+    if (local.length === 8) {
+      return '+36 ' + local.slice(0, 2) + ' ' + local.slice(2, 5) + ' ' + local.slice(5);
+    }
+
+    // Fallback — return original unchanged
+    return raw;
+  }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Contact Form",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Phone",
+      "info": "Phone number is pulled from Shopify Admin → Settings → Store details"
+    },
+    {
+      "type": "header",
+      "content": "Email",
+      "info": "Email address is pulled from Shopify Admin → Settings → Store details"
+    },
+    {
+      "type": "header",
+      "content": "Warehouse",
+      "info": "Address is pulled from Shopify Admin → Settings → Store details"
+    },
+    {
+      "type": "url",
+      "id": "maps_url",
+      "label": "Google Maps link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact Form",
+      "settings": {}
+    }
+  ]
+}
+{% endschema %}

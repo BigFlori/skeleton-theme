@@ -1,0 +1,135 @@
+{%- liquid
+  assign layout = section.settings.layout
+-%}
+
+<section class="sw-contact-hero sw-contact-hero--{{ layout }}">
+  <div class="container">
+    {%- if layout == 'centered' -%}
+
+      <div class="sw-contact-hero__centered">
+        <span class="eyebrow">{{ 'sections.contact_hero.eyebrow' | t }}</span>
+        <h1 class="display sw-contact-hero__heading sw-contact-hero__heading--centered">
+          {{ 'sections.contact_hero.heading_line1' | t }}<br>
+          <em>{{ 'sections.contact_hero.heading_em' | t }}</em>.
+        </h1>
+        <p class="sw-contact-hero__sub sw-contact-hero__sub--centered">
+          {{ 'sections.contact_hero.subcopy' | t }}
+        </p>
+      </div>
+
+    {%- elsif layout == 'editorial' -%}
+
+      <span class="eyebrow">{{ 'sections.contact_hero.eyebrow' | t }} · Sonnwerk</span>
+      <h1 class="display sw-contact-hero__heading sw-contact-hero__heading--editorial">
+        {{ 'sections.contact_hero.heading_line1' | t }}<br>
+        <em class="sw-contact-hero__em--accent">{{ 'sections.contact_hero.heading_em' | t }}</em>.
+      </h1>
+
+    {%- else -%}
+
+      {%- comment -%} split (default) {%- endcomment -%}
+      <span class="eyebrow">{{ 'sections.contact_hero.eyebrow' | t }}</span>
+      <h1 class="display sw-contact-hero__heading">
+        {{ 'sections.contact_hero.heading_line1' | t }}
+        <em class="sw-contact-hero__em--accent">{{ 'sections.contact_hero.heading_em' | t }}</em>.
+      </h1>
+      <p class="sw-contact-hero__sub">{{ 'sections.contact_hero.subcopy' | t }}</p>
+
+    {%- endif -%}
+  </div>
+</section>
+
+{% stylesheet %}
+.sw-contact-hero {
+  padding-top: var(--s-5);
+  padding-bottom: var(--s-3);
+}
+
+.sw-contact-hero__centered {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 18px;
+}
+
+.sw-contact-hero__heading {
+  font-size: clamp(48px, 6.5vw, 92px);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  margin-top: 16px;
+  max-width: 16ch;
+}
+
+.sw-contact-hero__heading--centered {
+  font-size: clamp(56px, 8vw, 112px);
+  max-width: 14ch;
+  text-align: center;
+  margin-top: 0;
+}
+
+.sw-contact-hero__heading--editorial {
+  font-size: clamp(64px, 12vw, 184px);
+  line-height: 0.92;
+  letter-spacing: -0.025em;
+  margin-top: var(--s-3);
+  max-width: none;
+}
+
+.sw-contact-hero__em--accent {
+  color: var(--accent-deep);
+}
+
+.sw-contact-hero__sub {
+  font-size: 17px;
+  color: var(--ink-soft);
+  max-width: 560px;
+  margin-top: 20px;
+  line-height: 1.55;
+}
+
+.sw-contact-hero__sub--centered {
+  font-size: 18px;
+  margin-top: 0;
+  text-align: center;
+}
+
+@media (max-width: 700px) {
+  .sw-contact-hero {
+    padding-top: var(--s-4);
+  }
+  .sw-contact-hero__heading {
+    font-size: clamp(40px, 12vw, 72px);
+  }
+  .sw-contact-hero__heading--editorial {
+    font-size: clamp(52px, 14vw, 92px);
+  }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Contact Hero",
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        { "value": "split",      "label": "Split (default)" },
+        { "value": "centered",   "label": "Centered" },
+        { "value": "editorial",  "label": "Editorial (large type)" }
+      ],
+      "default": "split"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact Hero",
+      "settings": {
+        "layout": "split"
+      }
+    }
+  ]
+}
+{% endschema %}

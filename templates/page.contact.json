@@ -1,0 +1,18 @@
+{
+  "sections": {
+    "contact-hero": {
+      "type": "contact-hero",
+      "settings": {
+        "layout": "split"
+      }
+    },
+    "contact-form": {
+      "type": "contact-form",
+      "settings": {}
+    }
+  },
+  "order": [
+    "contact-hero",
+    "contact-form"
+  ]
+}
