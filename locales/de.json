@@ -284,16 +284,16 @@
     },
     "contact_hero": {
       "eyebrow": "Kontakt",
-      "heading_line1": "Sprich mit einem echten Solar-",
-      "heading_em": "Techniker",
-      "subcopy": "Kein Callcenter. Keine Chatbot-Schleifen. Schreib uns — einer unserer Techniker in Wiener Neustadt antwortet innerhalb von 1 Werktag."
+      "heading_line1": "Sprich mit einem echten",
+      "heading_em": "Solartechniker",
+      "subcopy": "Kein Callcenter. Keine Chatbot-Schleifen. Schreib uns — einer unserer Techniker in Wiener Neustadt meldet sich innerhalb eines Werktags zurück."
     },
     "contact_form": {
       "step": "Deine Nachricht",
       "title": "Schreib uns.",
       "submit": "Nachricht senden",
-      "success": "Gesendet — wir melden uns bald",
-      "privacy_note": "Mit dem Absenden stimmst du unserer Datenschutzerklärung zu. Deine Daten werden nicht weitergegeben.",
+      "success": "Angekommen — wir melden uns in Kürze",
+      "privacy_note": "Mit dem Absenden der Nachricht stimmst du unserer Datenschutzerklärung zu. Deine Daten geben wir niemals weiter.",
       "field_name": "Name",
       "field_email": "E-Mail",
       "field_phone": "Telefon",
@@ -303,7 +303,7 @@
       "placeholder_name": "Anna Müller",
       "placeholder_email": "anna@beispiel.at",
       "placeholder_phone": "+43 660 123 45 67",
-      "placeholder_message": "Erzähl uns von deinem Dach, deinem Verbrauch oder dem Produkt, das dich interessiert. Je mehr Details, desto gezielter können wir helfen.",
+      "placeholder_message": "Erzähl uns von deinem Dach, deinem Verbrauch oder dem Produkt, das dich interessiert. Je mehr Details, desto gezielter können wir weiterhelfen.",
       "topic_general": "Allgemeine Frage",
       "topic_quote": "Angebot anfragen",
       "topic_compat": "Kompatibilitätsprüfung",

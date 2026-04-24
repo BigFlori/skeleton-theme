@@ -284,16 +284,16 @@
     },
     "contact_hero": {
       "eyebrow": "Kapcsolat",
-      "heading_line1": "Igazi napelemes",
-      "heading_em": "szakértő",
-      "subcopy": "Nincs call center, nincs chatbot-hurok. Küldj egy üzenetet — egyik bécsújhelyi technikusunk 1 munkanapon belül válaszol."
+      "heading_line1": "Beszélj egy igazi napelemes",
+      "heading_em": "szakértővel",
+      "subcopy": "Nincs call center, nincs chatbot-hurok. Írj egy üzenetet — bécsújhelyi technikusaink egyike egy munkanapon belül válaszol."
     },
     "contact_form": {
       "step": "Az üzeneted",
       "title": "Írj nekünk.",
       "submit": "Üzenet küldése",
-      "success": "Elküldve — hamarosan visszajelzünk",
-      "privacy_note": "Az elküldéssel elfogadod az adatvédelmi szabályzatunkat. Adataidat nem adjuk tovább.",
+      "success": "Megkaptuk — hamarosan jelentkezünk",
+      "privacy_note": "Az üzenet elküldésével elfogadod adatvédelmi szabályzatunkat. Adataidat soha nem adjuk át harmadik félnek.",
       "field_name": "Név",
       "field_email": "E-mail",
       "field_phone": "Telefon",
@@ -303,7 +303,7 @@
       "placeholder_name": "Kovács Anna",
       "placeholder_email": "anna@pelda.hu",
       "placeholder_phone": "+36 30 123 4567",
-      "placeholder_message": "Mesélj a tetőről, a fogyasztásodról, vagy arról a termékről, amelyik felkeltette az érdeklődésedet. Minél több részlet, annál pontosabb tanácsot tudunk adni.",
+      "placeholder_message": "Mesélj a tetődről, a fogyasztásodról vagy arról a termékről, ami felkeltette az érdeklődésedet. Minél több részletet írsz, annál pontosabban tudunk segíteni.",
       "topic_general": "Általános kérdés",
       "topic_quote": "Árajánlat kérése",
       "topic_compat": "Kompatibilitás ellenőrzése",
