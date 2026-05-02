@@ -354,6 +354,7 @@
       "total": "Összesen",
       "checkout_btn": "Tovább a fizetéshez",
       "checkout_note": "Shopify biztonságos fizetés · SSL-titkosítás",
+      "checkout_unavailable": "A folytatáshoz távolítsd el a nem elérhető termékeket.",
       "discount_label": "Kedvezmény kód",
       "discount_note": "Kódodat a Shopify pénztárnál add meg",
       "upsell_eyebrow": "Erre is szükséged lehet",

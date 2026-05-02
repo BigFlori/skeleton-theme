@@ -8,6 +8,13 @@
     assign shipping_free = false
     assign grand_total   = cart.total_price | plus: fee
   endif
+  assign has_unavailable = false
+  for item in cart.items
+    unless item.variant.available
+      assign has_unavailable = true
+      break
+    endunless
+  endfor
 -%}
 
 {%- if cart.item_count == 0 -%}
@@ -33,7 +40,7 @@
           {%- endfor -%}
         </div>
 
-        {%- render 'cart-summary', grand_total: grand_total, fee: fee, shipping_free: shipping_free -%}
+        {%- render 'cart-summary', grand_total: grand_total, fee: fee, shipping_free: shipping_free, has_unavailable: has_unavailable -%}
 
       </div>
     </div>
@@ -379,6 +386,24 @@
   margin-top: 20px;
   font-size: 16px;
   padding: 16px;
+}
+.sw-cart-summary__checkout-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.sw-cart-summary__checkout-btn:disabled:hover {
+  background: var(--accent-deep);
+  transform: none;
+}
+.sw-cart-summary__unavailable-note {
+  font-size: 13px;
+  font-weight: 500;
+  color: #b84a1a;
+  text-align: center;
+  margin-top: 10px;
+  padding: 8px 12px;
+  background: #fdf0ea;
+  border-radius: var(--radius);
 }
 .sw-cart-summary__checkout-note {
   font-size: 10px;

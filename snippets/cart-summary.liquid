@@ -1,5 +1,5 @@
 {%- comment -%}
-  Expects: grand_total, fee, shipping_free (passed via render)
+  Expects: grand_total, fee, shipping_free, has_unavailable (passed via render)
   Globals used: cart, section
 {%- endcomment -%}
 
@@ -47,10 +47,20 @@
     </div>
 
     {%- form 'cart', cart, class: 'sw-cart-summary__checkout-form' -%}
-      <button type="submit" name="checkout" class="btn btn-primary sw-cart-summary__checkout-btn">
+      <button
+        type="submit"
+        name="checkout"
+        class="btn btn-primary sw-cart-summary__checkout-btn"
+        {%- if has_unavailable %} disabled aria-disabled="true"{% endif %}
+      >
         {{ 'sections.cart.checkout_btn' | t }}
         {%- render 'icon', icon: 'arrow-right', size: 16 -%}
       </button>
+      {%- if has_unavailable -%}
+        <p class="mono sw-cart-summary__unavailable-note">
+          {{ 'sections.cart.checkout_unavailable' | t }}
+        </p>
+      {%- endif -%}
     {%- endform -%}
     <div class="mono sw-cart-summary__checkout-note">
       {%- render 'icon', icon: 'lock', size: 12 -%}

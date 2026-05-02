@@ -354,6 +354,7 @@
       "total": "Total",
       "checkout_btn": "Continue to checkout",
       "checkout_note": "Shopify secure checkout · SSL-encrypted",
+      "checkout_unavailable": "Remove out-of-stock items to continue.",
       "discount_label": "Discount code",
       "discount_note": "Enter your discount code at Shopify checkout",
       "upsell_eyebrow": "You might also need",

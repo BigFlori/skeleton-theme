@@ -22,8 +22,8 @@ Három párhuzamos agent review eredménye: UX, Accessibility (WCAG 2.1 AA), SEO
 
 | # | Fájl | Probléma |
 |---|------|---------|
-| H1 | `sections/cart.liquid` JS:652–654 | Qty=1 → decrement → azonnali törlés, `location.reload()`, nincs undo/megerősítés — €2000+ tételeknél kritikus |
-| H2 | `snippets/cart-summary.liquid` | Out-of-stock termékekkel a checkout gomb nincs letiltva — a vevő leadhatja a rendelést, a checkout oldal visszadobja |
+| ✅ H1 | `sections/cart.liquid` JS:652–654 | Qty=1 → decrement → azonnali törlés, `location.reload()`, nincs undo/megerősítés — €2000+ tételeknél kritikus |
+| ✅ H2 | `snippets/cart-summary.liquid` | Out-of-stock termékekkel a checkout gomb nincs letiltva — a vevő leadhatja a rendelést, a checkout oldal visszadobja |
 | H3 | `snippets/cart-summary.liquid:59–62` | Discount szekció: csak magyarázó szöveg, nincs input mező — törött form érzetét kelti |
 
 ### Accessibility
