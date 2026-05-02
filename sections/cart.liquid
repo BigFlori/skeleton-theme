@@ -24,7 +24,7 @@
 {%- else -%}
 
   {%- render 'cart-hero' -%}
-  {%- render 'cart-progress' -%}
+  {%- render 'cart-progress', threshold: threshold, shipping_free: shipping_free -%}
 
   <section class="sw-cart-body">
     <div class="container">
@@ -51,6 +51,7 @@
 {%- endif -%}
 
 <div id="sw-cart-toast" class="sw-toast" aria-live="polite" aria-atomic="true" hidden></div>
+<div id="sw-cart-live" class="sw-sr-only" aria-live="polite" aria-atomic="true"></div>
 
 {% stylesheet %}
 
@@ -162,6 +163,32 @@
   background: var(--accent-deep);
   border-color: var(--accent-deep);
   color: var(--accent-ink);
+}
+
+/* ── Free shipping bar ── */
+.sw-free-ship-bar {
+  padding-bottom: var(--s-3);
+}
+.sw-free-ship-bar__track {
+  height: 6px;
+  background: var(--line);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+.sw-free-ship-bar__fill {
+  height: 100%;
+  background: var(--accent-deep);
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+.sw-free-ship-bar__fill--done {
+  background: #22c55e;
+}
+.sw-free-ship-bar__label {
+  font-size: 13px;
+  color: var(--ink-mute);
+  margin: 0;
 }
 
 /* ── Cart body grid ── */
@@ -532,6 +559,8 @@
   text-underline-offset: 2px;
 }
 
+.sw-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
 /* ── Responsive ── */
 @media (max-width: 960px) {
   .sw-cart-grid { grid-template-columns: 1fr; }
@@ -563,7 +592,9 @@ window.swCartConfig = {
     shippingPaidNote: {{ 'sections.cart.shipping_paid_note' | t | json }},
     qtyMin: {{ 'sections.cart.qty_min' | t | json }},
     itemRemoved: {{ 'sections.cart.item_removed' | t | json }},
-    undo: {{ 'sections.cart.undo' | t | json }}
+    undo: {{ 'sections.cart.undo' | t | json }},
+    freeShipUnlocked: {{ 'sections.cart.shipping_bar_unlocked' | t | json }},
+    freeShipProgress: {{ 'sections.cart.shipping_bar_progress' | t: amount: '__AMOUNT__' | json }}
   }
 };
 </script>
@@ -677,10 +708,59 @@ window.swCartConfig = {
     if (shippingNoteEl) shippingNoteEl.textContent = shippingFree ? cfg.strings.shippingFreeNote : cfg.strings.shippingPaidNote;
     if (grandTotalEl)   grandTotalEl.textContent   = formatMoney(grandTotal);
 
+    var liveEl = document.getElementById('sw-cart-live');
+    if (liveEl) liveEl.textContent = cart.item_count + ' ' + cfg.strings.items + ' — ' + formatMoney(grandTotal);
+
+    var freeShipFill  = document.querySelector('[data-free-ship-fill]');
+    var freeShipLabel = document.querySelector('[data-free-ship-label]');
+    var freeShipTrack = freeShipFill && freeShipFill.closest('[role="progressbar"]');
+    if (freeShipFill) {
+      var pct = Math.min(100, Math.round(cart.total_price / cfg.threshold * 100));
+      freeShipFill.style.width = pct + '%';
+      if (freeShipTrack) freeShipTrack.setAttribute('aria-valuenow', pct);
+      if (shippingFree) {
+        freeShipFill.classList.add('sw-free-ship-bar__fill--done');
+        if (freeShipLabel) freeShipLabel.textContent = cfg.strings.freeShipUnlocked;
+      } else {
+        freeShipFill.classList.remove('sw-free-ship-bar__fill--done');
+        if (freeShipLabel) {
+          var rem = cfg.threshold - cart.total_price;
+          freeShipLabel.textContent = cfg.strings.freeShipProgress.replace('__AMOUNT__', formatMoney(rem));
+        }
+      }
+    }
+
     setLineLoading(lineIndex, false);
   }
 
-  async function changeQty(lineIndex, newQty, skipReload) {
+  function getFocusTargetAfterRemoval(lineIndex) {
+    var next = document.querySelector('[data-line="' + (lineIndex + 1) + '"]');
+    if (next) return next.querySelector('[data-cart-remove]') || next.querySelector('a') || next;
+    var prev = document.querySelector('[data-line="' + (lineIndex - 1) + '"]');
+    if (prev) return prev.querySelector('[data-cart-remove]') || prev.querySelector('a') || prev;
+    var countEl = document.querySelector('[data-cart-count]');
+    if (countEl) { if (!countEl.getAttribute('tabindex')) countEl.setAttribute('tabindex', '-1'); return countEl; }
+    return null;
+  }
+
+  function reindexLines(removedIndex) {
+    var i = removedIndex + 1;
+    while (true) {
+      var el = document.querySelector('[data-line="' + i + '"]');
+      if (!el) break;
+      var n = i - 1;
+      el.dataset.line = n;
+      var dec = el.querySelector('[data-cart-dec]');   if (dec)   dec.dataset.cartDec   = n;
+      var inc = el.querySelector('[data-cart-inc]');   if (inc)   inc.dataset.cartInc   = n;
+      var rem = el.querySelector('[data-cart-remove]');if (rem)   rem.dataset.cartRemove = n;
+      var qty = el.querySelector('[data-cart-qty]');   if (qty)   qty.dataset.cartQty   = n;
+      var tot = el.querySelector('[data-line-total]'); if (tot)   tot.dataset.lineTotal  = n;
+      var ech = el.querySelector('[data-line-each]');  if (ech)   ech.dataset.lineEach   = n;
+      i++;
+    }
+  }
+
+  async function changeQty(lineIndex, newQty) {
     setLineLoading(lineIndex, true);
     try {
       var res = await fetch('/cart/change.js', {
@@ -700,7 +780,16 @@ window.swCartConfig = {
       }
       var cart = await res.json();
       if (newQty === 0) {
-        if (!skipReload) location.reload();
+        if (cart.item_count === 0) {
+          location.reload();
+        } else {
+          updateCartDOM(cart, lineIndex);
+          var lineEl   = document.querySelector('[data-line="' + lineIndex + '"]');
+          var focusEl  = getFocusTargetAfterRemoval(lineIndex);
+          if (lineEl) lineEl.remove();
+          reindexLines(lineIndex);
+          if (focusEl) focusEl.focus();
+        }
       } else {
         updateCartDOM(cart, lineIndex);
       }
@@ -719,7 +808,7 @@ window.swCartConfig = {
     pendingRemovals = {};
     removalTimer    = null;
     for (var i = 0; i < indices.length; i++) {
-      await changeQty(indices[i], 0, i < indices.length - 1);
+      await changeQty(indices[i], 0);
     }
   }
 

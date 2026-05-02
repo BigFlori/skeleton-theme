@@ -30,10 +30,9 @@ Három párhuzamos agent review eredménye: UX, Accessibility (WCAG 2.1 AA), SEO
 
 | # | Fájl | Probléma |
 |---|------|---------|
-| H4 | `sections/cart.liquid` CSS (teljes stylesheet) | Nincs `:focus-visible` stílus egyetlen interaktív elemen sem — ha a globális CSS törli az outline-t, az egész cart billentyűzet-vak |
-| H5 | `sections/cart.liquid` CSS:243, 254 | `#964A16` (low-stock szöveg, 11px) ~3.8:1 kontraszt — WCAG AA **FAIL** (minimum 4.5:1 szükséges) |
-| H6 | `sections/cart.liquid` JS:566 | Sikeres qty-változásról nincs screen reader bejelentés — nincs `aria-live` frissítés a darabszámra/összegre |
-| H7 | `sections/cart.liquid` JS:628–630 | `location.reload()` termékeltávolításnál elveszíti a fókuszt — screen reader felhasználó az oldal tetejéről kénytelen újra navigálni |
+| ✅ H4 | `sections/cart.liquid` CSS (teljes stylesheet) | Nincs `:focus-visible` stílus egyetlen interaktív elemen sem — ha a globális CSS törli az outline-t, az egész cart billentyűzet-vak |
+| ✅ H6 | `sections/cart.liquid` JS:566 | Sikeres qty-változásról nincs screen reader bejelentés — nincs `aria-live` frissítés a darabszámra/összegre |
+| ✅ H7 | `sections/cart.liquid` JS:628–630 | `location.reload()` termékeltávolításnál elveszíti a fókuszt — screen reader felhasználó az oldal tetejéről kénytelen újra navigálni |
 
 ---
 
@@ -41,8 +40,8 @@ Három párhuzamos agent review eredménye: UX, Accessibility (WCAG 2.1 AA), SEO
 
 | # | Fájl | Terület | Probléma |
 |---|------|---------|---------|
-| M1 | `snippets/cart-progress.liquid:3–15` | A11y | `aria-disabled` `listitem`-en nem érvényes ARIA; aktív lépésen kell `aria-current="step"` |
-| M2 | `sections/cart.liquid:1–11` | UX | Van threshold logika de nincs free shipping progress bar — az egyik legjobb konverziós eszköz |
+| ✅ M1 | `snippets/cart-progress.liquid:3–15` | A11y | `aria-disabled` `listitem`-en nem érvényes ARIA; aktív lépésen kell `aria-current="step"` |
+| ✅ M2 | `sections/cart.liquid:1–11` | UX | Van threshold logika de nincs free shipping progress bar — az egyik legjobb konverziós eszköz |
 | M3 | `sections/cart.liquid` JS:633–640 | UX | Sikertelen API call után az input értéke nem áll vissza az előző helyes értékre (desync) |
 | M4 | `snippets/cart-empty.liquid:9` | UX | `#pakete` anchor hardcoded és csak németül — section ID változáskor csendesen elromlik; legyen theme setting |
 | M5 | `sections/cart.liquid` JS:556–563 | Tech | `formatMoney` nem kezeli az `amount_with_space_separator` és `amount_no_decimals_with_space_separator` formátumokat |
@@ -56,7 +55,7 @@ Három párhuzamos agent review eredménye: UX, Accessibility (WCAG 2.1 AA), SEO
 
 | # | Fájl | Terület | Probléma |
 |---|------|---------|---------|
-| L1 | `sections/cart.liquid` JS:628–630 | UX | `location.reload()` törlésnél kellemetlen — a DOM update infrastruktúra már megvan, csak `lineEl.remove()` hiányzik |
+| ✅ L1 | `sections/cart.liquid` JS:628–630 | UX | `location.reload()` törlésnél kellemetlen — a DOM update infrastruktúra már megvan, csak `lineEl.remove()` hiányzik |
 | L2 | `snippets/cart-line-item.liquid:13–20` | Perf | `srcset` hiányzik — 192px kép töltődik 96px displayhez; non-retina eszközök feleslegesen töltenek |
 | L3 | `snippets/cart-upsell.liquid:19–24` | Perf | Ugyanaz a srcset probléma: 240px fetch, 120px display |
 | L4 | `snippets/cart-line-item.liquid:1` | A11y | `<article>` line item-eknek nincs accessible name — kell `aria-label="{{ item.product.title \| escape }}"` |
@@ -82,6 +81,5 @@ Három párhuzamos agent review eredménye: UX, Accessibility (WCAG 2.1 AA), SEO
 5. **H3** — Discount szekció redesign vagy label csere
 6. **H1** — Törlés megerősítése / undo toast
 7. **H4** — `:focus-visible` stílusok
-8. **H5** — `#964A16` szín sötétítése (~`#7A3A0D`)
-9. **M2** — Free shipping progress bar
+8. **M2** — Free shipping progress bar
 10. **B5 + M6** — Upsell gomb szemantika + payment div role

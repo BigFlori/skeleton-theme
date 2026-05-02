@@ -1,15 +1,40 @@
+{%- liquid
+  assign remaining = threshold | minus: cart.total_price
+  if cart.total_price >= threshold
+    assign progress_pct = 100
+  else
+    assign progress_pct = cart.total_price | times: 100 | divided_by: threshold
+  endif
+  assign remaining_money = remaining | money
+-%}
+
+<div class="sw-free-ship-bar">
+  <div class="container">
+    <div class="sw-free-ship-bar__track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ progress_pct }}">
+      <div class="sw-free-ship-bar__fill{% if shipping_free %} sw-free-ship-bar__fill--done{% endif %}" data-free-ship-fill style="width: {{ progress_pct }}%"></div>
+    </div>
+    <p class="sw-free-ship-bar__label" data-free-ship-label>
+      {%- if shipping_free -%}
+        {{ 'sections.cart.shipping_bar_unlocked' | t }}
+      {%- else -%}
+        {{ 'sections.cart.shipping_bar_progress' | t: amount: remaining_money }}
+      {%- endif -%}
+    </p>
+  </div>
+</div>
+
 <section class="sw-cart-progress-wrap">
   <div class="container">
     <div class="sw-progress" role="list" aria-label="{{ 'sections.cart.progress_label' | t }}">
-      <div class="sw-progress__step sw-progress__step--active" role="listitem">
+      <div class="sw-progress__step sw-progress__step--active" role="listitem" aria-current="step">
         <div class="sw-progress__num" aria-hidden="true">1</div>
         <span>{{ 'sections.cart.progress_step_1' | t }}</span>
       </div>
-      <div class="sw-progress__step" role="listitem" aria-disabled="true">
+      <div class="sw-progress__step" role="listitem">
         <div class="sw-progress__num" aria-hidden="true">2</div>
         <span>{{ 'sections.cart.progress_step_2' | t }}</span>
       </div>
-      <div class="sw-progress__step" role="listitem" aria-disabled="true">
+      <div class="sw-progress__step" role="listitem">
         <div class="sw-progress__num" aria-hidden="true">3</div>
         <span>{{ 'sections.cart.progress_step_3' | t }}</span>
       </div>

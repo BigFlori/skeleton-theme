@@ -366,7 +366,9 @@
       "empty_body": "Még nem választottál ki semmit. Böngészd a teljes csomagjainkat vagy az egyedi komponenseket.",
       "empty_packages": "Csomagok böngészése",
       "empty_components": "Összes komponens",
-      "payment_methods": "Elfogadott fizetési módok"
+      "payment_methods": "Elfogadott fizetési módok",
+      "shipping_bar_progress": "Még {{ amount }} hiányzik az ingyenes szállításhoz",
+      "shipping_bar_unlocked": "Ingyenes szállítás elérve!"
     }
   }
 }

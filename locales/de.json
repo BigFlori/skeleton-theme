@@ -366,7 +366,9 @@
       "empty_body": "Du hast noch nichts ausgewählt. Stöbere in unseren Komplettanlagen oder Einzelkomponenten.",
       "empty_packages": "Pakete ansehen",
       "empty_components": "Alle Komponenten",
-      "payment_methods": "Akzeptierte Zahlungsmethoden"
+      "payment_methods": "Akzeptierte Zahlungsmethoden",
+      "shipping_bar_progress": "Noch {{ amount }} bis zum kostenlosen Versand",
+      "shipping_bar_unlocked": "Kostenloser Versand freigeschaltet!"
     }
   }
 }

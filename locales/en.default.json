@@ -366,7 +366,9 @@
       "empty_body": "Looks like you haven't picked anything yet. Browse our complete packages or individual components.",
       "empty_packages": "Browse packages",
       "empty_components": "All components",
-      "payment_methods": "Accepted payment methods"
+      "payment_methods": "Accepted payment methods",
+      "shipping_bar_progress": "Add {{ amount }} more for free shipping",
+      "shipping_bar_unlocked": "Free shipping unlocked!"
     }
   }
 }
