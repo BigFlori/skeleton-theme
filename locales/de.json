@@ -347,7 +347,7 @@
       "subtotal": "Zwischensumme",
       "shipping": "Versand",
       "shipping_free": "Kostenlos",
-      "shipping_free_note": "ab € 2.000",
+      "shipping_free_note": "ab {{ amount }}",
       "shipping_paid_note": "Standardversand",
       "vat": "USt. (0 %, Österreich ≤ 20 kWp)",
       "vat_note": "Nullsteuersatz angewendet",
@@ -362,13 +362,17 @@
       "upsell_title": "Die Kabel nicht vergessen.",
       "upsell_all": "Alle Zubehörteile →",
       "upsell_add": "Hinzufügen",
+      "upsell_view": "Ansehen",
+      "upsell_added": "Zum Warenkorb hinzugefügt",
       "empty_title": "Dein Warenkorb ist leer.",
       "empty_body": "Du hast noch nichts ausgewählt. Stöbere in unseren Komplettanlagen oder Einzelkomponenten.",
       "empty_packages": "Pakete ansehen",
       "empty_components": "Alle Komponenten",
       "payment_methods": "Akzeptierte Zahlungsmethoden",
       "shipping_bar_progress": "Noch {{ amount }} bis zum kostenlosen Versand",
-      "shipping_bar_unlocked": "Kostenloser Versand freigeschaltet!"
+      "shipping_bar_unlocked": "Kostenloser Versand freigeschaltet!",
+      "error_generic": "Etwas ist schiefgelaufen — bitte versuche es erneut.",
+      "update_cart": "Warenkorb aktualisieren"
     }
   }
 }

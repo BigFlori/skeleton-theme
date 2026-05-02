@@ -16,8 +16,9 @@
             {%- if product.featured_image -%}
               <div class="sw-cart-upsell__img-wrap">
                 <img
-                  src="{{ product.featured_image | image_url: width: 240 }}"
-                  alt="{{ product.featured_image.alt | escape }}"
+                  src="{{ product.featured_image | image_url: width: 120 }}"
+                  srcset="{{ product.featured_image | image_url: width: 120 }} 1x, {{ product.featured_image | image_url: width: 240 }} 2x"
+                  alt="{{ product.featured_image.alt | default: product.title | escape }}"
                   width="120"
                   height="120"
                   loading="lazy"
@@ -29,18 +30,30 @@
             {%- endif -%}
             <div class="sw-cart-upsell__meta">
               <div class="mono sw-cart-upsell__vendor">{{ product.vendor }}</div>
-              <h4 class="sw-cart-upsell__name">{{ product.title }}</h4>
+              <h3 class="sw-cart-upsell__name">{{ product.title }}</h3>
             </div>
             <div class="sw-cart-upsell__footer">
               <span class="display sw-cart-upsell__price">{{ product.price | money }}</span>
-              <a
-                href="{{ product.url }}"
-                class="btn btn-secondary sw-cart-upsell__add"
-                aria-label="{{ 'sections.cart.upsell_add' | t }}: {{ product.title | escape }}"
-              >
-                {%- render 'icon', icon: 'plus', size: 13 -%}
-                {{ 'sections.cart.upsell_add' | t }}
-              </a>
+              {%- if product.variants.size == 1 -%}
+                <button
+                  type="button"
+                  class="btn btn-secondary sw-cart-upsell__add"
+                  data-upsell-add="{{ product.selected_or_first_available_variant.id }}"
+                  aria-label="{{ 'sections.cart.upsell_add' | t }}: {{ product.title | escape }}"
+                >
+                  {%- render 'icon', icon: 'plus', size: 13 -%}
+                  {{ 'sections.cart.upsell_add' | t }}
+                </button>
+              {%- else -%}
+                <a
+                  href="{{ product.url }}"
+                  class="btn btn-secondary sw-cart-upsell__add"
+                  aria-label="{{ 'sections.cart.upsell_view' | t }}: {{ product.title | escape }}"
+                >
+                  {%- render 'icon', icon: 'arrow-right', size: 13 -%}
+                  {{ 'sections.cart.upsell_view' | t }}
+                </a>
+              {%- endif -%}
             </div>
           </article>
         {%- endfor -%}

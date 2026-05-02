@@ -3,10 +3,10 @@
   Globals used: cart, section
 {%- endcomment -%}
 
-<aside class="sw-cart-summary">
+<aside class="sw-cart-summary" aria-labelledby="cart-summary-heading">
 
   <div class="sw-cart-summary__card">
-    <h2 class="display sw-cart-summary__title">
+    <h2 id="cart-summary-heading" class="display sw-cart-summary__title">
       {{ 'sections.cart.summary_title' | t }}
     </h2>
 
@@ -25,8 +25,11 @@
           {%- endif -%}
         </dd>
         <div class="mono sw-cart-summary__sub" data-cart-shipping-note>
+          {%- liquid
+            assign threshold_money = section.settings.free_shipping_threshold | times: 100 | money
+          -%}
           {%- if shipping_free -%}
-            {{ 'sections.cart.shipping_free_note' | t }}
+            {{ 'sections.cart.shipping_free_note' | t: amount: threshold_money }}
           {%- else -%}
             {{ 'sections.cart.shipping_paid_note' | t }}
           {%- endif -%}
@@ -84,7 +87,7 @@
     </div>
   </div>
 
-  <div class="sw-cart-payment" aria-label="{{ 'sections.cart.payment_methods' | t }}">
+  <div class="sw-cart-payment" role="img" aria-label="{{ 'sections.cart.payment_methods' | t }}">
     {%- for type in shop.enabled_payment_types -%}
       <div class="sw-pay-logo">
         {{ type | payment_type_svg_tag }}

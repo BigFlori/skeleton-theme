@@ -1,4 +1,4 @@
-<article class="sw-cart-line" data-line="{{ line_index }}">
+<article class="sw-cart-line" data-line="{{ line_index }}" aria-label="{{ item.product.title | escape }}">
 
   {%- liquid
     assign show_low_stock = false
@@ -11,7 +11,8 @@
     {%- if item.image -%}
       <a href="{{ item.url }}" tabindex="-1" aria-hidden="true">
         <img
-          src="{{ item.image | image_url: width: 192 }}"
+          src="{{ item.image | image_url: width: 96 }}"
+          srcset="{{ item.image | image_url: width: 96 }} 1x, {{ item.image | image_url: width: 192 }} 2x"
           alt="{{ item.image.alt | escape }}"
           width="96"
           height="96"
@@ -90,6 +91,7 @@
         min="1"
         max="{% if track_inventory %}{{ item.variant.inventory_quantity }}{% else %}999{% endif %}"
         data-cart-qty="{{ line_index }}"
+        data-prev-qty="{{ item.quantity }}"
         {%- if track_inventory %}
         data-max="{{ item.variant.inventory_quantity }}"
         data-max-msg="{{ 'sections.cart.qty_max' | t: count: item.variant.inventory_quantity }}"
@@ -113,5 +115,20 @@
       </div>
     </div>
   </div>
+
+  <noscript>
+    <div class="sw-cart-line__noscript">
+      <form method="post" action="{{ routes.cart_url }}/change">
+        <input type="hidden" name="line" value="{{ line_index }}">
+        <input type="number" name="quantity" value="{{ item.quantity }}" min="1">
+        <button type="submit" class="btn btn-secondary">{{ 'sections.cart.update_cart' | t }}</button>
+      </form>
+      <form method="post" action="{{ routes.cart_url }}/change">
+        <input type="hidden" name="line" value="{{ line_index }}">
+        <input type="hidden" name="quantity" value="0">
+        <button type="submit" class="sw-cart-line__action">{{ 'sections.cart.remove' | t }}</button>
+      </form>
+    </div>
+  </noscript>
 
 </article>

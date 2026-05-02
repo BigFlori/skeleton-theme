@@ -1,6 +1,7 @@
 {%- liquid
-  assign threshold = section.settings.free_shipping_threshold | times: 100
-  assign fee       = section.settings.shipping_fee | times: 100
+  assign threshold       = section.settings.free_shipping_threshold | times: 100
+  assign threshold_money = threshold | money
+  assign fee             = section.settings.shipping_fee | times: 100
   if cart.total_price >= threshold
     assign shipping_free = true
     assign grand_total   = cart.total_price
@@ -26,7 +27,7 @@
   {%- render 'cart-hero' -%}
   {%- render 'cart-progress', threshold: threshold, shipping_free: shipping_free -%}
 
-  <section class="sw-cart-body">
+  <section class="sw-cart-body" aria-label="{{ 'general.cart' | t }}">
     <div class="container">
       <div class="sw-cart-grid">
 
@@ -298,6 +299,7 @@
   padding: 3px 8px;
   border-radius: 5px;
   line-height: 1.4;
+  white-space: nowrap;
   pointer-events: none;
 }
 .sw-cart-line__action {
@@ -575,6 +577,8 @@
   .sw-cart-line__img-placeholder { width: 72px; height: 72px; }
   .sw-cart-upsell__grid { grid-template-columns: 1fr 1fr; }
   .sw-cart-hero__title { font-size: clamp(36px, 10vw, 56px); }
+  .sw-qty { height: 50px; }
+  .sw-qty__btn { width: 44px; height: 44px; }
 }
 
 {% endstylesheet %}
@@ -588,13 +592,15 @@ window.swCartConfig = {
     each: {{ 'sections.cart.each' | t | json }},
     items: {{ 'sections.cart.items' | t | json }},
     shippingFree: {{ 'sections.cart.shipping_free' | t | json }},
-    shippingFreeNote: {{ 'sections.cart.shipping_free_note' | t | json }},
+    shippingFreeNote: {{ 'sections.cart.shipping_free_note' | t: amount: threshold_money | json }},
     shippingPaidNote: {{ 'sections.cart.shipping_paid_note' | t | json }},
     qtyMin: {{ 'sections.cart.qty_min' | t | json }},
     itemRemoved: {{ 'sections.cart.item_removed' | t | json }},
     undo: {{ 'sections.cart.undo' | t | json }},
     freeShipUnlocked: {{ 'sections.cart.shipping_bar_unlocked' | t | json }},
-    freeShipProgress: {{ 'sections.cart.shipping_bar_progress' | t: amount: '__AMOUNT__' | json }}
+    freeShipProgress: {{ 'sections.cart.shipping_bar_progress' | t: amount: '__AMOUNT__' | json }},
+    errorGeneric: {{ 'sections.cart.error_generic' | t | json }},
+    upsellAdded: {{ 'sections.cart.upsell_added' | t | json }}
   }
 };
 </script>
@@ -616,21 +622,21 @@ window.swCartConfig = {
 
   function showToast(msg, actionLabel, actionFn, duration) {
     if (!toast) return;
-    toast.innerHTML = '';
-    var msgNode = document.createElement('span');
-    msgNode.textContent = msg;
-    toast.appendChild(msgNode);
-    if (actionLabel && actionFn) {
-      var btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'sw-toast__action';
-      btn.textContent = actionLabel;
-      btn.addEventListener('click', function () { actionFn(); });
-      toast.appendChild(btn);
-    }
-    toast.hidden = false;
     clearTimeout(toastTimer);
+    toast.innerHTML = '';
+    toast.hidden = false;
     requestAnimationFrame(function () {
+      var msgNode = document.createElement('span');
+      msgNode.textContent = msg;
+      toast.appendChild(msgNode);
+      if (actionLabel && actionFn) {
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'sw-toast__action';
+        btn.textContent = actionLabel;
+        btn.addEventListener('click', function () { actionFn(); });
+        toast.appendChild(btn);
+      }
       toast.classList.add('sw-toast--visible');
     });
     toastTimer = setTimeout(function () {
@@ -662,8 +668,10 @@ window.swCartConfig = {
       case 'amount':                                  val = delimit(cents, 2);        break;
       case 'amount_no_decimals':                      val = delimit(cents, 0);        break;
       case 'amount_with_comma_separator':             val = delimit(cents, 2, '.', ','); break;
-      case 'amount_no_decimals_with_comma_separator': val = delimit(cents, 0, '.', ','); break;
-      default:                                        val = delimit(cents, 2);
+      case 'amount_no_decimals_with_comma_separator':  val = delimit(cents, 0, '.', ','); break;
+      case 'amount_with_space_separator':              val = delimit(cents, 2, ' ', '.'); break;
+      case 'amount_no_decimals_with_space_separator':  val = delimit(cents, 0, ' ');      break;
+      default:                                         val = delimit(cents, 2);
     }
     return fmt.replace(re, val);
   }
@@ -681,6 +689,7 @@ window.swCartConfig = {
       if (qtyInput) {
         settingValue = true;
         qtyInput.value = item.quantity;
+        qtyInput.dataset.prevQty = item.quantity;
         settingValue = false;
       }
 
@@ -776,7 +785,7 @@ window.swCartConfig = {
         try { errData = await res.json(); } catch (_) {}
         console.error('[sw-cart] change failed:', res.status, errData);
         var apiError = errData ? (errData.description || errData.message) : null;
-        throw new Error(apiError || 'Something went wrong — please try again.');
+        throw new Error(apiError || cfg.strings.errorGeneric);
       }
       var cart = await res.json();
       if (newQty === 0) {
@@ -796,10 +805,16 @@ window.swCartConfig = {
     } catch (err) {
       console.error('[sw-cart]', err.message);
       setLineLoading(lineIndex, false);
+      var failedInput = document.querySelector('[data-cart-qty="' + lineIndex + '"]');
+      if (failedInput && failedInput.dataset.prevQty) {
+        settingValue = true;
+        failedInput.value = failedInput.dataset.prevQty;
+        settingValue = false;
+      }
       var msg = (err.message === 'Failed to fetch' || err.message.indexOf('HTTP') === 0)
-        ? 'Something went wrong — please try again.'
+        ? cfg.strings.errorGeneric
         : err.message;
-      showToast(msg || 'Something went wrong — please try again.');
+      showToast(msg || cfg.strings.errorGeneric);
     }
   }
 
@@ -866,6 +881,61 @@ window.swCartConfig = {
     var rem = e.target.closest('[data-cart-remove]');
     if (rem) {
       scheduleRemoval(parseInt(rem.dataset.cartRemove, 10));
+      return;
+    }
+    var upsellBtn = e.target.closest('[data-upsell-add]');
+    if (upsellBtn) {
+      upsellBtn.disabled = true;
+      fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ id: parseInt(upsellBtn.dataset.upsellAdd, 10), quantity: 1 })
+      })
+      .then(function (res) {
+        if (!res.ok) return res.json().then(function (d) { throw new Error(d.description || cfg.strings.errorGeneric); });
+        return fetch('/cart.js', { headers: { 'Accept': 'application/json' } });
+      })
+      .then(function (res) { return res.json(); })
+      .then(function (cart) {
+        var shippingFree = cart.total_price >= cfg.threshold;
+        var grandTotal   = shippingFree ? cart.total_price : cart.total_price + cfg.fee;
+        var countEl = document.querySelector('[data-cart-count]');
+        if (countEl) countEl.innerHTML = cart.item_count + ' ' + cfg.strings.items;
+        var subtotalEl     = document.querySelector('[data-cart-subtotal]');
+        var shippingValEl  = document.querySelector('[data-cart-shipping-value]');
+        var shippingNoteEl = document.querySelector('[data-cart-shipping-note]');
+        var grandTotalEl   = document.querySelector('[data-cart-grand-total]');
+        if (subtotalEl)     subtotalEl.textContent     = formatMoney(cart.total_price);
+        if (shippingValEl)  shippingValEl.textContent  = shippingFree ? cfg.strings.shippingFree : formatMoney(cfg.fee);
+        if (shippingNoteEl) shippingNoteEl.textContent = shippingFree ? cfg.strings.shippingFreeNote : cfg.strings.shippingPaidNote;
+        if (grandTotalEl)   grandTotalEl.textContent   = formatMoney(grandTotal);
+        var freeShipFill  = document.querySelector('[data-free-ship-fill]');
+        var freeShipLabel = document.querySelector('[data-free-ship-label]');
+        var freeShipTrack = freeShipFill && freeShipFill.closest('[role="progressbar"]');
+        if (freeShipFill) {
+          var pct = Math.min(100, Math.round(cart.total_price / cfg.threshold * 100));
+          freeShipFill.style.width = pct + '%';
+          if (freeShipTrack) freeShipTrack.setAttribute('aria-valuenow', pct);
+          if (shippingFree) {
+            freeShipFill.classList.add('sw-free-ship-bar__fill--done');
+            if (freeShipLabel) freeShipLabel.textContent = cfg.strings.freeShipUnlocked;
+          } else {
+            freeShipFill.classList.remove('sw-free-ship-bar__fill--done');
+            if (freeShipLabel) {
+              var rem2 = cfg.threshold - cart.total_price;
+              freeShipLabel.textContent = cfg.strings.freeShipProgress.replace('__AMOUNT__', formatMoney(rem2));
+            }
+          }
+        }
+        var liveEl = document.getElementById('sw-cart-live');
+        if (liveEl) liveEl.textContent = cart.item_count + ' ' + cfg.strings.items + ' — ' + formatMoney(grandTotal);
+        showToast(cfg.strings.upsellAdded);
+        upsellBtn.disabled = false;
+      })
+      .catch(function (err) {
+        showToast(err.message || cfg.strings.errorGeneric);
+        upsellBtn.disabled = false;
+      });
     }
   });
 
@@ -876,7 +946,14 @@ window.swCartConfig = {
     var line     = parseInt(input.dataset.cartQty, 10);
     var maxStock = input.dataset.max ? parseInt(input.dataset.max, 10) : 999;
     var raw      = parseInt(input.value, 10);
-    var val      = Math.max(1, Math.min(maxStock, isNaN(raw) ? 1 : raw));
+    if (!isNaN(raw) && raw === 0) {
+      settingValue = true;
+      input.value = input.dataset.prevQty || 1;
+      settingValue = false;
+      scheduleRemoval(line);
+      return;
+    }
+    var val = Math.max(1, Math.min(maxStock, isNaN(raw) ? 1 : raw));
     if (isNaN(raw) || raw < 1) showToast(cfg.strings.qtyMin);
     else if (raw > maxStock && input.dataset.maxMsg) showToast(input.dataset.maxMsg);
     settingValue = true;
@@ -894,14 +971,14 @@ window.swCartConfig = {
     {
       "type": "number",
       "id": "free_shipping_threshold",
-      "label": "Free shipping threshold (€)",
+      "label": "Free shipping threshold",
       "default": 2000,
       "info": "Orders above this amount qualify for free shipping."
     },
     {
       "type": "number",
       "id": "shipping_fee",
-      "label": "Standard shipping fee (€)",
+      "label": "Standard shipping fee",
       "default": 49
     },
     {
@@ -910,6 +987,16 @@ window.swCartConfig = {
       "label": "Low stock warning threshold",
       "default": 5,
       "info": "Show a warning on cart items when inventory is at or below this number."
+    },
+    {
+      "type": "header",
+      "content": "Empty cart"
+    },
+    {
+      "type": "url",
+      "id": "packages_url",
+      "label": "\"Browse packages\" button URL",
+      "info": "Link for the primary CTA on the empty cart page."
     },
     {
       "type": "header",

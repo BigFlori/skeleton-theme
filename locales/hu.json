@@ -347,7 +347,7 @@
       "subtotal": "Részösszeg",
       "shipping": "Szállítás",
       "shipping_free": "Ingyenes",
-      "shipping_free_note": "€ 2.000 felett",
+      "shipping_free_note": "{{ amount }} felett",
       "shipping_paid_note": "standard szállítás",
       "vat": "ÁFA (0 %, Ausztria ≤ 20 kWp)",
       "vat_note": "Nulladókulcs alkalmazva",
@@ -362,13 +362,17 @@
       "upsell_title": "A kábelekről ne feledkezz el.",
       "upsell_all": "Összes kiegészítő →",
       "upsell_add": "Kosárba",
+      "upsell_view": "Megnézem",
+      "upsell_added": "Kosárba téve",
       "empty_title": "A kosárad üres.",
       "empty_body": "Még nem választottál ki semmit. Böngészd a teljes csomagjainkat vagy az egyedi komponenseket.",
       "empty_packages": "Csomagok böngészése",
       "empty_components": "Összes komponens",
       "payment_methods": "Elfogadott fizetési módok",
       "shipping_bar_progress": "Még {{ amount }} hiányzik az ingyenes szállításhoz",
-      "shipping_bar_unlocked": "Ingyenes szállítás elérve!"
+      "shipping_bar_unlocked": "Ingyenes szállítás elérve!",
+      "error_generic": "Valami hiba történt — kérjük, próbáld újra.",
+      "update_cart": "Kosár frissítése"
     }
   }
 }

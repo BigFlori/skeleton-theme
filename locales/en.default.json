@@ -347,7 +347,7 @@
       "subtotal": "Subtotal",
       "shipping": "Shipping",
       "shipping_free": "Free",
-      "shipping_free_note": "over € 2,000",
+      "shipping_free_note": "over {{ amount }}",
       "shipping_paid_note": "standard delivery",
       "vat": "VAT (0 %, Austria ≤ 20 kWp)",
       "vat_note": "Nullsteuersatz applied",
@@ -362,13 +362,17 @@
       "upsell_title": "Don't forget the cables.",
       "upsell_all": "View all accessories →",
       "upsell_add": "Add",
+      "upsell_view": "View",
+      "upsell_added": "Added to cart",
       "empty_title": "Your cart is empty.",
       "empty_body": "Looks like you haven't picked anything yet. Browse our complete packages or individual components.",
       "empty_packages": "Browse packages",
       "empty_components": "All components",
       "payment_methods": "Accepted payment methods",
       "shipping_bar_progress": "Add {{ amount }} more for free shipping",
-      "shipping_bar_unlocked": "Free shipping unlocked!"
+      "shipping_bar_unlocked": "Free shipping unlocked!",
+      "error_generic": "Something went wrong — please try again.",
+      "update_cart": "Update cart"
     }
   }
 }

@@ -1,12 +1,12 @@
-<section class="sw-cart-hero">
+<section class="sw-cart-hero" aria-labelledby="cart-hero-heading">
   <div class="container">
     <div class="sw-cart-hero__meta">
       <span class="eyebrow">{{ 'sections.cart.step' | t }}</span>
-      <a href="{{ routes.root_url }}" class="sw-cart-hero__back">
+      <a href="{{ routes.all_products_collection_url }}" class="sw-cart-hero__back">
         {{ 'sections.cart.continue_shopping' | t }}
       </a>
     </div>
-    <h1 class="display sw-cart-hero__title">
+    <h1 id="cart-hero-heading" class="display sw-cart-hero__title">
       {{ 'sections.cart.title' | t }} <em>{{ 'sections.cart.title_em' | t }}</em>.
     </h1>
   </div>
