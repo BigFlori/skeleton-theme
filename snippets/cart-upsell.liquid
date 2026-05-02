@@ -1,0 +1,50 @@
+{%- if section.settings.upsell_collection != blank and section.settings.show_upsell -%}
+  <section class="sw-cart-upsell">
+    <div class="container">
+      <div class="sw-cart-upsell__header">
+        <div>
+          <span class="eyebrow">{{ 'sections.cart.upsell_eyebrow' | t }}</span>
+          <h2 class="display sw-cart-upsell__title">{{ 'sections.cart.upsell_title' | t }}</h2>
+        </div>
+        <a href="{{ section.settings.upsell_collection.url }}" class="sw-cart-upsell__all">
+          {{ 'sections.cart.upsell_all' | t }}
+        </a>
+      </div>
+      <div class="sw-cart-upsell__grid">
+        {%- for product in section.settings.upsell_collection.products limit: 4 -%}
+          <article class="sw-cart-upsell__card">
+            {%- if product.featured_image -%}
+              <div class="sw-cart-upsell__img-wrap">
+                <img
+                  src="{{ product.featured_image | image_url: width: 240 }}"
+                  alt="{{ product.featured_image.alt | escape }}"
+                  width="120"
+                  height="120"
+                  loading="lazy"
+                  class="sw-cart-upsell__img"
+                >
+              </div>
+            {%- else -%}
+              <div class="sw-cart-upsell__img-placeholder" aria-hidden="true"></div>
+            {%- endif -%}
+            <div class="sw-cart-upsell__meta">
+              <div class="mono sw-cart-upsell__vendor">{{ product.vendor }}</div>
+              <h4 class="sw-cart-upsell__name">{{ product.title }}</h4>
+            </div>
+            <div class="sw-cart-upsell__footer">
+              <span class="display sw-cart-upsell__price">{{ product.price | money }}</span>
+              <a
+                href="{{ product.url }}"
+                class="btn btn-secondary sw-cart-upsell__add"
+                aria-label="{{ 'sections.cart.upsell_add' | t }}: {{ product.title | escape }}"
+              >
+                {%- render 'icon', icon: 'plus', size: 13 -%}
+                {{ 'sections.cart.upsell_add' | t }}
+              </a>
+            </div>
+          </article>
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+{%- endif -%}

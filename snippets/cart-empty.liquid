@@ -1,0 +1,18 @@
+<section class="sw-cart-empty">
+  <div class="container sw-cart-empty__inner">
+    <div class="sw-cart-empty__icon" aria-hidden="true">
+      {%- render 'icon', icon: 'cart', size: 32 -%}
+    </div>
+    <h1 class="display sw-cart-empty__title">{{ 'sections.cart.empty_title' | t }}</h1>
+    <p class="sw-cart-empty__body">{{ 'sections.cart.empty_body' | t }}</p>
+    <div class="sw-cart-empty__actions">
+      <a href="{{ routes.root_url }}#pakete" class="btn btn-primary">
+        {{ 'sections.cart.empty_packages' | t }}
+        {%- render 'icon', icon: 'arrow-right', size: 15 -%}
+      </a>
+      <a href="{{ routes.collections_url }}" class="btn btn-secondary">
+        {{ 'sections.cart.empty_components' | t }}
+      </a>
+    </div>
+  </div>
+</section>

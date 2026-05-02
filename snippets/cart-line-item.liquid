@@ -1,0 +1,117 @@
+<article class="sw-cart-line" data-line="{{ line_index }}">
+
+  {%- liquid
+    assign show_low_stock = false
+    if item.variant.inventory_management == 'shopify' and item.variant.inventory_quantity > 0 and item.variant.inventory_quantity <= low_stock_threshold
+      assign show_low_stock = true
+    endif
+  -%}
+
+  <div class="sw-cart-line__thumb">
+    {%- if item.image -%}
+      <a href="{{ item.url }}" tabindex="-1" aria-hidden="true">
+        <img
+          src="{{ item.image | image_url: width: 192 }}"
+          alt="{{ item.image.alt | escape }}"
+          width="96"
+          height="96"
+          loading="lazy"
+          class="sw-cart-line__img"
+        >
+      </a>
+    {%- else -%}
+      <div class="sw-cart-line__img-placeholder" aria-hidden="true"></div>
+    {%- endif -%}
+    {%- if show_low_stock -%}
+      <span class="sw-cart-line__badge mono" aria-hidden="true">
+        {{- 'sections.cart.stock_low_badge' | t -}}
+      </span>
+    {%- endif -%}
+  </div>
+
+  <div class="sw-cart-line__info">
+    <div class="mono sw-cart-line__brand">{{ item.vendor }}</div>
+    <h3 class="display sw-cart-line__name">
+      <a href="{{ item.url }}">{{ item.product.title }}</a>
+    </h3>
+    {%- unless item.variant.title == 'Default Title' -%}
+      <div class="sw-cart-line__variant">{{ item.variant.title }}</div>
+    {%- endunless -%}
+    <div class="sw-cart-line__meta">
+      <span class="mono sw-cart-line__stock {% if show_low_stock %}sw-cart-line__stock--low{% elsif item.variant.available %}sw-cart-line__stock--in{% endif %}">
+        <span
+          class="sw-cart-line__dot {% if show_low_stock %}sw-cart-line__dot--low{% elsif item.variant.available %}sw-cart-line__dot--in{% else %}sw-cart-line__dot--out{% endif %}"
+          aria-hidden="true"
+        ></span>
+        {%- if show_low_stock -%}
+          {{ 'sections.cart.stock_low' | t: count: item.variant.inventory_quantity }}
+        {%- elsif item.variant.available -%}
+          {{ 'sections.cart.stock_in' | t }}
+        {%- else -%}
+          {{ 'sections.cart.stock_out' | t }}
+        {%- endif -%}
+      </span>
+      <button
+        type="button"
+        class="sw-cart-line__action"
+        data-cart-remove="{{ line_index }}"
+        aria-label="{{ 'sections.cart.remove' | t }}: {{ item.product.title | escape }}"
+      >
+        {{ 'sections.cart.remove' | t }}
+      </button>
+
+    </div>
+  </div>
+
+  <div class="sw-cart-line__controls">
+    <div
+      class="sw-qty"
+      role="group"
+      aria-label="{{ 'sections.cart.qty_label' | t }}"
+    >
+      <button
+        type="button"
+        class="sw-qty__btn"
+        data-cart-dec="{{ line_index }}"
+        aria-label="{{ 'sections.cart.qty_decrease' | t }}"
+      >
+        {%- render 'icon', icon: 'minus', size: 14 -%}
+      </button>
+      {%- liquid
+        assign track_inventory = false
+        if item.variant.inventory_management == 'shopify' and item.variant.inventory_policy == 'deny' and item.variant.inventory_quantity > 0
+          assign track_inventory = true
+        endif
+      -%}
+      <input
+        type="number"
+        class="sw-qty__input mono"
+        value="{{ item.quantity }}"
+        min="1"
+        max="{% if track_inventory %}{{ item.variant.inventory_quantity }}{% else %}999{% endif %}"
+        data-cart-qty="{{ line_index }}"
+        {%- if track_inventory %}
+        data-max="{{ item.variant.inventory_quantity }}"
+        data-max-msg="{{ 'sections.cart.qty_max' | t: count: item.variant.inventory_quantity }}"
+        {%- endif %}
+        aria-label="{{ 'sections.cart.qty_label' | t }}"
+      >
+      <button
+        type="button"
+        class="sw-qty__btn"
+        data-cart-inc="{{ line_index }}"
+        aria-label="{{ 'sections.cart.qty_increase' | t }}"
+      >
+        {%- render 'icon', icon: 'plus', size: 14 -%}
+      </button>
+    </div>
+
+    <div class="sw-cart-line__price">
+      <div class="display sw-cart-line__total" data-line-total="{{ line_index }}">{{ item.line_price | money }}</div>
+      <div class="mono sw-cart-line__each" data-line-each="{{ line_index }}"{% unless item.quantity > 1 %} hidden{% endunless %}>
+        {{ item.price | money }} {{ 'sections.cart.each' | t }}
+      </div>
+    </div>
+  </div>
+
+</article>

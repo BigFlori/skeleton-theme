@@ -1,0 +1,75 @@
+{%- comment -%}
+  Expects: grand_total, fee, shipping_free (passed via render)
+  Globals used: cart, section
+{%- endcomment -%}
+
+<aside class="sw-cart-summary">
+
+  <div class="sw-cart-summary__card">
+    <h2 class="display sw-cart-summary__title">
+      {{ 'sections.cart.summary_title' | t }}
+    </h2>
+
+    <dl class="sw-cart-summary__rows">
+      <div class="sw-cart-summary__row">
+        <dt>{{ 'sections.cart.subtotal' | t }}</dt>
+        <dd class="mono" data-cart-subtotal>{{ cart.total_price | money }}</dd>
+      </div>
+      <div class="sw-cart-summary__row">
+        <dt>{{ 'sections.cart.shipping' | t }}</dt>
+        <dd class="mono sw-cart-summary__dd--accent" data-cart-shipping-value>
+          {%- if shipping_free -%}
+            {{ 'sections.cart.shipping_free' | t }}
+          {%- else -%}
+            {{ fee | money }}
+          {%- endif -%}
+        </dd>
+        <div class="mono sw-cart-summary__sub" data-cart-shipping-note>
+          {%- if shipping_free -%}
+            {{ 'sections.cart.shipping_free_note' | t }}
+          {%- else -%}
+            {{ 'sections.cart.shipping_paid_note' | t }}
+          {%- endif -%}
+        </div>
+      </div>
+      <div class="sw-cart-summary__row">
+        <dt>{{ 'sections.cart.vat' | t }}</dt>
+        <dd class="mono">{{ cart.total_tax | money }}</dd>
+        <div class="mono sw-cart-summary__sub">{{ 'sections.cart.vat_note' | t }}</div>
+      </div>
+    </dl>
+
+    <div class="sw-cart-summary__total-row">
+      <span class="sw-cart-summary__total-label">{{ 'sections.cart.total' | t }}</span>
+      <span class="display sw-cart-summary__total-amount" data-cart-grand-total>
+        {{ grand_total | money }}
+      </span>
+    </div>
+
+    {%- form 'cart', cart, class: 'sw-cart-summary__checkout-form' -%}
+      <button type="submit" name="checkout" class="btn btn-primary sw-cart-summary__checkout-btn">
+        {{ 'sections.cart.checkout_btn' | t }}
+        {%- render 'icon', icon: 'arrow-right', size: 16 -%}
+      </button>
+    {%- endform -%}
+    <div class="mono sw-cart-summary__checkout-note">
+      {%- render 'icon', icon: 'lock', size: 12 -%}
+      {{ 'sections.cart.checkout_note' | t }}
+    </div>
+  </div>
+
+  <div class="sw-cart-discount">
+    <div class="mono sw-cart-discount__label">{{ 'sections.cart.discount_label' | t }}</div>
+    <p class="sw-cart-discount__note">{{ 'sections.cart.discount_note' | t }}</p>
+  </div>
+
+  <div class="sw-cart-payment" aria-label="{{ 'sections.cart.payment_methods' | t }}">
+    {%- for type in shop.enabled_payment_types -%}
+      <div class="sw-pay-logo">
+        {{ type | payment_type_svg_tag }}
+      </div>
+    {%- endfor -%}
+  </div>
+
+
+</aside>
