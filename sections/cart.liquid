@@ -416,24 +416,38 @@
   gap: 5px;
 }
 
-/* ── Discount hint ── */
+/* ── Discount ── */
 .sw-cart-discount {
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  padding: 18px;
-  background: var(--bg-card);
+  border-top: 1px solid var(--line);
+  padding-top: 18px;
+  margin-top: 18px;
 }
 .sw-cart-discount__label {
+  display: block;
   font-size: 10px;
   color: var(--ink-mute);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   margin-bottom: 6px;
 }
-.sw-cart-discount__note {
+.sw-cart-discount__input {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 10px 12px;
   font-size: 13px;
-  color: var(--ink-soft);
-  line-height: 1.5;
+  background: var(--bg);
+  color: var(--ink);
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.15s;
+}
+.sw-cart-discount__input:focus { border-color: var(--accent); }
+.sw-cart-discount__input::placeholder { color: var(--ink-mute); }
+.sw-cart-discount__note {
+  font-size: 11px;
+  color: var(--ink-mute);
+  margin-top: 6px;
 }
 
 /* ── Payment logos ── */

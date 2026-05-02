@@ -47,6 +47,22 @@
     </div>
 
     {%- form 'cart', cart, class: 'sw-cart-summary__checkout-form' -%}
+      <div class="sw-cart-discount">
+        <label class="mono sw-cart-discount__label" for="CartDiscountCode">
+          {{ 'sections.cart.discount_label' | t }}
+        </label>
+        <input
+          type="text"
+          id="CartDiscountCode"
+          name="discount"
+          class="sw-cart-discount__input"
+          placeholder="{{ 'sections.cart.discount_placeholder' | t }}"
+          autocorrect="off"
+          autocapitalize="characters"
+          spellcheck="false"
+        >
+        <p class="mono sw-cart-discount__note">{{ 'sections.cart.discount_note' | t }}</p>
+      </div>
       <button
         type="submit"
         name="checkout"
@@ -66,11 +82,6 @@
       {%- render 'icon', icon: 'lock', size: 12 -%}
       {{ 'sections.cart.checkout_note' | t }}
     </div>
-  </div>
-
-  <div class="sw-cart-discount">
-    <div class="mono sw-cart-discount__label">{{ 'sections.cart.discount_label' | t }}</div>
-    <p class="sw-cart-discount__note">{{ 'sections.cart.discount_note' | t }}</p>
   </div>
 
   <div class="sw-cart-payment" aria-label="{{ 'sections.cart.payment_methods' | t }}">
