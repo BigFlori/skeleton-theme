@@ -70,12 +70,13 @@
         type="submit"
         name="checkout"
         class="btn btn-primary sw-cart-summary__checkout-btn"
+        aria-describedby="cart-checkout-unavailable"
         {%- if has_unavailable %} disabled aria-disabled="true"{% endif %}
       >
         {{ 'sections.cart.checkout_btn' | t }}
         {%- render 'icon', icon: 'arrow-right', size: 16 -%}
       </button>
-      <p class="mono sw-cart-summary__unavailable-note"{% unless has_unavailable %} hidden{% endunless %}>
+      <p id="cart-checkout-unavailable" class="mono sw-cart-summary__unavailable-note"{% unless has_unavailable %} hidden{% endunless %}>
         {{ 'sections.cart.checkout_unavailable' | t }}
       </p>
     {%- endform -%}

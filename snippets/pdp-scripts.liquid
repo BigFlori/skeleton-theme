@@ -172,6 +172,7 @@ window.PDP_I18N = {
   function addToCart(variantId, quantity, callback) {
     fetch('/cart/add.js', {
       method: 'POST',
+      credentials: 'same-origin',
       headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
       body: JSON.stringify({ id: variantId, quantity: quantity }),
     })
