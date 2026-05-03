@@ -1,4 +1,4 @@
-<article class="sw-cart-line" data-line="{{ line_index }}" aria-label="{{ item.product.title | escape }}">
+<article class="sw-cart-line" data-line="{{ line_index }}"{% unless item.variant.available %} data-unavailable{% endunless %} aria-label="{{ item.product.title | escape }}">
 
   {%- liquid
     assign show_low_stock = false

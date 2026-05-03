@@ -790,6 +790,7 @@ window.swCartConfig = {
           showEmptyCart();
         } else {
           updateCartDOM(cart, lineIndex);
+          updateCheckoutButton();
           if (focusEl) focusEl.focus();
         }
       } else {
@@ -809,6 +810,14 @@ window.swCartConfig = {
         : err.message;
       showToast(msg || cfg.strings.errorGeneric);
     }
+  }
+
+  function updateCheckoutButton() {
+    var btn  = document.querySelector('.sw-cart-summary__checkout-btn');
+    var note = document.querySelector('.sw-cart-summary__unavailable-note');
+    var hasUnavailable = !!document.querySelector('[data-unavailable]');
+    if (btn)  { btn.disabled = hasUnavailable; btn.setAttribute('aria-disabled', hasUnavailable ? 'true' : 'false'); }
+    if (note) note.hidden = !hasUnavailable;
   }
 
   function showEmptyCart() {

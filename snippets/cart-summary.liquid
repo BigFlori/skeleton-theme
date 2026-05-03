@@ -75,11 +75,9 @@
         {{ 'sections.cart.checkout_btn' | t }}
         {%- render 'icon', icon: 'arrow-right', size: 16 -%}
       </button>
-      {%- if has_unavailable -%}
-        <p class="mono sw-cart-summary__unavailable-note">
-          {{ 'sections.cart.checkout_unavailable' | t }}
-        </p>
-      {%- endif -%}
+      <p class="mono sw-cart-summary__unavailable-note"{% unless has_unavailable %} hidden{% endunless %}>
+        {{ 'sections.cart.checkout_unavailable' | t }}
+      </p>
     {%- endform -%}
     <div class="mono sw-cart-summary__checkout-note">
       {%- render 'icon', icon: 'lock', size: 12 -%}
