@@ -29,7 +29,8 @@
       "Bash(node -e \"['en.default','de','hu'].forEach\\(f => { try { JSON.parse\\(require\\('fs'\\).readFileSync\\('C:/Users/Thurneer/Documents/Shopify/solar-theme/locales/'+f+'.json','utf8'\\)\\); console.log\\(f+': valid'\\); } catch\\(e\\) { console.log\\(f+': ERROR '+e.message\\); } }\\)\")",
       "Bash(node -e \"['en.default','de','hu'].forEach\\(f => { var d = JSON.parse\\(require\\('fs'\\).readFileSync\\('C:/Users/Thurneer/Documents/Shopify/solar-theme/locales/'+f+'.json','utf8'\\)\\); var keys = Object.keys\\(d.sections.cart\\); console.log\\(f+': '+keys.length+' cart keys'\\); }\\)\")",
       "Bash(node -e \"JSON.parse\\(require\\('fs'\\).readFileSync\\('locales/hu.json','utf8'\\)\\); console.log\\('hu.json OK'\\)\")",
-      "Bash(node -e \"JSON.parse\\(require\\('fs'\\).readFileSync\\('locales/de.json','utf8'\\)\\); console.log\\('de.json OK'\\)\")"
+      "Bash(node -e \"JSON.parse\\(require\\('fs'\\).readFileSync\\('locales/de.json','utf8'\\)\\); console.log\\('de.json OK'\\)\")",
+      "Bash(xargs grep *)"
     ]
   }
 }

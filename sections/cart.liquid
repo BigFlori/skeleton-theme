@@ -18,12 +18,11 @@
   endfor
 -%}
 
-{%- if cart.item_count == 0 -%}
-
+<div data-cart-empty{% unless cart.item_count == 0 %} hidden{% endunless %}>
   {%- render 'cart-empty' -%}
+</div>
 
-{%- else -%}
-
+<div data-cart-full{% if cart.item_count == 0 %} hidden{% endif %}>
   {%- render 'cart-hero' -%}
   {%- render 'cart-progress', threshold: threshold, shipping_free: shipping_free -%}
 
@@ -48,8 +47,7 @@
   </section>
 
   {%- render 'cart-upsell' -%}
-
-{%- endif -%}
+</div>
 
 <div id="sw-cart-toast" class="sw-toast" aria-live="polite" aria-atomic="true" hidden></div>
 <div id="sw-cart-live" class="sw-sr-only" aria-live="polite" aria-atomic="true"></div>
@@ -546,7 +544,6 @@
 }
 .sw-toast--visible { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
 .sw-cart-line--loading   { opacity: 0.5; pointer-events: none; }
-.sw-cart-line--removing  { opacity: 0.35; pointer-events: none; transition: opacity 0.15s ease; }
 .sw-toast__action {
   background: transparent;
   border: none;
@@ -595,8 +592,6 @@ window.swCartConfig = {
     shippingFreeNote: {{ 'sections.cart.shipping_free_note' | t: amount: threshold_money | json }},
     shippingPaidNote: {{ 'sections.cart.shipping_paid_note' | t | json }},
     qtyMin: {{ 'sections.cart.qty_min' | t | json }},
-    itemRemoved: {{ 'sections.cart.item_removed' | t | json }},
-    undo: {{ 'sections.cart.undo' | t | json }},
     freeShipUnlocked: {{ 'sections.cart.shipping_bar_unlocked' | t | json }},
     freeShipProgress: {{ 'sections.cart.shipping_bar_progress' | t: amount: '__AMOUNT__' | json }},
     errorGeneric: {{ 'sections.cart.error_generic' | t | json }},
@@ -610,9 +605,7 @@ window.swCartConfig = {
   var cfg          = window.swCartConfig;
   var toast          = document.getElementById('sw-cart-toast');
   var toastTimer;
-  var settingValue    = false;
-  var pendingRemovals = {};
-  var removalTimer    = null;
+  var settingValue = false;
 
   function hideToast() {
     clearTimeout(toastTimer);
@@ -789,14 +782,14 @@ window.swCartConfig = {
       }
       var cart = await res.json();
       if (newQty === 0) {
+        var lineEl  = document.querySelector('[data-line="' + lineIndex + '"]');
+        var focusEl = getFocusTargetAfterRemoval(lineIndex);
+        if (lineEl) lineEl.remove();
+        reindexLines(lineIndex);
         if (cart.item_count === 0) {
-          location.reload();
+          showEmptyCart();
         } else {
           updateCartDOM(cart, lineIndex);
-          var lineEl   = document.querySelector('[data-line="' + lineIndex + '"]');
-          var focusEl  = getFocusTargetAfterRemoval(lineIndex);
-          if (lineEl) lineEl.remove();
-          reindexLines(lineIndex);
           if (focusEl) focusEl.focus();
         }
       } else {
@@ -818,38 +811,18 @@ window.swCartConfig = {
     }
   }
 
-  async function commitPendingRemovals() {
-    var indices = Object.keys(pendingRemovals).map(Number).sort(function (a, b) { return b - a; });
-    pendingRemovals = {};
-    removalTimer    = null;
-    for (var i = 0; i < indices.length; i++) {
-      await changeQty(indices[i], 0);
-    }
-  }
-
-  function scheduleRemoval(lineIndex) {
-    clearTimeout(removalTimer);
-    var lineEl = document.querySelector('[data-line="' + lineIndex + '"]');
-    if (lineEl) lineEl.classList.add('sw-cart-line--removing');
-    pendingRemovals[lineIndex] = lineEl;
-
-    var nameEl   = lineEl ? lineEl.querySelector('.sw-cart-line__name a') : null;
-    var itemName = nameEl ? nameEl.textContent.trim() : '';
-    var msg      = itemName ? (itemName + ' — ' + cfg.strings.itemRemoved) : cfg.strings.itemRemoved;
-
-    removalTimer = setTimeout(commitPendingRemovals, 5000);
-
-    showToast(msg, cfg.strings.undo, function () {
-      hideToast();
-      clearTimeout(removalTimer);
-      removalTimer = null;
-      var el = pendingRemovals[lineIndex];
-      delete pendingRemovals[lineIndex];
-      if (el) el.classList.remove('sw-cart-line--removing');
-      if (Object.keys(pendingRemovals).length > 0) {
-        removalTimer = setTimeout(commitPendingRemovals, 5000);
+  function showEmptyCart() {
+    var emptyEl = document.querySelector('[data-cart-empty]');
+    var fullEl  = document.querySelector('[data-cart-full]');
+    if (fullEl)  fullEl.hidden  = true;
+    if (emptyEl) {
+      emptyEl.hidden = false;
+      var focusTarget = emptyEl.querySelector('h1, a, button');
+      if (focusTarget) {
+        if (!focusTarget.getAttribute('tabindex')) focusTarget.setAttribute('tabindex', '-1');
+        focusTarget.focus();
       }
-    }, 5000);
+    }
   }
 
   function getLineQty(lineIndex) {
@@ -862,7 +835,7 @@ window.swCartConfig = {
     if (dec) {
       var line = parseInt(dec.dataset.cartDec, 10);
       var qty  = getLineQty(line);
-      if (qty <= 1) { scheduleRemoval(line); } else { changeQty(line, qty - 1); }
+      if (qty <= 1) { changeQty(line, 0); } else { changeQty(line, qty - 1); }
       return;
     }
     var inc = e.target.closest('[data-cart-inc]');
@@ -880,7 +853,7 @@ window.swCartConfig = {
     }
     var rem = e.target.closest('[data-cart-remove]');
     if (rem) {
-      scheduleRemoval(parseInt(rem.dataset.cartRemove, 10));
+      changeQty(parseInt(rem.dataset.cartRemove, 10), 0);
       return;
     }
     var upsellBtn = e.target.closest('[data-upsell-add]');
@@ -950,7 +923,7 @@ window.swCartConfig = {
       settingValue = true;
       input.value = input.dataset.prevQty || 1;
       settingValue = false;
-      scheduleRemoval(line);
+      changeQty(line, 0);
       return;
     }
     var val = Math.max(1, Math.min(maxStock, isNaN(raw) ? 1 : raw));
