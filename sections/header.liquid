@@ -77,17 +77,25 @@
         </div>
       {%- endif -%}
 
-      {%- comment -%} Cart button {%- endcomment -%}
-      <a href="{{ routes.cart_url }}" class="btn btn-secondary sw-nav__cart" aria-label="{{ 'general.cart' | t }} ({{ cart.item_count }})">
+      {%- comment -%} Cart button — opens drawer; falls back to /cart without JS {%- endcomment -%}
+      <a
+        href="{{ routes.cart_url }}"
+        class="btn btn-secondary sw-nav__cart"
+        data-cart-drawer-trigger
+        aria-label="{{ 'general.cart' | t }} ({{ cart.item_count }})"
+      >
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
           <line x1="3" y1="6" x2="21" y2="6"/>
           <path d="M16 10a4 4 0 01-8 0"/>
         </svg>
         <span class="hide-mobile">{{ 'general.cart' | t }}</span>
-        {%- if cart.item_count > 0 -%}
-          <span class="sw-nav__badge mono" aria-label="{{ cart.item_count }} {{ 'general.items' | t }}">{{ cart.item_count }}</span>
-        {%- endif -%}
+        <span
+          class="sw-nav__badge mono"
+          data-cart-drawer-count
+          {% if cart.item_count == 0 %} hidden{% endif %}
+          aria-label="{{ cart.item_count }} {{ 'general.items' | t }}"
+        >{{ cart.item_count }}</span>
       </a>
 
     </div>

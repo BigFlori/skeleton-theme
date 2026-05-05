@@ -373,6 +373,22 @@
       "shipping_bar_unlocked": "Free shipping unlocked!",
       "error_generic": "Something went wrong — please try again.",
       "update_cart": "Update cart"
+    },
+    "cart_drawer": {
+      "close": "Close",
+      "title_empty_html": "Still <em>empty</em>.",
+      "empty_heading": "Nothing here — yet.",
+      "empty_body": "Browse our complete packages or choose individual components.",
+      "browse_cta": "Keep browsing",
+      "shipping_free_html": "<strong>Free shipping</strong> unlocked — thank you!",
+      "shipping_progress_html": "Spend <strong class=\"mono\">{{ remaining }}</strong> more for free shipping.",
+      "shipping_progress_label": "Free shipping progress",
+      "upsell_eyebrow": "Forgotten?",
+      "vat_note": "incl. 0 % VAT · Zero rate Austria",
+      "continue_shopping": "Continue shopping",
+      "trust_ssl": "SSL-secure",
+      "trust_shipping": "3-day delivery",
+      "trust_install": "Installation AT-wide"
     }
   }
 }

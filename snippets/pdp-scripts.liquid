@@ -182,6 +182,7 @@ window.PDP_I18N = {
           showToast(i18n.errorPrefix + (data.description || ''));
         } else {
           showToast(ti(i18n.added, { count: quantity, title: PRODUCT_TITLE }));
+          document.dispatchEvent(new CustomEvent('cart:item-added'));
           if (callback) callback();
         }
       })

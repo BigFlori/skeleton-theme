@@ -373,6 +373,22 @@
       "shipping_bar_unlocked": "Kostenloser Versand freigeschaltet!",
       "error_generic": "Etwas ist schiefgelaufen — bitte versuche es erneut.",
       "update_cart": "Warenkorb aktualisieren"
+    },
+    "cart_drawer": {
+      "close": "Schließen",
+      "title_empty_html": "Noch <em>leer</em>.",
+      "empty_heading": "Nichts drin — noch.",
+      "empty_body": "Stöbern Sie durch unsere Komplettpakete oder wählen Sie einzelne Komponenten.",
+      "browse_cta": "Weiter stöbern",
+      "shipping_free_html": "<strong>Gratis Versand</strong> freigeschaltet — danke!",
+      "shipping_progress_html": "Noch <strong class=\"mono\">{{ remaining }}</strong> bis zum Gratis-Versand.",
+      "shipping_progress_label": "Fortschritt Gratis-Versand",
+      "upsell_eyebrow": "Vergessen?",
+      "vat_note": "inkl. 0 % USt · Nullsteuersatz Österreich",
+      "continue_shopping": "Weiter einkaufen",
+      "trust_ssl": "SSL-sicher",
+      "trust_shipping": "3 Tage Versand",
+      "trust_install": "Montage AT-weit"
     }
   }
 }

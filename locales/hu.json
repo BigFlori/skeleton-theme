@@ -373,6 +373,22 @@
       "shipping_bar_unlocked": "Ingyenes szállítás elérve!",
       "error_generic": "Valami hiba történt — kérjük, próbáld újra.",
       "update_cart": "Kosár frissítése"
+    },
+    "cart_drawer": {
+      "close": "Bezárás",
+      "title_empty_html": "Még <em>üres</em>.",
+      "empty_heading": "Még semmi itt.",
+      "empty_body": "Böngésszen komplett csomagjaink között, vagy válasszon egyedi komponenseket.",
+      "browse_cta": "Böngészés folytatása",
+      "shipping_free_html": "<strong>Ingyenes szállítás</strong> elérve — köszönjük!",
+      "shipping_progress_html": "Még <strong class=\"mono\">{{ remaining }}</strong> az ingyenes szállításig.",
+      "shipping_progress_label": "Ingyenes szállítás folyamata",
+      "upsell_eyebrow": "Elfelejtettél valamit?",
+      "vat_note": "0 % ÁFA · Nullaadó-kulcs Ausztria",
+      "continue_shopping": "Vásárlás folytatása",
+      "trust_ssl": "SSL-biztonságos",
+      "trust_shipping": "3 napos szállítás",
+      "trust_install": "Szerelés egész AT-ban"
     }
   }
 }
