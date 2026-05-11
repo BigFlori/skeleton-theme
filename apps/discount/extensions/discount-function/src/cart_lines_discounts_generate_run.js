@@ -1,96 +1,63 @@
 import {
   DiscountClass,
-  OrderDiscountSelectionStrategy,
   ProductDiscountSelectionStrategy,
 } from '../generated/api';
 
-
 /**
-  * @typedef {import("../generated/api").CartInput} RunInput
-  * @typedef {import("../generated/api").CartLinesDiscountsGenerateRunResult} CartLinesDiscountsGenerateRunResult
-  */
-
-/**
-  * @param {RunInput} input
-  * @returns {CartLinesDiscountsGenerateRunResult}
-  */
-
+ * Volume discount: per cart line we read product.metafield(custom.volume_tiers)
+ * as a JSON array of { min_qty, discount_pct } and apply the highest matching
+ * tier as a line-level percentage discount. The PDP reads the same metafield,
+ * so storefront and checkout stay in sync.
+ *
+ * @typedef {import("../generated/api").CartInput} RunInput
+ * @typedef {import("../generated/api").CartLinesDiscountsGenerateRunResult} CartLinesDiscountsGenerateRunResult
+ *
+ * @param {RunInput} input
+ * @returns {CartLinesDiscountsGenerateRunResult}
+ */
 export function cartLinesDiscountsGenerateRun(input) {
-  if (!input.cart.lines.length) {
-    return {operations: []};
+  if (!input.cart.lines.length) return { operations: [] };
+  if (!input.discount.discountClasses.includes(DiscountClass.Product)) {
+    return { operations: [] };
   }
 
-  const hasOrderDiscountClass = input.discount.discountClasses.includes(
-    DiscountClass.Order,
-  );
-  const hasProductDiscountClass = input.discount.discountClasses.includes(
-    DiscountClass.Product,
-  );
+  const candidates = [];
 
-  if (!hasOrderDiscountClass && !hasProductDiscountClass) {
-    return {operations: []};
-  }
+  for (const line of input.cart.lines) {
+    if (line.merchandise.__typename !== 'ProductVariant') continue;
 
-  const maxCartLine = input.cart.lines.reduce((maxLine, line) => {
-    if (line.cost.subtotalAmount.amount > maxLine.cost.subtotalAmount.amount) {
-      return line;
+    const tiers = line.merchandise.product?.volumeTiers?.jsonValue;
+    if (!Array.isArray(tiers) || tiers.length === 0) continue;
+
+    let bestPct = 0;
+    for (const tier of tiers) {
+      if (!tier) continue;
+      const minQty = Number(tier.min_qty);
+      const pct = Number(tier.discount_pct);
+      if (!Number.isFinite(minQty) || !Number.isFinite(pct)) continue;
+      if (pct <= 0) continue;
+      if (line.quantity < minQty) continue;
+      if (pct > bestPct) bestPct = pct;
     }
-    return maxLine;
-  }, input.cart.lines[0]);
+    if (bestPct <= 0) continue;
 
-  const operations = [];
-
-  if (hasOrderDiscountClass) {
-    operations.push({
-      orderDiscountsAdd: {
-        candidates: [
-          {
-            message: '10% OFF ORDER',
-            targets: [
-              {
-                orderSubtotal: {
-                  excludedCartLineIds: [],
-                },
-              },
-            ],
-            value: {
-              percentage: {
-                value: 10,
-              },
-            },
-          },
-        ],
-        selectionStrategy: OrderDiscountSelectionStrategy.First,
-      },
+    candidates.push({
+      message: `Volume −${bestPct}%`,
+      targets: [{ cartLine: { id: line.id } }],
+      value: { percentage: { value: bestPct } },
     });
   }
 
-  if (hasProductDiscountClass) {
-    operations.push({
-      productDiscountsAdd: {
-        candidates: [
-          {
-            message: '20% OFF PRODUCT',
-            targets: [
-              {
-                cartLine: {
-                  id: maxCartLine.id,
-                },
-              },
-            ],
-            value: {
-              percentage: {
-                value: 20,
-              },
-            },
-          },
-        ],
-        selectionStrategy: ProductDiscountSelectionStrategy.First,
-      },
-    });
-  }
+  if (candidates.length === 0) return { operations: [] };
 
   return {
-    operations,
+    operations: [
+      {
+        productDiscountsAdd: {
+          candidates,
+          selectionStrategy: ProductDiscountSelectionStrategy.All,
+        },
+      },
+    ],
   };
 }

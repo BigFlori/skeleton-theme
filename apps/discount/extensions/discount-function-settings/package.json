@@ -1,0 +1,14 @@
+{
+  "name": "discount-function-settings",
+  "version": "0.0.1",
+  "license": "UNLICENSED",
+  "type": "module",
+  "scripts": {
+    "shopify": "npm exec -- shopify"
+  },
+  "dependencies": {
+    "@shopify/ui-extensions": "2026.1.x",
+    "preact": "^10.22.0",
+    "@preact/signals": "^2.3.0"
+  }
+}

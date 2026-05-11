@@ -64,7 +64,8 @@
       "PowerShell(Get-CimInstance Win32_Process | Where-Object { $_.Name -match 'node|javy|function-runner|cargo|ruby|wasm' } | Select-Object ProcessId, Name, @{n='CmdLine';e={$_.CommandLine}} | Format-List)",
       "mcp__plugin_context7_context7__resolve-library-id",
       "mcp__plugin_context7_context7__query-docs",
-      "Bash(shopify app *)"
+      "Bash(shopify app *)",
+      "Bash(npm install *)"
     ],
     "additionalDirectories": [
       "/home/fmolnar/Documents/Shopify/nrgedge/apps/discounts/extensions/volume-discount",

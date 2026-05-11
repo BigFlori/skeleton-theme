@@ -2,9 +2,15 @@ query CartInput {
   cart {
     lines {
       id
-      cost {
-        subtotalAmount {
-          amount
+      quantity
+      merchandise {
+        __typename
+        ... on ProductVariant {
+          product {
+            volumeTiers: metafield(namespace: "custom", key: "volume_tiers") {
+              jsonValue
+            }
+          }
         }
       }
     }
