@@ -1,0 +1,44 @@
+{%- comment -%}
+  Renders a single Shopify storefront list filter (checkbox group).
+
+  Parameters:
+    - filter: a list-type filter from collection.filters (required)
+{%- endcomment -%}
+
+{%- assign filter_key = filter.param_name | replace: '.', '-' -%}
+<div class="coll-filter-section">
+  <button type="button" class="coll-filter-section__toggle" aria-expanded="true" data-section-toggle="{{ filter_key }}">
+    <span class="mono">{{ filter.label }}</span>
+    <svg class="coll-filter-section__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+  </button>
+  <div class="coll-filter-section__body" data-section-body="{{ filter_key }}">
+    <ul class="coll-check-list" data-check-list="{{ filter_key }}">
+      {%- for value in filter.values -%}
+        <li{% if forloop.index > 8 %} class="coll-check-overflow" hidden{% endif %}>
+          <label class="coll-check-label">
+            <input
+              class="coll-check-input"
+              type="checkbox"
+              name="{{ value.param_name }}"
+              value="{{ value.value }}"
+              {% if value.active %}checked{% endif %}
+            >
+            <span class="coll-check-box{% if value.active %} coll-check-box--checked{% endif %}" aria-hidden="true">
+              {%- if value.active -%}
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              {%- endif -%}
+            </span>
+            <span class="coll-check-label__text">{{ value.label }}</span>
+            <span class="mono coll-check-label__count">({{ value.count }})</span>
+          </label>
+        </li>
+      {%- endfor -%}
+    </ul>
+    {%- if filter.values.size > 8 -%}
+      {%- assign overflow_count = filter.values.size | minus: 8 -%}
+      <button type="button" class="coll-show-more mono" data-show-more="{{ filter_key }}">
+        {{ 'collection.filters.show_more' | t: count: overflow_count }}
+      </button>
+    {%- endif -%}
+  </div>
+</div>

@@ -1,0 +1,35 @@
+{%- comment -%}
+  Renders the "Complete packages" promo strip above the collection grid.
+
+  Parameters:
+    - packages_collection_handle: handle of the collection holding package products.
+      Falls back to 'packages' when not provided.
+{%- endcomment -%}
+
+{%- assign pkg_handle = packages_collection_handle | default: 'packages' -%}
+{%- assign pkg_coll = collections[pkg_handle] -%}
+
+{%- if pkg_coll and pkg_coll.products.size > 0 -%}
+  <section class="coll-pkg-section">
+    <div class="container">
+
+      <div class="coll-pkg-header">
+        <div>
+          <span class="eyebrow">{{ 'collection.packages.eyebrow' | t }}</span>
+          <h2 class="display coll-pkg-title">{{ 'collection.packages.title_pre' | t }} <em>{{ 'collection.packages.title_em' | t }}</em></h2>
+        </div>
+        <a href="{{ pkg_coll.url }}" class="coll-pkg-view-all mono">
+          {{ 'collection.packages.view_all' | t: count: pkg_coll.products_count }}
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+        </a>
+      </div>
+
+      <div class="coll-pkg-grid">
+        {%- for product in pkg_coll.products limit: 4 -%}
+          {% render 'collection-pkg-card', product: product %}
+        {%- endfor -%}
+      </div>
+
+    </div>
+  </section>
+{%- endif -%}

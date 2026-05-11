@@ -1,0 +1,54 @@
+{%- comment -%}
+  Renders pagination controls. Reusable across paginated lists.
+
+  Parameters:
+    - paginate: the paginate object (required)
+{%- endcomment -%}
+
+{%- if paginate.pages > 1 -%}
+  <div class="coll-pagination">
+    <div class="mono coll-pagination__info">
+      {{ 'collection.pagination.showing' | t }}
+      <span>{{ paginate.current_offset | plus: 1 }}–{{ paginate.current_offset | plus: paginate.page_size | at_most: paginate.items }}</span>
+      {{ 'collection.pagination.of' | t }} <span>{{ paginate.items }}</span>
+    </div>
+
+    <nav class="coll-pagination__nav" aria-label="{{ 'collection.pagination.label' | t }}">
+      {%- if paginate.previous -%}
+        <a href="{{ paginate.previous.url }}" class="coll-page-btn" aria-label="{{ 'collection.pagination.prev_aria' | t }}">
+          <svg width="13" height="13" style="transform:rotate(180deg)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          {{ 'collection.pagination.prev' | t }}
+        </a>
+      {%- else -%}
+        <span class="coll-page-btn coll-page-btn--disabled" aria-disabled="true">
+          <svg width="13" height="13" style="transform:rotate(180deg)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          {{ 'collection.pagination.prev' | t }}
+        </span>
+      {%- endif -%}
+
+      <div class="coll-page-numbers">
+        {%- for part in paginate.parts -%}
+          {%- if part.is_link -%}
+            <a href="{{ part.url }}" class="coll-page-num mono">{{ part.title }}</a>
+          {%- elsif part.title != blank -%}
+            <span class="coll-page-num coll-page-num--active mono" aria-current="page">{{ part.title }}</span>
+          {%- else -%}
+            <span class="mono coll-page-num--ellipsis" aria-hidden="true">…</span>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      {%- if paginate.next -%}
+        <a href="{{ paginate.next.url }}" class="coll-page-btn" aria-label="{{ 'collection.pagination.next_aria' | t }}">
+          {{ 'collection.pagination.next' | t }}
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      {%- else -%}
+        <span class="coll-page-btn coll-page-btn--disabled" aria-disabled="true">
+          {{ 'collection.pagination.next' | t }}
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </span>
+      {%- endif -%}
+    </nav>
+  </div>
+{%- endif -%}

@@ -1,0 +1,100 @@
+{%- comment -%}
+  Renders a product card used in collection grids and any other
+  product listing context.
+
+  Parameters:
+    - product: the Shopify product object (required)
+{%- endcomment -%}
+
+{%- liquid
+  assign has_discount = false
+  assign discount_pct = null
+  if product.compare_at_price > product.price
+    assign has_discount = true
+    assign discount_pct = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price
+  endif
+
+  assign prod_spec = product.metafields.custom.spec | default: product.type
+
+  assign v = product.variants.first
+  assign stock_label = 'collection.card.in_stock' | t
+  assign stock_color = 'var(--accent-deep)'
+  assign stock_dot   = 'var(--accent-deep)'
+  if product.available == false
+    assign stock_label = 'collection.card.out_of_stock' | t
+    assign stock_color = 'var(--ink-mute)'
+    assign stock_dot   = 'var(--ink-mute)'
+  elsif v.inventory_management != blank and v.inventory_quantity > 0 and v.inventory_quantity <= 5
+    assign stock_label = 'collection.card.low_stock' | t
+    assign stock_color = 'oklch(0.50 0.13 60)'
+    assign stock_dot   = 'oklch(0.65 0.16 60)'
+  endif
+-%}
+
+<article class="prod-card">
+
+  <div class="prod-card__img-wrap">
+    {%- if product.featured_image -%}
+      {{
+        product.featured_image
+        | image_url: width: 400
+        | image_tag:
+          class: 'prod-card__img',
+          alt: product.featured_image.alt,
+          loading: 'lazy',
+          width: 400,
+          height: 400
+      }}
+    {%- endif -%}
+
+    {%- if has_discount -%}
+      <span class="prod-card__disc-badge mono">−{{ discount_pct }}%</span>
+    {%- endif -%}
+
+    <span class="prod-card__brand-badge mono">{{ product.vendor }}</span>
+
+    {%- if product.available -%}
+      {%- if product.variants.size == 1 -%}
+        <button
+          class="prod-card__atc-btn"
+          data-atc-id="{{ v.id }}"
+          data-atc-title="{{ product.title | escape }}"
+          aria-label="{{ 'collection.card.add_to_cart_aria' | t: title: product.title }}"
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+          {{ 'collection.card.add_to_cart' | t }}
+        </button>
+      {%- else -%}
+        <a
+          href="{{ product.url }}"
+          class="prod-card__atc-btn prod-card__atc-btn--select"
+          aria-label="{{ 'collection.card.select_options_aria' | t: title: product.title }}"
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          {{ 'collection.card.select_options' | t }}
+        </a>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+
+  <div class="prod-card__vendor mono">{{ product.vendor }}</div>
+  <h3 class="prod-card__title">{{ product.title }}</h3>
+  {%- unless prod_spec == blank -%}
+    <div class="prod-card__spec mono">{{ prod_spec }}</div>
+  {%- endunless -%}
+
+  <div class="prod-card__footer">
+    <div class="prod-card__price-block">
+      <span class="display prod-card__price">{{ product.price | money_without_trailing_zeros }}</span>
+      {%- if has_discount -%}
+        <span class="prod-card__old-price mono">{{ product.compare_at_price | money_without_trailing_zeros }}</span>
+      {%- endif -%}
+    </div>
+    <div class="prod-card__stock mono" style="color:{{ stock_color }}">
+      <span class="prod-card__stock-dot" style="background:{{ stock_dot }}"></span>
+      {{ stock_label }}
+    </div>
+  </div>
+
+  <a href="{{ product.url }}" class="prod-card__overlay-link" tabindex="-1" aria-hidden="true"></a>
+</article>

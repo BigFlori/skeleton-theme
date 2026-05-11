@@ -1,0 +1,165 @@
+{%- comment -%}
+  Renders the collection sidebar filter form.
+
+  Parameters:
+    - paginate: the paginate object (required, used for the items count)
+    - category_menu_handle: optional link list handle for category navigation
+{%- endcomment -%}
+
+<form
+  class="coll-sidebar"
+  id="CollectionFilters"
+  method="get"
+  action="{{ collection.url }}"
+  novalidate
+>
+  <div class="coll-sidebar__header">
+    <div class="display" style="font-size:22px;line-height:1">{{ 'collection.filters.title' | t }}</div>
+    <a href="{{ collection.url }}" class="coll-sidebar__clear mono">{{ 'collection.filters.clear_all' | t }}</a>
+  </div>
+
+  {%- comment -%} Category navigation {%- endcomment -%}
+  {%- if category_menu_handle != blank -%}
+    <div class="coll-filter-section">
+      <button type="button" class="coll-filter-section__toggle" aria-expanded="true" data-section-toggle="cat">
+        <span class="mono">{{ 'collection.filters.category' | t }}</span>
+        <svg class="coll-filter-section__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="coll-filter-section__body" data-section-body="cat">
+        <ul class="coll-cat-list">
+          {%- for link in linklists[category_menu_handle].links -%}
+            {%- assign link_count = '' -%}
+            {%- if link.type == 'collection_link' and link.object != blank -%}
+              {%- assign link_count = link.object.all_products_count -%}
+            {%- elsif link.type == 'catalog_link' -%}
+              {%- assign link_count = collections.all.all_products_count -%}
+            {%- endif -%}
+            <li>
+              <a href="{{ link.url }}" class="coll-cat-item{% if link.active %} coll-cat-item--active{% endif %}">
+                <span>{{ link.title }}</span>
+                {%- if link_count != '' -%}
+                  <span class="mono">{{ link_count }}</span>
+                {%- endif -%}
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- comment -%}
+    Dynamic Shopify storefront filters, rendered in a fixed order:
+    price → brand (vendor) → availability → any other list filters.
+  {%- endcomment -%}
+
+  {%- comment -%} 1. Price {%- endcomment -%}
+  {%- for filter in collection.filters -%}
+    {%- if filter.type == 'price_range' -%}
+      {%- liquid
+        assign price_min_value  = filter.min_value.value | default: 0
+        assign price_max_value  = filter.max_value.value | default: filter.range_max
+        assign price_min_attr   = price_min_value | money_without_currency | replace: ',', ''
+        assign price_max_attr   = price_max_value | money_without_currency | replace: ',', ''
+        assign range_max_attr   = filter.range_max  | money_without_currency | replace: ',', ''
+        assign price_min_label  = 0                 | money
+        assign price_max_label  = filter.range_max  | money
+      -%}
+      <div class="coll-filter-section">
+        <button type="button" class="coll-filter-section__toggle" aria-expanded="true" data-section-toggle="price">
+          <span class="mono">{{ 'collection.filters.price' | t }}</span>
+          <svg class="coll-filter-section__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="coll-filter-section__body" data-section-body="price">
+          <div class="price-display">
+            <span id="PriceMin" class="mono">{{ price_min_value | money }}</span>
+            <span class="mono" style="color:var(--ink-mute)">—</span>
+            <span id="PriceMax" class="mono">{{ price_max_value | money }}</span>
+          </div>
+          <div class="price-slider-wrap">
+            <div class="price-track">
+              <div class="price-fill" id="PriceRangeFill"></div>
+            </div>
+            <input
+              class="price-range-input"
+              type="range"
+              name="{{ filter.min_value.param_name }}"
+              min="0"
+              max="{{ range_max_attr }}"
+              value="{{ price_min_attr }}"
+              data-price-handle="min"
+              step="1"
+            >
+            <input
+              class="price-range-input"
+              type="range"
+              name="{{ filter.max_value.param_name }}"
+              min="0"
+              max="{{ range_max_attr }}"
+              value="{{ price_max_attr }}"
+              data-price-handle="max"
+              step="1"
+            >
+          </div>
+          <div class="mono price-limits">{{ 'collection.filters.price_min' | t: min: price_min_label, max: price_max_label }}</div>
+        </div>
+      </div>
+    {%- endif -%}
+  {%- endfor -%}
+
+  {%- comment -%} 2. Brand (vendor) {%- endcomment -%}
+  {%- for filter in collection.filters -%}
+    {%- if filter.type == 'list' and filter.param_name == 'filter.p.vendor' -%}
+      {% render 'collection-filter-list', filter: filter %}
+    {%- endif -%}
+  {%- endfor -%}
+
+  {%- comment -%} 3. Availability {%- endcomment -%}
+  {%- for filter in collection.filters -%}
+    {%- if filter.type == 'list' and filter.param_name == 'filter.v.availability' -%}
+      {% render 'collection-filter-list', filter: filter %}
+    {%- endif -%}
+  {%- endfor -%}
+
+  {%- comment -%} 4. Any remaining list filters, in admin order {%- endcomment -%}
+  {%- for filter in collection.filters -%}
+    {%- if filter.type == 'list' and filter.param_name != 'filter.p.vendor' and filter.param_name != 'filter.v.availability' -%}
+      {% render 'collection-filter-list', filter: filter %}
+    {%- endif -%}
+  {%- endfor -%}
+
+  {%- comment -%} Fallback: vendor list when Shopify filters not configured {%- endcomment -%}
+  {%- if collection.filters.size == 0 and collection.all_vendors.size > 0 -%}
+    <div class="coll-filter-section">
+      <button type="button" class="coll-filter-section__toggle" aria-expanded="true" data-section-toggle="vendor">
+        <span class="mono">{{ 'collection.filters.brand' | t }}</span>
+        <svg class="coll-filter-section__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="coll-filter-section__body" data-section-body="vendor">
+        <ul class="coll-check-list" data-check-list="vendor">
+          {%- for vendor in collection.all_vendors -%}
+            <li{% if forloop.index > 8 %} class="coll-check-overflow" hidden{% endif %}>
+              <label class="coll-check-label">
+                <input
+                  class="coll-check-input"
+                  type="checkbox"
+                  name="filter.p.vendor"
+                  value="{{ vendor }}"
+                >
+                <span class="coll-check-box" aria-hidden="true"></span>
+                <span class="coll-check-label__text">{{ vendor }}</span>
+              </label>
+            </li>
+          {%- endfor -%}
+        </ul>
+        {%- if collection.all_vendors.size > 8 -%}
+          {%- assign vendor_overflow = collection.all_vendors.size | minus: 8 -%}
+          <button type="button" class="coll-show-more mono" data-show-more="vendor">
+            {{ 'collection.filters.show_more' | t: count: vendor_overflow }}
+          </button>
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+</form>

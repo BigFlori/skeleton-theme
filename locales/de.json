@@ -139,6 +139,73 @@
       "error_prefix": "Fehler: "
     }
   },
+  "collection": {
+    "breadcrumb": {
+      "label": "Brotkrumen",
+      "home": "Start",
+      "shop": "Shop"
+    },
+    "packages": {
+      "eyebrow": "Empfohlen · Kuratierte Bundles",
+      "title_pre": "Komplett-",
+      "title_em": "pakete",
+      "view_all": "Alle {{ count }} Pakete ansehen",
+      "modules": "Module",
+      "view_aria": "{{ title }} ansehen",
+      "add_to_cart_aria": "{{ title }} in den Warenkorb"
+    },
+    "filters": {
+      "title": "Filter",
+      "clear_all": "Alle löschen",
+      "showing": "ANGEZEIGT",
+      "products_count": "{{ count }} Produkte",
+      "category": "Kategorie",
+      "all_products": "Alle Produkte",
+      "price": "Preis",
+      "price_min": "MIN {{ min }} — MAX {{ max }}",
+      "brand": "Marke",
+      "show_more": "+ {{ count }} weitere",
+      "show_less": "Weniger anzeigen",
+      "active_label": "Aktiv:",
+      "remove_price_aria": "Preisfilter entfernen",
+      "remove_filter_aria": "Filter {{ label }} entfernen"
+    },
+    "toolbar": {
+      "eyebrow": "Einzelkomponenten",
+      "title_pre": "Alle",
+      "title_em": "Produkte",
+      "results": "{{ count }} Ergebnisse",
+      "sort_label": "Sortieren",
+      "sort_aria": "Produkte sortieren"
+    },
+    "pagination": {
+      "label": "Seitennavigation",
+      "showing": "Zeige",
+      "of": "von",
+      "prev": "Zurück",
+      "next": "Weiter",
+      "prev_aria": "Vorherige Seite",
+      "next_aria": "Nächste Seite"
+    },
+    "card": {
+      "in_stock": "Auf Lager",
+      "out_of_stock": "Nicht verfügbar",
+      "low_stock": "Nur noch wenige",
+      "add_to_cart": "In den Warenkorb",
+      "add_to_cart_aria": "{{ title }} in den Warenkorb",
+      "select_options": "Optionen wählen",
+      "select_options_aria": "Optionen für {{ title }} wählen"
+    },
+    "empty": {
+      "title": "Keine Treffer.",
+      "body": "Entferne einen Filter oder wähle eine andere Kategorie. Wir führen über 200 Artikel im Lager — etwas wird passen.",
+      "reset": "Filter zurücksetzen"
+    },
+    "toast": {
+      "error_generic": "Etwas ist schiefgelaufen",
+      "error_add_cart": "Konnte nicht zum Warenkorb hinzugefügt werden"
+    }
+  },
   "sections": {
     "hero": {
       "eyebrow": "Austria · KWp-Marktplatz",

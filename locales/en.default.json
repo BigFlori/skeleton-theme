@@ -139,6 +139,73 @@
       "error_prefix": "Error: "
     }
   },
+  "collection": {
+    "breadcrumb": {
+      "label": "Breadcrumb",
+      "home": "Home",
+      "shop": "Shop"
+    },
+    "packages": {
+      "eyebrow": "Featured · Curated bundles",
+      "title_pre": "Complete",
+      "title_em": "packages",
+      "view_all": "View all {{ count }} packages",
+      "modules": "modules",
+      "view_aria": "View {{ title }}",
+      "add_to_cart_aria": "Add {{ title }} to cart"
+    },
+    "filters": {
+      "title": "Filter",
+      "clear_all": "Clear all",
+      "showing": "SHOWING",
+      "products_count": "{{ count }} products",
+      "category": "Category",
+      "all_products": "All products",
+      "price": "Price",
+      "price_min": "MIN {{ min }} — MAX {{ max }}",
+      "brand": "Brand",
+      "show_more": "+ {{ count }} more",
+      "show_less": "Show less",
+      "active_label": "Active:",
+      "remove_price_aria": "Remove price filter",
+      "remove_filter_aria": "Remove {{ label }} filter"
+    },
+    "toolbar": {
+      "eyebrow": "Single components",
+      "title_pre": "All",
+      "title_em": "products",
+      "results": "{{ count }} results",
+      "sort_label": "Sort",
+      "sort_aria": "Sort products"
+    },
+    "pagination": {
+      "label": "Pagination",
+      "showing": "Showing",
+      "of": "of",
+      "prev": "Prev",
+      "next": "Next",
+      "prev_aria": "Previous page",
+      "next_aria": "Next page"
+    },
+    "card": {
+      "in_stock": "In stock",
+      "out_of_stock": "Out of stock",
+      "low_stock": "Only a few left",
+      "add_to_cart": "Add to cart",
+      "add_to_cart_aria": "Add {{ title }} to cart",
+      "select_options": "Select options",
+      "select_options_aria": "Select options for {{ title }}"
+    },
+    "empty": {
+      "title": "No matches.",
+      "body": "Try removing a filter, or pick a different category. We carry over 200 articles in our warehouse — something will fit.",
+      "reset": "Reset filters"
+    },
+    "toast": {
+      "error_generic": "Something went wrong",
+      "error_add_cart": "Could not add to cart"
+    }
+  },
   "sections": {
     "hero": {
       "eyebrow": "Austria · KWp Marketplace",
