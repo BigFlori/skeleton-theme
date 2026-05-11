@@ -504,50 +504,7 @@
 }
 {% endstylesheet %}
 
-<script>
-(function () {
-  var el = document.getElementById('sw-phone-display');
-  if (!el) return;
-
-  var raw = el.dataset.raw || el.textContent;
-  el.textContent = formatHunPhone(raw);
-
-  function formatHunPhone(raw) {
-    var digits = raw.replace(/[^\d]/g, '');
-
-    // Normalize 06... prefix to +36
-    if (raw.match(/^06/)) {
-      digits = '36' + digits.slice(2);
-    } else if (raw.match(/^\+36/)) {
-      digits = '36' + digits.slice(2); // re-use already stripped version
-    } else {
-      // Not a Hungarian number — return original
-      return raw;
-    }
-
-    // At this point digits starts with "36"
-    var local = digits.slice(2); // strip country code
-
-    // Budapest landline: starts with 1, 8 local digits → +36 1 XXX XXXX
-    if (local.charAt(0) === '1' && local.length === 8) {
-      return '+36 1 ' + local.slice(1, 4) + ' ' + local.slice(4);
-    }
-
-    // Mobile (20/30/31/50/70) or other 2-digit prefix: 9 local digits → +36 XX XXX XXXX
-    if (local.length === 9) {
-      return '+36 ' + local.slice(0, 2) + ' ' + local.slice(2, 5) + ' ' + local.slice(5);
-    }
-
-    // Other landline: 2-digit area code, 6 digits total → +36 XX XXX XXX
-    if (local.length === 8) {
-      return '+36 ' + local.slice(0, 2) + ' ' + local.slice(2, 5) + ' ' + local.slice(5);
-    }
-
-    // Fallback — return original unchanged
-    return raw;
-  }
-})();
-</script>
+<script src="{{ 'contact-phone.js' | asset_url }}" defer></script>
 
 {% schema %}
 {

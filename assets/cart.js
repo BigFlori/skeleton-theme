@@ -1,69 +1,23 @@
 (function () {
+  'use strict';
+
   var cfg          = window.swCartConfig;
-  var toast          = document.getElementById('sw-cart-toast');
-  var toastTimer;
+  var toastEl      = document.getElementById('sw-cart-toast');
   var settingValue = false;
+  var mutating     = false;
+  var lastCartFingerprint = null;
 
-  function hideToast() {
-    clearTimeout(toastTimer);
-    toast.classList.remove('sw-toast--visible');
-    setTimeout(function () { toast.hidden = true; }, 220);
+  function cartFingerprint(cart) {
+    var parts = cart.items.map(function (i) { return i.variant_id + 'x' + i.quantity; });
+    return cart.item_count + ':' + cart.total_price + ':' + parts.join(',');
   }
 
-  function showToast(msg, actionLabel, actionFn, duration) {
-    if (!toast) return;
-    clearTimeout(toastTimer);
-    toast.innerHTML = '';
-    toast.hidden = false;
-    requestAnimationFrame(function () {
-      var msgNode = document.createElement('span');
-      msgNode.textContent = msg;
-      toast.appendChild(msgNode);
-      if (actionLabel && actionFn) {
-        var btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'sw-toast__action';
-        btn.textContent = actionLabel;
-        btn.addEventListener('click', function () { actionFn(); });
-        toast.appendChild(btn);
-      }
-      toast.classList.add('sw-toast--visible');
-    });
-    toastTimer = setTimeout(function () {
-      toast.classList.remove('sw-toast--visible');
-      setTimeout(function () { toast.hidden = true; }, 220);
-    }, duration || 4500);
-  }
+  function formatMoney(cents) { return SwUtils.formatMoney(cents, cfg.moneyFormat); }
+  function showToast(msg, opts) { SwUtils.toast(toastEl, msg, opts); }
 
   function setLineLoading(lineIndex, on) {
     var el = document.querySelector('[data-line="' + lineIndex + '"]');
     if (el) el.classList.toggle('sw-cart-line--loading', on);
-  }
-
-  function formatMoney(cents) {
-    var fmt = cfg.moneyFormat;
-    var re  = /\{\{\s*(\w+)\s*\}\}/;
-    function d(o, def) { return typeof o === 'undefined' ? def : o; }
-    function delimit(n, prec, th, dec) {
-      prec = d(prec, 2); th = d(th, ','); dec = d(dec, '.');
-      n = (n / 100).toFixed(prec);
-      var p = n.split('.');
-      p[0] = p[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1' + th);
-      return p[0] + (p[1] ? dec + p[1] : '');
-    }
-    var m = fmt.match(re);
-    if (!m) return fmt;
-    var val;
-    switch (m[1]) {
-      case 'amount':                                  val = delimit(cents, 2);        break;
-      case 'amount_no_decimals':                      val = delimit(cents, 0);        break;
-      case 'amount_with_comma_separator':             val = delimit(cents, 2, '.', ','); break;
-      case 'amount_no_decimals_with_comma_separator':  val = delimit(cents, 0, '.', ','); break;
-      case 'amount_with_space_separator':              val = delimit(cents, 2, ' ', '.'); break;
-      case 'amount_no_decimals_with_space_separator':  val = delimit(cents, 0, ' ');      break;
-      default:                                         val = delimit(cents, 2);
-    }
-    return fmt.replace(re, val);
   }
 
   function updateCartTotals(cart) {
@@ -93,12 +47,11 @@
       var pct = Math.min(100, Math.round(cart.total_price / cfg.threshold * 100));
       freeShipFill.style.width = pct + '%';
       if (freeShipTrack) freeShipTrack.setAttribute('aria-valuenow', pct);
-      if (shippingFree) {
-        freeShipFill.classList.add('sw-free-ship-bar__fill--done');
-        if (freeShipLabel) freeShipLabel.textContent = cfg.strings.freeShipUnlocked;
-      } else {
-        freeShipFill.classList.remove('sw-free-ship-bar__fill--done');
-        if (freeShipLabel) {
+      freeShipFill.classList.toggle('sw-free-ship-bar__fill--done', shippingFree);
+      if (freeShipLabel) {
+        if (shippingFree) {
+          freeShipLabel.textContent = cfg.strings.freeShipUnlocked;
+        } else {
           var rem = cfg.threshold - cart.total_price;
           freeShipLabel.textContent = cfg.strings.freeShipProgress.replace('__AMOUNT__', formatMoney(rem));
         }
@@ -153,17 +106,19 @@
       if (!el) break;
       var n = i - 1;
       el.dataset.line = n;
-      var dec = el.querySelector('[data-cart-dec]');   if (dec)   dec.dataset.cartDec   = n;
-      var inc = el.querySelector('[data-cart-inc]');   if (inc)   inc.dataset.cartInc   = n;
-      var rem = el.querySelector('[data-cart-remove]');if (rem)   rem.dataset.cartRemove = n;
-      var qty = el.querySelector('[data-cart-qty]');   if (qty)   qty.dataset.cartQty   = n;
-      var tot = el.querySelector('[data-line-total]'); if (tot)   tot.dataset.lineTotal  = n;
-      var ech = el.querySelector('[data-line-each]');  if (ech)   ech.dataset.lineEach   = n;
+      var dec = el.querySelector('[data-cart-dec]');    if (dec) dec.dataset.cartDec    = n;
+      var inc = el.querySelector('[data-cart-inc]');    if (inc) inc.dataset.cartInc    = n;
+      var rem = el.querySelector('[data-cart-remove]'); if (rem) rem.dataset.cartRemove = n;
+      var qty = el.querySelector('[data-cart-qty]');    if (qty) qty.dataset.cartQty    = n;
+      var tot = el.querySelector('[data-line-total]');  if (tot) tot.dataset.lineTotal  = n;
+      var ech = el.querySelector('[data-line-each]');   if (ech) ech.dataset.lineEach   = n;
       i++;
     }
   }
 
   async function changeQty(lineIndex, newQty) {
+    if (mutating) return;
+    mutating = true;
     setLineLoading(lineIndex, true);
     try {
       var res = await fetch('/cart/change.js', {
@@ -178,11 +133,10 @@
       if (!res.ok) {
         var errData = null;
         try { errData = await res.json(); } catch (_) {}
-        console.error('[sw-cart] change failed:', res.status, errData);
-        var apiError = errData ? (errData.description || errData.message) : null;
-        throw new Error(apiError || cfg.strings.errorGeneric);
+        throw new Error((errData && (errData.description || errData.message)) || cfg.strings.errorGeneric);
       }
       var cart = await res.json();
+      lastCartFingerprint = cartFingerprint(cart);
       if (newQty === 0) {
         var lineEl  = document.querySelector('[data-line="' + lineIndex + '"]');
         var focusEl = getFocusTargetAfterRemoval(lineIndex);
@@ -199,7 +153,6 @@
         updateCartDOM(cart, lineIndex);
       }
     } catch (err) {
-      console.error('[sw-cart]', err.message);
       setLineLoading(lineIndex, false);
       var failedInput = document.querySelector('[data-cart-qty="' + lineIndex + '"]');
       if (failedInput && failedInput.dataset.prevQty) {
@@ -207,10 +160,9 @@
         failedInput.value = failedInput.dataset.prevQty;
         settingValue = false;
       }
-      var msg = (err.message === 'Failed to fetch' || err.message.indexOf('HTTP') === 0)
-        ? cfg.strings.errorGeneric
-        : err.message;
-      showToast(msg || cfg.strings.errorGeneric);
+      showToast(err.message || cfg.strings.errorGeneric);
+    } finally {
+      mutating = false;
     }
   }
 
@@ -241,25 +193,51 @@
     return input ? (parseInt(input.value, 10) || 1) : 1;
   }
 
+  async function addUpsell(variantId, btn) {
+    btn.disabled = true;
+    try {
+      var res = await fetch('/cart/add.js', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ id: variantId, quantity: 1 })
+      });
+      if (!res.ok) {
+        var d = null;
+        try { d = await res.json(); } catch (_) {}
+        throw new Error((d && (d.description || d.message)) || cfg.strings.errorGeneric);
+      }
+      var cartRes = await fetch('/cart.js', { headers: { 'Accept': 'application/json' } });
+      var cart = await cartRes.json();
+      lastCartFingerprint = cartFingerprint(cart);
+      updateCartTotals(cart);
+      showToast(cfg.strings.upsellAdded);
+    } catch (err) {
+      showToast(err.message || cfg.strings.errorGeneric);
+    } finally {
+      btn.disabled = false;
+    }
+  }
+
   document.addEventListener('click', function (e) {
     var dec = e.target.closest('[data-cart-dec]');
     if (dec) {
-      var line = parseInt(dec.dataset.cartDec, 10);
-      var qty  = getLineQty(line);
-      if (qty <= 1) { changeQty(line, 0); } else { changeQty(line, qty - 1); }
+      var li = parseInt(dec.dataset.cartDec, 10);
+      var qty = getLineQty(li);
+      changeQty(li, qty <= 1 ? 0 : qty - 1);
       return;
     }
     var inc = e.target.closest('[data-cart-inc]');
     if (inc) {
-      var line = parseInt(inc.dataset.cartInc, 10);
-      var incInput = document.querySelector('[data-cart-qty="' + line + '"]');
+      var liInc = parseInt(inc.dataset.cartInc, 10);
+      var incInput = document.querySelector('[data-cart-qty="' + liInc + '"]');
       var incMax = incInput && incInput.dataset.max ? parseInt(incInput.dataset.max, 10) : Infinity;
-      var incQty = getLineQty(line);
+      var incQty = getLineQty(liInc);
       if (incQty >= incMax) {
         if (incInput && incInput.dataset.maxMsg) showToast(incInput.dataset.maxMsg);
         return;
       }
-      changeQty(line, incQty + 1);
+      changeQty(liInc, incQty + 1);
       return;
     }
     var rem = e.target.closest('[data-cart-remove]');
@@ -269,29 +247,32 @@
     }
     var upsellBtn = e.target.closest('[data-upsell-add]');
     if (upsellBtn) {
-      upsellBtn.disabled = true;
-      fetch('/cart/add.js', {
-        method: 'POST',
-        credentials: 'same-origin',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({ id: parseInt(upsellBtn.dataset.upsellAdd, 10), quantity: 1 })
-      })
-      .then(function (res) {
-        if (!res.ok) return res.json().then(function (d) { throw new Error(d.description || cfg.strings.errorGeneric); });
-        return fetch('/cart.js', { headers: { 'Accept': 'application/json' } });
-      })
-      .then(function (res) { return res.json(); })
-      .then(function (cart) {
-        updateCartTotals(cart);
-        showToast(cfg.strings.upsellAdded);
-        upsellBtn.disabled = false;
-      })
-      .catch(function (err) {
-        showToast(err.message || cfg.strings.errorGeneric);
-        upsellBtn.disabled = false;
-      });
+      addUpsell(parseInt(upsellBtn.dataset.upsellAdd, 10), upsellBtn);
     }
   });
+
+  async function captureCartFingerprint() {
+    try {
+      var res = await fetch('/cart.js', { headers: { 'Accept': 'application/json' } });
+      if (!res.ok) return;
+      var cart = await res.json();
+      if (lastCartFingerprint === null) lastCartFingerprint = cartFingerprint(cart);
+    } catch (_) {}
+  }
+
+  document.addEventListener('visibilitychange', async function () {
+    if (document.visibilityState !== 'visible') return;
+    if (mutating) return;
+    if (lastCartFingerprint === null) { captureCartFingerprint(); return; }
+    try {
+      var res = await fetch('/cart.js', { headers: { 'Accept': 'application/json' } });
+      if (!res.ok) return;
+      var cart = await res.json();
+      if (cartFingerprint(cart) !== lastCartFingerprint) window.location.reload();
+    } catch (_) {}
+  });
+
+  captureCartFingerprint();
 
   document.addEventListener('change', function (e) {
     if (settingValue) return;

@@ -5,7 +5,6 @@
   var drawerEl = document.getElementById('sw-cart-drawer');
   var backdropEl = document.querySelector('[data-cart-drawer-backdrop]');
   var toastEl = document.getElementById('sw-drawer-toast');
-  var toastTimer;
   var mutating = false;
   var cartDirty = false;
 
@@ -31,51 +30,8 @@
     if (trigger) trigger.focus();
   }
 
-  // ── Toast ─────────────────────────────────────────────────────────────────
-
-  function showToast(msg) {
-    if (!toastEl) return;
-    clearTimeout(toastTimer);
-    toastEl.textContent = msg;
-    toastEl.hidden = false;
-    requestAnimationFrame(function () {
-      requestAnimationFrame(function () {
-        toastEl.classList.add('sw-toast--visible');
-      });
-    });
-    toastTimer = setTimeout(function () {
-      toastEl.classList.remove('sw-toast--visible');
-      setTimeout(function () { toastEl.hidden = true; }, 220);
-    }, 4500);
-  }
-
-  // ── formatMoney ───────────────────────────────────────────────────────────
-
-  function formatMoney(cents) {
-    var fmt = cfg.moneyFormat;
-    var re = /\{\{\s*(\w+)\s*\}\}/;
-    function d(v, def) { return v === undefined ? def : v; }
-    function delimit(n, prec, th, dec) {
-      prec = d(prec, 2); th = d(th, ','); dec = d(dec, '.');
-      n = (n / 100).toFixed(prec);
-      var p = n.split('.');
-      p[0] = p[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1' + th);
-      return p[0] + (p[1] ? dec + p[1] : '');
-    }
-    var m = fmt.match(re);
-    if (!m) return fmt;
-    var val;
-    switch (m[1]) {
-      case 'amount':                                    val = delimit(cents, 2);           break;
-      case 'amount_no_decimals':                        val = delimit(cents, 0);           break;
-      case 'amount_with_comma_separator':               val = delimit(cents, 2, '.', ','); break;
-      case 'amount_no_decimals_with_comma_separator':   val = delimit(cents, 0, '.', ','); break;
-      case 'amount_with_space_separator':               val = delimit(cents, 2, ' ', '.'); break;
-      case 'amount_no_decimals_with_space_separator':   val = delimit(cents, 0, ' ');      break;
-      default:                                          val = delimit(cents, 2);
-    }
-    return fmt.replace(re, val);
-  }
+  function showToast(msg) { SwUtils.toast(toastEl, msg); }
+  function formatMoney(cents) { return SwUtils.formatMoney(cents, cfg.moneyFormat); }
 
   // ── DOM helpers ───────────────────────────────────────────────────────────
 

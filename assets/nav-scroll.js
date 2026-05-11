@@ -1,15 +1,19 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const nav = document.querySelector('.sw-nav');
+(function () {
+  'use strict';
+
+  var nav = document.querySelector('.sw-nav');
   if (!nav) return;
 
-  const update = () => {
-    if (window.scrollY > 24) {
-      nav.classList.add('sw-nav--scrolled');
-    } else {
-      nav.classList.remove('sw-nav--scrolled');
+  var pending = false;
+  function update() {
+    pending = false;
+    nav.classList.toggle('sw-nav--scrolled', window.scrollY > 24);
+  }
+  window.addEventListener('scroll', function () {
+    if (!pending) {
+      pending = true;
+      requestAnimationFrame(update);
     }
-  };
-
-  window.addEventListener('scroll', update, { passive: true });
+  }, { passive: true });
   update();
-});
+})();

@@ -28,6 +28,13 @@
     {% render 'meta-tags' %}
 
     {{ content_for_header }}
+
+    {% comment %}
+      sw-utils.js must load before any section/template script that uses SwUtils
+      (e.g. cart.js). Defer scripts run in document order, so placing this in
+      <head> guarantees it executes before body-level defer scripts.
+    {% endcomment %}
+    <script src="{{ 'sw-utils.js' | asset_url }}" defer></script>
   </head>
 
   <body>

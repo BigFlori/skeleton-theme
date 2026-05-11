@@ -8,7 +8,20 @@
 
 <div class="sw-hero-visual" style="height: min({{ visual_height }}, 72vh);">
 
-  {%- comment -%} SVG roof scene — replace with real image via section settings later {%- endcomment -%}
+  {%- if image != blank -%}
+    <img
+      class="sw-hero-visual__img"
+      src="{{ image | image_url: width: 1400 }}"
+      srcset="{{ image | image_url: width: 600 }} 600w,
+              {{ image | image_url: width: 900 }} 900w,
+              {{ image | image_url: width: 1400 }} 1400w"
+      sizes="(max-width: 768px) 100vw, 50vw"
+      alt="{{ image.alt | escape }}"
+      width="{{ image.width }}"
+      height="{{ image.height }}"
+      loading="eager"
+    >
+  {%- else -%}
   <svg class="sw-hero-visual__svg" width="100%" height="100%" viewBox="0 0 800 620" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
     <defs>
       <linearGradient id="sw-sky" x1="0" x2="0" y1="0" y2="1">
@@ -52,6 +65,7 @@
       {%- endfor -%}
     {%- endfor -%}
   </svg>
+  {%- endif -%}
 
   {%- comment -%} Floating spec chip — bottom left {%- endcomment -%}
   <div class="sw-hero-visual__chip">
@@ -95,6 +109,15 @@
   height: 100%;
   display: block;
   max-width: none;
+}
+
+.sw-hero-visual__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 /* Floating spec chip */

@@ -38,7 +38,9 @@
       "Bash(mkdir -p /tmp/design)",
       "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d.get\\('general',{}\\), indent=2\\)\\)\")",
       "Bash(node -e \"const d=require\\('./locales/de.json'\\); console.log\\(JSON.stringify\\(d.general,null,2\\)\\)\")",
-      "Bash(node -e \"const d=require\\('./locales/de.json'\\); const s=d.sections&&d.sections.cart; console.log\\(JSON.stringify\\(s,null,2\\)\\)\")"
+      "Bash(node -e \"const d=require\\('./locales/de.json'\\); const s=d.sections&&d.sections.cart; console.log\\(JSON.stringify\\(s,null,2\\)\\)\")",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d.get\\('sections',{}\\).get\\('hero',{}\\), indent=2\\)\\)\")",
+      "Bash(awk 'NR==69' /home/fmolnar/Documents/Shopify/nrgedge/assets/calculator.js)"
     ]
   }
 }

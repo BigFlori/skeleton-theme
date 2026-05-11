@@ -200,38 +200,7 @@
 }
 {% endstylesheet %}
 
-<script>
-(function () {
-  var list = document.getElementById('sw-faq-list');
-  if (!list) return;
-
-  var items = list.querySelectorAll('.sw-faq__item');
-
-  items.forEach(function (item) {
-    var trigger = item.querySelector('.sw-faq__trigger');
-    var answer  = item.querySelector('.sw-faq__answer');
-    var inner   = item.querySelector('.sw-faq__answer-inner');
-
-    trigger.addEventListener('click', function () {
-      var isOpen = item.classList.contains('sw-faq__item--open');
-
-      /* close all */
-      items.forEach(function (el) {
-        el.classList.remove('sw-faq__item--open');
-        el.querySelector('.sw-faq__trigger').setAttribute('aria-expanded', 'false');
-        el.querySelector('.sw-faq__answer').style.maxHeight = '0';
-      });
-
-      /* open clicked if it was closed */
-      if (!isOpen) {
-        item.classList.add('sw-faq__item--open');
-        trigger.setAttribute('aria-expanded', 'true');
-        answer.style.maxHeight = inner.scrollHeight + 'px';
-      }
-    });
-  });
-})();
-</script>
+<script src="{{ 'faq.js' | asset_url }}" defer></script>
 
 {% schema %}
 {
