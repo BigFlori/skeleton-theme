@@ -40,7 +40,29 @@
       "Bash(node -e \"const d=require\\('./locales/de.json'\\); console.log\\(JSON.stringify\\(d.general,null,2\\)\\)\")",
       "Bash(node -e \"const d=require\\('./locales/de.json'\\); const s=d.sections&&d.sections.cart; console.log\\(JSON.stringify\\(s,null,2\\)\\)\")",
       "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d.get\\('sections',{}\\).get\\('hero',{}\\), indent=2\\)\\)\")",
-      "Bash(awk 'NR==69' /home/fmolnar/Documents/Shopify/nrgedge/assets/calculator.js)"
+      "Bash(awk 'NR==69' /home/fmolnar/Documents/Shopify/nrgedge/assets/calculator.js)",
+      "Bash(mkdir -p /home/fmolnar/Documents/Shopify/nrgedge/apps/discounts/extensions/volume-discount/src)",
+      "Bash(pstree -p 99080)",
+      "Read(//home/fmolnar/.cache/**)",
+      "Read(//home/fmolnar/**)",
+      "Bash(cat /proc/99080/status 2>/dev/null | grep -E \"^State|^Name\"; echo \"---open files:\"; ls -la /proc/99080/fd 2>/dev/null | grep -vE 'pipe:|socket:|/dev/null|/dev/pts' | head -30; echo \"---network:\"; ss -tnp 2>/dev/null | grep 99080 | head)",
+      "Read(//proc/99080/**)",
+      "Read(//proc/99080/fd/**)",
+      "Bash(echo \"=== shopify app function build \\(100563\\) ===\"; cat /proc/100563/status 2>/dev/null | grep -E \"^State|^Threads\"; echo \"open non-pipe files:\"; ls -la /proc/100563/fd 2>/dev/null | grep -vE 'pipe:|socket:|/dev/null|/dev/pts|anon_inode' | tail -n +2; echo \"network:\"; ss -tnp 2>/dev/null | grep -E '100563|100516' | head; echo; echo \"=== shopify app build \\(100516\\) ===\"; cat /proc/100516/status 2>/dev/null | grep -E \"^State|^Threads\"; ls -la /proc/100516/fd 2>/dev/null | grep -vE 'pipe:|socket:|/dev/null|/dev/pts|anon_inode' | tail -n +2; echo; echo \"=== dist? ===\"; ls -la /home/fmolnar/Documents/Shopify/nrgedge/apps/discounts/extensions/volume-discount/ 2>/dev/null; ls -la /home/fmolnar/Documents/Shopify/nrgedge/apps/discounts/extensions/volume-discount/dist/ 2>/dev/null)",
+      "Read(//proc/100563/**)",
+      "Read(//proc/100563/fd/**)",
+      "Read(//proc/100516/**)",
+      "Read(//proc/100516/fd/**)",
+      "Bash(ps -fp 100504)",
+      "Bash(ps -fp 100551)",
+      "Bash(shopify version *)",
+      "Bash(npm ls *)",
+      "Bash(node -e \"console.log\\(require\\('/home/fmolnar/.nvm/versions/node/v22.17.1/lib/node_modules/@shopify/cli/package.json'\\).version\\)\")",
+      "Bash(kill 100563 100562 100551 100516 100515 100504)"
+    ],
+    "additionalDirectories": [
+      "/home/fmolnar/Documents/Shopify/nrgedge/apps/discounts/extensions/volume-discount",
+      "/home/fmolnar/Documents/Shopify/nrgedge/apps/discounts/extensions/volume-discount/.build-lock"
     ]
   }
 }

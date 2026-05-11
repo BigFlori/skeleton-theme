@@ -1,0 +1,17 @@
+api_version = "2025-04"
+uid = "bb2f00de-e779-90e3-7141-d67d5d765661b27f22c4"
+
+[[extensions]]
+name = "Volume Discount"
+handle = "volume-discount"
+type = "function"
+description = "Per-product volume tiers from custom.volume_tiers metafield, applied as line-level percentage discount."
+
+  [[extensions.targeting]]
+  target = "cart.lines.discounts.generate.run"
+  input_query = "input.graphql"
+  export = "run"
+
+  [extensions.build]
+  command = "npm run build"
+  path = "dist/function.wasm"

@@ -16,3 +16,9 @@ node_modules/
 release
 *.zip
 /design_handoff_sonnwerk_landing
+
+# Function build artifacts (apps/discounts/**)
+dist/
+build/
+*.wasm
+generated/

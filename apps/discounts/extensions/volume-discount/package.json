@@ -1,0 +1,12 @@
+{
+  "name": "volume-discount",
+  "version": "1.0.0",
+  "private": true,
+  "license": "UNLICENSED",
+  "main": "src/run.js",
+  "scripts": {
+    "build": "shopify app function build",
+    "typegen": "shopify app function typegen",
+    "preview": "shopify app function run"
+  }
+}

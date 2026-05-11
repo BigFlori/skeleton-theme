@@ -14,12 +14,14 @@ window.PDP_I18N = {
   compatSummary:     {{ 'pdp.compat.summary' | t | json }},
   vocLabel:          'bei Voc'
 };
+{%- assign volume_tiers_raw = product.metafields.custom.volume_tiers.value -%}
 window.PDP_CONFIG = {
   basePriceCents: {{ current_variant.price }},
   moduleKwp:      {{ product.metafields.custom.datasheet.value.module_power_kwp | default: section.settings.module_power_raw | default: 0.425 }},
   voc:            {{ product.metafields.custom.datasheet.value.voc | default: section.settings.voc_raw | default: 38.9 }},
   productTitle:   {{ product.title | json }},
-  variants:       {{ product.variants | json }}
+  variants:       {{ product.variants | json }},
+  discountTiers:  {% if volume_tiers_raw %}{{ volume_tiers_raw | json }}{% else %}[]{% endif %}
 };
 </script>
 <script src="{{ 'pdp.js' | asset_url }}" defer></script>

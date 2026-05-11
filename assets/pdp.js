@@ -18,13 +18,30 @@
     var PRODUCT_TITLE    = cfg.productTitle;
     var allVariants      = cfg.variants || [];
 
+    var DISCOUNT_TIERS = (cfg.discountTiers || [])
+      .map(function (t) {
+        return {
+          minQty: Number(t && t.min_qty),
+          pct:    Number(t && t.discount_pct)
+        };
+      })
+      .filter(function (t) {
+        return Number.isFinite(t.minQty) && Number.isFinite(t.pct) && t.pct > 0;
+      })
+      .sort(function (a, b) { return a.minQty - b.minQty; });
+
     var qty = 1;
 
     function fmtEur(cents) {
       return '€ ' + Math.round(cents / 100).toLocaleString('de-AT');
     }
     function discount(n) {
-      return n >= 24 ? 0.12 : n >= 10 ? 0.08 : n >= 5 ? 0.04 : 0;
+      var best = 0;
+      for (var i = 0; i < DISCOUNT_TIERS.length; i++) {
+        var t = DISCOUNT_TIERS[i];
+        if (n >= t.minQty && t.pct > best) best = t.pct;
+      }
+      return best / 100;
     }
     function effCents(n) {
       return Math.round(BASE_PRICE_CENTS * (1 - discount(n)));
