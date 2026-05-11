@@ -58,7 +58,13 @@
       "Bash(shopify version *)",
       "Bash(npm ls *)",
       "Bash(node -e \"console.log\\(require\\('/home/fmolnar/.nvm/versions/node/v22.17.1/lib/node_modules/@shopify/cli/package.json'\\).version\\)\")",
-      "Bash(kill 100563 100562 100551 100516 100515 100504)"
+      "Bash(kill 100563 100562 100551 100516 100515 100504)",
+      "Read(//c/c/Users/Thurneer/Documents/Shopify/solar-theme/apps/discounts/**)",
+      "PowerShell(Get-Process | Where-Object { $_.ProcessName -match 'node|shopify|javy|ruby|cargo' } | Select-Object Id, ProcessName, StartTime, CPU | Format-Table -AutoSize)",
+      "PowerShell(Get-CimInstance Win32_Process | Where-Object { $_.Name -match 'node|javy|function-runner|cargo|ruby|wasm' } | Select-Object ProcessId, Name, @{n='CmdLine';e={$_.CommandLine}} | Format-List)",
+      "mcp__plugin_context7_context7__resolve-library-id",
+      "mcp__plugin_context7_context7__query-docs",
+      "Bash(shopify app *)"
     ],
     "additionalDirectories": [
       "/home/fmolnar/Documents/Shopify/nrgedge/apps/discounts/extensions/volume-discount",
