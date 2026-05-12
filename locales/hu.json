@@ -143,6 +143,73 @@
       "error_prefix": "Hiba: "
     }
   },
+  "collection": {
+    "breadcrumb": {
+      "label": "Morzsasor",
+      "home": "Főoldal",
+      "shop": "Üzlet"
+    },
+    "packages": {
+      "eyebrow": "Kiemelt · Válogatott csomagok",
+      "title_pre": "Komplett",
+      "title_em": "csomagok",
+      "view_all": "Mind a(z) {{ count }} csomag megtekintése",
+      "modules": "modul",
+      "view_aria": "{{ title }} megtekintése",
+      "add_to_cart_aria": "{{ title }} kosárba"
+    },
+    "filters": {
+      "title": "Szűrő",
+      "clear_all": "Összes törlése",
+      "showing": "MEGJELENÍTVE",
+      "products_count": "{{ count }} termék",
+      "category": "Kategória",
+      "all_products": "Összes termék",
+      "price": "Ár",
+      "price_min": "MIN {{ min }} — MAX {{ max }}",
+      "brand": "Márka",
+      "show_more": "+ {{ count }} további",
+      "show_less": "Kevesebb mutatása",
+      "active_label": "Aktív:",
+      "remove_price_aria": "Ár szűrő eltávolítása",
+      "remove_filter_aria": "{{ label }} szűrő eltávolítása"
+    },
+    "toolbar": {
+      "eyebrow": "Egyedi komponensek",
+      "title_pre": "Összes",
+      "title_em": "termék",
+      "results": "{{ count }} találat",
+      "sort_label": "Rendezés",
+      "sort_aria": "Termékek rendezése"
+    },
+    "pagination": {
+      "label": "Lapozás",
+      "showing": "Megjelenítve",
+      "of": "összesen",
+      "prev": "Előző",
+      "next": "Következő",
+      "prev_aria": "Előző oldal",
+      "next_aria": "Következő oldal"
+    },
+    "card": {
+      "in_stock": "Készleten",
+      "out_of_stock": "Elfogyott",
+      "low_stock": "Már csak kevés",
+      "add_to_cart": "Kosárba",
+      "add_to_cart_aria": "{{ title }} kosárba",
+      "select_options": "Opciók választása",
+      "select_options_aria": "Opciók kiválasztása ehhez: {{ title }}"
+    },
+    "empty": {
+      "title": "Nincs találat.",
+      "body": "Próbálj eltávolítani egy szűrőt, vagy válassz másik kategóriát. Több mint 200 cikket tartunk raktáron — biztos lesz, ami passzol.",
+      "reset": "Szűrők visszaállítása"
+    },
+    "toast": {
+      "error_generic": "Valami hiba történt",
+      "error_add_cart": "Nem sikerült a kosárba helyezni"
+    }
+  },
   "sections": {
     "hero": {
       "eyebrow": "Ausztria · kWp piactér",

@@ -16,9 +16,10 @@
 
     <div class="sw-packages__grid">
       {%- assign products_shown = 0 -%}
-      {%- if section.settings.collection != blank -%}
-        {%- for product in section.settings.collection.products limit: 4 -%}
-          {%- render 'package-card', product: product, col_index: forloop.index0 -%}
+      {%- assign pkg_collection = section.settings.collection | default: collections['packages'] -%}
+      {%- if pkg_collection != blank and pkg_collection.products.size > 0 -%}
+        {%- for product in pkg_collection.products limit: 4 -%}
+          {%- render 'collection-pkg-card', product: product -%}
           {%- assign products_shown = products_shown | plus: 1 -%}
         {%- endfor -%}
       {%- endif -%}
@@ -26,25 +27,16 @@
       {%- comment -%} Fallback placeholder cards in the theme editor {%- endcomment -%}
       {%- if products_shown == 0 -%}
         {%- for i in (1..4) -%}
-          <article class="sw-pkg-card sw-pkg-card--placeholder">
-            <div class="sw-pkg-card__preview" aria-hidden="true">
-              <svg width="100%" height="100%" viewBox="0 0 240 100" preserveAspectRatio="none">
-                {%- assign cols = i | times: 2 | plus: 2 -%}
-                {%- for c in (1..cols) -%}
-                  {%- assign px = c | minus: 1 | times: 20 | plus: 12 -%}
-                  <rect x="{{ px }}" y="16" width="16" height="18" fill="oklch(0.25 0.05 230)" stroke="oklch(0.40 0.05 230)" stroke-width="0.5"/>
-                  <rect x="{{ px }}" y="38" width="16" height="18" fill="oklch(0.25 0.05 230)" stroke="oklch(0.40 0.05 230)" stroke-width="0.5"/>
-                  <rect x="{{ px }}" y="60" width="16" height="18" fill="oklch(0.25 0.05 230)" stroke="oklch(0.40 0.05 230)" stroke-width="0.5"/>
-                {%- endfor -%}
-              </svg>
+          <article class="pkg-card">
+            <div class="pkg-card__visual" aria-hidden="true">
+              {{ 'product-' | append: i | placeholder_svg_tag: 'pkg-card__img placeholder-svg' }}
             </div>
-            <h3 class="display sw-pkg-card__name">{{ 'general.onboarding.product_title' | t }}</h3>
-            <p class="mono sw-pkg-card__roof">{{ 'general.onboarding.product_vendor' | t }}</p>
-            <div class="sw-pkg-card__footer">
-              <div class="sw-pkg-card__price-row">
-                <span class="display sw-pkg-card__price">€ 0.000</span>
-              </div>
-              <button class="btn btn-primary sw-pkg-card__atc" disabled>{{ 'sections.featured_packages.add_to_cart' | t }}</button>
+            <h3 class="display pkg-card__name">{{ 'general.onboarding.product_title' | t }}</h3>
+            <div class="pkg-card__footer">
+              <div class="display pkg-card__price">€ 0.000</div>
+              <button class="pkg-card__atc" disabled aria-hidden="true">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+              </button>
             </div>
           </article>
         {%- endfor -%}
@@ -74,6 +66,8 @@
 
   </div>
 </section>
+
+<script src="{{ 'collection.js' | asset_url }}" defer></script>
 
 {% stylesheet %}
 .sw-packages {
@@ -113,164 +107,6 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 16px;
-}
-
-/* ── Package card ── */
-.sw-pkg-card {
-  display: flex;
-  flex-direction: column;
-  background: var(--bg-card);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  padding: 22px;
-  position: relative;
-  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.sw-pkg-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--accent);
-  box-shadow: 0 20px 40px -20px oklch(0.22 0.025 155 / 0.2);
-}
-
-/* Badge */
-.sw-pkg-card__badge {
-  position: absolute;
-  top: -10px;
-  left: 22px;
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  padding: 5px 10px;
-  border-radius: 6px;
-  font-weight: 500;
-  background: var(--ink);
-  color: var(--bg);
-}
-
-.sw-pkg-card__badge--meistgewählt {
-  background: var(--sun);
-  color: var(--ink);
-}
-
-/* Panel preview */
-.sw-pkg-card__preview {
-  height: 100px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, var(--accent-soft), oklch(0.88 0.03 130));
-  margin-bottom: 18px;
-  position: relative;
-  overflow: hidden;
-}
-
-.sw-pkg-card__preview svg {
-  max-width: none;
-  height: 100%;
-}
-
-.sw-pkg-card__kwp-chip {
-  position: absolute;
-  top: 10px;
-  right: 12px;
-  font-size: 10px;
-  color: var(--accent-deep);
-  background: oklch(0.98 0.01 90 / 0.9);
-  padding: 2px 6px;
-  border-radius: 4px;
-}
-
-/* Card content */
-.sw-pkg-card__name {
-  font-size: 30px;
-  line-height: 1;
-  margin: 0;
-}
-
-.sw-pkg-card__roof {
-  font-size: 11px;
-  color: var(--ink-mute);
-  margin: 6px 0 0;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-/* Specs */
-.sw-pkg-card__specs {
-  margin-top: 16px;
-  font-size: 13px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  flex: 1;
-}
-
-.sw-pkg-card__spec {
-  display: grid;
-  grid-template-columns: 90px 1fr;
-  gap: 8px;
-}
-
-.sw-pkg-card__spec dt {
-  font-size: 10px;
-  color: var(--ink-mute);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  padding-top: 2px;
-}
-
-.sw-pkg-card__spec dd {
-  color: var(--ink);
-  line-height: 1.35;
-  margin: 0;
-}
-
-/* Footer */
-.sw-pkg-card__footer {
-  margin-top: 18px;
-  padding-top: 16px;
-  border-top: 1px dashed var(--line);
-}
-
-.sw-pkg-card__price-row {
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-}
-
-.sw-pkg-card__price {
-  font-size: 34px;
-  color: var(--ink);
-}
-
-.sw-pkg-card__old-price {
-  font-size: 12px;
-  color: var(--ink-mute);
-  text-decoration: line-through;
-}
-
-.sw-pkg-card__vat {
-  font-size: 10px;
-  color: var(--ink-mute);
-  margin: 2px 0 0;
-}
-
-.sw-pkg-card__form {
-  margin-top: 14px;
-}
-
-.sw-pkg-card__atc {
-  width: 100%;
-  justify-content: center;
-  font-size: 14px;
-}
-
-.sw-pkg-card__details {
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  margin-top: 4px;
-  font-size: 13px;
-  padding: 8px;
 }
 
 /* Promo strip */
@@ -355,7 +191,8 @@
     {
       "type": "collection",
       "id": "collection",
-      "label": "Packages collection"
+      "label": "Packages collection",
+      "info": "Leave blank to use the collection with handle 'packages'."
     },
     {
       "type": "textarea",

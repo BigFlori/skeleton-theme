@@ -1,0 +1,31 @@
+{%- comment -%}
+  Renders the toolbar above the product grid (title, results count, sort).
+
+  Parameters:
+    - paginate: paginate object (required)
+    - sort_by: currently selected sort key (required)
+{%- endcomment -%}
+
+<div class="coll-toolbar">
+  <div>
+    <span class="eyebrow">{{ 'collection.toolbar.eyebrow' | t }}</span>
+    <h2 class="display coll-toolbar__title">{{ 'collection.toolbar.title_pre' | t }} <em>{{ 'collection.toolbar.title_em' | t }}</em></h2>
+  </div>
+  <div class="coll-toolbar__right">
+    <span class="mono coll-toolbar__count">{{ 'collection.toolbar.results' | t: count: paginate.items }}</span>
+    <div class="coll-toolbar__divider"></div>
+    <label class="coll-sort-wrap">
+      <span class="mono coll-sort-label">{{ 'collection.toolbar.sort_label' | t }}</span>
+      <select
+        class="coll-sort-select"
+        name="sort_by"
+        form="CollectionFilters"
+        aria-label="{{ 'collection.toolbar.sort_aria' | t }}"
+      >
+        {%- for option in collection.sort_options -%}
+          <option value="{{ option.value }}"{% if option.value == sort_by %} selected{% endif %}>{{ option.name }}</option>
+        {%- endfor -%}
+      </select>
+    </label>
+  </div>
+</div>

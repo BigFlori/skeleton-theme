@@ -1,0 +1,75 @@
+{%- comment -%}
+  Renders a compact package card used in the collection page packages strip.
+
+  Parameters:
+    - product: the package product (required)
+{%- endcomment -%}
+
+{%- liquid
+  assign pkg_discount = null
+  if product.compare_at_price > product.price
+    assign pkg_discount = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price
+  endif
+  assign pkg_badge   = product.metafields.custom.badge
+  assign pkg_size    = product.metafields.custom.size
+  assign pkg_modules = product.metafields.custom.modules
+  assign pkg_roof    = product.metafields.custom.roof
+-%}
+
+<article class="pkg-card">
+
+  {%- if pkg_badge != blank -%}
+    <div class="pkg-card__badge{% if pkg_badge == 'Most chosen' %} pkg-card__badge--sun{% else %} pkg-card__badge--dark{% endif %}">
+      {{- pkg_badge -}}
+    </div>
+  {%- endif -%}
+
+  <div class="pkg-card__visual">
+    {%- if product.featured_image -%}
+      {{ product.featured_image | image_url: width: 600 | image_tag:
+           loading: 'lazy',
+           widths: '240, 360, 480, 600, 720',
+           sizes: '(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 25vw',
+           alt: product.featured_image.alt | default: product.title,
+           class: 'pkg-card__img'
+      -}}
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag: 'pkg-card__img placeholder-svg' }}
+    {%- endif -%}
+    {%- if pkg_size != blank -%}
+      <span class="pkg-card__size mono">{{ pkg_size }}</span>
+    {%- endif -%}
+  </div>
+
+  <h3 class="display pkg-card__name">{{ product.title }}</h3>
+  {%- if pkg_modules != blank or pkg_roof != blank -%}
+    <div class="pkg-card__meta mono">
+      {%- if pkg_modules != blank -%}{{ pkg_modules }} {{ 'collection.packages.modules' | t }} · {%- endif -%}{{ pkg_roof }}
+    </div>
+  {%- endif -%}
+
+  <div class="pkg-card__footer">
+    <div>
+      <div class="display pkg-card__price">{{ product.price | money_without_trailing_zeros }}</div>
+      {%- if product.compare_at_price > product.price -%}
+        <div class="pkg-card__old">
+          <span class="mono">{{ product.compare_at_price | money_without_trailing_zeros }}</span>
+          {%- if pkg_discount -%}
+            <span class="pkg-card__discount mono">−{{ pkg_discount }}%</span>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <button
+      class="pkg-card__atc"
+      data-atc-id="{{ product.variants.first.id }}"
+      data-atc-title="{{ product.title | escape }}"
+      aria-label="{{ 'collection.packages.add_to_cart_aria' | t: title: product.title }}"
+    >
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+    </button>
+  </div>
+
+  <a href="{{ product.url }}" class="pkg-card__overlay-link" aria-label="{{ 'collection.packages.view_aria' | t: title: product.title }}"></a>
+</article>

@@ -1,0 +1,142 @@
+/* ──────────────────────────────────────────────────────────────
+ * Shared package card component.
+ * Rendered via snippets/collection-pkg-card.liquid.
+ * Used on: collection page (packages strip), landing page (featured packages).
+ * ────────────────────────────────────────────────────────────── */
+
+.pkg-card {
+  --sale: oklch(0.55 0.18 30);
+  --sale-soft: oklch(0.94 0.05 35);
+
+  position: relative;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  transition: transform .2s ease, border-color .2s ease;
+}
+.pkg-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+}
+.pkg-card__overlay-link {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  z-index: 1;
+}
+.pkg-card__badge {
+  position: absolute;
+  top: -9px;
+  left: 18px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+  padding: 5px 9px;
+  border-radius: 6px;
+  z-index: 2;
+}
+.pkg-card__badge--sun { background: var(--sun); color: var(--ink); }
+.pkg-card__badge--dark { background: var(--ink); color: var(--bg); }
+
+.pkg-card__visual {
+  aspect-ratio: 1 / 1;
+  border-radius: 10px;
+  background: var(--bg-warm);
+  margin-bottom: 14px;
+  padding: 12px;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.pkg-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+.pkg-card__visual .placeholder-svg {
+  width: 100%;
+  height: 100%;
+  fill: var(--ink-mute);
+  opacity: 0.4;
+}
+.pkg-card__size {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  font-size: 10px;
+  color: var(--accent-deep);
+  background: oklch(0.98 0.01 90 / 0.92);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.pkg-card__name {
+  font-size: 24px;
+  line-height: 1;
+}
+.pkg-card__meta {
+  font-size: 10px;
+  color: var(--ink-mute);
+  margin-top: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.pkg-card__footer {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--line);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: auto;
+}
+.pkg-card__price {
+  font-size: 24px;
+  line-height: 1;
+}
+.pkg-card__old {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 2px;
+}
+.pkg-card__old .mono {
+  font-size: 11px;
+  color: var(--ink-mute);
+  text-decoration: line-through;
+}
+.pkg-card__discount {
+  font-size: 10px;
+  background: var(--sale-soft);
+  color: var(--sale);
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-weight: 500;
+}
+.pkg-card__atc {
+  position: relative;
+  z-index: 2;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--accent-deep);
+  color: var(--accent-ink);
+  border: none;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  transition: background .2s ease, transform .15s ease;
+}
+.pkg-card__atc:hover {
+  background: var(--ink);
+  transform: scale(1.06);
+}
+.pkg-card__atc:disabled { opacity: 0.6; }
