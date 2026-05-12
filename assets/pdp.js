@@ -18,7 +18,36 @@
     var PRODUCT_TITLE    = cfg.productTitle;
     var allVariants      = cfg.variants || [];
 
-    var DISCOUNT_TIERS = (cfg.discountTiers || [])
+    var ZERO_DECIMAL_CURRENCIES = {
+      BIF:1, CLP:1, DJF:1, GNF:1, HUF:1, ISK:1, JPY:1, KMF:1, KRW:1, PYG:1,
+      RWF:1, UGX:1, UYI:1, VND:1, VUV:1, XAF:1, XOF:1, XPF:1
+    };
+    var SUBUNIT_TO_UNIT = ZERO_DECIMAL_CURRENCIES[cfg.currencyCode] ? 1 : 100;
+    var BASE_PRICE_MAJOR = BASE_PRICE_CENTS / SUBUNIT_TO_UNIT;
+
+    var tierSource = 'none';
+    var rawTiers = [];
+    if (Array.isArray(cfg.discountTiers) && cfg.discountTiers.length > 0) {
+      rawTiers = cfg.discountTiers;
+      tierSource = 'product';
+    } else if (Array.isArray(cfg.priceBands)) {
+      for (var bi = 0; bi < cfg.priceBands.length; bi++) {
+        var band = cfg.priceBands[bi];
+        if (!band) continue;
+        var bMin = Number(band.min_price);
+        var bMax = band.max_price === null || band.max_price === undefined
+          ? Infinity
+          : Number(band.max_price);
+        if (!Number.isFinite(bMin)) continue;
+        if (BASE_PRICE_MAJOR >= bMin && BASE_PRICE_MAJOR <= bMax) {
+          rawTiers = Array.isArray(band.tiers) ? band.tiers : [];
+          tierSource = 'band';
+          break;
+        }
+      }
+    }
+
+    var DISCOUNT_TIERS = rawTiers
       .map(function (t) {
         return {
           minQty: Number(t && t.min_qty),
@@ -32,8 +61,27 @@
 
     var qty = 1;
 
-    function fmtEur(cents) {
-      return '€ ' + Math.round(cents / 100).toLocaleString('de-AT');
+    var CURRENCY_CODE = cfg.currencyCode || 'EUR';
+    var PRICE_FRACTION_DIGITS = SUBUNIT_TO_UNIT === 1 ? 0 : 2;
+    var priceFormatter;
+    try {
+      priceFormatter = new Intl.NumberFormat(undefined, {
+        style: 'currency',
+        currency: CURRENCY_CODE,
+        maximumFractionDigits: PRICE_FRACTION_DIGITS,
+        minimumFractionDigits: 0
+      });
+    } catch (e) {
+      priceFormatter = null;
+    }
+    function fmtEur(subunit) {
+      var major = Number(subunit) / SUBUNIT_TO_UNIT;
+      if (!Number.isFinite(major)) return '';
+      if (priceFormatter) return priceFormatter.format(major);
+      var rounded = SUBUNIT_TO_UNIT === 1
+        ? Math.round(major).toLocaleString()
+        : major.toFixed(2);
+      return rounded + ' ' + CURRENCY_CODE;
     }
     function discount(n) {
       var best = 0;
@@ -58,6 +106,57 @@
       m.textContent = msg;
       t.classList.add('sw-toast--visible');
       setTimeout(function () { t.classList.remove('sw-toast--visible'); }, 2400);
+    }
+
+    // ── Tier list ──
+    var tierListEl   = scope.querySelector('#pdp-tier-list');
+    var tierHeadEl   = scope.querySelector('#pdp-tier-heading');
+    var tierRowsEl   = scope.querySelector('#pdp-tier-rows');
+    var tierSourceEl = scope.querySelector('#pdp-tier-source');
+    var tierRowEls   = [];
+
+    function renderTierList() {
+      if (!tierListEl || !tierRowsEl) return;
+      if (DISCOUNT_TIERS.length === 0) {
+        tierListEl.style.display = 'none';
+        return;
+      }
+      tierListEl.style.display = '';
+      if (tierHeadEl && i18n.tierHeading) tierHeadEl.textContent = i18n.tierHeading;
+
+      tierRowsEl.innerHTML = '';
+      tierRowEls = DISCOUNT_TIERS.map(function (t) {
+        var effUnit = Math.round(BASE_PRICE_CENTS * (1 - t.pct / 100));
+        var row = document.createElement('div');
+        row.className = 'pdp-buy__tier-row';
+        row.dataset.tierMin = String(t.minQty);
+        row.innerHTML = ti(i18n.tierRowHtml || '{{ qty }} → {{ price }}', {
+          qty:   t.minQty,
+          price: fmtEur(effUnit)
+        });
+        tierRowsEl.appendChild(row);
+        return row;
+      });
+
+      if (tierSourceEl) {
+        var label = tierSource === 'product'
+          ? (i18n.tierSourceProduct || 'product')
+          : tierSource === 'band'
+            ? (i18n.tierSourceBand || 'shop band')
+            : '—';
+        tierSourceEl.textContent = ti(i18n.tierSourceTest || 'Source (test): {{ source }}', { source: label });
+      }
+    }
+
+    function highlightActiveTier(currentQty) {
+      if (tierRowEls.length === 0) return;
+      var activeIdx = -1;
+      for (var i = 0; i < DISCOUNT_TIERS.length; i++) {
+        if (currentQty >= DISCOUNT_TIERS[i].minQty) activeIdx = i;
+      }
+      tierRowEls.forEach(function (row, idx) {
+        row.classList.toggle('is-active', idx === activeIdx);
+      });
     }
 
     // ── Gallery ──
@@ -109,12 +208,6 @@
         priceOrig.textContent = fmtEur(BASE_PRICE_CENTS);
       }
 
-      var kwpEl = document.getElementById('pdp-price-kwp');
-      if (kwpEl) {
-        var perKwp = Math.round(eff / MODULE_KWP / 100);
-        kwpEl.textContent = ti(i18n.kwpPrice, { price: perKwp.toLocaleString('de-AT') });
-      }
-
       var atcLabel = document.getElementById('pdp-atc-label');
       if (atcLabel) atcLabel.textContent = ti(i18n.addToCart, { price: fmtEur(total) });
 
@@ -127,6 +220,8 @@
           badge.style.display = 'none';
         }
       }
+
+      highlightActiveTier(qty);
 
       document.querySelectorAll('.pdp-buy__qty-preset').forEach(function (btn) {
         btn.classList.toggle('is-active', parseInt(btn.dataset.preset, 10) === qty);
@@ -288,6 +383,7 @@
     if (invSelect) invSelect.addEventListener('change', updateCompatibility);
 
     // ── Init ──
+    renderTierList();
     updateQty(1);
     onScroll();
   }

@@ -65,7 +65,16 @@
       "mcp__plugin_context7_context7__resolve-library-id",
       "mcp__plugin_context7_context7__query-docs",
       "Bash(shopify app *)",
-      "Bash(npm install *)"
+      "Bash(npm install *)",
+      "Bash(npm run *)",
+      "Bash(npx eslint *)",
+      "Bash(echo \"exit=$?\")",
+      "Bash(awk '/^type ProductVariant/,/^}/' /home/fmolnar/Documents/Shopify/nrgedge/apps/discount/extensions/discount-function/schema.graphql)",
+      "Bash(grep -E \":\\\\s*\\\\w+!?$\")",
+      "Bash(node --check src/cart_lines_discounts_generate_run.js)",
+      "Bash(node --check assets/pdp.js)",
+      "Bash(node --check apps/discount/app/routes/app.price-bands.jsx)",
+      "Bash(node --check /home/fmolnar/Documents/Shopify/nrgedge/assets/pdp.js)"
     ],
     "additionalDirectories": [
       "/home/fmolnar/Documents/Shopify/nrgedge/apps/discounts/extensions/volume-discount",

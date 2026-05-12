@@ -75,7 +75,6 @@
     "buy": {
       "reviews_abbr": "Rev.",
       "per_piece": "/ piece · incl. 0% VAT",
-      "kwp_price": "€ {{ price }} / kWp · Volume pricing from 5 units",
       "add_to_cart": "Add to cart · {{ price }}",
       "unavailable": "Unavailable",
       "check_compat": "Check compatibility with my inverter",
@@ -97,7 +96,12 @@
         "other": "Qty · {{ count }} modules ({{ kwp }} kWp)"
       },
       "unit": "pcs",
-      "discount_badge": "–{{ percent }}% volume discount active"
+      "discount_badge": "–{{ percent }}% volume discount active",
+      "tier_heading": "Volume pricing",
+      "tier_row_html": "<span class=\"pdp-buy__tier-qty\">From {{ qty }} pcs</span> <span class=\"pdp-buy__tier-price\">{{ price }}</span>",
+      "tier_source_test": "Source (test): {{ source }}",
+      "tier_source_product": "product-specific",
+      "tier_source_band": "shop-wide price band"
     },
     "compat": {
       "eyebrow": "Compatible?",

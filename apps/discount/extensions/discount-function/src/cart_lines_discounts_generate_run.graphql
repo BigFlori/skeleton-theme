@@ -3,6 +3,11 @@ query CartInput {
     lines {
       id
       quantity
+      cost {
+        amountPerQuantity {
+          amount
+        }
+      }
       merchandise {
         __typename
         ... on ProductVariant {
@@ -13,6 +18,11 @@ query CartInput {
           }
         }
       }
+    }
+  }
+  shop {
+    volumeTierBands: metafield(namespace: "custom", key: "volume_tier_bands") {
+      jsonValue
     }
   }
   discount {

@@ -4,10 +4,13 @@ import {
 } from '../generated/api';
 
 /**
- * Volume discount: per cart line we read product.metafield(custom.volume_tiers)
- * as a JSON array of { min_qty, discount_pct } and apply the highest matching
- * tier as a line-level percentage discount. The PDP reads the same metafield,
- * so storefront and checkout stay in sync.
+ * Volume discount with two-tier lookup:
+ *   1. Per-product override: product.metafield(custom.volume_tiers)
+ *   2. Shop-wide price-band default: shop.metafield(custom.volume_tier_bands)
+ *      — a JSON array of { min_price, max_price|null, tiers:[{min_qty,discount_pct}] }.
+ *      The variant unit price (line.cost.amountPerQuantity) selects the band.
+ *
+ * Per-product tiers, when present and non-empty, fully override the band.
  *
  * @typedef {import("../generated/api").CartInput} RunInput
  * @typedef {import("../generated/api").CartLinesDiscountsGenerateRunResult} CartLinesDiscountsGenerateRunResult
@@ -21,12 +24,48 @@ export function cartLinesDiscountsGenerateRun(input) {
     return { operations: [] };
   }
 
+  const rawBands = input.shop?.volumeTierBands?.jsonValue;
+  const bands = Array.isArray(rawBands)
+    ? rawBands
+        .map((b) => {
+          if (!b) return null;
+          const minPrice = Number(b.min_price);
+          const maxPrice =
+            b.max_price === null || b.max_price === undefined
+              ? Infinity
+              : Number(b.max_price);
+          const tiers = Array.isArray(b.tiers) ? b.tiers : [];
+          if (!Number.isFinite(minPrice) || minPrice < 0) return null;
+          if (!Number.isFinite(maxPrice) && maxPrice !== Infinity) return null;
+          if (tiers.length === 0) return null;
+          return { minPrice, maxPrice, tiers };
+        })
+        .filter(Boolean)
+        .sort((a, b) => a.minPrice - b.minPrice)
+    : [];
+
+  function pickTiersForLine(line) {
+    const productTiers = line.merchandise.product?.volumeTiers?.jsonValue;
+    if (Array.isArray(productTiers) && productTiers.length > 0) {
+      return productTiers;
+    }
+    if (bands.length === 0) return null;
+    const unitPrice = Number(line.cost?.amountPerQuantity?.amount);
+    if (!Number.isFinite(unitPrice)) return null;
+    for (const band of bands) {
+      if (unitPrice >= band.minPrice && unitPrice <= band.maxPrice) {
+        return band.tiers;
+      }
+    }
+    return null;
+  }
+
   const candidates = [];
 
   for (const line of input.cart.lines) {
     if (line.merchandise.__typename !== 'ProductVariant') continue;
 
-    const tiers = line.merchandise.product?.volumeTiers?.jsonValue;
+    const tiers = pickTiersForLine(line);
     if (!Array.isArray(tiers) || tiers.length === 0) continue;
 
     let bestPct = 0;

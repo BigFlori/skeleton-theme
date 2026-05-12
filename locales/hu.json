@@ -75,7 +75,6 @@
     "buy": {
       "reviews_abbr": "ért.",
       "per_piece": "/ db · 0% ÁFA",
-      "kwp_price": "€ {{ price }} / kWp · Mennyiségi kedvezmény 5 db-tól",
       "add_to_cart": "Kosárba · {{ price }}",
       "unavailable": "Nem elérhető",
       "check_compat": "Inverterkompatibilitás ellenőrzése",
@@ -97,7 +96,12 @@
         "other": "Mennyiség · {{ count }} modul ({{ kwp }} kWp)"
       },
       "unit": "db",
-      "discount_badge": "−{{ percent }}% mennyiségi kedvezmény érvényben"
+      "discount_badge": "−{{ percent }}% mennyiségi kedvezmény érvényben",
+      "tier_heading": "Mennyiségi kedvezmény",
+      "tier_row_html": "<span class=\"pdp-buy__tier-qty\">{{ qty }} db rendelésétől</span> <span class=\"pdp-buy__tier-price\">{{ price }}</span>",
+      "tier_source_test": "Forrás (teszt): {{ source }}",
+      "tier_source_product": "termék-specifikus",
+      "tier_source_band": "bolt-szintű ársáv"
     },
     "compat": {
       "eyebrow": "Kompatibilis?",

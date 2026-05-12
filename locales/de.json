@@ -75,7 +75,6 @@
     "buy": {
       "reviews_abbr": "Bew.",
       "per_piece": "/ Stück · inkl. 0 % USt",
-      "kwp_price": "€ {{ price }} / kWp · Preis-Staffel ab 5 Stück",
       "add_to_cart": "In den Warenkorb · {{ price }}",
       "unavailable": "Nicht verfügbar",
       "check_compat": "Kompatibilität mit meinem Inverter prüfen",
@@ -97,7 +96,12 @@
         "other": "Menge · {{ count }} Module ({{ kwp }} kWp)"
       },
       "unit": "Stk",
-      "discount_badge": "–{{ percent }} % Mengenrabatt aktiv"
+      "discount_badge": "–{{ percent }} % Mengenrabatt aktiv",
+      "tier_heading": "Mengenrabatt",
+      "tier_row_html": "<span class=\"pdp-buy__tier-qty\">Ab {{ qty }} Stk</span> <span class=\"pdp-buy__tier-price\">{{ price }}</span>",
+      "tier_source_test": "Quelle (Test): {{ source }}",
+      "tier_source_product": "produktspezifisch",
+      "tier_source_band": "shopweite Preisspanne"
     },
     "compat": {
       "eyebrow": "Passt es zusammen?",
