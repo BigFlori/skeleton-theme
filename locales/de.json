@@ -68,12 +68,14 @@
       "sold_out": "AUSVERKAUFT",
       "zoom": "Zoomen",
       "zoom_label": "Bild vergrößern",
+      "close": "Schließen",
+      "prev": "Vorheriges Bild",
+      "next": "Nächstes Bild",
       "datasheet_title": "Datenblatt & Zertifikate",
       "datasheet_certs": "PDF · TÜV, IEC 61215, IEC 61730",
       "download": "Download"
     },
     "buy": {
-      "reviews_abbr": "Bew.",
       "per_piece": "/ Stück · inkl. 0 % USt",
       "add_to_cart": "In den Warenkorb · {{ price }}",
       "unavailable": "Nicht verfügbar",

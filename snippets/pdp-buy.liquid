@@ -17,7 +17,7 @@
               <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.8 6.2 20.9l1.1-6.5L2.6 9.8l6.5-.9z"/></svg>
             {%- endfor -%}
           </div>
-          <span class="mono" style="font-size:10px;color:var(--ink-mute);">{{ datasheet.rating | default: section.settings.rating | default: 4.8 | replace: '.', ',' }} · {{ datasheet.review_count | default: section.settings.review_count | default: '127' }} {{ 'pdp.buy.reviews_abbr' | t }}</span>
+          <span class="mono" style="font-size:10px;color:var(--ink-mute);">{{ datasheet.rating | default: section.settings.rating | default: 4.8 | replace: '.', ',' }}</span>
         </div>
       </div>
       <h1 class="display" style="font-size:clamp(38px,4.5vw,58px);letter-spacing:-.02em;">{{ product.title }}</h1>
@@ -29,10 +29,14 @@
     </div>
 
     <!-- Price -->
+    {%- assign has_sale = false -%}
+    {%- if current_variant.compare_at_price and current_variant.compare_at_price > current_variant.price -%}
+      {%- assign has_sale = true -%}
+    {%- endif -%}
     <div class="pdp-buy__price-block">
       <div class="pdp-buy__price-row">
         <span class="pdp-buy__price-main" id="pdp-price-display">{{ current_variant.price | money_without_trailing_zeros }}</span>
-        <span class="pdp-buy__price-original mono" id="pdp-price-original" style="display:none;">{{ current_variant.price | money_without_trailing_zeros }}</span>
+        <span class="pdp-buy__price-original mono" id="pdp-price-original" style="{% unless has_sale %}display:none;{% endunless %}">{{ current_variant.compare_at_price | default: current_variant.price | money_without_trailing_zeros }}</span>
         <span class="mono" style="font-size:12px;color:var(--ink-mute);">{{ 'pdp.buy.per_piece' | t }}</span>
       </div>
     </div>
@@ -98,7 +102,8 @@
           <button type="button" class="pdp-buy__stepper-btn" id="pdp-qty-down" aria-label="-">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14"/></svg>
           </button>
-          <span class="pdp-buy__stepper-val" id="pdp-qty-display">1</span>
+          <input type="text" inputmode="numeric" pattern="[0-9]*" class="pdp-buy__stepper-val" id="pdp-qty-display" value="1" aria-label="{{ 'pdp.qty.label' | t: count: 1, kwp: section.settings.module_power | default: '0,43' | escape }}">
+
           <button type="button" class="pdp-buy__stepper-btn" id="pdp-qty-up" aria-label="+">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
           </button>

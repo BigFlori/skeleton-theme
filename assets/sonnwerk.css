@@ -61,10 +61,19 @@ body::before {
   padding-inline: var(--s-4);
 }
 
-/* Smooth scroll */
+/* Smooth scroll + reserve scrollbar gutter so modals/locks don't shift layout.
+   The gutter color follows --gutter-bg so overlays can theme it via :has() below. */
 html {
   scroll-behavior: smooth;
+  scrollbar-gutter: stable;
+  background: var(--gutter-bg, var(--bg));
+  transition: background .18s ease;
 }
+
+/* Generic scroll-lock + dark gutter while any overlay is open.
+   Add `is-scroll-locked` to <body> and expose --gutter-bg on the overlay element. */
+body.is-scroll-locked { overflow: hidden; }
+html:has(body.is-scroll-locked) { --gutter-bg: oklch(0.08 0.01 220); }
 
 /* ── Buttons ── */
 .btn {

@@ -68,12 +68,14 @@
       "sold_out": "SOLD OUT",
       "zoom": "Zoom",
       "zoom_label": "Zoom image",
+      "close": "Close",
+      "prev": "Previous image",
+      "next": "Next image",
       "datasheet_title": "Datasheet & Certificates",
       "datasheet_certs": "PDF · TÜV, IEC 61215, IEC 61730",
       "download": "Download"
     },
     "buy": {
-      "reviews_abbr": "Rev.",
       "per_piece": "/ piece · incl. 0% VAT",
       "add_to_cart": "Add to cart · {{ price }}",
       "unavailable": "Unavailable",

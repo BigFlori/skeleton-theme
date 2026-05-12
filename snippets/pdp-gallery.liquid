@@ -39,7 +39,7 @@
       </div>
 
       <button class="pdp-gallery__zoom" type="button" aria-label="{{ 'pdp.gallery.zoom_label' | t }}" id="pdp-zoom-btn">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="10" cy="10" r="7"/><path d="M15 15l6 6"/></svg>
         {{ 'pdp.gallery.zoom' | t }}
       </button>
     </div>
@@ -87,3 +87,31 @@
     </div>
   </div>
 </div>
+
+{%- if product.images.size > 0 -%}
+  <script id="pdp-gallery-data" type="application/json">
+    [
+      {%- for image in product.images -%}
+        {"src":{{ image | image_url: width: 1600 | json }},"alt":{{ image.alt | default: product.title | json }}}{%- unless forloop.last -%},{%- endunless -%}
+      {%- endfor -%}
+    ]
+  </script>
+
+  <div class="pdp-lightbox" id="pdp-lightbox" role="dialog" aria-modal="true" aria-label="{{ 'pdp.gallery.zoom_label' | t }}" aria-hidden="true">
+    <button class="pdp-lightbox__close" type="button" id="pdp-lightbox-close" aria-label="{{ 'pdp.gallery.close' | t }}">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    {%- if product.images.size > 1 -%}
+      <button class="pdp-lightbox__nav pdp-lightbox__nav--prev" type="button" id="pdp-lightbox-prev" aria-label="{{ 'pdp.gallery.prev' | t }}">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <button class="pdp-lightbox__nav pdp-lightbox__nav--next" type="button" id="pdp-lightbox-next" aria-label="{{ 'pdp.gallery.next' | t }}">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
+    {%- endif -%}
+    <div class="pdp-lightbox__stage">
+      <img class="pdp-lightbox__img" id="pdp-lightbox-img" alt="" width="1600" height="1600">
+    </div>
+    <div class="pdp-lightbox__counter mono" id="pdp-lightbox-counter"></div>
+  </div>
+{%- endif -%}

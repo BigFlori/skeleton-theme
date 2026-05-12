@@ -68,12 +68,14 @@
       "sold_out": "ELFOGYOTT",
       "zoom": "Nagyítás",
       "zoom_label": "Kép nagyítása",
+      "close": "Bezárás",
+      "prev": "Előző kép",
+      "next": "Következő kép",
       "datasheet_title": "Adatlap és tanúsítványok",
       "datasheet_certs": "PDF · TÜV, IEC 61215, IEC 61730",
       "download": "Letöltés"
     },
     "buy": {
-      "reviews_abbr": "ért.",
       "per_piece": "/ db · 0% ÁFA",
       "add_to_cart": "Kosárba · {{ price }}",
       "unavailable": "Nem elérhető",
