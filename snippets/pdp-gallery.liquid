@@ -1,5 +1,5 @@
 {%- assign datasheet = product.metafields.custom.datasheet.value -%}
-{%- assign tech_badge = datasheet.tech_badge | default: section.settings.tech_badge -%}
+{%- assign tech_badge = datasheet.tech_badge -%}
 <div class="pdp-gallery-sticky">
   <div>
     <!-- Main image -->
@@ -36,10 +36,6 @@
         {%- else -%}
           <span class="pdp-gallery__badge" style="background:oklch(0.92 0.06 30);color:var(--ink);">{{ 'pdp.gallery.sold_out' | t }}</span>
         {%- endif -%}
-      </div>
-
-      <div class="pdp-gallery__label mono" id="pdp-gallery-label">
-        01 / {{ product.images.size | at_least: 1 | prepend: "0" | slice: -2, 2 }}
       </div>
 
       <button class="pdp-gallery__zoom" type="button" aria-label="{{ 'pdp.gallery.zoom_label' | t }}" id="pdp-zoom-btn">

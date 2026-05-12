@@ -171,7 +171,6 @@
     // ── Gallery ──
     var mainImg      = scope.querySelector('#pdp-main-img');
     var mainStage    = scope.querySelector('.pdp-gallery__main');
-    var galleryLabel = scope.querySelector('#pdp-gallery-label');
     var thumbButtons = scope.querySelectorAll('.pdp-gallery__thumb');
     var totalImgs    = thumbButtons.length;
     var currentImgIdx = 0;
@@ -184,11 +183,6 @@
         if (btn.dataset.srcset) mainImg.srcset = btn.dataset.srcset;
         mainImg.src = btn.dataset.src;
         mainImg.alt = btn.dataset.alt;
-      }
-      if (galleryLabel) {
-        var n   = String(idx + 1).padStart(2, '0');
-        var tot = String(totalImgs).padStart(2, '0');
-        galleryLabel.textContent = n + ' / ' + tot + (btn.dataset.label ? ' · ' + btn.dataset.label : '');
       }
       thumbButtons.forEach(function (b) { b.classList.remove('is-active'); });
       btn.classList.add('is-active');

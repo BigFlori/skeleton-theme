@@ -11,7 +11,7 @@
           {{ product.vendor }}{% if product.metafields.custom.model_number != blank %} · {{ product.metafields.custom.model_number }}{% endif %}
         </span>
         <span style="width:4px;height:4px;border-radius:4px;background:var(--line);display:inline-block;"></span>
-        {%- assign rating_value = datasheet.rating | default: section.settings.rating | default: 4.8 -%}
+        {%- assign rating_value = datasheet.rating | default: 4.8 -%}
         {%- assign rating_pct = rating_value | times: 20.0 -%}
         <div style="display:flex;align-items:center;gap:4px;">
           <div class="pdp-buy__stars" style="--rating-fill:{{ rating_pct }}%;" role="img" aria-label="{{ rating_value }} / 5">
@@ -104,14 +104,14 @@
     <!-- Quantity -->
     <div>
       <label class="mono" style="font-size:11px;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:10px;" id="pdp-qty-label">
-        {{ 'pdp.qty.label' | t: count: 1, kwp: section.settings.module_power | default: '0,43' }}
+        {{ 'pdp.qty.label' | t: count: 1, kwp: '0,43' }}
       </label>
       <div class="pdp-buy__qty-wrap">
         <div class="pdp-buy__stepper">
           <button type="button" class="pdp-buy__stepper-btn" id="pdp-qty-down" aria-label="-">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14"/></svg>
           </button>
-          <input type="text" inputmode="numeric" pattern="[0-9]*" class="pdp-buy__stepper-val" id="pdp-qty-display" value="1" aria-label="{{ 'pdp.qty.label' | t: count: 1, kwp: section.settings.module_power | default: '0,43' | escape }}">
+          <input type="text" inputmode="numeric" pattern="[0-9]*" class="pdp-buy__stepper-val" id="pdp-qty-display" value="1" aria-label="{{ 'pdp.qty.label' | t: count: 1, kwp: '0,43' | escape }}">
 
           <button type="button" class="pdp-buy__stepper-btn" id="pdp-qty-up" aria-label="+">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>

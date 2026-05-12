@@ -28,8 +28,8 @@ window.PDP_CONFIG = {
   basePriceCents:    {{ current_variant.price }},
   compareAtCents:    {% if current_variant.compare_at_price %}{{ current_variant.compare_at_price }}{% else %}null{% endif %},
   currencyCode:      {{ shop.currency | json }},
-  moduleKwp:      {{ product.metafields.custom.datasheet.value.module_power_kwp | default: section.settings.module_power_raw | default: 0.425 }},
-  voc:            {{ product.metafields.custom.datasheet.value.voc | default: section.settings.voc_raw | default: 38.9 }},
+  moduleKwp:      {{ product.metafields.custom.datasheet.value.module_power_kwp | default: 0.425 }},
+  voc:            {{ product.metafields.custom.datasheet.value.voc | default: 38.9 }},
   productTitle:   {{ product.title | json }},
   variants:       {{ product.variants | json }},
   {%- comment -%} Volume discount config — disabled until the discount app is built

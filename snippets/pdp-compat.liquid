@@ -1,8 +1,8 @@
 {%- assign datasheet = product.metafields.custom.datasheet.value -%}
-{%- assign vmp = datasheet.vmp | default: section.settings.vmp | default: 32.4 | replace: '.', ',' -%}
-{%- assign voc = datasheet.voc | default: section.settings.voc_display | default: 38.9 | replace: '.', ',' -%}
-{%- assign imp = datasheet.imp | default: section.settings.imp | default: 13.1 | replace: '.', ',' -%}
-{%- assign isc = datasheet.isc | default: section.settings.isc | default: 13.9 | replace: '.', ',' -%}
+{%- assign vmp = datasheet.vmp | default: 32.4 | replace: '.', ',' -%}
+{%- assign voc = datasheet.voc | default: 38.9 | replace: '.', ',' -%}
+{%- assign imp = datasheet.imp | default: 13.1 | replace: '.', ',' -%}
+{%- assign isc = datasheet.isc | default: 13.9 | replace: '.', ',' -%}
 
 <section class="pdp-compat full-width" id="kompatibilitaet">
   <div class="container">
