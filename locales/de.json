@@ -66,14 +66,12 @@
     "gallery": {
       "in_stock": "AUF LAGER",
       "sold_out": "AUSVERKAUFT",
+      "no_image": "Kein Bild verfügbar",
       "zoom": "Zoomen",
       "zoom_label": "Bild vergrößern",
       "close": "Schließen",
       "prev": "Vorheriges Bild",
-      "next": "Nächstes Bild",
-      "datasheet_title": "Datenblatt & Zertifikate",
-      "datasheet_certs": "PDF · TÜV, IEC 61215, IEC 61730",
-      "download": "Download"
+      "next": "Nächstes Bild"
     },
     "buy": {
       "per_piece": "/ Stück · inkl. 0 % USt",

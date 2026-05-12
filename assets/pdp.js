@@ -170,25 +170,69 @@
 
     // ── Gallery ──
     var mainImg      = scope.querySelector('#pdp-main-img');
+    var mainStage    = scope.querySelector('.pdp-gallery__main');
     var galleryLabel = scope.querySelector('#pdp-gallery-label');
     var thumbButtons = scope.querySelectorAll('.pdp-gallery__thumb');
     var totalImgs    = thumbButtons.length;
     var currentImgIdx = 0;
 
+    function goToThumb(idx) {
+      var btn = thumbButtons[idx];
+      if (!btn) return;
+      currentImgIdx = idx;
+      if (mainImg) {
+        if (btn.dataset.srcset) mainImg.srcset = btn.dataset.srcset;
+        mainImg.src = btn.dataset.src;
+        mainImg.alt = btn.dataset.alt;
+      }
+      if (galleryLabel) {
+        var n   = String(idx + 1).padStart(2, '0');
+        var tot = String(totalImgs).padStart(2, '0');
+        galleryLabel.textContent = n + ' / ' + tot + (btn.dataset.label ? ' · ' + btn.dataset.label : '');
+      }
+      thumbButtons.forEach(function (b) { b.classList.remove('is-active'); });
+      btn.classList.add('is-active');
+    }
+    function stepThumb(delta) {
+      if (totalImgs < 2) return;
+      goToThumb((currentImgIdx + delta + totalImgs) % totalImgs);
+    }
+
     thumbButtons.forEach(function (btn) {
       btn.addEventListener('click', function () {
-        var idx = parseInt(this.dataset.idx, 10);
-        currentImgIdx = idx;
-        if (mainImg) { mainImg.src = this.dataset.src; mainImg.alt = this.dataset.alt; }
-        if (galleryLabel) {
-          var n   = String(idx + 1).padStart(2, '0');
-          var tot = String(totalImgs).padStart(2, '0');
-          galleryLabel.textContent = n + ' / ' + tot + (this.dataset.label ? ' · ' + this.dataset.label : '');
-        }
-        thumbButtons.forEach(function (b) { b.classList.remove('is-active'); });
-        this.classList.add('is-active');
+        goToThumb(parseInt(this.dataset.idx, 10));
       });
     });
+
+    if (mainStage && totalImgs > 1) {
+      if (!mainStage.hasAttribute('tabindex')) mainStage.setAttribute('tabindex', '0');
+      mainStage.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowLeft')       { e.preventDefault(); stepThumb(-1); }
+        else if (e.key === 'ArrowRight') { e.preventDefault(); stepThumb( 1); }
+      });
+
+      var mainTouchX = 0, mainTouchY = 0, mainTouchActive = false, mainSwiped = false;
+      mainStage.addEventListener('touchstart', function (e) {
+        if (!e.touches[0]) return;
+        mainTouchX = e.touches[0].clientX;
+        mainTouchY = e.touches[0].clientY;
+        mainTouchActive = true;
+        mainSwiped = false;
+      }, { passive: true });
+      mainStage.addEventListener('touchend', function (e) {
+        if (!mainTouchActive || !e.changedTouches[0]) return;
+        mainTouchActive = false;
+        var dx = e.changedTouches[0].clientX - mainTouchX;
+        var dy = e.changedTouches[0].clientY - mainTouchY;
+        if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
+          mainSwiped = true;
+          stepThumb(dx < 0 ? 1 : -1);
+        }
+      }, { passive: true });
+      mainStage.addEventListener('click', function (e) {
+        if (mainSwiped) { e.preventDefault(); e.stopPropagation(); mainSwiped = false; }
+      }, true);
+    }
 
     // ── Lightbox ──
     var lightbox = document.getElementById('pdp-lightbox');
@@ -416,13 +460,30 @@
 
       var featured = variant.featured_image || variant.featured_media && variant.featured_media.preview_image;
       if (featured && featured.src) {
-        var mainImg = document.getElementById('pdp-main-img');
-        if (mainImg) {
+        var featuredId = (variant.featured_image && variant.featured_image.id) ||
+                         (variant.featured_media && variant.featured_media.preview_image && variant.featured_media.preview_image.id) ||
+                         (variant.featured_media && variant.featured_media.id);
+        var matchedIdx = -1;
+        if (featuredId != null) {
+          for (var ti2 = 0; ti2 < thumbButtons.length; ti2++) {
+            if (String(thumbButtons[ti2].dataset.imageId) === String(featuredId)) {
+              matchedIdx = ti2;
+              break;
+            }
+          }
+        }
+        if (matchedIdx >= 0) {
+          goToThumb(matchedIdx);
+        } else if (mainImg) {
+          mainImg.removeAttribute('srcset');
           mainImg.src = featured.src;
           if (featured.alt) mainImg.alt = featured.alt;
         }
         var stickyThumb = document.querySelector('.pdp-sticky-bar__thumb img');
-        if (stickyThumb) stickyThumb.src = featured.src;
+        if (stickyThumb) {
+          stickyThumb.removeAttribute('srcset');
+          stickyThumb.src = featured.src;
+        }
       }
 
       if (window.history && window.history.replaceState) {

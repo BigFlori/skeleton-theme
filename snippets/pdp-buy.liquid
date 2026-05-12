@@ -11,13 +11,22 @@
           {{ product.vendor }}{% if product.metafields.custom.model_number != blank %} · {{ product.metafields.custom.model_number }}{% endif %}
         </span>
         <span style="width:4px;height:4px;border-radius:4px;background:var(--line);display:inline-block;"></span>
+        {%- assign rating_value = datasheet.rating | default: section.settings.rating | default: 4.8 -%}
+        {%- assign rating_pct = rating_value | times: 20.0 -%}
         <div style="display:flex;align-items:center;gap:4px;">
-          <div class="pdp-buy__stars">
-            {%- for i in (1..5) -%}
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.8 6.2 20.9l1.1-6.5L2.6 9.8l6.5-.9z"/></svg>
-            {%- endfor -%}
+          <div class="pdp-buy__stars" style="--rating-fill:{{ rating_pct }}%;" role="img" aria-label="{{ rating_value }} / 5">
+            <div class="pdp-buy__stars-row pdp-buy__stars-row--bg" aria-hidden="true">
+              {%- for i in (1..5) -%}
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.8 6.2 20.9l1.1-6.5L2.6 9.8l6.5-.9z"/></svg>
+              {%- endfor -%}
+            </div>
+            <div class="pdp-buy__stars-row pdp-buy__stars-row--fg" aria-hidden="true">
+              {%- for i in (1..5) -%}
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.8 6.2 20.9l1.1-6.5L2.6 9.8l6.5-.9z"/></svg>
+              {%- endfor -%}
+            </div>
           </div>
-          <span class="mono" style="font-size:10px;color:var(--ink-mute);">{{ datasheet.rating | default: section.settings.rating | default: 4.8 | replace: '.', ',' }}</span>
+          <span class="mono" style="font-size:10px;color:var(--ink-mute);">{{ rating_value | replace: '.', ',' }}</span>
         </div>
       </div>
       <h1 class="display" style="font-size:clamp(38px,4.5vw,58px);letter-spacing:-.02em;">{{ product.title }}</h1>
