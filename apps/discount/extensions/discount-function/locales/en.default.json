@@ -1,4 +1,0 @@
-{
-  "name": "Volume Discount",
-  "description": "Per-product volume tiers from the custom.volume_tiers metafield, applied as a line-level percentage discount at checkout."
-}
