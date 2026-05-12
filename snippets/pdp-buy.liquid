@@ -37,12 +37,14 @@
       </div>
     </div>
 
+    {%- comment -%} Volume discount tier list — disabled until the discount app is built
     <!-- Tier list -->
     <div class="pdp-buy__tier-list" id="pdp-tier-list" style="display:none;">
       <div class="pdp-buy__tier-heading mono" id="pdp-tier-heading"></div>
       <div id="pdp-tier-rows"></div>
       <div class="pdp-buy__tier-source mono" id="pdp-tier-source"></div>
     </div>
+    {%- endcomment -%}
 
     <!-- Variants -->
     {%- unless product.has_only_default_variant -%}
@@ -107,7 +109,9 @@
           <button type="button" class="pdp-buy__qty-preset" data-preset="24">24 {{ 'pdp.qty.unit' | t }}</button>
         </div>
       </div>
+      {%- comment -%} Volume discount badge — disabled until the discount app is built
       <div class="pdp-buy__discount-badge" id="pdp-discount-badge" style="display:none;"></div>
+      {%- endcomment -%}
     </div>
 
     <!-- CTAs -->

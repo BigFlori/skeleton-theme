@@ -26,6 +26,8 @@
     var BASE_PRICE_MAJOR = BASE_PRICE_CENTS / SUBUNIT_TO_UNIT;
 
     var tierSource = 'none';
+    var DISCOUNT_TIERS = [];
+    /* Volume discount tier resolution — disabled until the discount app is built
     var rawTiers = [];
     if (Array.isArray(cfg.discountTiers) && cfg.discountTiers.length > 0) {
       rawTiers = cfg.discountTiers;
@@ -47,7 +49,7 @@
       }
     }
 
-    var DISCOUNT_TIERS = rawTiers
+    DISCOUNT_TIERS = rawTiers
       .map(function (t) {
         return {
           minQty: Number(t && t.min_qty),
@@ -58,6 +60,7 @@
         return Number.isFinite(t.minQty) && Number.isFinite(t.pct) && t.pct > 0;
       })
       .sort(function (a, b) { return a.minQty - b.minQty; });
+    */
 
     var qty = 1;
 
