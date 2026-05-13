@@ -74,7 +74,16 @@
       "Bash(node --check src/cart_lines_discounts_generate_run.js)",
       "Bash(node --check assets/pdp.js)",
       "Bash(node --check apps/discount/app/routes/app.price-bands.jsx)",
-      "Bash(node --check /home/fmolnar/Documents/Shopify/nrgedge/assets/pdp.js)"
+      "Bash(node --check /home/fmolnar/Documents/Shopify/nrgedge/assets/pdp.js)",
+      "Bash(git log *)",
+      "WebFetch(domain:stackoverflow.com)",
+      "WebSearch",
+      "WebFetch(domain:pratikpathak.com)",
+      "WebFetch(domain:bugs.webkit.org)",
+      "Bash(xargs cat)",
+      "WebFetch(domain:webkit.org)",
+      "WebFetch(domain:www.reddit.com)",
+      "WebFetch(domain:frontendmasters.com)"
     ],
     "additionalDirectories": [
       "/home/fmolnar/Documents/Shopify/nrgedge/apps/discounts/extensions/volume-discount",

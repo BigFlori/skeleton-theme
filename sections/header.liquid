@@ -109,17 +109,26 @@
   left: 0;
   right: 0;
   z-index: 40;
-  padding: 14px 0;
+  padding: calc(env(safe-area-inset-top, 0px) + 14px) 0 14px;
   background: transparent;
   border-bottom: 1px solid transparent;
-  transition: background 0.25s ease, border-color 0.25s ease, backdrop-filter 0.25s ease;
+  transition: background 0.25s ease, border-color 0.25s ease;
+  will-change: transform;
 }
 
 .sw-nav--scrolled {
-  background: oklch(0.975 0.012 90 / 0.82);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: oklch(0.975 0.012 90);
   border-bottom-color: var(--line-soft);
+}
+
+/* Frosted glass only on non-iOS — iOS 26 Liquid Glass would turn backdrop-filter
+   elements into floating rounded cards, breaking the full-width nav layout. */
+@supports not (-webkit-touch-callout: none) {
+  .sw-nav--scrolled {
+    background: oklch(0.975 0.012 90 / 0.82);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
 }
 
 .sw-nav__inner {

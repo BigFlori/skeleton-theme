@@ -6,7 +6,7 @@ body {
   color: var(--ink);
   -webkit-font-smoothing: antialiased;
   font-feature-settings: "ss01", "cv11";
-  padding-top: 68px;
+  padding-top: calc(68px + env(safe-area-inset-top, 0px));
 }
 
 /* Grain overlay */
@@ -59,6 +59,22 @@ body::before {
   max-width: 1240px;
   margin-inline: auto;
   padding-inline: var(--s-4);
+}
+
+/* Fills the iOS safe-area-inset-top (notch / Dynamic Island) with a solid
+   background so Safari iOS 26 Liquid Glass doesn't bleed through the status bar.
+   min 3px ensures Safari always has a solid pixel to sample even on notch-free devices. */
+.sw-top-safe {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: max(env(safe-area-inset-top, 0px), 3px);
+  background: var(--bg);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  z-index: 10000;
+  pointer-events: none;
 }
 
 /* Smooth scroll + reserve scrollbar gutter so modals/locks don't shift layout.

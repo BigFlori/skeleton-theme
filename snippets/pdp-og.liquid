@@ -1,0 +1,42 @@
+{%- comment -%}
+  Product Open Graph tags (og:type=product + product:* namespace)
+  Includes price, availability, brand and condition. Twitter card uses
+  the primary product image when available.
+{%- endcomment -%}
+
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign og_image = product.featured_image | default: product.images.first
+  assign currency = cart.currency.iso_code
+  assign availability = 'out of stock'
+  if current_variant.available
+    assign availability = 'in stock'
+  endif
+-%}
+
+<meta property="og:type" content="product">
+<meta property="product:price:amount" content="{{ current_variant.price | money_without_currency | strip_html | replace: ',', '.' | replace: ' ', '' }}">
+<meta property="product:price:currency" content="{{ currency }}">
+<meta property="product:availability" content="{{ availability }}">
+<meta property="product:condition" content="new">
+{%- if product.vendor != blank %}
+<meta property="product:brand" content="{{ product.vendor | escape }}">
+{%- endif %}
+{%- if current_variant.sku != blank %}
+<meta property="product:retailer_item_id" content="{{ current_variant.sku | escape }}">
+{%- endif %}
+
+{%- comment -%} Legacy og:price namespace (still consumed by some scrapers) {%- endcomment -%}
+<meta property="og:price:amount" content="{{ current_variant.price | money_without_currency | strip_html | replace: ',', '.' | replace: ' ', '' }}">
+<meta property="og:price:currency" content="{{ currency }}">
+<meta property="og:availability" content="{{ availability }}">
+
+{%- if og_image -%}
+  <meta property="og:image" content="https:{{ og_image | image_url: width: 1200 }}">
+  <meta property="og:image:secure_url" content="https:{{ og_image | image_url: width: 1200 }}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="{{ 1200 | times: og_image.height | divided_by: og_image.width }}">
+  <meta property="og:image:alt" content="{{ og_image.alt | default: product.title | escape }}">
+  <meta name="twitter:image" content="https:{{ og_image | image_url: width: 1200 }}">
+  <meta name="twitter:image:alt" content="{{ og_image.alt | default: product.title | escape }}">
+{%- endif -%}

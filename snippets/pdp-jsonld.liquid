@@ -1,0 +1,68 @@
+{%- comment -%}
+  Product JSON-LD (schema.org/Product)
+  Renders structured data for the current product. Uses AggregateOffer when
+  the product has multiple variants, Offer otherwise.
+{%- endcomment -%}
+
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign model_number = product.metafields.custom.model_number
+  assign currency = cart.currency.iso_code
+  assign canonical = canonical_url | default: request.origin | append: product.url
+  assign image_count = product.images.size
+-%}
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "name": {{ product.title | json }},
+  "url": {{ canonical | json }},
+  "description": {{ product.description | strip_html | truncate: 5000 | json }},
+  {%- if image_count > 0 %}
+  "image": [
+    {%- for img in product.images limit: 6 -%}
+      "https:{{ img | image_url: width: 1600 }}"{%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+  ],
+  {%- endif %}
+  {%- if product.vendor != blank %}
+  "brand": {
+    "@type": "Brand",
+    "name": {{ product.vendor | json }}
+  },
+  {%- endif %}
+  {%- if model_number != blank %}
+  "mpn": {{ model_number | json }},
+  "sku": {{ current_variant.sku | default: model_number | json }},
+  {%- elsif current_variant.sku != blank %}
+  "sku": {{ current_variant.sku | json }},
+  {%- endif %}
+  {%- if current_variant.barcode != blank %}
+  "gtin": {{ current_variant.barcode | json }},
+  {%- endif %}
+  {%- if product.type != blank %}
+  "category": {{ product.type | json }},
+  {%- endif %}
+  {%- if product.variants.size > 1 %}
+  "offers": {
+    "@type": "AggregateOffer",
+    "priceCurrency": {{ currency | json }},
+    "lowPrice": "{{ product.price_min | money_without_currency | strip_html | replace: ',', '.' | replace: ' ', '' }}",
+    "highPrice": "{{ product.price_max | money_without_currency | strip_html | replace: ',', '.' | replace: ' ', '' }}",
+    "offerCount": {{ product.variants.size }},
+    "availability": "https://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}",
+    "url": {{ canonical | json }}
+  }
+  {%- else %}
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": {{ currency | json }},
+    "price": "{{ current_variant.price | money_without_currency | strip_html | replace: ',', '.' | replace: ' ', '' }}",
+    "availability": "https://schema.org/{% if current_variant.available %}InStock{% else %}OutOfStock{% endif %}",
+    "itemCondition": "https://schema.org/NewCondition",
+    "url": {{ canonical | json }}
+  }
+  {%- endif %}
+}
+</script>
