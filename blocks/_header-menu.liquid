@@ -1,0 +1,128 @@
+{% liquid
+  assign block_settings = block.settings
+  assign menu = block_settings.menu
+  assign font_size = block_settings.type_font_primary_size | default: '0.875rem'
+  assign font_family_id = block_settings.type_font_primary_link | default: 'body'
+  assign text_case = block_settings.type_case_primary_link | default: 'none'
+%}
+
+<nav
+  class="header-menu"
+  aria-label="{{ 'general.header' | t }}"
+  style="
+    --menu-top-level-font-size: {{ font_size }};
+    --menu-top-level-font-family: var(--font-{{ font_family_id }}--family, inherit);
+    --menu-top-level-font-case: {{ text_case }};
+  "
+  {{ block.shopify_attributes }}
+>
+  <ul class="menu-list menu-list__list" role="list">
+    {%- for link in menu.links -%}
+      <li class="menu-list__list-item">
+        <a
+          href="{{ link.url }}"
+          class="menu-list__link{% if link.active %} menu-list__link--active{% endif %}"
+          {% if link.current %}aria-current="page"{% endif %}
+        >
+          <span class="menu-list__link-title">{{- link.title -}}</span>
+        </a>
+      </li>
+    {%- endfor -%}
+  </ul>
+</nav>
+
+{% stylesheet %}
+  .header-menu {
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  .menu-list {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .menu-list__list-item {
+    flex-shrink: 0;
+  }
+
+  .menu-list__link {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 14px;
+    color: var(--color-foreground, #333);
+    text-decoration: none;
+    font-size: var(--menu-top-level-font-size, 0.875rem);
+    font-family: var(--menu-top-level-font-family, inherit);
+    text-transform: var(--menu-top-level-font-case, none);
+    border-radius: 8px;
+    transition: color 0.2s ease, background 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .menu-list__link:hover {
+    color: var(--color-foreground, #333);
+    background: rgb(0 0 0 / 0.05);
+    text-decoration: none;
+  }
+
+  .menu-list__link--active {
+    font-weight: 600;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Menu",
+  "tag": null,
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Navigation menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "select",
+      "id": "type_font_primary_size",
+      "label": "Font size",
+      "options": [
+        { "value": "0.75rem", "label": "12px" },
+        { "value": "0.875rem", "label": "14px" },
+        { "value": "1rem", "label": "16px" },
+        { "value": "1.125rem", "label": "18px" }
+      ],
+      "default": "0.875rem"
+    },
+    {
+      "type": "select",
+      "id": "type_font_primary_link",
+      "label": "Font",
+      "options": [
+        { "value": "body", "label": "Body" },
+        { "value": "heading", "label": "Heading" }
+      ],
+      "default": "body"
+    },
+    {
+      "type": "select",
+      "id": "type_case_primary_link",
+      "label": "Text case",
+      "options": [
+        { "value": "none", "label": "Default" },
+        { "value": "uppercase", "label": "Uppercase" }
+      ],
+      "default": "none"
+    }
+  ]
+}
+{% endschema %}

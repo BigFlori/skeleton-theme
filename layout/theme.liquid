@@ -39,7 +39,6 @@
   </head>
 
   <body>
-    <div class="sw-top-safe" aria-hidden="true"></div>
     {% sections 'header-group' %}
 
     {{ content_for_layout }}
@@ -48,7 +47,6 @@
 
     {% section 'cart-drawer' %}
 
-    <script src="{{ 'nav-scroll.js' | asset_url }}" defer></script>
     <script src="{{ 'cart-drawer.js' | asset_url }}" defer></script>
   </body>
 </html>

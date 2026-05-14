@@ -83,7 +83,8 @@
       "Bash(xargs cat)",
       "WebFetch(domain:webkit.org)",
       "WebFetch(domain:www.reddit.com)",
-      "WebFetch(domain:frontendmasters.com)"
+      "WebFetch(domain:frontendmasters.com)",
+      "Bash(grep -E '\\\\.\\(js|css|svg|jpg|png|gif\\)$')"
     ],
     "additionalDirectories": [
       "/home/fmolnar/Documents/Shopify/nrgedge/apps/discounts/extensions/volume-discount",
