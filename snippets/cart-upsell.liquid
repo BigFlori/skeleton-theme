@@ -41,7 +41,7 @@
                   data-upsell-add="{{ product.selected_or_first_available_variant.id }}"
                   aria-label="{{ 'sections.cart.upsell_add' | t }}: {{ product.title | escape }}"
                 >
-                  {%- render 'icon', icon: 'plus', size: 13 -%}
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{%- render 'icon', icon: 'plus' -%}</svg>
                   {{ 'sections.cart.upsell_add' | t }}
                 </button>
               {%- else -%}
@@ -50,7 +50,7 @@
                   class="btn btn-secondary sw-cart-upsell__add"
                   aria-label="{{ 'sections.cart.upsell_view' | t }}: {{ product.title | escape }}"
                 >
-                  {%- render 'icon', icon: 'arrow-right', size: 13 -%}
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{%- render 'icon', icon: 'arrow-right' -%}</svg>
                   {{ 'sections.cart.upsell_view' | t }}
                 </a>
               {%- endif -%}

@@ -16,7 +16,7 @@
           {%- comment -%} Success state {%- endcomment -%}
           {%- if form.posted_successfully? -%}
             <div class="sw-contact-form__success" role="alert">
-              {%- render 'icon', icon: 'check' -%}
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{%- render 'icon', icon: 'check' -%}</svg>
               <span>{{ 'sections.contact_form.success' | t }}</span>
             </div>
           {%- endif -%}
@@ -117,7 +117,7 @@
             <p class="mono sw-contact-form__privacy">{{ 'sections.contact_form.privacy_note' | t }}</p>
             <button type="submit" class="btn btn-primary sw-contact-form__submit">
               {{ 'sections.contact_form.submit' | t }}
-              {%- render 'icon', icon: 'arrow-right', size: 15 -%}
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{%- render 'icon', icon: 'arrow-right' -%}</svg>
             </button>
           </div>
 
@@ -135,7 +135,7 @@
         <div class="sw-contact-info__card sw-contact-info__card--missing">
       {%- endif -%}
           <div class="sw-contact-info__icon" aria-hidden="true">
-            {%- render 'icon', icon: 'phone' -%}
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{%- render 'icon', icon: 'phone' -%}</svg>
           </div>
           <div class="sw-contact-info__body">
             <div class="mono sw-contact-info__label">{{ 'sections.contact_form.info_call' | t }}</div>
@@ -147,7 +147,7 @@
             {%- endif -%}
           </div>
           {%- if shop.phone != blank -%}
-            {%- render 'icon', icon: 'arrow-external', size: 18, css_class: 'sw-contact-info__arrow' -%}
+            <svg class="sw-contact-info__arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{%- render 'icon', icon: 'arrow-external' -%}</svg>
           {%- endif -%}
       {%- if shop.phone != blank -%}
         </a>
@@ -162,7 +162,7 @@
         <div class="sw-contact-info__card sw-contact-info__card--missing">
       {%- endif -%}
           <div class="sw-contact-info__icon" aria-hidden="true">
-            {%- render 'icon', icon: 'globe' -%}
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{%- render 'icon', icon: 'globe' -%}</svg>
           </div>
           <div class="sw-contact-info__body">
             <div class="mono sw-contact-info__label">{{ 'sections.contact_form.info_email' | t }}</div>
@@ -174,7 +174,7 @@
             {%- endif -%}
           </div>
           {%- if shop.email != blank -%}
-            {%- render 'icon', icon: 'arrow-external', size: 18, css_class: 'sw-contact-info__arrow' -%}
+            <svg class="sw-contact-info__arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{%- render 'icon', icon: 'arrow-external' -%}</svg>
           {%- endif -%}
       {%- if shop.email != blank -%}
         </a>
@@ -210,7 +210,7 @@
         <div class="sw-contact-info__card{% unless has_address %} sw-contact-info__card--missing{% endunless %}">
       {%- endif -%}
           <div class="sw-contact-info__icon" aria-hidden="true">
-            {%- render 'icon', icon: 'warehouse' -%}
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{%- render 'icon', icon: 'warehouse' -%}</svg>
           </div>
           <div class="sw-contact-info__body">
             <div class="mono sw-contact-info__label">{{ 'sections.contact_form.info_warehouse' | t }}</div>
@@ -225,7 +225,7 @@
             {%- endif -%}
           </div>
           {%- if has_address and section.settings.maps_url != blank -%}
-            {%- render 'icon', icon: 'arrow-external', size: 18, css_class: 'sw-contact-info__arrow' -%}
+            <svg class="sw-contact-info__arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{%- render 'icon', icon: 'arrow-external' -%}</svg>
           {%- endif -%}
       {%- if has_address and section.settings.maps_url != blank -%}
         </a>

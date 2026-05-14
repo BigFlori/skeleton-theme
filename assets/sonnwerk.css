@@ -6,19 +6,6 @@ body {
   color: var(--ink);
   -webkit-font-smoothing: antialiased;
   font-feature-settings: "ss01", "cv11";
-  padding-top: calc(68px + env(safe-area-inset-top, 0px));
-}
-
-/* Grain overlay */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 9999;
-  opacity: 0.6;
-  mix-blend-mode: multiply;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.15'/%3E%3C/svg%3E");
 }
 
 /* Typography utilities */
@@ -77,6 +64,16 @@ body::before {
   pointer-events: none;
 }
 
+/* Let the header's `position: sticky` actually stick: Shopify wraps each section
+   in `.shopify-section-group-* > .shopify-section`, and sticky is bounded by its
+   containing block. Those wrappers are header-height tall, so sticky scrolls away
+   with them. `display: contents` removes the wrappers from layout, making the
+   header an effective child of <body>, which spans the full page. */
+.shopify-section-group-header-group,
+.shopify-section-group-header-group > .shopify-section {
+  display: contents;
+}
+
 /* Smooth scroll + reserve scrollbar gutter so modals/locks don't shift layout.
    The gutter color follows --gutter-bg so overlays can theme it via :has() below. */
 html {
@@ -88,8 +85,13 @@ html {
 
 /* Generic scroll-lock + dark gutter while any overlay is open.
    Add `is-scroll-locked` to <body> and expose --gutter-bg on the overlay element. */
-body.is-scroll-locked { overflow: hidden; }
-html:has(body.is-scroll-locked) { --gutter-bg: oklch(0.08 0.01 220); }
+body.is-scroll-locked {
+  overflow: hidden;
+}
+
+html:has(body.is-scroll-locked) {
+  --gutter-bg: oklch(0.08 0.01 220);
+}
 
 /* ── Buttons ── */
 .btn {
@@ -113,6 +115,7 @@ html:has(body.is-scroll-locked) { --gutter-bg: oklch(0.08 0.01 220); }
   color: var(--accent-ink);
   border: 1.5px solid transparent;
 }
+
 .btn-primary:hover {
   background: var(--ink);
   transform: translateY(-1px);
@@ -123,6 +126,7 @@ html:has(body.is-scroll-locked) { --gutter-bg: oklch(0.08 0.01 220); }
   color: var(--ink);
   border: 1.5px solid var(--line);
 }
+
 .btn-secondary:hover {
   border-color: var(--accent);
   background: var(--accent-soft);
@@ -133,6 +137,7 @@ html:has(body.is-scroll-locked) { --gutter-bg: oklch(0.08 0.01 220); }
   color: var(--ink-soft);
   border: 1.5px solid transparent;
 }
+
 .btn-ghost:hover {
   background: oklch(0.93 0.015 90);
   color: var(--ink);
@@ -145,6 +150,7 @@ html:has(body.is-scroll-locked) { --gutter-bg: oklch(0.08 0.01 220); }
   border-radius: var(--radius-lg);
   transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
+
 .card:hover {
   transform: translateY(-4px);
   border-color: var(--accent);
@@ -171,10 +177,12 @@ html:has(body.is-scroll-locked) { --gutter-bg: oklch(0.08 0.01 220); }
   transition: opacity 0.25s ease, transform 0.25s ease;
   pointer-events: none;
 }
+
 .sw-toast.sw-toast--visible {
   opacity: 1;
   transform: translateX(-50%) translateY(0);
 }
+
 .sw-toast__icon {
   color: var(--sun);
   flex-shrink: 0;
@@ -185,6 +193,7 @@ html:has(body.is-scroll-locked) { --gutter-bg: oklch(0.08 0.01 220); }
   .container {
     padding-inline: var(--s-3);
   }
+
   .hide-mobile {
     display: none !important;
   }

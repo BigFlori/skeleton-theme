@@ -44,7 +44,9 @@
   },
   "general": {
     "header": "Főnavigáció",
+    "menu": "Menü",
     "cart": "Kosár",
+    "language": "Nyelv",
     "items": "termék",
     "onboarding": {
       "product_title": "Példa termék neve",

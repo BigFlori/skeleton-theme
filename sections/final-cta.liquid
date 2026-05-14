@@ -5,11 +5,6 @@
       {%- comment -%} Decorative sun SVG {%- endcomment -%}
       <svg class="sw-final-cta__sun" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
         <circle cx="50" cy="50" r="40" fill="var(--sun)"/>
-        {%- for i in (0..11) -%}
-          {%- assign angle_deg = i | times: 30 -%}
-          {%- assign angle_rad = angle_deg | times: 0.017453 -%}
-          {%- comment -%} Liquid can't do trig — use pre-computed ray endpoints {%- endcomment -%}
-        {%- endfor -%}
         <line x1="94" y1="50"  x2="105" y2="50"  stroke="var(--sun)" stroke-width="1.5"/>
         <line x1="50" y1="6"   x2="50"  y2="-5"  stroke="var(--sun)" stroke-width="1.5"/>
         <line x1="6"  y1="50"  x2="-5"  y2="50"  stroke="var(--sun)" stroke-width="1.5"/>
@@ -37,7 +32,7 @@
             <a href="{{ section.settings.cta_primary_url | default: '#pakete' }}" class="btn sw-final-cta__btn-sun">
               {{ 'sections.final_cta.cta_primary' | t }}
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                {%- render 'icon', icon: 'arrow-right' -%}
               </svg>
             </a>
             <a href="{{ section.settings.cta_ghost_url | default: '#rechner' }}" class="btn sw-final-cta__btn-ghost">

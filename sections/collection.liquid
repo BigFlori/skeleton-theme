@@ -47,7 +47,7 @@
             <p class="coll-empty__body">{{ 'collection.empty.body' | t }}</p>
             <a href="{{ collection.url }}" class="btn btn-primary">
               {{ 'collection.empty.reset' | t }}
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{%- render 'icon', icon: 'arrow-right' -%}</svg>
             </a>
           </div>
 

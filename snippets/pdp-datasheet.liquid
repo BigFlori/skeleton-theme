@@ -32,19 +32,18 @@
               <div class="pdp-accordion-item{% if forloop.first %} is-open{% endif %}">
                 <button type="button" class="pdp-accordion-item__trigger" data-accordion-trigger>
                   <div class="pdp-accordion-item__icon">
-                    {%- if acc_icon == "bolt" -%}
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/></svg>
-                    {%- elsif acc_icon == "panel" -%}
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="13" rx="1"/><path d="M3 8h18M3 13h18M9 4v13M15 4v13"/></svg>
-                    {%- elsif acc_icon == "shield" -%}
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg>
-                    {%- elsif acc_icon == "leaf" -%}
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 3c0 9-6 15-15 15a9 9 0 0 1 0-18c4 0 8 1 15 3z"/><path d="M3 21c4-7 9-11 15-13"/></svg>
-                    {%- endif -%}
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      {%- case acc_icon -%}
+                        {%- when 'bolt' -%}   {%- render 'icon', icon: 'bolt' -%}
+                        {%- when 'panel' -%}  {%- render 'icon', icon: 'panel-grid' -%}
+                        {%- when 'shield' -%} {%- render 'icon', icon: 'shield-check' -%}
+                        {%- when 'leaf' -%}   {%- render 'icon', icon: 'leaf-alt' -%}
+                      {%- endcase -%}
+                    </svg>
                   </div>
                   <span style="flex:1;">{{ acc_title | t }}</span>
                   <span class="mono" style="font-size:11px;color:var(--ink-mute);">{{ rows.size }} {{ 'pdp.datasheet.entries' | t }}</span>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9l6 6 6-6"/></svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{%- render 'icon', icon: 'chevron-down' -%}</svg>
                 </button>
                 <div class="pdp-accordion-item__body">
                   <div class="pdp-accordion-item__rows">
@@ -67,11 +66,11 @@
             <div class="pdp-accordion-item">
               <button type="button" class="pdp-accordion-item__trigger" data-accordion-trigger>
                 <div class="pdp-accordion-item__icon">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M8 7h9v9"/></svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{%- render 'icon', icon: 'arrow-external' -%}</svg>
                 </div>
                 <span style="flex:1;">{{ 'pdp.datasheet.downloads' | t }}</span>
                 <span class="mono" style="font-size:11px;color:var(--ink-mute);">{{ downloads.size }} {{ 'pdp.datasheet.entries' | t }}</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9l6 6 6-6"/></svg>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{%- render 'icon', icon: 'chevron-down' -%}</svg>
               </button>
               <div class="pdp-accordion-item__body">
                 <div class="pdp-accordion-item__rows">
@@ -80,7 +79,7 @@
                       <span style="font-size:13px;color:var(--ink-soft);">{{ dl.label }}</span>
                       <span class="mono" style="font-size:13px;font-weight:500;">{{ dl.size }}</span>
                       <a href="{{ dl.url | default: '#' }}" class="btn btn-ghost" style="font-size:11px;padding:4px 8px;" target="_blank" rel="noopener">
-                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M8 7h9v9"/></svg>
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{%- render 'icon', icon: 'arrow-external' -%}</svg>
                       </a>
                     </div>
                   {%- endfor -%}

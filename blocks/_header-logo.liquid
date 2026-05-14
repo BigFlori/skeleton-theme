@@ -1,0 +1,124 @@
+{% liquid
+  assign block_settings = block.settings
+  assign logo_image = settings.logo
+  assign logo_height = settings.logo_height | default: 36
+  assign logo_height_mobile = settings.logo_height_mobile | default: 28
+  assign alt_text = shop.name
+
+  if logo_image != blank
+    assign logo_width = logo_height | times: logo_image.aspect_ratio | ceil
+    assign logo_width_mobile = logo_height_mobile | times: logo_image.aspect_ratio | ceil
+  endif
+
+  assign padding_block_start = block_settings.padding-block-start | default: 0
+  assign padding_block_end = block_settings.padding-block-end | default: 0
+%}
+
+<a
+  href="{{ routes.root_url }}"
+  class="header-logo"
+  aria-label="{{ alt_text }}"
+  style="
+    padding-block-start: {{ padding_block_start }}px;
+    padding-block-end: {{ padding_block_end }}px;
+    --header-logo-image-height: {{ logo_height }}px;
+    --header-logo-image-height-mobile: {{ logo_height_mobile }}px;
+    {% if logo_image %}
+      --header-logo-image-width: {{ logo_width }}px;
+      --header-logo-image-width-mobile: {{ logo_width_mobile }}px;
+    {% endif %}
+  "
+  {{ block.shopify_attributes }}
+>
+  {% if logo_image != blank %}
+    {%- assign srcset = '' -%}
+    {%- assign srcset = srcset | append: logo_image | image_url: height: logo_height | append: ' 1x, ' -%}
+    {%- assign srcset = srcset | append: logo_image | image_url: height: logo_height | times: 2 | append: ' 2x' -%}
+    {{
+      logo_image
+      | image_url: height: logo_height
+      | image_tag:
+        class: 'header-logo__image',
+        srcset: srcset,
+        alt: alt_text,
+        loading: 'eager',
+        fetchpriority: 'high'
+    }}
+  {% else %}
+    <span class="header-logo__text">{{ shop.name }}</span>
+  {% endif %}
+</a>
+
+{% stylesheet %}
+  .header-logo {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--color-foreground, #333);
+    font-weight: 600;
+    font-size: 1.125rem;
+    height: 100%;
+  }
+
+  .header-logo:hover {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .header-logo__image {
+    object-fit: contain;
+    display: block;
+    height: var(--header-logo-image-height-mobile);
+    width: var(--header-logo-image-width-mobile, auto);
+    max-width: 100%;
+  }
+
+  @media screen and (min-width: 750px) {
+    .header-logo__image {
+      height: var(--header-logo-image-height);
+      width: var(--header-logo-image-width, auto);
+    }
+  }
+
+  .header-logo__text {
+    white-space: nowrap;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Logo",
+  "tag": null,
+  "class": "header-logo",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Edit the logo image in Theme settings → Logo."
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ]
+}
+{% endschema %}

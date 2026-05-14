@@ -15,7 +15,7 @@
           <div class="sw-why__stars" aria-label="5 von 5 Sternen">
             {%- for i in (1..5) -%}
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                {%- render 'icon', icon: 'star' -%}
               </svg>
             {%- endfor -%}
           </div>
@@ -49,32 +49,16 @@
             {%- assign usp_key = 'sections.why_us.usp_' | append: forloop.index -%}
             <div class="sw-why__usp" {{ block.shopify_attributes }}>
               <div class="sw-why__usp-icon" aria-hidden="true">
-                {%- case block.settings.icon -%}
-                  {%- when 'leaf' -%}
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
-                    </svg>
-                  {%- when 'truck' -%}
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                      <rect x="1" y="3" width="15" height="13"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
-                    </svg>
-                  {%- when 'shield' -%}
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                    </svg>
-                  {%- when 'tools' -%}
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/>
-                    </svg>
-                  {%- when 'star' -%}
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                    </svg>
-                  {%- else -%}
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                      <circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>
-                    </svg>
-                {%- endcase -%}
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  {%- case block.settings.icon -%}
+                    {%- when 'leaf' -%}   {%- render 'icon', icon: 'leaf' -%}
+                    {%- when 'truck' -%}  {%- render 'icon', icon: 'truck' -%}
+                    {%- when 'shield' -%} {%- render 'icon', icon: 'shield' -%}
+                    {%- when 'tools' -%}  {%- render 'icon', icon: 'wrench' -%}
+                    {%- when 'star' -%}   {%- render 'icon', icon: 'star' -%}
+                    {%- else -%}          {%- render 'icon', icon: 'sun' -%}
+                  {%- endcase -%}
+                </svg>
               </div>
               <h3 class="sw-why__usp-title">{{ usp_key | append: '_title' | t }}</h3>
               <p class="sw-why__usp-desc">{{ usp_key | append: '_description' | t }}</p>

@@ -15,6 +15,7 @@ node_modules/
 ## Release files
 release
 *.zip
+/example-project
 /design_handoff_sonnwerk_landing
 
 # Function build artifacts (apps/discounts/**)
