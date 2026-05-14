@@ -41,7 +41,7 @@
             <a href="{{ cta_primary_url }}" class="btn btn-primary sw-hero__cta-primary">
               {{ cta_primary_text }}
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M5 12h14M12 5l7 7-7 7"/>
+                {%- render 'icon', icon: 'arrow-right' -%}
               </svg>
             </a>
             <a href="{{ cta_ghost_url }}" class="btn btn-ghost">

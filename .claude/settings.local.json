@@ -84,7 +84,9 @@
       "WebFetch(domain:webkit.org)",
       "WebFetch(domain:www.reddit.com)",
       "WebFetch(domain:frontendmasters.com)",
-      "Bash(grep -E '\\\\.\\(js|css|svg|jpg|png|gif\\)$')"
+      "Bash(grep -E '\\\\.\\(js|css|svg|jpg|png|gif\\)$')",
+      "Bash(python3 -m json.tool)",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d, indent=2\\)\\)\")"
     ],
     "additionalDirectories": [
       "/home/fmolnar/Documents/Shopify/nrgedge/apps/discounts/extensions/volume-discount",

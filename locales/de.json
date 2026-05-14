@@ -44,7 +44,9 @@
   },
   "general": {
     "header": "Hauptnavigation",
+    "menu": "Menü",
     "cart": "Warenkorb",
+    "language": "Sprache",
     "items": "Artikel",
     "onboarding": {
       "product_title": "Beispiel-Produkttitel",

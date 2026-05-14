@@ -16,12 +16,12 @@
     <nav class="coll-pagination__nav" aria-label="{{ 'collection.pagination.label' | t }}">
       {%- if paginate.previous -%}
         <a href="{{ paginate.previous.url }}" class="coll-page-btn" aria-label="{{ 'collection.pagination.prev_aria' | t }}">
-          <svg width="13" height="13" style="transform:rotate(180deg)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <svg width="13" height="13" style="transform:rotate(180deg)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{%- render 'icon', icon: 'arrow-right' -%}</svg>
           {{ 'collection.pagination.prev' | t }}
         </a>
       {%- else -%}
         <span class="coll-page-btn coll-page-btn--disabled" aria-disabled="true">
-          <svg width="13" height="13" style="transform:rotate(180deg)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <svg width="13" height="13" style="transform:rotate(180deg)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{%- render 'icon', icon: 'arrow-right' -%}</svg>
           {{ 'collection.pagination.prev' | t }}
         </span>
       {%- endif -%}
@@ -41,12 +41,12 @@
       {%- if paginate.next -%}
         <a href="{{ paginate.next.url }}" class="coll-page-btn" aria-label="{{ 'collection.pagination.next_aria' | t }}">
           {{ 'collection.pagination.next' | t }}
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{%- render 'icon', icon: 'arrow-right' -%}</svg>
         </a>
       {%- else -%}
         <span class="coll-page-btn coll-page-btn--disabled" aria-disabled="true">
           {{ 'collection.pagination.next' | t }}
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{%- render 'icon', icon: 'arrow-right' -%}</svg>
         </span>
       {%- endif -%}
     </nav>

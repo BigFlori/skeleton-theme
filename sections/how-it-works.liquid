@@ -22,32 +22,16 @@
           </div>
 
           <div class="sw-hiw__icon-box" aria-hidden="true">
-            {%- case block.settings.icon -%}
-              {%- when 'panel' -%}
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
-                </svg>
-              {%- when 'shield' -%}
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                </svg>
-              {%- when 'truck' -%}
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="1" y="3" width="15" height="13"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
-                </svg>
-              {%- when 'tools' -%}
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/>
-                </svg>
-              {%- when 'sun' -%}
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/>
-                </svg>
-              {%- else -%}
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>
-                </svg>
-            {%- endcase -%}
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              {%- case block.settings.icon -%}
+                {%- when 'panel' -%}   {%- render 'icon', icon: 'panel' -%}
+                {%- when 'shield' -%}  {%- render 'icon', icon: 'shield' -%}
+                {%- when 'truck' -%}   {%- render 'icon', icon: 'truck' -%}
+                {%- when 'tools' -%}   {%- render 'icon', icon: 'wrench' -%}
+                {%- when 'sun' -%}     {%- render 'icon', icon: 'sun' -%}
+                {%- else -%}           {%- render 'icon', icon: 'sun' -%}
+              {%- endcase -%}
+            </svg>
           </div>
 
           <h3 class="sw-hiw__step-title">{{ step_key | append: '_title' | t }}</h3>

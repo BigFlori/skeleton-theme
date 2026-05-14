@@ -35,7 +35,7 @@
 
         <div class="pdp-compat__verdict" id="pdp-compat-verdict" style="background:var(--accent-soft);">
           <div class="pdp-compat__verdict-icon" id="pdp-compat-icon" style="background:var(--accent-deep);color:var(--accent-ink);">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{%- render 'icon', icon: 'check-simple' -%}</svg>
           </div>
           <div>
             <div style="font-size:14px;font-weight:500;" id="pdp-compat-title">—</div>
@@ -65,7 +65,7 @@
           <div class="mono" style="font-size:10px;color:var(--ink-mute);">{{ 'pdp.compat.calc_note' | t }}</div>
           <a href="#datenblatt" class="btn btn-ghost" style="font-size:12px;padding:6px 10px;">
             {{ 'pdp.compat.full_datasheet' | t }}
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{%- render 'icon', icon: 'arrow-right' -%}</svg>
           </a>
         </div>
       </div>

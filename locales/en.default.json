@@ -44,7 +44,9 @@
   },
   "general": {
     "header": "Main navigation",
+    "menu": "Menu",
     "cart": "Cart",
+    "language": "Language",
     "items": "items",
     "onboarding": {
       "product_title": "Example product title",

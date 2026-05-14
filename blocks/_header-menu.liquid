@@ -21,7 +21,7 @@
       <li class="menu-list__list-item">
         <a
           href="{{ link.url }}"
-          class="menu-list__link{% if link.active %} menu-list__link--active{% endif %}"
+          class="menu-list__link{% if link.current %} menu-list__link--active{% endif %}"
           {% if link.current %}aria-current="page"{% endif %}
         >
           <span class="menu-list__link-title">{{- link.title -}}</span>
@@ -55,7 +55,7 @@
     display: inline-flex;
     align-items: center;
     padding: 8px 14px;
-    color: var(--color-foreground, #333);
+    color: var(--ink);
     text-decoration: none;
     font-size: var(--menu-top-level-font-size, 0.875rem);
     font-family: var(--menu-top-level-font-family, inherit);
@@ -66,13 +66,14 @@
   }
 
   .menu-list__link:hover {
-    color: var(--color-foreground, #333);
-    background: rgb(0 0 0 / 0.05);
+    color: var(--accent-deep);
+    background: var(--accent-soft);
     text-decoration: none;
   }
 
   .menu-list__link--active {
     font-weight: 600;
+    color: var(--accent-deep);
   }
 {% endstylesheet %}
 
