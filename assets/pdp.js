@@ -492,7 +492,12 @@
     scope.querySelectorAll('[data-pdp-swatch]').forEach(function (btn) {
       btn.addEventListener('click', function () {
         var pos = parseInt(this.dataset.optionPos, 10);
-        document.querySelectorAll('[data-option-pos="' + pos + '"]').forEach(function (b) { b.classList.remove('is-active'); });
+        var siblings = document.querySelectorAll('[data-option-pos="' + pos + '"]');
+        var prevActive = null;
+        siblings.forEach(function (b) {
+          if (b.classList.contains('is-active')) prevActive = b;
+          b.classList.remove('is-active');
+        });
         this.classList.add('is-active');
 
         var selected = {};
@@ -503,6 +508,13 @@
         var match = allVariants.find(function (v) {
           return v.options.every(function (opt, i) { return opt === selected[i + 1]; });
         });
+
+        if (!match) {
+          this.classList.remove('is-active');
+          if (prevActive && prevActive !== this) prevActive.classList.add('is-active');
+          return;
+        }
+
         applyVariant(match);
       });
     });

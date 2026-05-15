@@ -78,6 +78,7 @@
     "buy": {
       "per_piece": "/ db · 0% ÁFA",
       "add_to_cart": "Kosárba · {{ price }}",
+      "add_to_cart_short": "Kosárba",
       "unavailable": "Nem elérhető",
       "check_compat": "Inverterkompatibilitás ellenőrzése",
       "in_stock_label": "Készleten",
@@ -124,6 +125,7 @@
       "slight_over": "Megfelelő — enyhe túlméretezés",
       "under_loaded": "Megfelelő — az inverter alulterhelt",
       "too_many": "Túl sok modul ehhez az inverterhez",
+      "voc_label": "Voc-nál",
       "summary": "{{ count }} × {{ power }} W = {{ kwp }} kWp · Inverter AC {{ inverter_kw }} kW · Optimum ≈ {{ optimal }} modul"
     },
     "datasheet": {

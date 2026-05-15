@@ -78,6 +78,7 @@
     "buy": {
       "per_piece": "/ piece · incl. 0% VAT",
       "add_to_cart": "Add to cart · {{ price }}",
+      "add_to_cart_short": "Add to cart",
       "unavailable": "Unavailable",
       "check_compat": "Check compatibility with my inverter",
       "in_stock_label": "In stock",
@@ -124,6 +125,7 @@
       "slight_over": "Compatible — slight oversizing",
       "under_loaded": "Compatible — inverter underloaded",
       "too_many": "Too many modules for this inverter",
+      "voc_label": "at Voc",
       "summary": "{{ count }} × {{ power }} W = {{ kwp }} kWp · Inverter AC {{ inverter_kw }} kW · Optimum ≈ {{ optimal }} modules"
     },
     "datasheet": {

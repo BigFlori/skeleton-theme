@@ -133,9 +133,22 @@
 
 .pdp-sticky-bar { position:fixed; left:0; right:0; bottom:0; z-index:60; background:oklch(0.98 0.01 90/.95); backdrop-filter:blur(16px); border-top:1px solid var(--line); transform:translateY(100%); transition:transform .3s ease; box-shadow:0 -8px 30px -10px oklch(0.22 0.02 150/.15); }
 .pdp-sticky-bar.is-visible { transform:translateY(0); }
-.pdp-sticky-bar__inner { padding:12px 0; display:flex; align-items:center; gap:16px; }
+.pdp-sticky-bar__inner { padding:12px 16px; display:flex; align-items:center; gap:16px; }
 .pdp-sticky-bar__thumb { width:54px; height:54px; border-radius:10px; flex-shrink:0; overflow:hidden; border:1px solid var(--line); background:linear-gradient(145deg,oklch(0.94 0.015 130),oklch(0.88 0.015 130)); }
 .pdp-sticky-bar__thumb img { width:100%; height:100%; object-fit:contain; }
+.pdp-sticky-bar__atc { flex-shrink:0; white-space:nowrap; }
+
+@media (max-width:640px) {
+  .pdp-sticky-bar__inner { padding:8px 12px; gap:8px; }
+  .pdp-sticky-bar__thumb { display:none; }
+  .pdp-sticky-bar__atc { padding-left:12px; padding-right:12px; }
+  .pdp-sticky-bar__atc-label { display:none; }
+  .pdp-sticky-bar .pdp-buy__stepper-btn { padding:8px 8px; }
+  .pdp-sticky-bar .pdp-buy__stepper-val { padding:8px 4px; width:30px; min-width:24px; font-size:13px; }
+}
+@media (max-width:420px) {
+  .pdp-sticky-bar #pdp-sticky-price { display:none; }
+}
 
 @media (max-width:900px) {
   .pdp-split { grid-template-columns:1fr; }

@@ -4,7 +4,7 @@
 {%- assign imp = datasheet.imp | default: 13.1 | replace: '.', ',' -%}
 {%- assign isc = datasheet.isc | default: 13.9 | replace: '.', ',' -%}
 
-<section class="pdp-compat full-width" id="kompatibilitaet">
+<section class="pdp-compat full-width" id="compatibility">
   <div class="container">
     <div class="pdp-compat__grid">
       <div>
@@ -63,7 +63,7 @@
 
         <div style="margin-top:18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
           <div class="mono" style="font-size:10px;color:var(--ink-mute);">{{ 'pdp.compat.calc_note' | t }}</div>
-          <a href="#datenblatt" class="btn btn-ghost" style="font-size:12px;padding:6px 10px;">
+          <a href="#datasheet" class="btn btn-ghost" style="font-size:12px;padding:6px 10px;">
             {{ 'pdp.compat.full_datasheet' | t }}
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{%- render 'icon', icon: 'arrow-right' -%}</svg>
           </a>

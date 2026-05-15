@@ -140,13 +140,14 @@
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{%- render 'icon', icon: 'cart' -%}</svg>
         <span id="pdp-atc-label">
           {%- if current_variant.available -%}
-            {{ 'pdp.buy.add_to_cart' | t: price: current_variant.price | money_without_trailing_zeros }}
+            {%- assign atc_price = current_variant.price | money_without_trailing_zeros -%}
+            {{ 'pdp.buy.add_to_cart' | t: price: atc_price }}
           {%- else -%}
             {{ 'pdp.buy.unavailable' | t }}
           {%- endif -%}
         </span>
       </button>
-      <a href="#kompatibilitaet" class="btn btn-secondary" style="justify-content:center;">
+      <a href="#compatibility" class="btn btn-secondary" style="justify-content:center;">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{%- render 'icon', icon: 'compat' -%}</svg>
         {{ 'pdp.buy.check_compat' | t }}
       </a>

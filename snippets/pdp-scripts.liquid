@@ -18,7 +18,7 @@ window.PDP_I18N = {
   compatUnderLoaded: {{ 'pdp.compat.under_loaded' | t | json }},
   compatTooMany:     {{ 'pdp.compat.too_many' | t | json }},
   compatSummary:     {{ 'pdp.compat.summary' | t | json }},
-  vocLabel:          'bei Voc'
+  vocLabel:          {{ 'pdp.compat.voc_label' | t | json }}
 };
 {%- comment -%} Volume discount metafields — disabled until the discount app is built
 {%- assign volume_tiers_raw = product.metafields.custom.volume_tiers.value -%}
