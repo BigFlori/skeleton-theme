@@ -86,7 +86,9 @@
       "WebFetch(domain:frontendmasters.com)",
       "Bash(grep -E '\\\\.\\(js|css|svg|jpg|png|gif\\)$')",
       "Bash(python3 -m json.tool)",
-      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d, indent=2\\)\\)\")"
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d, indent=2\\)\\)\")",
+      "Bash(node \"C:\\\\Users\\\\Thurneer\\\\.claude\\\\plugins\\\\cache\\\\shopify-ai-toolkit\\\\shopify-plugin\\\\1.0.0\\\\skills\\\\shopify-custom-data\\\\scripts\\\\search_docs.mjs\" \"metaobject theme liquid reference\")",
+      "Read(//c/Users/Thurneer/.claude/plugins/cache/shopify-ai-toolkit/shopify-plugin/1.0.0/skills/shopify-custom-data/**)"
     ],
     "additionalDirectories": [
       "/home/fmolnar/Documents/Shopify/nrgedge/apps/discounts/extensions/volume-discount",

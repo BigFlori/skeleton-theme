@@ -1,4 +1,13 @@
 {%- assign datasheet = product.metafields.custom.datasheet.value -%}
+{%- if is_solar == nil -%}{%- assign is_solar = false -%}{%- endif -%}
+{%- if is_solar -%}
+  {%- assign qty_unit = 'pdp.qty.unit' | t -%}
+  {%- assign init_kwp = datasheet.module_power_kwp | default: 0.425 | round: 2 | replace: '.', ',' -%}
+  {%- capture qty_label_text -%}{{ 'pdp.qty.label' | t: count: 1, kwp: init_kwp }}{%- endcapture -%}
+{%- else -%}
+  {%- assign qty_unit = 'pdp.qty.unit_generic' | t -%}
+  {%- capture qty_label_text -%}{{ 'pdp.qty.label_generic' | t: count: 1 }}{%- endcapture -%}
+{%- endif -%}
 {%- form 'product', product, id: 'pdp-form', novalidate: 'novalidate' -%}
   <input type="hidden" name="id" id="pdp-variant-id" value="{{ current_variant.id }}">
   <input type="hidden" name="quantity" id="pdp-qty-input" value="1">
@@ -104,23 +113,23 @@
     <!-- Quantity -->
     <div>
       <label class="mono" style="font-size:11px;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:10px;" id="pdp-qty-label">
-        {{ 'pdp.qty.label' | t: count: 1, kwp: '0,43' }}
+        {{ qty_label_text }}
       </label>
       <div class="pdp-buy__qty-wrap">
         <div class="pdp-buy__stepper">
           <button type="button" class="pdp-buy__stepper-btn" id="pdp-qty-down" aria-label="-">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{%- render 'icon', icon: 'minus' -%}</svg>
           </button>
-          <input type="text" inputmode="numeric" pattern="[0-9]*" class="pdp-buy__stepper-val" id="pdp-qty-display" value="1" aria-label="{{ 'pdp.qty.label' | t: count: 1, kwp: '0,43' | escape }}">
+          <input type="text" inputmode="numeric" pattern="[0-9]*" class="pdp-buy__stepper-val" id="pdp-qty-display" value="1" aria-label="{{ qty_label_text | escape }}">
 
           <button type="button" class="pdp-buy__stepper-btn" id="pdp-qty-up" aria-label="+">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{%- render 'icon', icon: 'plus' -%}</svg>
           </button>
         </div>
         <div class="pdp-buy__qty-presets">
-          <button type="button" class="pdp-buy__qty-preset" data-preset="5">5 {{ 'pdp.qty.unit' | t }}</button>
-          <button type="button" class="pdp-buy__qty-preset" data-preset="10">10 {{ 'pdp.qty.unit' | t }}</button>
-          <button type="button" class="pdp-buy__qty-preset" data-preset="24">24 {{ 'pdp.qty.unit' | t }}</button>
+          <button type="button" class="pdp-buy__qty-preset" data-preset="5">5 {{ qty_unit }}</button>
+          <button type="button" class="pdp-buy__qty-preset" data-preset="10">10 {{ qty_unit }}</button>
+          <button type="button" class="pdp-buy__qty-preset" data-preset="24">24 {{ qty_unit }}</button>
         </div>
       </div>
       {%- comment -%} Volume discount badge — disabled until the discount app is built
@@ -147,10 +156,12 @@
           {%- endif -%}
         </span>
       </button>
-      <a href="#compatibility" class="btn btn-secondary" style="justify-content:center;">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{%- render 'icon', icon: 'compat' -%}</svg>
-        {{ 'pdp.buy.check_compat' | t }}
-      </a>
+      {%- if is_solar -%}
+        <a href="#compatibility" class="btn btn-secondary" style="justify-content:center;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{%- render 'icon', icon: 'compat' -%}</svg>
+          {{ 'pdp.buy.check_compat' | t }}
+        </a>
+      {%- endif -%}
     </div>
 
     <!-- Trust strip -->

@@ -10,7 +10,7 @@
   <div class="container pdp-split">
     {% render 'pdp-gallery', current_variant: current_variant %}
     <div id="buy-col-anchor">
-      {% render 'pdp-buy', current_variant: current_variant %}
+      {% render 'pdp-buy', current_variant: current_variant, is_solar: true %}
     </div>
   </div>
 </section>
@@ -19,11 +19,11 @@
 {% render 'pdp-compat' %}
 {% render 'pdp-datasheet' %}
 {% render 'pdp-sticky-bar', current_variant: current_variant %}
-{% render 'pdp-scripts', current_variant: current_variant %}
+{% render 'pdp-scripts', current_variant: current_variant, is_solar: true %}
 
 {% schema %}
 {
-  "name": "Sonnwerk PDP",
+  "name": "PDP — Solar module",
   "settings": [
     { "type": "page", "id": "contact_page", "label": "Kapcsolat oldal" }
   ],

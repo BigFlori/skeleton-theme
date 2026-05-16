@@ -98,7 +98,12 @@
         "one": "Qty · 1 module ({{ kwp }} kWp)",
         "other": "Qty · {{ count }} modules ({{ kwp }} kWp)"
       },
+      "label_generic": {
+        "one": "Qty · 1 pc",
+        "other": "Qty · {{ count }} pcs"
+      },
       "unit": "pcs",
+      "unit_generic": "pcs",
       "discount_badge": "–{{ percent }}% volume discount active",
       "tier_heading": "Volume pricing",
       "tier_row_html": "<span class=\"pdp-buy__tier-qty\">From {{ qty }} pcs</span> <span class=\"pdp-buy__tier-price\">{{ price }}</span>",
@@ -124,6 +129,7 @@
       "perfect": "Perfect sizing",
       "slight_over": "Compatible — slight oversizing",
       "under_loaded": "Compatible — inverter underloaded",
+      "under_mppt_min": "Too few modules — string voltage below MPPT minimum",
       "too_many": "Too many modules for this inverter",
       "voc_label": "at Voc",
       "summary": "{{ count }} × {{ power }} W = {{ kwp }} kWp · Inverter AC {{ inverter_kw }} kW · Optimum ≈ {{ optimal }} modules"

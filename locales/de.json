@@ -98,7 +98,12 @@
         "one": "Menge · 1 Modul ({{ kwp }} kWp)",
         "other": "Menge · {{ count }} Module ({{ kwp }} kWp)"
       },
+      "label_generic": {
+        "one": "Menge · 1 Stk",
+        "other": "Menge · {{ count }} Stk"
+      },
       "unit": "Stk",
+      "unit_generic": "Stk",
       "discount_badge": "–{{ percent }} % Mengenrabatt aktiv",
       "tier_heading": "Mengenrabatt",
       "tier_row_html": "<span class=\"pdp-buy__tier-qty\">Ab {{ qty }} Stk</span> <span class=\"pdp-buy__tier-price\">{{ price }}</span>",
@@ -124,6 +129,7 @@
       "perfect": "Perfekte Dimensionierung",
       "slight_over": "Passt — leichte Überdimensionierung",
       "under_loaded": "Passt — Inverter nicht ausgelastet",
+      "under_mppt_min": "Zu wenige Module — Strangspannung unter MPPT-Minimum",
       "too_many": "Zu viele Module für diesen Inverter",
       "voc_label": "bei Voc",
       "summary": "{{ count }} × {{ power }} W = {{ kwp }} kWp · Inverter-AC {{ inverter_kw }} kW · Optimum ≈ {{ optimal }} Module"

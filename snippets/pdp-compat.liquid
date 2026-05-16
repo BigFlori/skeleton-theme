@@ -4,6 +4,48 @@
 {%- assign imp = datasheet.imp | default: 13.1 | replace: '.', ',' -%}
 {%- assign isc = datasheet.isc | default: 13.9 | replace: '.', ',' -%}
 
+{%- comment -%} Manual override has priority — if curated, render as-is. Else: auto-filter shop default. {%- endcomment -%}
+{%- assign inverters = product.metafields.custom.compatible_inverters.value -%}
+{%- assign auto_filter = false -%}
+{%- if inverters == blank -%}
+  {%- assign inverters = shop.metafields.custom.default_inverters.value -%}
+  {%- assign auto_filter = true -%}
+{%- endif -%}
+
+{%- assign panel_voc = datasheet.voc | default: 38.9 -%}
+{%- assign panel_vmp = datasheet.vmp | default: 32.4 -%}
+{%- assign panel_kwp = datasheet.module_power_kwp | default: 0.425 -%}
+
+{%- comment -%}
+  Cold Voc correction at T_min = -10°C (Δ = -35°C) with fixed tc = -0.30 %/°C.
+  Factor: 1 + (-0.30/100) × -35 = 1.105 (~10.5% upward).
+{%- endcomment -%}
+{%- assign panel_cold_voc = panel_voc | times: 1.105 -%}
+
+{%- comment -%} Pre-count compatible inverters so we know whether to render the section at all {%- endcomment -%}
+{%- assign compatible_count = 0 -%}
+{%- if auto_filter -%}
+  {%- for inv in inverters -%}
+    {%- assign max_per_str_cold = inv.max_dc_voltage | divided_by: panel_cold_voc | floor -%}
+    {%- assign total_max = max_per_str_cold | times: inv.mppt_count | times: inv.strings_per_mppt -%}
+    {%- assign optimal = inv.power | times: 1.1 | divided_by: panel_kwp | divided_by: 1000 | floor -%}
+
+    {%- assign mppt_v_min = inv.mppt_min_voltage | default: 0 -%}
+    {%- if mppt_v_min > 0 -%}
+      {%- assign min_per_str_mppt = mppt_v_min | divided_by: panel_vmp | ceil -%}
+    {%- else -%}
+      {%- assign min_per_str_mppt = 1 -%}
+    {%- endif -%}
+
+    {%- if max_per_str_cold >= min_per_str_mppt and max_per_str_cold >= 2 and optimal >= 2 -%}
+      {%- assign compatible_count = compatible_count | plus: 1 -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- else -%}
+  {%- assign compatible_count = inverters.size -%}
+{%- endif -%}
+
+{%- if compatible_count > 0 -%}
 <section class="pdp-compat full-width" id="compatibility">
   <div class="container">
     <div class="pdp-compat__grid">
@@ -26,11 +68,28 @@
           {{ 'pdp.compat.select_label' | t }}
         </label>
         <select class="pdp-compat__select" id="pdp-inverter-select">
-          <option value="fronius-symo-10" data-mppts="2" data-vmax="1000" data-str-max="8" data-power="10000">Fronius Symo 10.0-3-M — 10 kW</option>
-          <option value="fronius-primo-4" data-mppts="2" data-vmax="600" data-str-max="6" data-power="4000">Fronius Primo 4.0-1 — 4 kW</option>
-          <option value="huawei-8" data-mppts="2" data-vmax="1100" data-str-max="10" data-power="8000">Huawei SUN2000-8KTL-M1 — 8 kW</option>
-          <option value="sma-5" data-mppts="2" data-vmax="1000" data-str-max="9" data-power="5000">SMA Tripower 5.0 — 5 kW</option>
-          <option value="goodwe-6" data-mppts="2" data-vmax="1000" data-str-max="8" data-power="6000">Goodwe GW6000-ES — 6 kW</option>
+          {%- for inv in inverters -%}
+            {%- if auto_filter -%}
+              {%- assign max_per_str_cold = inv.max_dc_voltage | divided_by: panel_cold_voc | floor -%}
+              {%- assign total_max = max_per_str_cold | times: inv.mppt_count | times: inv.strings_per_mppt -%}
+              {%- assign optimal = inv.power | times: 1.1 | divided_by: panel_kwp | divided_by: 1000 | floor -%}
+              {%- assign mppt_v_min = inv.mppt_min_voltage | default: 0 -%}
+              {%- if mppt_v_min > 0 -%}
+                {%- assign min_per_str_mppt = mppt_v_min | divided_by: panel_vmp | ceil -%}
+              {%- else -%}
+                {%- assign min_per_str_mppt = 1 -%}
+              {%- endif -%}
+              {%- if max_per_str_cold < min_per_str_mppt or max_per_str_cold < 2 or optimal < 2 -%}{%- continue -%}{%- endif -%}
+            {%- endif -%}
+            <option
+              value="{{ inv.handle }}"
+              data-mppts="{{ inv.mppt_count }}"
+              data-vmax="{{ inv.max_dc_voltage }}"
+              data-vmppt-min="{{ inv.mppt_min_voltage | default: 0 }}"
+              data-str-max="{{ inv.strings_per_mppt }}"
+              data-power="{{ inv.power }}"
+            >{{ inv.display_name }}</option>
+          {%- endfor -%}
         </select>
 
         <div class="pdp-compat__verdict" id="pdp-compat-verdict" style="background:var(--accent-soft);">
@@ -72,3 +131,4 @@
     </div>
   </div>
 </section>
+{%- endif -%}

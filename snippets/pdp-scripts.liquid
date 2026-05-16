@@ -1,41 +1,48 @@
+{%- if is_solar == nil -%}{%- assign is_solar = false -%}{%- endif -%}
 <script>
 window.PDP_I18N = {
   added:             {{ 'pdp.toast.added' | t | json }},
   errorPrefix:       {{ 'pdp.toast.error_prefix' | t | json }},
+  {%- if is_solar %}
   qtyLabelOne:       {{ 'pdp.qty.label.one' | t | json }},
   qtyLabelOther:     {{ 'pdp.qty.label.other' | t | json }},
-  addToCart:         {{ 'pdp.buy.add_to_cart' | t | json }},
-  {%- comment -%} Volume discount i18n — disabled until the discount app is built
-  discountBadge:     {{ 'pdp.qty.discount_badge' | t | json }},
-  tierHeading:       {{ 'pdp.qty.tier_heading' | t | json }},
-  tierRowHtml:       {{ 'pdp.qty.tier_row_html' | t | json }},
-  tierSourceTest:    {{ 'pdp.qty.tier_source_test' | t | json }},
-  tierSourceProduct: {{ 'pdp.qty.tier_source_product' | t | json }},
-  tierSourceBand:    {{ 'pdp.qty.tier_source_band' | t | json }},
-  {%- endcomment -%}
+  {%- else %}
+  qtyLabelOne:       {{ 'pdp.qty.label_generic.one' | t | json }},
+  qtyLabelOther:     {{ 'pdp.qty.label_generic.other' | t | json }},
+  {%- endif %}
+  addToCart:         {{ 'pdp.buy.add_to_cart' | t | json }}
+  {%- if is_solar %},
   compatPerfect:     {{ 'pdp.compat.perfect' | t | json }},
   compatSlightOver:  {{ 'pdp.compat.slight_over' | t | json }},
   compatUnderLoaded: {{ 'pdp.compat.under_loaded' | t | json }},
+  compatUnderMpptMin: {{ 'pdp.compat.under_mppt_min' | t | json }},
   compatTooMany:     {{ 'pdp.compat.too_many' | t | json }},
   compatSummary:     {{ 'pdp.compat.summary' | t | json }},
   vocLabel:          {{ 'pdp.compat.voc_label' | t | json }}
+  {%- endif %}
 };
-{%- comment -%} Volume discount metafields — disabled until the discount app is built
-{%- assign volume_tiers_raw = product.metafields.custom.volume_tiers.value -%}
-{%- assign price_bands_raw = shop.metafields.custom.volume_tier_bands.value -%}
-{%- endcomment -%}
 window.PDP_CONFIG = {
   basePriceCents:    {{ current_variant.price }},
   compareAtCents:    {% if current_variant.compare_at_price %}{{ current_variant.compare_at_price }}{% else %}null{% endif %},
   currencyCode:      {{ shop.currency | json }},
-  moduleKwp:      {{ product.metafields.custom.datasheet.value.module_power_kwp | default: 0.425 }},
-  voc:            {{ product.metafields.custom.datasheet.value.voc | default: 38.9 }},
+  {%- if is_solar %}
+  {%- assign ds = product.metafields.custom.datasheet.value -%}
+  {%- assign voc_val = ds.voc | default: 38.9 -%}
+  {%- assign vmp_val = ds.vmp | default: 32.4 -%}
+  {%- comment -%} Cold Voc at T_min = -10°C with fixed tc = -0.30 %/°C → factor 1.105 {%- endcomment -%}
+  {%- assign cold_voc_val = voc_val | times: 1.105 -%}
+  moduleKwp:      {{ ds.module_power_kwp | default: 0.425 }},
+  voc:            {{ voc_val }},
+  vmp:            {{ vmp_val }},
+  coldVoc:        {{ cold_voc_val }},
+  {%- else %}
+  moduleKwp:      0,
+  voc:            0,
+  vmp:            0,
+  coldVoc:        0,
+  {%- endif %}
   productTitle:   {{ product.title | json }},
   variants:       {{ product.variants | json }},
-  {%- comment -%} Volume discount config — disabled until the discount app is built
-  discountTiers:  {% if volume_tiers_raw %}{{ volume_tiers_raw | json }}{% else %}[]{% endif %},
-  priceBands:     {% if price_bands_raw %}{{ price_bands_raw | json }}{% else %}[]{% endif %}
-  {%- endcomment -%}
   discountTiers:  [],
   priceBands:     []
 };

@@ -98,7 +98,12 @@
         "one": "Mennyiség · 1 modul ({{ kwp }} kWp)",
         "other": "Mennyiség · {{ count }} modul ({{ kwp }} kWp)"
       },
+      "label_generic": {
+        "one": "Mennyiség · 1 db",
+        "other": "Mennyiség · {{ count }} db"
+      },
       "unit": "db",
+      "unit_generic": "db",
       "discount_badge": "−{{ percent }}% mennyiségi kedvezmény érvényben",
       "tier_heading": "Mennyiségi kedvezmény",
       "tier_row_html": "<span class=\"pdp-buy__tier-qty\">{{ qty }} db rendelésétől</span> <span class=\"pdp-buy__tier-price\">{{ price }}</span>",
@@ -124,6 +129,7 @@
       "perfect": "Tökéletes méretezés",
       "slight_over": "Megfelelő — enyhe túlméretezés",
       "under_loaded": "Megfelelő — az inverter alulterhelt",
+      "under_mppt_min": "Túl kevés modul — string feszültség az MPPT minimum alatt",
       "too_many": "Túl sok modul ehhez az inverterhez",
       "voc_label": "Voc-nál",
       "summary": "{{ count }} × {{ power }} W = {{ kwp }} kWp · Inverter AC {{ inverter_kw }} kW · Optimum ≈ {{ optimal }} modul"

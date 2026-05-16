@@ -1,0 +1,34 @@
+{% comment %} Sonnwerk PDP — generic product detail page (no solar calculator) {% endcomment %}
+
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+
+{% render 'pdp-styles' %}
+
+{% render 'pdp-breadcrumb' %}
+
+<section class="full-width">
+  <div class="container pdp-split">
+    {% render 'pdp-gallery', current_variant: current_variant %}
+    <div id="buy-col-anchor">
+      {% render 'pdp-buy', current_variant: current_variant, is_solar: false %}
+    </div>
+  </div>
+</section>
+
+{%- if product.metafields.custom.datasheet.value != blank -%}
+  {% render 'pdp-datasheet' %}
+{%- endif -%}
+{% render 'pdp-sticky-bar', current_variant: current_variant %}
+{% render 'pdp-scripts', current_variant: current_variant, is_solar: false %}
+
+{% schema %}
+{
+  "name": "Sonnwerk PDP",
+  "settings": [
+    { "type": "page", "id": "contact_page", "label": "Kapcsolat oldal" }
+  ],
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  }
+}
+{% endschema %}

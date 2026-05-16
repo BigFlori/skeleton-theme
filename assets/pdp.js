@@ -18,6 +18,8 @@
       : null;
     var MODULE_KWP       = cfg.moduleKwp;
     var VOC              = cfg.voc;
+    var COLD_VOC         = cfg.coldVoc || cfg.voc;
+    var VMP              = cfg.vmp || cfg.voc;
     var PRODUCT_TITLE    = cfg.productTitle;
     var allVariants      = cfg.variants || [];
 
@@ -570,16 +572,22 @@
     function updateCompatibility() {
       var sel = document.getElementById('pdp-inverter-select');
       if (!sel) return;
-      var opt    = sel.options[sel.selectedIndex];
-      var mppts  = parseInt(opt.dataset.mppts, 10);
-      var vmax   = parseInt(opt.dataset.vmax, 10);
-      var strMax = parseInt(opt.dataset.strMax, 10);
-      var power  = parseInt(opt.dataset.power, 10);
+      var opt      = sel.options[sel.selectedIndex];
+      var mppts    = parseInt(opt.dataset.mppts, 10);
+      var vmax     = parseInt(opt.dataset.vmax, 10);
+      var strMax   = parseInt(opt.dataset.strMax, 10);
+      var power    = parseInt(opt.dataset.power, 10);
+      var vmpptMin = parseInt(opt.dataset.vmpptMin, 10) || 0;
 
-      var maxPerStr     = Math.floor(vmax / VOC);
+      // Cold Voc bounds the max modules per string; nominal Vmp bounds the
+      // MPPT-min minimum modules per string. Both use the picked inverter's
+      // limits so the JS verdict stays in sync with the Liquid pre-filter.
+      var maxPerStr     = Math.floor(vmax / COLD_VOC);
+      var minPerStrMppt = vmpptMin > 0 ? Math.ceil(vmpptMin / VMP) : 1;
       var totalMax      = maxPerStr * mppts * strMax;
       var optimal       = Math.floor(power * 1.1 / (MODULE_KWP * 1000));
       var fits          = qty <= totalMax;
+      var meetsMpptMin  = qty >= minPerStrMppt;
       var withinOptimal = qty <= optimal && qty >= Math.max(2, optimal - 6);
 
       var verdict = document.getElementById('pdp-compat-verdict');
@@ -588,7 +596,11 @@
       var sub     = document.getElementById('pdp-compat-sub');
 
       if (verdict && icon && title) {
-        if (fits && withinOptimal) {
+        if (!meetsMpptMin) {
+          verdict.style.background = 'oklch(0.92 0.06 30)';
+          icon.style.background = 'oklch(0.55 0.18 30)'; icon.style.color = 'var(--ink)';
+          title.textContent = i18n.compatUnderMpptMin || i18n.compatUnderLoaded;
+        } else if (fits && withinOptimal) {
           verdict.style.background = 'var(--accent-soft)';
           icon.style.background = 'var(--accent-deep)'; icon.style.color = 'var(--accent-ink)';
           title.textContent = i18n.compatPerfect;
