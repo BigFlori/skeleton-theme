@@ -31,11 +31,9 @@
         {%- if tech_badge != blank -%}
           <span class="pdp-gallery__badge pdp-gallery__badge--dark">{{ tech_badge }}</span>
         {%- endif -%}
-        {%- if current_variant.available -%}
-          <span class="pdp-gallery__badge pdp-gallery__badge--sun">{{ 'pdp.gallery.in_stock' | t }}</span>
-        {%- else -%}
+        {%- unless current_variant.available -%}
           <span class="pdp-gallery__badge" style="background:oklch(0.92 0.06 30);color:var(--ink);">{{ 'pdp.gallery.sold_out' | t }}</span>
-        {%- endif -%}
+        {%- endunless -%}
       </div>
 
       <button class="pdp-gallery__zoom" type="button" aria-label="{{ 'pdp.gallery.zoom_label' | t }}" id="pdp-zoom-btn">

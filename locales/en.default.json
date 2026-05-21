@@ -70,7 +70,6 @@
   },
   "pdp": {
     "gallery": {
-      "in_stock": "IN STOCK",
       "sold_out": "SOLD OUT",
       "no_image": "No image available",
       "zoom": "Zoom",
@@ -351,6 +350,8 @@
     "footer": {
       "tagline": "Independent solar specialist from Wiener Neustadt. Shipping throughout Austria, Bavaria & southern Germany.",
       "flags_label": "Delivery areas: Austria and Germany",
+      "contact_label": "Contact information",
+      "contact_title": "Contact",
       "col_1_title": "Shop",
       "col_1_links": "Complete packages\nModules\nInverters\nStorage\nWallboxes\nAccessories",
       "col_2_title": "Service",

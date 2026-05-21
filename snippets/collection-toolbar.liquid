@@ -8,8 +8,12 @@
 
 <div class="coll-toolbar">
   <div>
-    <span class="eyebrow">{{ 'collection.toolbar.eyebrow' | t }}</span>
-    <h2 class="display coll-toolbar__title">{{ 'collection.toolbar.title_pre' | t }} <em>{{ 'collection.toolbar.title_em' | t }}</em></h2>
+    {%- if collection.handle == 'all-products' -%}
+      <span class="eyebrow">{{ 'collection.toolbar.eyebrow' | t }}</span>
+      <h2 class="display coll-toolbar__title">{{ 'collection.toolbar.title_pre' | t }} <em>{{ 'collection.toolbar.title_em' | t }}</em></h2>
+    {%- else -%}
+      <h2 class="display coll-toolbar__title"><em>{{ collection.title }}</em></h2>
+    {%- endif -%}
   </div>
   <div class="coll-toolbar__right">
     <button

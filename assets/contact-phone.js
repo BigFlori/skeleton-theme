@@ -1,11 +1,13 @@
 (function () {
   'use strict';
 
-  var el = document.getElementById('sw-phone-display');
-  if (!el) return;
+  var els = document.querySelectorAll('.js-format-hun-phone');
+  if (!els.length) return;
 
-  var raw = el.dataset.raw || el.textContent;
-  el.textContent = formatHunPhone(raw);
+  els.forEach(function (el) {
+    var raw = el.dataset.raw || el.textContent;
+    el.textContent = formatHunPhone(raw);
+  });
 
   function formatHunPhone(raw) {
     var digits = raw.replace(/[^\d]/g, '');

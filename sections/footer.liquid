@@ -21,32 +21,110 @@
         </div>
       </div>
 
-      {%- comment -%} Link groups {%- endcomment -%}
-      {%- for block in section.blocks -%}
-        {%- if block.type == 'link_group' -%}
-          {%- assign col_key = 'sections.footer.col_' | append: forloop.index -%}
-          <div class="sw-footer__col" {{ block.shopify_attributes }}>
-            <div class="mono sw-footer__col-title">{{ col_key | append: '_title' | t }}</div>
-            {%- if block.settings.menu != blank -%}
+      {%- comment -%} Link groups — from `footer` linklist (top-level item = column, children = links) {%- endcomment -%}
+      {%- assign footer_menu = section.settings.menu_main -%}
+      {%- if footer_menu == blank -%}
+        {%- assign footer_menu = linklists.footer -%}
+      {%- endif -%}
+
+      {%- if footer_menu != blank and footer_menu.levels > 0 -%}
+        {%- for column in footer_menu.links -%}
+          <div class="sw-footer__col">
+            {%- if column.links.size > 0 -%}
+              <div class="mono sw-footer__col-title">{{ column.title }}</div>
               <ul class="sw-footer__links">
-                {%- for link in block.settings.menu.links -%}
-                  <li><a href="{{ link.url }}" class="sw-footer__link">{{ link.title }}</a></li>
+                {%- for link in column.links -%}
+                  <li>
+                    <a href="{{ link.url }}" class="sw-footer__link">{{ link.title }}</a>
+                    {%- if link.links.size > 0 -%}
+                      <ul class="sw-footer__links sw-footer__links--nested">
+                        {%- for sublink in link.links -%}
+                          <li><a href="{{ sublink.url }}" class="sw-footer__link sw-footer__link--sub">{{ sublink.title }}</a></li>
+                        {%- endfor -%}
+                      </ul>
+                    {%- endif -%}
+                  </li>
                 {%- endfor -%}
               </ul>
             {%- else -%}
-              <ul class="sw-footer__links">
-                {%- assign rows = col_key | append: '_links' | t | newline_to_br | split: '<br />' -%}
-                {%- for row in rows -%}
-                  {%- assign row = row | strip -%}
-                  {%- if row != blank -%}
-                    <li><span class="sw-footer__link">{{ row }}</span></li>
-                  {%- endif -%}
-                {%- endfor -%}
-              </ul>
+              {%- comment -%} Top-level link without children → render as standalone column-titled link {%- endcomment -%}
+              <a href="{{ column.url }}" class="mono sw-footer__col-title sw-footer__col-title--link">{{ column.title }}</a>
             {%- endif -%}
           </div>
-        {%- endif -%}
-      {%- endfor -%}
+        {%- endfor -%}
+      {%- endif -%}
+
+      {%- comment -%} Contact column — pulled from Shopify Admin › Settings › Store details {%- endcomment -%}
+      {%- liquid
+        assign shop_address1    = shop.address.address1
+        assign shop_city        = shop.address.city
+        assign shop_zip         = shop.address.zip
+        assign shop_country_code = shop.address.country_code
+        assign has_address = false
+        if shop_address1 != blank or shop_city != blank or shop_zip != blank
+          assign has_address = true
+        endif
+        assign address_full = ''
+        if shop_zip != blank
+          assign address_full = shop_country_code | append: shop_zip
+        endif
+        if shop_city != blank
+          if address_full != blank
+            assign address_full = address_full | append: ' ' | append: shop_city
+          else
+            assign address_full = shop_city
+          endif
+        endif
+        if shop_address1 != blank
+          if address_full != blank
+            assign address_full = address_full | append: ', ' | append: shop_address1
+          else
+            assign address_full = shop_address1
+          endif
+        endif
+      -%}
+
+      {%- if shop.phone != blank or shop.email != blank or has_address -%}
+        <div class="sw-footer__col sw-footer__col--contact">
+          <div class="mono sw-footer__col-title">{{ 'sections.footer.contact_title' | t }}</div>
+          <ul class="sw-footer__contact" aria-label="{{ 'sections.footer.contact_label' | t }}">
+            {%- if shop.phone != blank -%}
+              <li class="sw-footer__contact-item">
+                <span class="sw-footer__contact-icon" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    {%- render 'icon', icon: 'phone' -%}
+                  </svg>
+                </span>
+                <a class="sw-footer__contact-link js-format-hun-phone" href="tel:{{ shop.phone | remove: ' ' | remove: '-' }}" data-raw="{{ shop.phone | escape }}">
+                  {{ shop.phone }}
+                </a>
+              </li>
+            {%- endif -%}
+            {%- if shop.email != blank -%}
+              <li class="sw-footer__contact-item">
+                <span class="sw-footer__contact-icon" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    {%- render 'icon', icon: 'mail' -%}
+                  </svg>
+                </span>
+                <a class="sw-footer__contact-link" href="mailto:{{ shop.email }}">
+                  {{ shop.email }}
+                </a>
+              </li>
+            {%- endif -%}
+            {%- if has_address -%}
+              <li class="sw-footer__contact-item">
+                <span class="sw-footer__contact-icon" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    {%- render 'icon', icon: 'map-pin' -%}
+                  </svg>
+                </span>
+                <span class="sw-footer__contact-text">{{ address_full }}</span>
+              </li>
+            {%- endif -%}
+          </ul>
+        </div>
+      {%- endif -%}
 
     </div>
 
@@ -56,8 +134,12 @@
         &copy; {{ 'now' | date: '%Y' }} {{ section.settings.legal_name }}
       </div>
       <div class="sw-footer__legal-links">
-        {%- if section.settings.menu_legal != blank -%}
-          {%- for link in section.settings.menu_legal.links -%}
+        {%- assign legal_menu = section.settings.menu_legal -%}
+        {%- if legal_menu == blank -%}
+          {%- assign legal_menu = linklists.policies -%}
+        {%- endif -%}
+        {%- if legal_menu != blank -%}
+          {%- for link in legal_menu.links -%}
             <a href="{{ link.url }}" class="sw-footer__legal-link">{{ link.title }}</a>
           {%- endfor -%}
         {%- endif -%}
@@ -74,6 +156,8 @@
   </div>
 </footer>
 
+<script src="{{ 'contact-phone.js' | asset_url }}" defer></script>
+
 {% stylesheet %}
 .sw-footer {
   padding: var(--s-6) 0 var(--s-4);
@@ -81,10 +165,10 @@
   border-top: 1px solid var(--line-soft);
 }
 
-/* Main grid */
+/* Main grid: brand + up to 2 menu columns + contact */
 .sw-footer__cols {
   display: grid;
-  grid-template-columns: 1.5fr repeat(4, 1fr);
+  grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
   gap: 40px;
   margin-bottom: var(--s-5);
 }
@@ -133,6 +217,50 @@
   line-height: 1;
 }
 
+/* Contact info */
+.sw-footer__contact {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sw-footer__contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+
+.sw-footer__contact-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  color: var(--ink-mute);
+}
+
+.sw-footer__contact-link {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.sw-footer__contact-link:hover {
+  color: var(--accent-deep);
+}
+
+.sw-footer__contact-text {
+  white-space: pre-line;
+}
+
 /* Link columns */
 .sw-footer__col-title {
   font-size: 11px;
@@ -160,6 +288,29 @@
 }
 
 a.sw-footer__link:hover {
+  color: var(--accent-deep);
+}
+
+.sw-footer__links--nested {
+  margin-top: 8px;
+  padding-left: 12px;
+  border-left: 1px solid var(--line-soft);
+  gap: 6px;
+}
+
+.sw-footer__link--sub {
+  font-size: 12px;
+  color: var(--ink-mute);
+}
+
+.sw-footer__col-title--link {
+  display: inline-block;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+
+.sw-footer__col-title--link:hover {
   color: var(--accent-deep);
 }
 
@@ -238,6 +389,13 @@ a.sw-footer__link:hover {
   "name": "t:general.footer",
   "settings": [
     {
+      "type": "link_list",
+      "id": "menu_main",
+      "label": "Footer menu",
+      "default": "footer",
+      "info": "Top-level items become column titles; their children become the links. Supports nested sub-links."
+    },
+    {
       "type": "textarea",
       "id": "tagline",
       "label": "Brand tagline",
@@ -247,12 +405,13 @@ a.sw-footer__link:hover {
       "type": "text",
       "id": "legal_name",
       "label": "Legal name (for copyright)",
-      "default": "Sonnwerk Solar GmbH \u00B7 FN 123456a \u00B7 UID ATU12345678"
+      "default": "Sonnwerk Solar GmbH"
     },
     {
       "type": "link_list",
       "id": "menu_legal",
-      "label": "Legal links menu (Impressum, AGB, etc.)"
+      "label": "Legal links menu (Impressum, AGB, etc.)",
+      "info": "Leave empty to use the `policies` menu by default."
     },
     {
       "type": "checkbox",
@@ -261,64 +420,9 @@ a.sw-footer__link:hover {
       "default": true
     }
   ],
-  "blocks": [
-    {
-      "type": "link_group",
-      "name": "Link group",
-      "settings": [
-        {
-          "type": "text",
-          "id": "title",
-          "label": "Column title",
-          "default": "Links"
-        },
-        {
-          "type": "link_list",
-          "id": "menu",
-          "label": "Menu (optional)"
-        },
-        {
-          "type": "textarea",
-          "id": "custom_links",
-          "label": "Custom text links (one per line, no URL)",
-          "info": "Fallback when no menu is assigned — useful for contact info."
-        }
-      ]
-    }
-  ],
   "presets": [
     {
-      "name": "Footer",
-      "blocks": [
-        {
-          "type": "link_group",
-          "settings": {
-            "title": "Shop",
-            "custom_links": "Komplettpakete\nModule\nWechselrichter\nSpeicher\nWallboxen\nZubeh\u00F6r"
-          }
-        },
-        {
-          "type": "link_group",
-          "settings": {
-            "title": "Service",
-            "custom_links": "Dach-Pr\u00FCfung\nMontagepartner\nFinanzierung\nF\u00F6rderungen AT\nLieferung\nReklamation"
-          }
-        },
-        {
-          "type": "link_group",
-          "settings": {
-            "title": "Wissen",
-            "custom_links": "Amortisationsrechner\nDIY-Videos\nTechnik-Blog\nGlossar\nDownloads"
-          }
-        },
-        {
-          "type": "link_group",
-          "settings": {
-            "title": "Kontakt",
-            "custom_links": "+43 1 234 56 78\nhallo@sonnwerk.at\nMo\u2013Fr 8\u201318 Uhr\nWiener Neustadt\nShowroom Wien"
-          }
-        }
-      ]
+      "name": "Footer"
     }
   ]
 }

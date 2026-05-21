@@ -70,7 +70,6 @@
   },
   "pdp": {
     "gallery": {
-      "in_stock": "AUF LAGER",
       "sold_out": "AUSVERKAUFT",
       "no_image": "Kein Bild verfügbar",
       "zoom": "Zoomen",
@@ -351,6 +350,8 @@
     "footer": {
       "tagline": "Unabhängiger Solar-Fachhandel aus Wiener Neustadt. Versand in ganz Österreich, Bayern & Süddeutschland.",
       "flags_label": "Liefergebiete: Österreich und Deutschland",
+      "contact_label": "Kontaktinformationen",
+      "contact_title": "Kontakt",
       "col_1_title": "Shop",
       "col_1_links": "Komplettpakete\nModule\nWechselrichter\nSpeicher\nWallboxen\nZubehör",
       "col_2_title": "Service",

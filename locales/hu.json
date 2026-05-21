@@ -70,7 +70,6 @@
   },
   "pdp": {
     "gallery": {
-      "in_stock": "KÉSZLETEN",
       "sold_out": "ELFOGYOTT",
       "no_image": "Nincs elérhető kép",
       "zoom": "Nagyítás",
@@ -351,6 +350,8 @@
     "footer": {
       "tagline": "Független napelemes szakkereskedő Bécsújhelyből. Szállítás egész Ausztriában, Bajorországban és Dél-Németországban.",
       "flags_label": "Szállítási területek: Ausztria és Németország",
+      "contact_label": "Kapcsolati információk",
+      "contact_title": "Kapcsolat",
       "col_1_title": "Bolt",
       "col_1_links": "Komplett csomagok\nModulok\nInverterek\nTárolók\nWallboxok\nKiegészítők",
       "col_2_title": "Szerviz",

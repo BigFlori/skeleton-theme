@@ -140,7 +140,7 @@
           <div class="sw-contact-info__body">
             <div class="mono sw-contact-info__label">{{ 'sections.contact_form.info_call' | t }}</div>
             {%- if shop.phone != blank -%}
-              <div class="display sw-contact-info__value" id="sw-phone-display" data-raw="{{ shop.phone | escape }}">{{ shop.phone }}</div>
+              <div class="display sw-contact-info__value js-format-hun-phone" data-raw="{{ shop.phone | escape }}">{{ shop.phone }}</div>
               <div class="sw-contact-info__sub">{{ 'sections.contact_form.phone_hours' | t }}</div>
             {%- else -%}
               <div class="mono sw-contact-info__missing">{{ 'sections.contact_form.not_set_phone' | t }}</div>
