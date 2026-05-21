@@ -51,8 +51,6 @@
       <span class="prod-card__disc-badge mono">−{{ discount_pct }}%</span>
     {%- endif -%}
 
-    <span class="prod-card__brand-badge mono">{{ product.vendor }}</span>
-
     {%- if product.available -%}
       {%- if product.variants.size == 1 -%}
         <button

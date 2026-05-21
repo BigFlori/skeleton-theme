@@ -5,11 +5,7 @@
 {%- liquid
   assign has_active = false
   for filter in collection.filters
-    if filter.type == 'price_range'
-      if filter.min_value.value or filter.max_value.value
-        assign has_active = true
-      endif
-    elsif filter.active_values.size > 0
+    if filter.active_values.size > 0
       assign has_active = true
     endif
   endfor
@@ -20,25 +16,18 @@
     <span class="mono coll-active-label">{{ 'collection.filters.active_label' | t }}</span>
 
     {%- for filter in collection.filters -%}
-      {%- if filter.type == 'price_range' -%}
-        {%- if filter.min_value.value or filter.max_value.value -%}
-          {%- assign chip_min = filter.min_value.value | default: 0 -%}
-          {%- assign chip_max = filter.max_value.value | default: filter.range_max -%}
-          <span class="filter-chip">
-            {{ chip_min | money }}–{{ chip_max | money }}
-            <a href="{{ filter.url_to_remove }}" class="filter-chip__remove" aria-label="{{ 'collection.filters.remove_price_aria' | t }}">×</a>
-          </span>
-        {%- endif -%}
-      {%- else -%}
-        {%- for value in filter.active_values -%}
-          <span class="filter-chip">
-            {{ value.label }}
-            <a href="{{ value.url_to_remove }}" class="filter-chip__remove" aria-label="{{ 'collection.filters.remove_filter_aria' | t: label: value.label }}">×</a>
-          </span>
-        {%- endfor -%}
-      {%- endif -%}
+      {%- for value in filter.active_values -%}
+        <span class="filter-chip">
+          {{ value.label }}
+          <a href="{{ value.url_to_remove }}" class="filter-chip__remove" aria-label="{{ 'collection.filters.remove_filter_aria' | t: label: value.label }}">×</a>
+        </span>
+      {%- endfor -%}
     {%- endfor -%}
 
-    <a href="{{ collection.url }}" class="coll-clear-all mono">{{ 'collection.filters.clear_all' | t }}</a>
+    {%- if collection.handle == 'all' -%}
+      <a href="/collections/all-products" class="coll-clear-all mono">{{ 'collection.filters.clear_all' | t }}</a>
+    {%- else -%}
+      <a href="{{ collection.url }}" class="coll-clear-all mono">{{ 'collection.filters.clear_all' | t }}</a>
+    {%- endif -%}
   </div>
 {%- endif -%}

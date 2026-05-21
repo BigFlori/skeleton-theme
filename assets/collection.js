@@ -9,82 +9,6 @@
     return tpl.replace('__COUNT__', count).replace('{{ count }}', count);
   }
 
-  // ── Price range dual-handle slider ────────────────────────────────────────
-
-  function buildCurrencyFormatter() {
-    var currencyCfg = cfg.currency || {};
-    var code   = currencyCfg.code || 'USD';
-    var locale = currencyCfg.locale || undefined;
-    try {
-      return new Intl.NumberFormat(locale, { style: 'currency', currency: code });
-    } catch (e) {
-      return { format: function (n) { return n.toLocaleString() + ' ' + code; } };
-    }
-  }
-
-  function initPriceSlider() {
-    var sliders = document.querySelectorAll('[data-price-handle]');
-    if (!sliders.length) return;
-
-    var minInput = document.querySelector('[data-price-handle="min"]');
-    var maxInput = document.querySelector('[data-price-handle="max"]');
-    var fill     = document.getElementById('PriceRangeFill');
-    var minLabel = document.getElementById('PriceMin');
-    var maxLabel = document.getElementById('PriceMax');
-
-    if (!minInput || !maxInput) return;
-
-    var priceMin = parseFloat(minInput.min) || 0;
-    var priceMax = parseFloat(maxInput.max) || 0;
-    if (priceMax <= priceMin) return;
-
-    var formatter = buildCurrencyFormatter();
-    var gap = Math.max(1, Math.round((priceMax - priceMin) / 100));
-
-    function pct(v) {
-      return ((v - priceMin) / (priceMax - priceMin)) * 100;
-    }
-
-    function update() {
-      var lo = parseFloat(minInput.value);
-      var hi = parseFloat(maxInput.value);
-
-      if (fill) {
-        fill.style.left  = pct(lo) + '%';
-        fill.style.right = (100 - pct(hi)) + '%';
-      }
-      if (minLabel) minLabel.textContent = formatter.format(Math.floor(lo));
-      if (maxLabel) maxLabel.textContent = formatter.format(Math.ceil(hi));
-    }
-
-    minInput.addEventListener('input', function () {
-      var lo = parseFloat(minInput.value);
-      var hi = parseFloat(maxInput.value);
-      if (lo >= hi - gap) {
-        minInput.value = hi - gap;
-      }
-      update();
-    });
-
-    maxInput.addEventListener('input', function () {
-      var lo = parseFloat(minInput.value);
-      var hi = parseFloat(maxInput.value);
-      if (hi <= lo + gap) {
-        maxInput.value = lo + gap;
-      }
-      update();
-    });
-
-    minInput.addEventListener('change', function () {
-      document.getElementById('CollectionFilters').submit();
-    });
-    maxInput.addEventListener('change', function () {
-      document.getElementById('CollectionFilters').submit();
-    });
-
-    update();
-  }
-
   // ── Filter section accordion ───────────────────────────────────────────────
 
   function initFilterSections() {
@@ -237,7 +161,6 @@
   // ── Init ──────────────────────────────────────────────────────────────────
 
   document.addEventListener('DOMContentLoaded', function () {
-    initPriceSlider();
     initFilterSections();
     initShowMore();
     initAutoSubmit();

@@ -175,13 +175,10 @@
       "products_count": "{{ count }} Produkte",
       "category": "Kategorie",
       "all_products": "Alle Produkte",
-      "price": "Preis",
-      "price_min": "MIN {{ min }} — MAX {{ max }}",
       "brand": "Marke",
       "show_more": "+ {{ count }} weitere",
       "show_less": "Weniger anzeigen",
       "active_label": "Aktiv:",
-      "remove_price_aria": "Preisfilter entfernen",
       "remove_filter_aria": "Filter {{ label }} entfernen"
     },
     "toolbar": {

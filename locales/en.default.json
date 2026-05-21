@@ -175,13 +175,10 @@
       "products_count": "{{ count }} products",
       "category": "Category",
       "all_products": "All products",
-      "price": "Price",
-      "price_min": "MIN {{ min }} — MAX {{ max }}",
       "brand": "Brand",
       "show_more": "+ {{ count }} more",
       "show_less": "Show less",
       "active_label": "Active:",
-      "remove_price_aria": "Remove price filter",
       "remove_filter_aria": "Remove {{ label }} filter"
     },
     "toolbar": {

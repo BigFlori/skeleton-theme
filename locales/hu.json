@@ -175,13 +175,10 @@
       "products_count": "{{ count }} termék",
       "category": "Kategória",
       "all_products": "Összes termék",
-      "price": "Ár",
-      "price_min": "MIN {{ min }} — MAX {{ max }}",
       "brand": "Márka",
       "show_more": "+ {{ count }} további",
       "show_less": "Kevesebb mutatása",
       "active_label": "Aktív:",
-      "remove_price_aria": "Ár szűrő eltávolítása",
       "remove_filter_aria": "{{ label }} szűrő eltávolítása"
     },
     "toolbar": {
