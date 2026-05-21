@@ -655,7 +655,9 @@
     var stickyBar = document.getElementById('pdp-sticky-bar');
     if (!stickyBar) return;
     var buyAnchor = document.getElementById('buy-col-anchor');
-    var show = buyAnchor ? buyAnchor.getBoundingClientRect().bottom < 80 : window.scrollY > 600;
+    var footerBottom = document.querySelector('.sw-footer__bottom');
+    var footerVisible = footerBottom && footerBottom.getBoundingClientRect().top < window.innerHeight;
+    var show = (buyAnchor ? buyAnchor.getBoundingClientRect().bottom < 80 : window.scrollY > 600) && !footerVisible;
     stickyBar.classList.toggle('is-visible', show);
     stickyBar.setAttribute('aria-hidden', show ? 'false' : 'true');
   }
