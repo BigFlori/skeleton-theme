@@ -179,7 +179,8 @@
       "show_more": "+ {{ count }} további",
       "show_less": "Kevesebb mutatása",
       "active_label": "Aktív:",
-      "remove_filter_aria": "{{ label }} szűrő eltávolítása"
+      "remove_filter_aria": "{{ label }} szűrő eltávolítása",
+      "close": "Szűrők bezárása"
     },
     "toolbar": {
       "eyebrow": "Egyedi komponensek",

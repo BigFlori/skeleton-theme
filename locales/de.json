@@ -179,7 +179,8 @@
       "show_more": "+ {{ count }} weitere",
       "show_less": "Weniger anzeigen",
       "active_label": "Aktiv:",
-      "remove_filter_aria": "Filter {{ label }} entfernen"
+      "remove_filter_aria": "Filter {{ label }} entfernen",
+      "close": "Filter schließen"
     },
     "toolbar": {
       "eyebrow": "Einzelkomponenten",

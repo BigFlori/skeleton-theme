@@ -12,6 +12,18 @@
     <h2 class="display coll-toolbar__title">{{ 'collection.toolbar.title_pre' | t }} <em>{{ 'collection.toolbar.title_em' | t }}</em></h2>
   </div>
   <div class="coll-toolbar__right">
+    <button
+      type="button"
+      class="coll-filters-trigger mono"
+      data-filters-trigger
+      aria-controls="CollectionFilters"
+      aria-expanded="false"
+    >
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        {%- render 'icon', icon: 'filter' -%}
+      </svg>
+      <span>{{ 'collection.filters.title' | t }}</span>
+    </button>
     <span class="mono coll-toolbar__count">{{ 'collection.toolbar.results' | t: count: paginate.items }}</span>
     <div class="coll-toolbar__divider"></div>
     <label class="coll-sort-wrap">

@@ -158,6 +158,44 @@
     });
   }
 
+  // ── Mobile filters drawer ─────────────────────────────────────────────────
+
+  function initFiltersDrawer() {
+    var drawer   = document.getElementById('CollectionFilters');
+    var backdrop = document.querySelector('[data-filters-backdrop]');
+    var trigger  = document.querySelector('[data-filters-trigger]');
+    if (!drawer || !trigger) return;
+
+    function open() {
+      drawer.classList.add('is-open');
+      drawer.setAttribute('aria-hidden', 'false');
+      trigger.setAttribute('aria-expanded', 'true');
+      if (backdrop) backdrop.classList.add('is-open');
+      document.body.classList.add('is-scroll-locked');
+      var closeBtn = drawer.querySelector('[data-filters-close]');
+      if (closeBtn) closeBtn.focus();
+    }
+
+    function close() {
+      drawer.classList.remove('is-open');
+      drawer.setAttribute('aria-hidden', 'true');
+      trigger.setAttribute('aria-expanded', 'false');
+      if (backdrop) backdrop.classList.remove('is-open');
+      document.body.classList.remove('is-scroll-locked');
+      trigger.focus();
+    }
+
+    document.addEventListener('click', function (e) {
+      if (e.target.closest('[data-filters-trigger]')) { e.preventDefault(); open(); return; }
+      if (e.target.closest('[data-filters-close]')) { e.preventDefault(); close(); return; }
+      if (e.target.closest('[data-filters-backdrop]')) { close(); }
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && drawer.classList.contains('is-open')) close();
+    });
+  }
+
   // ── Init ──────────────────────────────────────────────────────────────────
 
   document.addEventListener('DOMContentLoaded', function () {
@@ -166,6 +204,7 @@
     initAutoSubmit();
     initAddToCart();
     initSortSubmit();
+    initFiltersDrawer();
   });
 
 })();

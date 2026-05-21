@@ -6,16 +6,40 @@
     - category_menu_handle: optional link list handle for category navigation
 {%- endcomment -%}
 
+{%- liquid
+  assign has_active_filters = false
+  for filter in collection.filters
+    if filter.active_values.size > 0
+      assign has_active_filters = true
+    endif
+  endfor
+-%}
+
+<div class="coll-sidebar-backdrop" data-filters-backdrop aria-hidden="true"></div>
+
 <form
   class="coll-sidebar"
   id="CollectionFilters"
   method="get"
   action="{{ collection.url }}"
   novalidate
+  aria-hidden="true"
 >
   <div class="coll-sidebar__header">
     <div class="display" style="font-size:22px;line-height:1">{{ 'collection.filters.title' | t }}</div>
-    <a href="{{ collection.url }}" class="coll-sidebar__clear mono">{{ 'collection.filters.clear_all' | t }}</a>
+    {%- if has_active_filters -%}
+      <a href="{{ collection.url }}" class="coll-sidebar__clear mono">{{ 'collection.filters.clear_all' | t }}</a>
+    {%- endif -%}
+    <button
+      type="button"
+      class="coll-sidebar__close"
+      data-filters-close
+      aria-label="{{ 'collection.filters.close' | t }}"
+    >
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        {%- render 'icon', icon: 'close' -%}
+      </svg>
+    </button>
   </div>
 
   {%- comment -%} Category navigation {%- endcomment -%}
