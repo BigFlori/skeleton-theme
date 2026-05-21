@@ -90,7 +90,12 @@
       "Bash(node \"C:\\\\Users\\\\Thurneer\\\\.claude\\\\plugins\\\\cache\\\\shopify-ai-toolkit\\\\shopify-plugin\\\\1.0.0\\\\skills\\\\shopify-custom-data\\\\scripts\\\\search_docs.mjs\" \"metaobject theme liquid reference\")",
       "Read(//c/Users/Thurneer/.claude/plugins/cache/shopify-ai-toolkit/shopify-plugin/1.0.0/skills/shopify-custom-data/**)",
       "Read(//c/Users/Thurneer/Documents/Shopify/example-project/**)",
-      "Read(//c/Users/Thurneer/Documents/Shopify//**)"
+      "Read(//c/Users/Thurneer/Documents/Shopify//**)",
+      "Bash(powershell -Command \"Get-ChildItem -Recurse -Filter '*breadcrumb*' | Select-Object FullName\")",
+      "Bash(powershell -Command \"Select-String -Path 'assets/sonnwerk.css','assets/critical.css' -Pattern 'breadcrumb' -SimpleMatch | Select-Object Path, LineNumber, Line\")",
+      "Bash(powershell -Command \"\\(Get-Content 'assets/sonnwerk.css' | Measure-Object -Line\\).Lines\")",
+      "Bash(powershell -Command \"Remove-Item 'snippets/collection-breadcrumb.liquid','snippets/pdp-breadcrumb.liquid' -Force; Get-ChildItem 'snippets' -Filter '*breadcrumb*'\")",
+      "Bash(powershell -Command \"Get-Content 'locales/en.default.json' | ConvertFrom-Json | Out-Null; Get-Content 'locales/hu.json' | ConvertFrom-Json | Out-Null; Get-Content 'locales/de.json' | ConvertFrom-Json | Out-Null; Write-Host 'JSON OK'\")"
     ],
     "additionalDirectories": [
       "/home/fmolnar/Documents/Shopify/nrgedge/apps/discounts/extensions/volume-discount",

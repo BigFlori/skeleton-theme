@@ -60,11 +60,15 @@
     "no_results_html": "Keine Ergebnisse für {{ terms }}",
     "results_for_html": "{{ count }} Ergebnisse für {{ terms }}"
   },
+  "breadcrumb": {
+    "label": "Brotkrumen",
+    "home": "Start",
+    "products": "Produkte",
+    "search": "Suche",
+    "cart": "Warenkorb",
+    "not_found": "Seite nicht gefunden"
+  },
   "pdp": {
-    "breadcrumb": {
-      "shop": "Shop",
-      "modules": "Module"
-    },
     "gallery": {
       "in_stock": "AUF LAGER",
       "sold_out": "AUSVERKAUFT",
@@ -154,11 +158,6 @@
     }
   },
   "collection": {
-    "breadcrumb": {
-      "label": "Brotkrumen",
-      "home": "Start",
-      "shop": "Shop"
-    },
     "packages": {
       "eyebrow": "Empfohlen · Kuratierte Bundles",
       "title_pre": "Komplett-",

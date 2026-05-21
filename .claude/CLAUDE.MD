@@ -139,3 +139,42 @@ Globális téma-opciók?
 3. **CSS sectionből/blockból**: Az inline stílusokat `{% render 'spacing-style', settings: block.settings %}` mintájú snippet hívásokkal injektálják — ne közvetlenül inline-ban.
 4. **Kontextus átadás**: Aláhúzásos blockok `closest.product`, `closest.collection` változókon kapják a szülő kontextust.
 5. **Fordítás**: Minden felhasználónak látható szöveg `t:names.xxx` / `t:settings.xxx` kulcson keresztül megy a locales-be.
+6. **"Összes termék" kollekció**: A bolt NEM a Shopify alapértelmezett `all` handle-jét használja, hanem egy kézzel létrehozott `all-products` handle-ű kollekciót. Minden "összes termék" linkhez (breadcrumb, nav, footer, "view all" CTA, stb.) használd: `{{ collections['all-products'].url }}` — NE `routes.all_products_collection_url`-t és NE `/collections/all`-t.
+
+---
+
+## Ikonok
+
+A téma egyetlen központi ikon-snippetet használ: [snippets/icon.liquid](snippets/icon.liquid).
+
+### Használat
+
+A snippet **csak az SVG `<path>` / `<circle>` / `<line>` belső tartalmát** adja vissza — az `<svg>` wrappert a hívási helyen kell biztosítani. Ezzel a hívó kontrollálja a méretet, stroke-vastagságot és a színt (a `currentColor`-ral örökli a szülő szövegszínét).
+
+```liquid
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+     stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  {%- render 'icon', icon: 'arrow-right' -%}
+</svg>
+```
+
+**Tipikus hibák** (kerüld):
+- `{% render 'icon', icon: 'x' %}` önmagában, `<svg>` wrapper nélkül → **semmi nem fog látszani**.
+- Inline SVG path direkt beírása a komponensbe → duplikáció, nem központi.
+- `<img src="...">` SVG fájlra → elveszik a `currentColor` öröklés.
+
+### Új ikon hozzáadása
+
+1. Nyisd meg az [snippets/icon.liquid](snippets/icon.liquid) fájlt.
+2. Adj hozzá egy új `{%- when 'icon-nev' -%}` ágat a `case` blokkba (kebab-case név).
+3. Tedd be a path/shape elemeket — **fill, stroke, stroke-width NEM kell** rajtuk, mert ezeket a hívási oldali `<svg>` wrapper adja.
+4. A viewBox-ot tartsd `0 0 24 24`-en (a többi ikon is ezen van), hogy a hívási stílus konzisztens maradjon.
+
+**Példa új ikon felvétele:**
+
+```liquid
+{%- when 'heart' -%}
+  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+```
+
+Forrásként a [lucide.dev](https://lucide.dev) / [feathericons.com](https://feathericons.com) ikonjai stylisztikailag illeszkednek (24×24 viewBox, stroke-alapú, 1.8–2 stroke-width). Ha máshonnan veszel SVG-t, normalizáld 24×24-re és vedd ki a felesleges attribútumokat (`width`, `height`, `fill`, `stroke`, `xmlns`).

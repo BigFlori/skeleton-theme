@@ -188,6 +188,69 @@ html:has(body.is-scroll-locked) {
   flex-shrink: 0;
 }
 
+/* ── Breadcrumb (unified) ── */
+.breadcrumb {
+  padding: var(--s-4) 0 var(--s-3);
+  text-align: left;
+}
+.breadcrumb__list {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--ink-mute);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.breadcrumb__list a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.breadcrumb__list a:hover { color: var(--ink); }
+.breadcrumb__list [aria-current="page"] { color: var(--ink); }
+.breadcrumb__sep {
+  display: inline-flex;
+  align-items: center;
+  opacity: 0.45;
+}
+.breadcrumb__sep svg {
+  width: 10px;
+  height: 10px;
+}
+
+/* Current (last) segment — truncate on overflow */
+.breadcrumb__current {
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+}
+.breadcrumb__current span {
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: bottom;
+}
+
+/* PDP variant tweaks */
+.breadcrumb--product {
+  padding: 20px 0 28px;
+}
+.breadcrumb--product .breadcrumb__list { font-size: 10px; }
+.breadcrumb--product .breadcrumb__list a:hover { color: var(--accent-deep); }
+.breadcrumb--product .breadcrumb__current { max-width: 40ch; }
+@media (max-width: 640px) {
+  .breadcrumb--product .breadcrumb__current { max-width: 18ch; }
+}
+
 /* ── Responsive helpers ── */
 @media (max-width: 768px) {
   .container {

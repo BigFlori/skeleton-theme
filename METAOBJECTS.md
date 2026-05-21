@@ -9,7 +9,7 @@ A PDP snippetek (`pdp-*.liquid`) metaobjectekből és metafieldekből olvasnak, 
 | Namespace + key                  | Típus                     | Használja |
 |----------------------------------|---------------------------|-----------|
 | `custom.datasheet`               | Metaobject reference      | szinte minden pdp-* snippet |
-| `custom.model_number`            | Single line text          | pdp-buy, pdp-jsonld, pdp-breadcrumb |
+| `custom.model_number`            | Single line text          | pdp-buy, pdp-jsonld, breadcrumb |
 | `custom.compatible_inverters`    | Metaobject reference list | pdp-compat (curated override) |
 
 ## Shop metafields
@@ -75,6 +75,34 @@ A PDP snippetek (`pdp-*.liquid`) metaobjectekből és metafieldekből olvasnak, 
 | `power`            | Decimal number   | Névleges teljesítmény (W) |
 
 **Logika (`pdp-compat.liquid`):** ha `custom.compatible_inverters` ki van töltve → azt mutatja; különben `shop.default_inverters` alapján szűr hideg Voc szerint (tc = −0.30 %/°C, T_min = −10°C → faktor: 1.105).
+
+---
+
+## `product_type_collection_map` metaobject
+
+**Admin:** Content → Metaobjects → Product type collection map
+**Liquid:** `shop.metaobjects.product_type_collection_map.values`
+
+Product Type → Collection globális hozzárendelés. Egy entry / product type.
+
+| Mező           | Típus                | Példa |
+|----------------|----------------------|-------|
+| `product_type` | Single line text     | `Napelem` (egyezzen a termék Product Type-jával) |
+| `collection`   | Collection reference | pl. `napelemek` kollekció |
+
+**Használat Liquidben:**
+
+```liquid
+{%- assign maps = shop.metaobjects.product_type_collection_map.values -%}
+{%- for entry in maps -%}
+  {%- if entry.product_type == product.type -%}
+    <a href="{{ entry.collection.value.url }}">{{ entry.collection.value.title }}</a>
+    {%- break -%}
+  {%- endif -%}
+{%- endfor -%}
+```
+
+> A `product_type` mező értéke **pontosan** egyezzen a termék Product Type mezőjével (case-sensitive).
 
 ---
 

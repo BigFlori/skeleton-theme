@@ -15,7 +15,7 @@
 
 <div class="coll-page full-width">
 
-  {% render 'collection-breadcrumb' %}
+  {% render 'breadcrumb', type: 'collection' %}
 
   {%- if section.settings.show_packages -%}
     {% render 'collection-packages-strip',
@@ -89,28 +89,6 @@ window.swCollectionConfig = {
   --sale-soft: oklch(0.94 0.05 35);
   padding-bottom: var(--s-6);
 }
-
-/* Package card (.pkg-card*) styles live in assets/pkg-card.css. */
-
-/* ── Breadcrumb ── */
-.coll-breadcrumb {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 11px;
-  color: var(--ink-mute);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  padding: var(--s-4) 0 var(--s-3);
-}
-.coll-breadcrumb a {
-  color: var(--ink-mute);
-  text-decoration: none;
-  transition: color .15s;
-}
-.coll-breadcrumb a:hover { color: var(--ink); }
-.coll-breadcrumb span[aria-hidden] { opacity: 0.45; }
-.coll-breadcrumb [aria-current] { color: var(--ink); }
 
 /* ── Packages strip ── */
 .coll-pkg-section {

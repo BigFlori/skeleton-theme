@@ -60,11 +60,15 @@
     "no_results_html": "No results found for {{ terms }}",
     "results_for_html": "{{ count }} results found for {{ terms }}"
   },
+  "breadcrumb": {
+    "label": "Breadcrumb",
+    "home": "Home",
+    "products": "Products",
+    "search": "Search",
+    "cart": "Cart",
+    "not_found": "Page not found"
+  },
   "pdp": {
-    "breadcrumb": {
-      "shop": "Shop",
-      "modules": "Modules"
-    },
     "gallery": {
       "in_stock": "IN STOCK",
       "sold_out": "SOLD OUT",
@@ -154,11 +158,6 @@
     }
   },
   "collection": {
-    "breadcrumb": {
-      "label": "Breadcrumb",
-      "home": "Home",
-      "shop": "Shop"
-    },
     "packages": {
       "eyebrow": "Featured · Curated bundles",
       "title_pre": "Complete",

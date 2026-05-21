@@ -1,0 +1,120 @@
+{%- comment -%}
+  Egységes breadcrumb komponens.
+
+  Paraméterek:
+    type      (kötelező): 'collection' | 'product' | 'page' | 'blog' | 'article' | 'search' | 'cart' | '404'
+    container (opcionális, default true): .container wrapper kell-e
+    class     (opcionális): extra CSS osztály a <nav>-on
+
+  Új típus felvétele: bővítsd a `case type` blokkot egy újabb `when` ággal,
+  ami `<li>` szegmenseket emit-el, közéjük `{{ br_sep }}`-pal.
+{%- endcomment -%}
+
+{%- liquid
+  assign br_type = type | default: 'page'
+  assign br_use_container = container
+  if br_use_container == nil
+    assign br_use_container = true
+  endif
+-%}
+
+{%- capture br_sep -%}
+  <li class="breadcrumb__sep" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      {%- render 'icon', icon: 'chevron-right' -%}
+    </svg>
+  </li>
+{%- endcapture -%}
+
+{%- capture br_items -%}
+  {%- case br_type -%}
+
+  {%- when 'collection' -%}
+    <li><a href="{{ routes.root_url }}">{{ 'breadcrumb.home' | t }}</a></li>
+    {{ br_sep }}
+    {%- if collection.handle == 'all-products' -%}
+      <li><span aria-current="page">{{ 'breadcrumb.products' | t }}</span></li>
+    {%- else -%}
+      <li><a href="{{ collections['all-products'].url }}">{{ 'breadcrumb.products' | t }}</a></li>
+      {{ br_sep }}
+      <li><span aria-current="page">{{ collection.title }}</span></li>
+    {%- endif -%}
+
+  {%- when 'product' -%}
+    {%- liquid
+      assign br_type_collection = nil
+      if product.type != blank
+        for entry in shop.metaobjects.product_type_collection_map.values
+          if entry.product_type == product.type and entry.collection.value != blank
+            assign br_type_collection = entry.collection.value
+            break
+          endif
+        endfor
+      endif
+      assign br_model = product.metafields.custom.model_number | default: product.title
+      if product.vendor != blank
+        assign br_current = product.vendor | append: ' ' | append: br_model
+      else
+        assign br_current = br_model
+      endif
+      assign br_current_escaped = br_current | escape
+    -%}
+    <li><a href="{{ routes.root_url }}">{{ 'breadcrumb.home' | t }}</a></li>
+    {{ br_sep }}
+    <li><a href="{{ collections['all-products'].url }}">{{ 'breadcrumb.products' | t }}</a></li>
+    {{ br_sep }}
+    {%- if br_type_collection -%}
+      <li><a href="{{ br_type_collection.url }}">{{ br_type_collection.title }}</a></li>
+      {{ br_sep }}
+    {%- elsif product.type != blank -%}
+      <li><span>{{ product.type }}</span></li>
+      {{ br_sep }}
+    {%- endif -%}
+    <li class="breadcrumb__current" title="{{ br_current_escaped }}"><span aria-current="page">{{ br_current }}</span></li>
+
+  {%- when 'blog' -%}
+    <li><a href="{{ routes.root_url }}">{{ 'breadcrumb.home' | t }}</a></li>
+    {{ br_sep }}
+    <li><span aria-current="page">{{ blog.title }}</span></li>
+
+  {%- when 'article' -%}
+    <li><a href="{{ routes.root_url }}">{{ 'breadcrumb.home' | t }}</a></li>
+    {{ br_sep }}
+    <li><a href="{{ blog.url }}">{{ blog.title }}</a></li>
+    {{ br_sep }}
+    <li><span aria-current="page">{{ article.title }}</span></li>
+
+  {%- when 'search' -%}
+    <li><a href="{{ routes.root_url }}">{{ 'breadcrumb.home' | t }}</a></li>
+    {{ br_sep }}
+    <li><span aria-current="page">{{ 'breadcrumb.search' | t }}</span></li>
+
+  {%- when 'cart' -%}
+    <li><a href="{{ routes.root_url }}">{{ 'breadcrumb.home' | t }}</a></li>
+    {{ br_sep }}
+    <li><span aria-current="page">{{ 'breadcrumb.cart' | t }}</span></li>
+
+  {%- when '404' -%}
+    <li><a href="{{ routes.root_url }}">{{ 'breadcrumb.home' | t }}</a></li>
+    {{ br_sep }}
+    <li><span aria-current="page">{{ 'breadcrumb.not_found' | t }}</span></li>
+
+  {%- when 'page' -%}
+    <li><a href="{{ routes.root_url }}">{{ 'breadcrumb.home' | t }}</a></li>
+    {{ br_sep }}
+    <li><span aria-current="page">{{ page.title }}</span></li>
+
+  {%- endcase -%}
+{%- endcapture -%}
+
+{%- capture br_nav -%}
+  <nav class="breadcrumb breadcrumb--{{ br_type }}{% if class %} {{ class }}{% endif %}" aria-label="{{ 'breadcrumb.label' | t }}">
+    <ol class="breadcrumb__list">{{ br_items }}</ol>
+  </nav>
+{%- endcapture -%}
+
+{%- if br_use_container -%}
+  <div class="full-width"><div class="container">{{ br_nav }}</div></div>
+{%- else -%}
+  {{ br_nav }}
+{%- endif -%}

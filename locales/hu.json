@@ -60,11 +60,15 @@
     "no_results_html": "Nincs találat: {{ terms }}",
     "results_for_html": "{{ count }} találat: {{ terms }}"
   },
+  "breadcrumb": {
+    "label": "Morzsasor",
+    "home": "Főoldal",
+    "products": "Termékek",
+    "search": "Keresés",
+    "cart": "Kosár",
+    "not_found": "Az oldal nem található"
+  },
   "pdp": {
-    "breadcrumb": {
-      "shop": "Üzlet",
-      "modules": "Modulok"
-    },
     "gallery": {
       "in_stock": "KÉSZLETEN",
       "sold_out": "ELFOGYOTT",
@@ -154,11 +158,6 @@
     }
   },
   "collection": {
-    "breadcrumb": {
-      "label": "Morzsasor",
-      "home": "Főoldal",
-      "shop": "Üzlet"
-    },
     "packages": {
       "eyebrow": "Kiemelt · Válogatott csomagok",
       "title_pre": "Komplett",
