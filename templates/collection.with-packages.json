@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "main": {
+      "type": "collection",
+      "settings": {
+        "show_packages": true
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

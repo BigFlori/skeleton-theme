@@ -11,7 +11,9 @@
   "sections": {
     "main": {
       "type": "collection",
-      "settings": {}
+      "settings": {
+        "show_packages": false
+      }
     }
   },
   "order": [
