@@ -66,7 +66,7 @@
         endif
         assign address_full = ''
         if shop_zip != blank
-          assign address_full = shop_country_code | append: shop_zip
+          assign address_full = shop_country_code | append: '-' | append: shop_zip
         endif
         if shop_city != blank
           if address_full != blank
@@ -319,10 +319,10 @@ a.sw-footer__link:hover {
   border-top: 1px solid var(--line);
   padding-top: 24px;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  gap: 24px;
-  flex-wrap: wrap;
+  text-align: center;
+  gap: 12px;
 }
 
 .sw-footer__copy {
@@ -334,6 +334,7 @@ a.sw-footer__link:hover {
 .sw-footer__legal-links {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 24px;
   flex-wrap: wrap;
 }
@@ -376,11 +377,6 @@ a.sw-footer__link:hover {
     grid-template-columns: 1fr 1fr;
   }
 
-  .sw-footer__bottom {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-  }
 }
 {% endstylesheet %}
 
