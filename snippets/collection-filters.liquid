@@ -54,39 +54,4 @@
       {% render 'collection-filter-list', filter: filter %}
     {%- endif -%}
   {%- endfor -%}
-
-  {%- comment -%} Fallback: vendor list when Shopify filters not configured {%- endcomment -%}
-  {%- if collection.filters.size == 0 and collection.all_vendors.size > 0 -%}
-    <div class="coll-filter-section">
-      <button type="button" class="coll-filter-section__toggle" aria-expanded="true" data-section-toggle="vendor">
-        <span class="mono">{{ 'collection.filters.brand' | t }}</span>
-        <svg class="coll-filter-section__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
-      </button>
-      <div class="coll-filter-section__body" data-section-body="vendor">
-        <ul class="coll-check-list" data-check-list="vendor">
-          {%- for vendor in collection.all_vendors -%}
-            <li{% if forloop.index > 8 %} class="coll-check-overflow" hidden{% endif %}>
-              <label class="coll-check-label">
-                <input
-                  class="coll-check-input"
-                  type="checkbox"
-                  name="filter.p.vendor"
-                  value="{{ vendor }}"
-                >
-                <span class="coll-check-box" aria-hidden="true"></span>
-                <span class="coll-check-label__text">{{ vendor }}</span>
-              </label>
-            </li>
-          {%- endfor -%}
-        </ul>
-        {%- if collection.all_vendors.size > 8 -%}
-          {%- assign vendor_overflow = collection.all_vendors.size | minus: 8 -%}
-          <button type="button" class="coll-show-more mono" data-show-more="vendor">
-            {{ 'collection.filters.show_more' | t: count: vendor_overflow }}
-          </button>
-        {%- endif -%}
-      </div>
-    </div>
-  {%- endif -%}
-
 </form>
