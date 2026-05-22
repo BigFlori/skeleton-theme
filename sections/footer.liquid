@@ -316,13 +316,24 @@ a.sw-footer__link:hover {
 
 /* Bottom bar */
 .sw-footer__bottom {
-  border-top: 1px solid var(--line);
+  position: relative;
   padding-top: 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   gap: 12px;
+}
+
+.sw-footer__bottom::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  height: 1px;
+  background: var(--line-soft);
 }
 
 .sw-footer__copy {
