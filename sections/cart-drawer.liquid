@@ -690,7 +690,6 @@ window.swDrawerConfig = {
 
 {% endstylesheet %}
 
-{%- comment -%}TODO: "free_shipping_threshold" label hardcodes €; make it currency-agnostic or use shop.currency{%- endcomment -%}
 {% schema %}
 {
   "name": "Cart Drawer",
@@ -698,9 +697,9 @@ window.swDrawerConfig = {
     {
       "type": "number",
       "id": "free_shipping_threshold",
-      "label": "Free shipping threshold (€)",
+      "label": "Free shipping threshold",
       "default": 2000,
-      "info": "Orders above this amount qualify for free shipping."
+      "info": "Amount in your store's primary currency. Orders above this qualify for free shipping (displayed using shop money format)."
     },
     {
       "type": "product",

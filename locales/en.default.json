@@ -50,6 +50,7 @@
     "cart": "Cart",
     "language": "Language",
     "items": "items",
+    "skip_to_content": "Skip to content",
     "onboarding": {
       "product_title": "Example product title",
       "product_vendor": "Example vendor"

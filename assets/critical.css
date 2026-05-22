@@ -78,6 +78,37 @@ body {
   color: var(--color-foreground);
 }
 
+/** Accessibility: skip link + global focus indicator */
+.sw-skip-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 8px 12px;
+  background: var(--ink, #000);
+  color: var(--accent-ink, #fff);
+  font-family: var(--font-mono--family, monospace);
+  font-size: 12px;
+  text-decoration: none;
+  z-index: 10000;
+  transform: translateY(-200%);
+  transition: transform 0.2s ease;
+}
+.sw-skip-link:focus,
+.sw-skip-link:focus-visible {
+  transform: translateY(0);
+  outline: 2px solid var(--accent, #ffb800);
+  outline-offset: 2px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent, #ffb800);
+  outline-offset: 2px;
+}
+
+main:focus {
+  outline: none;
+}
+
 /** Section layout utilities */
 
 /**

@@ -103,3 +103,30 @@
     content="{{ page_description | escape }}"
   >
 {% endif %}
+
+{%- comment -%} Site-wide Organization + WebSite JSON-LD (brand & SEO) {%- endcomment -%}
+{%- capture org_logo -%}
+  {%- if settings.logo != blank -%}{{ settings.logo | image_url: width: 512 | prepend: 'https:' }}{%- endif -%}
+{%- endcapture -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": {{ shop.name | json }},
+  "url": {{ shop.url | json }}{%- if org_logo != blank -%},
+  "logo": {{ org_logo | strip | json }}{%- endif -%}
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": {{ shop.name | json }},
+  "url": {{ shop.url | json }},
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "{{ shop.url }}/search?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>

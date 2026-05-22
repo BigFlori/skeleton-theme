@@ -50,6 +50,7 @@
     "cart": "Warenkorb",
     "language": "Sprache",
     "items": "Artikel",
+    "skip_to_content": "Zum Inhalt springen",
     "onboarding": {
       "product_title": "Beispiel-Produkttitel",
       "product_vendor": "Beispiel-Hersteller"

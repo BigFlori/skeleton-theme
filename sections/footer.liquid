@@ -16,8 +16,19 @@
         </a>
         <p class="sw-footer__tagline">{{ 'sections.footer.tagline' | t }}</p>
         <div class="sw-footer__flags" aria-label="{{ 'sections.footer.flags_label' | t }}">
-          <span class="sw-footer__flag" title="Österreich">🇦🇹</span>
-          <span class="sw-footer__flag" title="Deutschland">🇩🇪</span>
+          <span class="sw-footer__flag" title="Österreich" role="img" aria-label="Österreich">
+            <svg width="20" height="14" viewBox="0 0 20 14" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect width="20" height="14" fill="#ED2939"/>
+              <rect y="4.667" width="20" height="4.667" fill="#FFFFFF"/>
+            </svg>
+          </span>
+          <span class="sw-footer__flag" title="Deutschland" role="img" aria-label="Deutschland">
+            <svg width="20" height="14" viewBox="0 0 20 14" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect width="20" height="4.667" fill="#000000"/>
+              <rect y="4.667" width="20" height="4.667" fill="#DD0000"/>
+              <rect y="9.333" width="20" height="4.667" fill="#FFCE00"/>
+            </svg>
+          </span>
         </div>
       </div>
 
@@ -213,8 +224,14 @@
 }
 
 .sw-footer__flag {
-  font-size: 20px;
+  display: inline-flex;
+  align-items: center;
   line-height: 1;
+}
+.sw-footer__flag svg {
+  display: block;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
 }
 
 /* Contact info */

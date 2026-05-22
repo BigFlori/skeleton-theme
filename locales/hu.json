@@ -50,6 +50,7 @@
     "cart": "Kosár",
     "language": "Nyelv",
     "items": "termék",
+    "skip_to_content": "Ugrás a tartalomra",
     "onboarding": {
       "product_title": "Példa termék neve",
       "product_vendor": "Példa gyártó"
