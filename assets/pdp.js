@@ -657,7 +657,7 @@
     var buyAnchor = document.getElementById('buy-col-anchor');
     var footerBottom = document.querySelector('.sw-footer__bottom');
     var footerVisible = footerBottom && footerBottom.getBoundingClientRect().top < window.innerHeight;
-    var show = (buyAnchor ? buyAnchor.getBoundingClientRect().bottom < 80 : window.scrollY > 600) && !footerVisible;
+    var show = (buyAnchor ? buyAnchor.getBoundingClientRect().bottom < window.innerHeight * 0.8 : window.scrollY > 200) && !footerVisible;
     stickyBar.classList.toggle('is-visible', show);
     stickyBar.setAttribute('aria-hidden', show ? 'false' : 'true');
   }

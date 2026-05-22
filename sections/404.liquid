@@ -1,19 +1,61 @@
 {% comment %}
-  This section is used in the 404 template to render page shown when customers
-  enter an invalid store URL.
-
+  404 template section. Shown when the customer hits an invalid URL.
   https://shopify.dev/docs/storefronts/themes/architecture/templates/404
 {% endcomment %}
 
-<h1>{{ '404.title' | t }}</h1>
+<section class="sw-404">
+  <div class="container sw-404__inner">
+    <div class="mono sw-404__code" aria-hidden="true">404</div>
+    <h1 class="display sw-404__title">{{ '404.not_found' | t }}</h1>
+    <p class="sw-404__body">{{ '404.subtitle' | t }}</p>
+    <div class="sw-404__actions">
+      <a href="{{ collections['all-products'].url }}" class="btn btn-primary">
+        {{ '404.back_to_shopping' | t }}
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{%- render 'icon', icon: 'arrow-right' -%}</svg>
+      </a>
+      <a href="{{ routes.root_url }}" class="btn btn-secondary">
+        {{ '404.back_home' | t }}
+      </a>
+    </div>
+  </div>
+</section>
 
-<p>
-  {{ '404.not_found' | t }}
-</p>
-
-<a href="{{ routes.all_products_collection_url }}">
-  {{ '404.back_to_shopping' | t }}
-</a>
+{% stylesheet %}
+.sw-404 {
+  padding-top: var(--s-7);
+  padding-bottom: var(--s-7);
+}
+.sw-404__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 18px;
+}
+.sw-404__code {
+  font-size: clamp(96px, 18vw, 200px);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  color: var(--accent-deep);
+  margin-bottom: 4px;
+}
+.sw-404__title {
+  font-size: clamp(32px, 5vw, 48px);
+  line-height: 1.05;
+}
+.sw-404__body {
+  color: var(--ink-soft);
+  max-width: 480px;
+  line-height: 1.6;
+}
+.sw-404__actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+{% endstylesheet %}
 
 {% schema %}
 {

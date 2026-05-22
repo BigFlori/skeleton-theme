@@ -1,0 +1,20 @@
+<section class="pdp-description full-width" id="description">
+  <div class="container">
+    <div class="pdp-description__grid">
+      <div class="pdp-description__sticky">
+        <span class="eyebrow">{{ 'pdp.description.eyebrow' | t }}</span>
+        <h2 class="display" style="font-size:clamp(40px,5vw,68px);margin-top:16px;line-height:1;">
+          {{ 'pdp.description.heading_line1' | t }}<br>
+          <em style="color:var(--accent-deep);">{{ 'pdp.description.heading_em' | t }}</em>
+        </h2>
+        <p style="color:var(--ink-soft);font-size:14px;margin-top:20px;max-width:340px;line-height:1.55;">
+          {{ 'pdp.description.subtitle' | t }}
+        </p>
+      </div>
+
+      <div class="pdp-description__body rte">
+        {{ product.description }}
+      </div>
+    </div>
+  </div>
+</section>

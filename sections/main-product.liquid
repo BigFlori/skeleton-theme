@@ -15,6 +15,10 @@
   </div>
 </section>
 
+{%- if product.description != blank -%}
+  {% render 'pdp-description' %}
+{%- endif -%}
+
 {%- if product.metafields.custom.datasheet.value != blank -%}
   {% render 'pdp-datasheet' %}
 {%- endif -%}

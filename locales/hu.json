@@ -1,8 +1,10 @@
 {
   "404": {
     "title": "404",
-    "not_found": "Az oldal nem található.",
-    "back_to_shopping": "Vissza a vásárláshoz"
+    "not_found": "Az oldal nem található",
+    "subtitle": "A keresett oldal nem létezik, vagy időközben átkerült. Segítünk visszatalálni.",
+    "back_to_shopping": "Termékek böngészése",
+    "back_home": "Vissza a főoldalra"
   },
   "blog": {
     "article_comments": "Hozzászólások",
@@ -136,6 +138,12 @@
       "too_many": "Túl sok modul ehhez az inverterhez",
       "voc_label": "Voc-nál",
       "summary": "{{ count }} × {{ power }} W = {{ kwp }} kWp · Inverter AC {{ inverter_kw }} kW · Optimum ≈ {{ optimal }} modul"
+    },
+    "description": {
+      "eyebrow": "Termékleírás",
+      "heading_line1": "Mit",
+      "heading_em": "kapsz?",
+      "subtitle": "A legfontosabb információk, jellemzők és részletek — minden, amit a termékről tudnod kell."
     },
     "datasheet": {
       "eyebrow": "Teljes műszaki adatok",
@@ -359,7 +367,8 @@
       "col_3_title": "Tudástár",
       "col_3_links": "Megtérülésszámító\nBarkácsvideók\nTech blog\nSzótár\nLetöltések",
       "col_4_title": "Kapcsolat",
-      "col_4_links": "+43 1 234 56 78\nhallo@sonnwerk.at\nH–P 8–18 óra\nBécsújhely\nBécsi showroom"
+      "col_4_links": "+43 1 234 56 78\nhallo@sonnwerk.at\nH–P 8–18 óra\nBécsújhely\nBécsi showroom",
+      "payment_methods": "Elfogadott fizetési módok"
     },
     "contact_hero": {
       "eyebrow": "Kapcsolat",

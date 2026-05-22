@@ -143,14 +143,14 @@
             <a href="{{ link.url }}" class="sw-footer__legal-link">{{ link.title }}</a>
           {%- endfor -%}
         {%- endif -%}
-        {%- if section.settings.show_payment_icons -%}
-          <div class="sw-footer__payment">
-            {%- for type in shop.enabled_payment_types -%}
-              {{ type | payment_type_svg_tag }}
-            {%- endfor -%}
-          </div>
-        {%- endif -%}
       </div>
+      {%- if section.settings.show_payment_icons and shop.enabled_payment_types.size > 0 -%}
+        <div class="sw-footer__payment" aria-label="{{ 'sections.footer.payment_methods' | t }}">
+          {%- for type in shop.enabled_payment_types -%}
+            {{ type | payment_type_svg_tag }}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
     </div>
 
   </div>

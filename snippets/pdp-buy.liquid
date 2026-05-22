@@ -21,11 +21,6 @@
         </span>
       </div>
       <h1 class="display" style="font-size:clamp(38px,4.5vw,58px);letter-spacing:-.02em;">{{ product.title }}</h1>
-      {%- if product.description != blank -%}
-        <p style="font-size:15px;color:var(--ink-soft);margin-top:14px;line-height:1.55;max-width:48ch;">
-          {{ product.description | strip_html | truncatewords: 35 }}
-        </p>
-      {%- endif -%}
     </div>
 
     <!-- Price -->

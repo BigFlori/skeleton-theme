@@ -1,8 +1,10 @@
 {
   "404": {
     "title": "404",
-    "not_found": "Page not found.",
-    "back_to_shopping": "Back to shopping"
+    "not_found": "Page not found",
+    "subtitle": "The page you're looking for doesn't exist or has been moved. Let's get you back on track.",
+    "back_to_shopping": "Browse products",
+    "back_home": "Back to home"
   },
   "blog": {
     "article_comments": "Comments",
@@ -136,6 +138,12 @@
       "too_many": "Too many modules for this inverter",
       "voc_label": "at Voc",
       "summary": "{{ count }} × {{ power }} W = {{ kwp }} kWp · Inverter AC {{ inverter_kw }} kW · Optimum ≈ {{ optimal }} modules"
+    },
+    "description": {
+      "eyebrow": "Product description",
+      "heading_line1": "What you",
+      "heading_em": "get.",
+      "subtitle": "Key information, features and details — everything you need to know about this product."
     },
     "datasheet": {
       "eyebrow": "Full specifications",
@@ -359,7 +367,8 @@
       "col_3_title": "Knowledge",
       "col_3_links": "Payback calculator\nDIY videos\nTech blog\nGlossary\nDownloads",
       "col_4_title": "Contact",
-      "col_4_links": "+43 1 234 56 78\nhallo@sonnwerk.at\nMon–Fri 8–18\nWiener Neustadt\nShowroom Vienna"
+      "col_4_links": "+43 1 234 56 78\nhallo@sonnwerk.at\nMon–Fri 8–18\nWiener Neustadt\nShowroom Vienna",
+      "payment_methods": "Accepted payment methods"
     },
     "contact_hero": {
       "eyebrow": "Contact",
