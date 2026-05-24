@@ -58,10 +58,39 @@
   },
   "search": {
     "title": "Keresés",
-    "placeholder": "Cikkek, oldalak vagy termékek keresése",
+    "title_pre": "Mit",
+    "title_em": "keresel?",
+    "eyebrow": "Keresés",
+    "placeholder": "Modulok, inverterek, csomagok…",
     "submit": "Keresés",
-    "no_results_html": "Nincs találat: {{ terms }}",
-    "results_for_html": "{{ count }} találat: {{ terms }}"
+    "close": "Keresés bezárása",
+    "clear": "Törlés",
+    "intro": "Írj be egy terméknevet, márkát vagy cikkszámot.",
+    "results_count": {
+      "one": "{{ count }} találat erre: {{ terms }}",
+      "other": "{{ count }} találat erre: {{ terms }}"
+    },
+    "other_results": "Cikkek és oldalak",
+    "kind": {
+      "article": "Cikk",
+      "page": "Oldal"
+    },
+    "empty": {
+      "title": "Nincs találat.",
+      "body_html": "Nem találtunk semmit erre: <strong>{{ terms }}</strong>. Próbálj más kulcsszót, márkát vagy cikkszámot.",
+      "browse_all": "Összes termék",
+      "back_home": "Vissza a főoldalra"
+    },
+    "predictive": {
+      "hint": "Kezdj el gépelni…",
+      "loading": "Keresés…",
+      "no_results": "Nincs találat",
+      "error": "A keresés nem elérhető. Nyomj Entert a teljes találati oldalért.",
+      "products": "Termékek",
+      "articles": "Cikkek",
+      "pages": "Oldalak",
+      "view_all": "Összes találat"
+    }
   },
   "breadcrumb": {
     "label": "Morzsasor",

@@ -58,10 +58,39 @@
   },
   "search": {
     "title": "Suche",
-    "placeholder": "Artikel, Seiten oder Produkte suchen",
+    "title_pre": "Wonach",
+    "title_em": "suchst du?",
+    "eyebrow": "Suche",
+    "placeholder": "Module, Wechselrichter, Pakete…",
     "submit": "Suchen",
-    "no_results_html": "Keine Ergebnisse für {{ terms }}",
-    "results_for_html": "{{ count }} Ergebnisse für {{ terms }}"
+    "close": "Suche schließen",
+    "clear": "Löschen",
+    "intro": "Tippe einen Produktnamen, eine Marke oder Artikelnummer ein.",
+    "results_count": {
+      "one": "{{ count }} Treffer für {{ terms }}",
+      "other": "{{ count }} Treffer für {{ terms }}"
+    },
+    "other_results": "Artikel & Seiten",
+    "kind": {
+      "article": "Artikel",
+      "page": "Seite"
+    },
+    "empty": {
+      "title": "Keine Treffer.",
+      "body_html": "Wir konnten nichts zu <strong>{{ terms }}</strong> finden. Versuche es mit einem anderen Stichwort, einer Marke oder Artikelnummer.",
+      "browse_all": "Alle Produkte ansehen",
+      "back_home": "Zur Startseite"
+    },
+    "predictive": {
+      "hint": "Tippen, um zu suchen…",
+      "loading": "Suche läuft…",
+      "no_results": "Keine Treffer",
+      "error": "Suche derzeit nicht verfügbar. Enter drücken für die vollständige Ergebnisseite.",
+      "products": "Produkte",
+      "articles": "Artikel",
+      "pages": "Seiten",
+      "view_all": "Alle Ergebnisse anzeigen"
+    }
   },
   "breadcrumb": {
     "label": "Brotkrumen",

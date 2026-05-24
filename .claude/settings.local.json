@@ -95,7 +95,8 @@
       "Bash(powershell -Command \"Select-String -Path 'assets/sonnwerk.css','assets/critical.css' -Pattern 'breadcrumb' -SimpleMatch | Select-Object Path, LineNumber, Line\")",
       "Bash(powershell -Command \"\\(Get-Content 'assets/sonnwerk.css' | Measure-Object -Line\\).Lines\")",
       "Bash(powershell -Command \"Remove-Item 'snippets/collection-breadcrumb.liquid','snippets/pdp-breadcrumb.liquid' -Force; Get-ChildItem 'snippets' -Filter '*breadcrumb*'\")",
-      "Bash(powershell -Command \"Get-Content 'locales/en.default.json' | ConvertFrom-Json | Out-Null; Get-Content 'locales/hu.json' | ConvertFrom-Json | Out-Null; Get-Content 'locales/de.json' | ConvertFrom-Json | Out-Null; Write-Host 'JSON OK'\")"
+      "Bash(powershell -Command \"Get-Content 'locales/en.default.json' | ConvertFrom-Json | Out-Null; Get-Content 'locales/hu.json' | ConvertFrom-Json | Out-Null; Get-Content 'locales/de.json' | ConvertFrom-Json | Out-Null; Write-Host 'JSON OK'\")",
+      "Bash(grep -nA 6 '\"search\":' c:/Users/Thurneer/Documents/Shopify/solar-theme/locales/hu.json c:/Users/Thurneer/Documents/Shopify/solar-theme/locales/de.json)"
     ],
     "additionalDirectories": [
       "/home/fmolnar/Documents/Shopify/nrgedge/apps/discounts/extensions/volume-discount",

@@ -1,0 +1,468 @@
+{%- comment -%}
+  Search drawer/overlay with predictive suggestions.
+  Opened by [data-search-trigger]. Live results from /search/suggest.json
+  rendered by assets/predictive-search.js.
+{%- endcomment -%}
+
+<div class="sw-search-backdrop" data-search-backdrop aria-hidden="true"></div>
+
+<div
+  id="sw-search-drawer"
+  class="sw-search-drawer"
+  role="dialog"
+  aria-modal="true"
+  aria-label="{{ 'search.title' | t }}"
+  aria-hidden="true"
+>
+  <div class="sw-search-drawer__inner">
+    <form
+      action="{{ routes.search_url }}"
+      method="get"
+      role="search"
+      class="sw-search-drawer__form"
+      data-predictive-search-form
+    >
+      <input type="hidden" name="options[prefix]" value="last">
+      <input type="hidden" name="type" value="product,article,page">
+
+      <span class="sw-search-drawer__icon" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          {%- render 'icon', icon: 'search' -%}
+        </svg>
+      </span>
+
+      <input
+        type="search"
+        name="q"
+        class="sw-search-drawer__input"
+        placeholder="{{ 'search.placeholder' | t }}"
+        autocomplete="off"
+        autocapitalize="off"
+        autocorrect="off"
+        spellcheck="false"
+        aria-label="{{ 'search.placeholder' | t }}"
+        data-predictive-search-input
+      >
+
+      <button
+        type="button"
+        class="sw-search-drawer__clear"
+        data-predictive-search-clear
+        hidden
+      >{{ 'search.clear' | t }}</button>
+
+      <button
+        type="button"
+        class="sw-search-drawer__close"
+        data-search-close
+        aria-label="{{ 'search.close' | t }}"
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          {%- render 'icon', icon: 'close' -%}
+        </svg>
+      </button>
+    </form>
+
+    <div class="sw-search-drawer__results" data-predictive-search-results>
+      <div class="sw-search-drawer__hint" data-predictive-search-state="idle">
+        <span class="sw-search-drawer__hint-icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            {%- render 'icon', icon: 'search' -%}
+          </svg>
+        </span>
+        <span class="mono">{{ 'search.predictive.hint' | t }}</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="{{ 'predictive-search.js' | asset_url }}" defer></script>
+<script>
+  window.swPredictiveSearchConfig = {
+    routes: {
+      suggest: {{ routes.predictive_search_url | json }},
+      search: {{ routes.search_url | json }}
+    },
+    strings: {
+      products: {{ 'search.predictive.products' | t | json }},
+      articles: {{ 'search.predictive.articles' | t | json }},
+      pages: {{ 'search.predictive.pages' | t | json }},
+      view_all: {{ 'search.predictive.view_all' | t | json }},
+      no_results: {{ 'search.predictive.no_results' | t | json }},
+      error: {{ 'search.predictive.error' | t | json }},
+      loading: {{ 'search.predictive.loading' | t | json }},
+      hint: {{ 'search.predictive.hint' | t | json }}
+    }
+  };
+</script>
+
+{% stylesheet %}
+.sw-search-backdrop {
+  position: fixed;
+  inset: 0;
+  background: oklch(0.22 0.025 155 / 0.5);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s ease;
+  z-index: 95;
+}
+
+.sw-search-backdrop.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.sw-search-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  transform: translateY(-100%);
+  transition: transform .4s cubic-bezier(.2,.8,.2,1);
+  z-index: 96;
+  max-height: min(82vh, 760px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.sw-search-drawer.is-open {
+  transform: translateY(0);
+  box-shadow:
+    0 24px 48px -12px oklch(0.22 0.025 155 / 0.22),
+    0 1px 0 0 oklch(0.22 0.025 155 / 0.04);
+}
+
+.sw-search-drawer__inner {
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: var(--s-3);
+  padding-block: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  flex: 1;
+  min-height: 0;
+}
+
+.sw-search-drawer__form {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: center;
+  gap: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 6px 6px 6px 16px;
+  transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+}
+
+.sw-search-drawer__form:focus-within {
+  border-color: var(--accent-deep);
+  box-shadow: 0 0 0 4px var(--accent-soft);
+}
+
+.sw-search-drawer__icon {
+  display: inline-flex;
+  color: var(--ink-mute);
+  transition: color .18s ease;
+}
+
+.sw-search-drawer__form:focus-within .sw-search-drawer__icon {
+  color: var(--accent-deep);
+}
+
+.sw-search-drawer__input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  padding: 14px 12px;
+  min-width: 0;
+}
+
+.sw-search-drawer__input::placeholder { color: var(--ink-mute); }
+
+.sw-search-drawer__input::-webkit-search-cancel-button,
+.sw-search-drawer__input::-webkit-search-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.sw-search-drawer__close {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--ink-soft);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  margin-left: 6px;
+  transition: border-color .15s ease, color .15s ease, background .15s ease;
+}
+
+.sw-search-drawer__close:hover {
+  border-color: var(--accent-deep);
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+}
+
+.sw-search-drawer__clear {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: color .15s ease, background .15s ease;
+}
+
+.sw-search-drawer__clear:hover {
+  color: var(--accent-deep);
+  background: var(--accent-soft);
+}
+
+.sw-search-drawer__clear[hidden] { display: none; }
+
+.sw-search-drawer__results {
+  flex: 1;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: 4px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
+}
+
+.sw-search-drawer__results::-webkit-scrollbar { width: 6px; }
+.sw-search-drawer__results::-webkit-scrollbar-thumb { background: var(--line); border-radius: 3px; }
+
+.sw-search-drawer__hint,
+.sw-search-drawer__empty,
+.sw-search-drawer__loading,
+.sw-search-drawer__error {
+  padding: 36px 4px;
+  color: var(--ink-mute);
+  text-align: center;
+  font-size: 13px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+
+.sw-search-drawer__hint-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  color: var(--ink-mute);
+  box-shadow: 0 0 0 6px oklch(0.22 0.025 155 / 0.02);
+}
+
+.sw-search-drawer__empty > span {
+  display: inline-flex;
+  align-items: baseline;
+  max-width: 100%;
+  padding-inline: 16px;
+  white-space: pre;
+}
+
+.sw-search-drawer__empty strong {
+  color: var(--ink);
+  font-weight: 600;
+  max-width: 240px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+  vertical-align: bottom;
+}
+
+.sw-search-drawer__error { color: oklch(0.50 0.13 30); }
+
+.sw-search-drawer__group {
+  margin-bottom: 24px;
+  animation: sw-search-fade .25s ease both;
+}
+
+@keyframes sw-search-fade {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.sw-search-drawer__group-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-mute);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding-block: 12px 10px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 8px;
+}
+
+.sw-search-drawer__group-title::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--sun);
+  box-shadow: 0 0 0 3px var(--sun-soft);
+  flex-shrink: 0;
+}
+
+.sw-search-drawer__group-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.sw-search-drawer__item a {
+  display: grid;
+  grid-template-columns: 56px 1fr auto;
+  gap: 14px;
+  align-items: center;
+  padding: 10px 10px;
+  border-radius: 10px;
+  color: var(--ink);
+  text-decoration: none;
+  transition: background .15s ease, color .15s ease, transform .15s ease;
+}
+
+.sw-search-drawer__item a:hover,
+.sw-search-drawer__item a:focus-visible {
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+  outline: none;
+}
+
+.sw-search-drawer__item a:hover .sw-search-drawer__item-img,
+.sw-search-drawer__item a:focus-visible .sw-search-drawer__item-img {
+  border-color: var(--accent-deep);
+}
+
+.sw-search-drawer__item-img {
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
+  background: var(--bg-card);
+  object-fit: cover;
+  border: 1px solid var(--line);
+  transition: border-color .15s ease;
+}
+
+.sw-search-drawer__item-img--ph {
+  display: grid;
+  place-items: center;
+  color: var(--ink-mute);
+}
+
+.sw-search-drawer__item-body {
+  min-width: 0;
+}
+
+.sw-search-drawer__item-vendor {
+  font-size: 11px;
+  color: var(--ink-mute);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.sw-search-drawer__item-title {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sw-search-drawer__item-price {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+  font-feature-settings: "tnum", "zero";
+}
+
+.sw-search-drawer__item a:hover .sw-search-drawer__item-price {
+  color: var(--accent-deep);
+}
+
+.sw-search-drawer__view-all {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-family: var(--font-mono);
+  color: var(--accent-deep);
+  text-decoration: none;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg-card);
+  transition: border-color .15s ease, background .15s ease, gap .15s ease;
+}
+
+.sw-search-drawer__view-all:hover {
+  border-color: var(--accent-deep);
+  background: var(--accent-soft);
+  gap: 12px;
+}
+
+@media screen and (max-width: 600px) {
+  .sw-search-drawer__inner { padding-block: 20px 14px; gap: 14px; padding-inline: var(--s-2); }
+  .sw-search-drawer__input { font-size: 16px; padding: 12px; }
+}
+
+/* Header trigger button (matches cart button) */
+.header__search {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--bg-card);
+  color: var(--ink);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: border-color .15s ease, background .15s ease, color .15s ease;
+}
+
+.header__search:hover {
+  border-color: var(--accent-deep);
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+}
+{% endstylesheet %}

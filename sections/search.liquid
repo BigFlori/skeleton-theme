@@ -1,70 +1,430 @@
 {% comment %}
-  This section is used in the search template to render search results for
-  products, articles, and pages.
-
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/search
+  Search results page. Renders products via collection-product-card, articles/pages
+  with a compact card style. Includes breadcrumb, hero with form, empty state.
 {% endcomment %}
 
-<h1>{{ 'search.title' | t }}</h1>
+{%- liquid
+  assign per_page = section.settings.results_per_page | default: 24
+  assign has_terms = false
+  if search.terms != blank
+    assign has_terms = true
+  endif
+-%}
 
-<form action="{{ routes.search_url }}" method="get" role="search">
-  <input
-    type="search"
-    size="50"
-    name="q"
-    value="{{ search.terms | escape }}"
-    placeholder="{{ 'search.placeholder' | t }}"
-  >
-  <button type="submit">{{ 'search.submit' | t }}</button>
-</form>
+<div class="sw-search full-width">
 
-{% if search.performed %}
-  {% if search.results_count == 0 %}
-    <p>{{ 'search.no_results_html' | t: terms: search.terms }}</p>
-  {% else %}
-    <p>{{ 'search.results_for_html' | t: terms: search.terms, count: search.results_count }}</p>
+  {% render 'breadcrumb', type: 'search' %}
 
-    <div class="search-results">
-      {% paginate search.results by 20 %}
-        {% # Search result items may be an article, a page, or a product. %}
-        {% for result in search.results %}
-          <div class="search-result">
-            {% assign featured_image = result.featured_image | default: result.image %}
-            {% if featured_image %}
-              {% render 'image', class: 'search-result__image', image: featured_image, url: result.url, width: 400 %}
-            {% endif %}
-            <div class="search-result__content">
-              <p>
-                {{ result.title | link_to: result.url }}
-                {% if result.price %}
-                  {{ result.price | money_with_currency }}
-                {% endif %}
-              </p>
-            </div>
+  <div class="container">
+
+    <header class="sw-search__hero">
+      <span class="eyebrow">{{ 'search.eyebrow' | t }}</span>
+      <h1 class="display sw-search__title">
+        {{ 'search.title_pre' | t }} <em>{{ 'search.title_em' | t }}</em>
+      </h1>
+
+      <form action="{{ routes.search_url }}" method="get" role="search" class="sw-search__form" data-sw-search-form>
+        <input type="hidden" name="options[prefix]" value="last">
+        <input type="hidden" name="type" value="product,article,page">
+        <span class="sw-search__form-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            {%- render 'icon', icon: 'search' -%}
+          </svg>
+        </span>
+        <input
+          type="search"
+          name="q"
+          class="sw-search__input"
+          value="{{ search.terms | escape }}"
+          placeholder="{{ 'search.placeholder' | t }}"
+          autocomplete="off"
+          autocapitalize="off"
+          autocorrect="off"
+          spellcheck="false"
+          aria-label="{{ 'search.placeholder' | t }}"
+          data-sw-search-input
+        >
+        <button
+          type="button"
+          class="sw-search__clear"
+          data-sw-search-clear
+          {% if search.terms == blank %}hidden{% endif %}
+        >{{ 'search.clear' | t }}</button>
+        <button type="submit" class="btn btn-primary sw-search__submit">
+          {{ 'search.submit' | t }}
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{%- render 'icon', icon: 'arrow-right' -%}</svg>
+        </button>
+      </form>
+
+    </header>
+
+    <script src="{{ 'search-form.js' | asset_url }}" defer></script>
+
+    {%- if has_terms and search.performed -%}
+
+      {%- if search.results_count == 0 -%}
+        <div class="sw-search__empty">
+          <div class="sw-search__empty-icon" aria-hidden="true">
+            <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              {%- render 'icon', icon: 'search' -%}
+            </svg>
           </div>
-        {% endfor %}
+          <h2 class="display sw-search__empty-title">{{ 'search.empty.title' | t }}</h2>
+          <p class="sw-search__empty-body">{{ 'search.empty.body_html' | t: terms: search.terms }}</p>
+          <div class="sw-search__empty-actions">
+            <a href="{{ collections['all-products'].url }}" class="btn btn-primary">
+              {{ 'search.empty.browse_all' | t }}
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{%- render 'icon', icon: 'arrow-right' -%}</svg>
+            </a>
+            <a href="{{ routes.root_url }}" class="btn btn-secondary">{{ 'search.empty.back_home' | t }}</a>
+          </div>
+        </div>
 
-        {{ paginate | default_pagination }}
-      {% endpaginate %}
-    </div>
-  {% endif %}
-{% endif %}
+      {%- else -%}
+        {%- paginate search.results by per_page -%}
+
+          <div class="sw-search__meta">
+            <span class="mono sw-search__count">
+              {{ 'search.results_count' | t: count: search.results_count, terms: search.terms }}
+            </span>
+          </div>
+
+          {%- capture product_cards -%}
+            {%- for result in search.results -%}
+              {%- if result.object_type == 'product' -%}
+                {% render 'collection-product-card', product: result %}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endcapture -%}
+
+          {%- if product_cards != blank -%}
+            <div class="sw-search__grid coll-grid">{{ product_cards }}</div>
+          {%- endif -%}
+
+          {%- capture other_items -%}
+            {%- for result in search.results -%}
+              {%- if result.object_type != 'product' -%}
+                <li class="sw-search__list-item">
+                  <a href="{{ result.url }}" class="sw-search__list-link">
+                    <span class="mono sw-search__list-kind">
+                      {%- if result.object_type == 'article' -%}{{ 'search.kind.article' | t }}
+                      {%- elsif result.object_type == 'page' -%}{{ 'search.kind.page' | t }}
+                      {%- else -%}{{ result.object_type }}{%- endif -%}
+                    </span>
+                    <span class="sw-search__list-name">{{ result.title }}</span>
+                    <svg class="sw-search__list-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{%- render 'icon', icon: 'arrow-right' -%}</svg>
+                  </a>
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endcapture -%}
+
+          {%- if other_items != blank -%}
+            <div class="sw-search__list">
+              <h3 class="mono sw-search__list-title">{{ 'search.other_results' | t }}</h3>
+              <ul class="sw-search__list-items" role="list">{{ other_items }}</ul>
+            </div>
+          {%- endif -%}
+
+          {% render 'collection-pagination', paginate: paginate %}
+
+        {%- endpaginate -%}
+      {%- endif -%}
+
+    {%- else -%}
+      <div class="sw-search__intro">
+        <p class="sw-search__intro-text">{{ 'search.intro' | t }}</p>
+      </div>
+    {%- endif -%}
+
+  </div>
+</div>
 
 {% stylesheet %}
-  .search-results {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+.sw-search {
+  padding-bottom: var(--s-7);
+}
+
+.sw-search__hero {
+  padding-top: var(--s-4);
+  padding-bottom: var(--s-5);
+  max-width: 820px;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.sw-search__title {
+  font-size: clamp(34px, 5vw, 52px);
+  line-height: 1.05;
+  margin-top: 10px;
+  margin-bottom: 22px;
+}
+
+.sw-search__title em {
+  font-style: italic;
+  color: var(--accent-deep);
+}
+
+.sw-search__form {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: center;
+  gap: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 6px 6px 6px 16px;
+  transition: border-color .18s ease, box-shadow .18s ease;
+}
+
+.sw-search__form:focus-within {
+  border-color: var(--accent-deep);
+  box-shadow: 0 0 0 4px var(--accent-soft);
+}
+
+.sw-search__form-icon {
+  display: inline-flex;
+  align-items: center;
+  color: var(--ink-mute);
+  transition: color .18s ease;
+}
+
+.sw-search__form:focus-within .sw-search__form-icon {
+  color: var(--accent-deep);
+}
+
+.sw-search__input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  padding: 14px 12px;
+  min-width: 0;
+}
+
+.sw-search__input::placeholder { color: var(--ink-mute); }
+
+.sw-search__input::-webkit-search-cancel-button,
+.sw-search__input::-webkit-search-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.sw-search__clear {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 8px;
+  margin-right: 4px;
+  transition: color .15s ease, background .15s ease;
+}
+
+.sw-search__clear:hover {
+  color: var(--accent-deep);
+  background: var(--accent-soft);
+}
+
+.sw-search__clear[hidden] { display: none; }
+
+.sw-search__submit {
+  white-space: nowrap;
+  padding: 10px 16px;
+}
+
+@media screen and (max-width: 600px) {
+  .sw-search__submit span,
+  .sw-search__submit { font-size: 13px; padding: 9px 12px; }
+  .sw-search__input { font-size: 16px; padding: 12px; }
+  .sw-search__clear { padding: 6px 8px; font-size: 10px; }
+}
+
+.sw-search__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 20px 18px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 24px;
+}
+
+.sw-search__count {
+  font-size: 12px;
+  color: var(--ink-mute);
+  letter-spacing: 0.04em;
+}
+
+.sw-search__grid {
+  margin-bottom: var(--s-5);
+}
+
+.sw-search__list {
+  border-top: 1px solid var(--line);
+  padding-top: 24px;
+  margin-top: 24px;
+}
+
+.sw-search__list-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+  color: var(--ink-mute);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.sw-search__list-title::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--sun);
+  box-shadow: 0 0 0 3px var(--sun-soft);
+  flex-shrink: 0;
+}
+
+.sw-search__list-items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sw-search__list-item {
+  border-bottom: 1px solid var(--line-soft, var(--line));
+}
+
+.sw-search__list-link {
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 4px;
+  color: var(--ink);
+  text-decoration: none;
+  transition: color .15s ease, padding .15s ease;
+}
+
+.sw-search__list-link:hover {
+  color: var(--accent-deep);
+  padding-left: 10px;
+}
+
+.sw-search__list-kind {
+  font-size: 11px;
+  color: var(--ink-mute);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.sw-search__list-name {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.sw-search__list-arrow {
+  color: var(--ink-mute);
+  transition: color .15s ease, transform .15s ease;
+}
+
+.sw-search__list-link:hover .sw-search__list-arrow {
+  color: var(--accent-deep);
+  transform: translateX(3px);
+}
+
+.sw-search__intro {
+  padding-block: var(--s-5);
+  text-align: center;
+}
+
+.sw-search__intro-text {
+  color: var(--ink-soft);
+  max-width: 520px;
+  margin-inline: auto;
+  line-height: 1.6;
+}
+
+.sw-search__empty {
+  padding-block: var(--s-6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 14px;
+  max-width: 520px;
+  margin-inline: auto;
+}
+
+.sw-search__empty-icon {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--bg-card);
+  display: grid;
+  place-items: center;
+  color: var(--ink-mute);
+}
+
+.sw-search__empty-title {
+  font-size: clamp(26px, 4vw, 36px);
+  line-height: 1.1;
+}
+
+.sw-search__empty-body {
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+.sw-search__empty-body strong,
+.sw-search__empty-body em {
+  color: var(--ink);
+  font-style: normal;
+  font-weight: 600;
+}
+
+.sw-search__empty-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 6px;
+}
+
+@media screen and (max-width: 600px) {
+  .sw-search__list-link {
+    grid-template-columns: 1fr auto;
   }
-  .search-results .prev,
-  .search-results .page,
-  .search-results .next {
+  .sw-search__list-kind {
     grid-column: 1 / -1;
+    margin-bottom: -8px;
   }
+}
 {% endstylesheet %}
 
 {% schema %}
 {
   "name": "t:general.search",
-  "settings": []
+  "settings": [
+    {
+      "type": "range",
+      "id": "results_per_page",
+      "label": "Results per page",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "default": 24
+    }
+  ]
 }
 {% endschema %}

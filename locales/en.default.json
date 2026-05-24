@@ -58,10 +58,39 @@
   },
   "search": {
     "title": "Search",
-    "placeholder": "Search articles, pages, or products",
+    "title_pre": "What are you",
+    "title_em": "looking for?",
+    "eyebrow": "Search",
+    "placeholder": "Search modules, inverters, packages…",
     "submit": "Search",
-    "no_results_html": "No results found for {{ terms }}",
-    "results_for_html": "{{ count }} results found for {{ terms }}"
+    "close": "Close search",
+    "clear": "Clear",
+    "intro": "Type a product name, brand, or part number above.",
+    "results_count": {
+      "one": "{{ count }} result for {{ terms }}",
+      "other": "{{ count }} results for {{ terms }}"
+    },
+    "other_results": "Articles & pages",
+    "kind": {
+      "article": "Article",
+      "page": "Page"
+    },
+    "empty": {
+      "title": "No matches.",
+      "body_html": "We couldn't find anything for <strong>{{ terms }}</strong>. Try a different keyword, brand, or part number.",
+      "browse_all": "Browse all products",
+      "back_home": "Back to home"
+    },
+    "predictive": {
+      "hint": "Start typing to search…",
+      "loading": "Searching…",
+      "no_results": "No matches",
+      "error": "Search is unavailable. Press Enter to load the full results page.",
+      "products": "Products",
+      "articles": "Articles",
+      "pages": "Pages",
+      "view_all": "View all results"
+    }
   },
   "breadcrumb": {
     "label": "Breadcrumb",

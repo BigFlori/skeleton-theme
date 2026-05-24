@@ -31,7 +31,7 @@
     {% if settings.logo %}
       "logo": {{ settings.logo | image_url: width: 500 | prepend: "https:" | json }},
     {% endif %}
-    "url": {{ request.origin | append: page.url | json }}
+    "url": {{ request.origin | json }}
   }
 </script>
 
@@ -87,6 +87,19 @@
             </details>
           </div>
         {%- endif -%}
+
+        <button
+          type="button"
+          class="header__search"
+          data-search-trigger
+          aria-label="{{ 'search.title' | t }}"
+          aria-controls="sw-search-drawer"
+          aria-expanded="false"
+        >
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            {%- render 'icon', icon: 'search' -%}
+          </svg>
+        </button>
 
         <a
           href="{{ routes.cart_url }}"
@@ -362,6 +375,7 @@
   }
 {% endstylesheet %}
 
+{%- render 'predictive-search' -%}
 {%- render 'mobile-nav-drawer', menu: mobile_menu -%}
 <script src="{{ 'mobile-nav.js' | asset_url }}" defer></script>
 <script>
