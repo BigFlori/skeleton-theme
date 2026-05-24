@@ -11,7 +11,15 @@
   {% for article in blog.articles %}
     <div>
       {% if article.image %}
-        {{ article.image | image_url: width: 1000 | image_tag }}
+        {{
+          article.image
+          | image_url: width: 1200
+          | image_tag:
+            loading: 'lazy',
+            widths: '320, 480, 640, 800, 1000, 1200',
+            sizes: '(min-width: 990px) 600px, 100vw',
+            alt: article.image.alt | default: article.title
+        }}
       {% endif %}
       <h2>
         {{ article.title | link_to: article.url }}
