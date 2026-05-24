@@ -80,8 +80,8 @@ body {
 
 /** Accessibility: skip link + global focus indicator */
 .sw-skip-link {
-  position: absolute;
-  top: 0;
+  position: fixed;
+  top: -200px;
   left: 0;
   padding: 8px 12px;
   background: var(--ink, #000);
@@ -90,12 +90,11 @@ body {
   font-size: 12px;
   text-decoration: none;
   z-index: 10000;
-  transform: translateY(-200%);
-  transition: transform 0.2s ease;
+  transition: top 0.2s ease;
 }
 .sw-skip-link:focus,
 .sw-skip-link:focus-visible {
-  transform: translateY(0);
+  top: 0;
   outline: 2px solid var(--accent, #ffb800);
   outline-offset: 2px;
 }

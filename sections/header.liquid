@@ -101,6 +101,18 @@
           </svg>
         </button>
 
+        {%- if shop.customer_accounts_enabled -%}
+          <a
+            href="{{ routes.account_url }}"
+            class="header__account"
+            aria-label="{{ 'general.account' | t }}"
+          >
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              {%- render 'icon', icon: 'user' -%}
+            </svg>
+          </a>
+        {%- endif -%}
+
         <a
           href="{{ routes.cart_url }}"
           class="header__cart"
@@ -242,6 +254,32 @@
     font-family: var(--font-sans);
     font-weight: 500;
     transition: border-color .15s ease, background .15s ease, color .15s ease;
+  }
+
+  .header__account {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    background: var(--bg-card);
+    color: var(--ink);
+    text-decoration: none;
+    transition: border-color .15s ease, background .15s ease, color .15s ease;
+  }
+
+  .header__account:hover {
+    border-color: var(--accent-deep);
+    background: var(--accent-soft);
+    color: var(--accent-deep);
+  }
+
+  @media screen and (min-width: 750px) {
+    .header__account {
+      display: inline-flex;
+    }
   }
 
   .header__cart-label {

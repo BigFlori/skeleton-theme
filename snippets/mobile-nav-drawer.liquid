@@ -58,6 +58,17 @@
     {%- endfor -%}
   </ul>
 
+  {%- if shop.customer_accounts_enabled -%}
+    <div class="sw-mobile-nav__account">
+      <a href="{{ routes.account_url }}" class="sw-mobile-nav__account-link">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          {%- render 'icon', icon: 'user' -%}
+        </svg>
+        <span>{{ 'general.account' | t }}</span>
+      </a>
+    </div>
+  {%- endif -%}
+
   {%- if localization.available_languages.size > 1 -%}
     <div class="sw-mobile-nav__lang">
       <span class="mono sw-mobile-nav__lang-label">{{ 'general.language' | t }}</span>
@@ -211,6 +222,33 @@
 .sw-mobile-nav__link:hover .sw-mobile-nav__link-arrow {
   color: var(--accent-deep);
   transform: translateX(3px);
+}
+
+/* ── Account section ── */
+.sw-mobile-nav__account {
+  padding: 16px 26px;
+  border-top: 1px solid var(--line);
+  flex-shrink: 0;
+}
+.sw-mobile-nav__account-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--bg-card);
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 14px;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  transition: border-color .15s ease, background .15s ease, color .15s ease;
+}
+.sw-mobile-nav__account-link:hover {
+  border-color: var(--accent-deep);
+  background: var(--accent-soft);
+  color: var(--accent-deep);
 }
 
 /* ── Language section (drawer footer) ── */
