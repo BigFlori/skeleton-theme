@@ -16,6 +16,9 @@
 </section>
 
 {% render 'pdp-keyspecs' %}
+{%- if product.description != blank -%}
+  {% render 'pdp-description' %}
+{%- endif -%}
 {% render 'pdp-compat' %}
 {% render 'pdp-datasheet' %}
 {% render 'pdp-sticky-bar', current_variant: current_variant %}
