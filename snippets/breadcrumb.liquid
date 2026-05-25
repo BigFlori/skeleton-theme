@@ -43,14 +43,20 @@
   {%- when 'product' -%}
     {%- liquid
       assign br_type_collection = nil
-      if product.type != blank
-        for entry in shop.metaobjects.product_type_collection_map.values
-          if entry.product_type == product.type and entry.collection.value != blank
-            assign br_type_collection = entry.collection.value
+      for entry in shop.metaobjects.product_type_collection_map.values
+        assign br_mapped_col = entry.collection.value
+        if br_mapped_col != blank
+          for br_col in product.collections
+            if br_col.id == br_mapped_col.id
+              assign br_type_collection = br_mapped_col
+              break
+            endif
+          endfor
+          if br_type_collection
             break
           endif
-        endfor
-      endif
+        endif
+      endfor
       assign br_model = product.metafields.custom.model_number | default: product.title
       if product.vendor != blank
         assign br_current = product.vendor | append: ' ' | append: br_model
