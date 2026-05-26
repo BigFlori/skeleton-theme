@@ -176,6 +176,13 @@
       "heading_em": "get.",
       "subtitle": "Key information, features and details — everything you need to know about this product."
     },
+    "youtube": {
+      "eyebrow": "Video walkthrough",
+      "heading_line1": "See it",
+      "heading_em": "in action.",
+      "subtitle": "A short video says more than a hundred datasheets. Installation, operation and real-world performance.",
+      "play_label": "Play video"
+    },
     "datasheet": {
       "eyebrow": "Full specifications",
       "heading_line1": "Everything",

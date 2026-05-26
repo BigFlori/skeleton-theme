@@ -176,6 +176,13 @@
       "heading_em": "bekommst.",
       "subtitle": "Wichtige Informationen, Merkmale und Details — alles, was du über dieses Produkt wissen musst."
     },
+    "youtube": {
+      "eyebrow": "Video-Rundgang",
+      "heading_line1": "Sieh es",
+      "heading_em": "in Aktion.",
+      "subtitle": "Ein kurzes Video sagt mehr als hundert Datenblätter. Montage, Betrieb und Erfahrungen aus der Praxis.",
+      "play_label": "Video abspielen"
+    },
     "datasheet": {
       "eyebrow": "Vollständige Daten",
       "heading_line1": "Alles was",

@@ -1,0 +1,87 @@
+{%- comment -%}
+  Renders a YouTube video facade (thumbnail + play button) that swaps to an iframe
+  on first click. Uses product.metafields.custom.youtube_video which accepts either
+  a raw 11-char YouTube ID or any full YouTube URL form (watch, youtu.be, embed, shorts).
+{%- endcomment -%}
+
+{%- assign yt_raw = product.metafields.custom.youtube_video.value | default: '' | strip -%}
+{%- assign yt_id = '' -%}
+
+{%- if yt_raw != blank -%}
+  {%- comment -%} Try to pick the ID from each known URL form, falling through to raw input. {%- endcomment -%}
+  {%- if yt_raw contains 'youtu.be/' -%}
+    {%- assign yt_id = yt_raw | split: 'youtu.be/' | last | split: '?' | first | split: '&' | first | split: '/' | first -%}
+  {%- elsif yt_raw contains 'v=' -%}
+    {%- assign yt_id = yt_raw | split: 'v=' | last | split: '&' | first -%}
+  {%- elsif yt_raw contains '/embed/' -%}
+    {%- assign yt_id = yt_raw | split: '/embed/' | last | split: '?' | first | split: '/' | first -%}
+  {%- elsif yt_raw contains '/shorts/' -%}
+    {%- assign yt_id = yt_raw | split: '/shorts/' | last | split: '?' | first | split: '/' | first -%}
+  {%- else -%}
+    {%- assign yt_id = yt_raw | split: '?' | first | split: '&' | first -%}
+  {%- endif -%}
+  {%- assign yt_id = yt_id | strip -%}
+{%- endif -%}
+
+{%- if yt_id != blank and yt_id.size == 11 -%}
+  <section class="pdp-youtube full-width" id="video">
+    <div class="container">
+      <div class="pdp-youtube__grid">
+        <div class="pdp-youtube__sticky">
+          <span class="eyebrow">{{ 'pdp.youtube.eyebrow' | t }}</span>
+          <h2 class="display" style="font-size:clamp(40px,5vw,68px);margin-top:16px;line-height:1;">
+            {{ 'pdp.youtube.heading_line1' | t }}<br>
+            <em style="color:var(--accent-deep);">{{ 'pdp.youtube.heading_em' | t }}</em>
+          </h2>
+          <p style="color:var(--ink-soft);font-size:14px;margin-top:20px;max-width:340px;line-height:1.55;">
+            {{ 'pdp.youtube.subtitle' | t }}
+          </p>
+        </div>
+
+        <div class="pdp-youtube__player">
+          <button
+            type="button"
+            class="pdp-youtube__facade"
+            data-yt-facade
+            data-yt-id="{{ yt_id }}"
+            aria-label="{{ 'pdp.youtube.play_label' | t }}"
+          >
+            <img
+              src="https://i.ytimg.com/vi/{{ yt_id }}/hqdefault.jpg"
+              srcset="https://i.ytimg.com/vi/{{ yt_id }}/hqdefault.jpg 480w, https://i.ytimg.com/vi/{{ yt_id }}/maxresdefault.jpg 1280w"
+              sizes="(max-width: 768px) 100vw, 720px"
+              alt="{{ product.title | escape }}"
+              loading="lazy"
+              class="pdp-youtube__thumb"
+            >
+            <span class="pdp-youtube__play" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    (function () {
+      var facades = document.querySelectorAll('[data-yt-facade]');
+      facades.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var id = btn.getAttribute('data-yt-id');
+          if (!id) return;
+          var iframe = document.createElement('iframe');
+          iframe.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0';
+          iframe.title = 'YouTube';
+          iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+          iframe.allowFullscreen = true;
+          iframe.loading = 'lazy';
+          iframe.className = 'pdp-youtube__iframe';
+          btn.replaceWith(iframe);
+        }, { once: true });
+      });
+    })();
+  </script>
+{%- endif -%}

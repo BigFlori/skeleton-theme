@@ -176,6 +176,13 @@
       "heading_em": "kapsz?",
       "subtitle": "A legfontosabb információk, jellemzők és részletek — minden, amit a termékről tudnod kell."
     },
+    "youtube": {
+      "eyebrow": "Videó bemutató",
+      "heading_line1": "Nézd meg",
+      "heading_em": "működés közben.",
+      "subtitle": "Egy rövid videó többet mond, mint száz adatlap. Telepítés, működés és valós tapasztalatok.",
+      "play_label": "Videó lejátszása"
+    },
     "datasheet": {
       "eyebrow": "Teljes műszaki adatok",
       "heading_line1": "Minden, ami",
