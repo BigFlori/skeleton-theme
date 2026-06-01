@@ -515,6 +515,18 @@
       "trust_ssl": "SSL-biztonságos",
       "trust_shipping": "3 napos szállítás",
       "trust_install": "Szerelés egész AT-ban"
+    },
+    "category_nav": {
+      "aria_label": "Termékkategóriák"
+    },
+    "testimonials": {
+      "eyebrow": "Vélemények",
+      "headline": "Mit mondanak",
+      "headline_em": "vásárlóink",
+      "view_all": "Összes vélemény"
+    },
+    "product_grid": {
+      "view_all": "Összes megtekintése"
     }
   }
 }

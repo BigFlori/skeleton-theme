@@ -515,6 +515,18 @@
       "trust_ssl": "SSL-sicher",
       "trust_shipping": "3 Tage Versand",
       "trust_install": "Montage AT-weit"
+    },
+    "category_nav": {
+      "aria_label": "Produktkategorien"
+    },
+    "testimonials": {
+      "eyebrow": "Bewertungen",
+      "headline": "Was unsere",
+      "headline_em": "Kunden sagen",
+      "view_all": "Alle Bewertungen"
+    },
+    "product_grid": {
+      "view_all": "Alle ansehen"
     }
   }
 }

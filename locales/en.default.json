@@ -515,6 +515,18 @@
       "trust_ssl": "SSL-secure",
       "trust_shipping": "3-day delivery",
       "trust_install": "Installation AT-wide"
+    },
+    "category_nav": {
+      "aria_label": "Product categories"
+    },
+    "testimonials": {
+      "eyebrow": "Reviews",
+      "headline": "What our",
+      "headline_em": "customers say",
+      "view_all": "All reviews"
+    },
+    "product_grid": {
+      "view_all": "View all"
     }
   }
 }

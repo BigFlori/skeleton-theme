@@ -1,0 +1,311 @@
+<section class="sw-reviews full-width">
+  <div class="container">
+
+    <div class="sw-reviews__header">
+      <span class="eyebrow">{{ 'sections.testimonials.eyebrow' | t }}</span>
+      <h2 class="display sw-reviews__headline">
+        {{ 'sections.testimonials.headline' | t }}<br>
+        <em class="sw-reviews__em">{{ 'sections.testimonials.headline_em' | t }}</em>
+      </h2>
+    </div>
+
+    <div class="sw-reviews__grid">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'review' -%}
+          <article class="sw-reviews__card" {{ block.shopify_attributes }}>
+
+            <div class="sw-reviews__card-top">
+              <div class="sw-reviews__author">
+                {%- if block.settings.flag != blank -%}
+                  <span class="sw-reviews__flag" aria-hidden="true">{{ block.settings.flag }}</span>
+                {%- endif -%}
+                <div class="sw-reviews__author-text">
+                  <span class="sw-reviews__name">{{ block.settings.author }}</span>
+                  <span class="mono sw-reviews__date">{{ block.settings.date }}</span>
+                </div>
+              </div>
+              {%- assign star_count = block.settings.stars | default: 5 -%}
+              <div class="sw-reviews__stars" role="img" aria-label="{{ star_count }}/5">
+                {%- for i in (1..5) -%}
+                  {%- if i <= star_count -%}
+                    <svg class="sw-reviews__star sw-reviews__star--on" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1" aria-hidden="true">{%- render 'icon', icon: 'star' -%}</svg>
+                  {%- else -%}
+                    <svg class="sw-reviews__star" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">{%- render 'icon', icon: 'star' -%}</svg>
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+            </div>
+
+            <p class="sw-reviews__text">{{ block.settings.text }}</p>
+
+          </article>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.view_all_url != blank -%}
+      <div class="sw-reviews__footer">
+        <a href="{{ section.settings.view_all_url }}" class="mono sw-reviews__view-all">
+          {{ 'sections.testimonials.view_all' | t }}
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            {%- render 'icon', icon: 'arrow-right' -%}
+          </svg>
+        </a>
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% stylesheet %}
+.sw-reviews {
+  padding: var(--s-6) 0;
+  background: var(--bg);
+}
+
+.sw-reviews__header {
+  margin-bottom: var(--s-5);
+}
+
+.sw-reviews__headline {
+  font-size: clamp(36px, 5vw, 64px);
+  line-height: 1.05;
+  margin-top: 14px;
+  margin-bottom: 0;
+}
+
+.sw-reviews__em {
+  font-style: italic;
+  color: var(--accent-deep);
+}
+
+.sw-reviews__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.sw-reviews__card {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.sw-reviews__card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.sw-reviews__author {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sw-reviews__flag {
+  font-size: 20px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.sw-reviews__author-text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.sw-reviews__name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.2;
+}
+
+.sw-reviews__date {
+  font-size: 10px;
+  color: var(--ink-mute);
+  letter-spacing: 0.04em;
+}
+
+.sw-reviews__stars {
+  display: flex;
+  gap: 2px;
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+
+.sw-reviews__star {
+  color: var(--line);
+}
+
+.sw-reviews__star--on {
+  color: oklch(0.72 0.15 65);
+}
+
+.sw-reviews__text {
+  font-size: 14px;
+  color: var(--ink-soft);
+  line-height: 1.65;
+  margin: 0;
+}
+
+.sw-reviews__footer {
+  margin-top: var(--s-4);
+  text-align: center;
+}
+
+.sw-reviews__view-all {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--ink-soft);
+  text-decoration: none;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: color 0.15s;
+}
+
+.sw-reviews__view-all:hover {
+  color: var(--accent-deep);
+}
+
+@media (max-width: 960px) {
+  .sw-reviews__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 580px) {
+  .sw-reviews__grid {
+    grid-template-columns: 1fr;
+  }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "settings": [
+    {
+      "type": "url",
+      "id": "view_all_url",
+      "label": "View all reviews URL"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author name",
+          "default": "Thomas M."
+        },
+        {
+          "type": "text",
+          "id": "flag",
+          "label": "Flag emoji (e.g. 🇦🇹 or 🇩🇪)",
+          "default": "🇦🇹"
+        },
+        {
+          "type": "text",
+          "id": "date",
+          "label": "Date label",
+          "default": "März 2025"
+        },
+        {
+          "type": "range",
+          "id": "stars",
+          "label": "Stars",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Review text",
+          "default": "Sehr schnelle Lieferung, alles top verpackt."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials",
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+            "author": "Thomas M.",
+            "flag": "🇦🇹",
+            "date": "März 2025",
+            "stars": 5,
+            "text": "Sehr schnelle Lieferung und alles einwandfrei verpackt. Die Beratung per Telefon war kompetent und ehrlich — hat mich sogar vor einem zu großen Paket abgeraten."
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "author": "Klaus B.",
+            "flag": "🇩🇪",
+            "date": "Februar 2025",
+            "stars": 5,
+            "text": "Preisleistung unschlagbar. Module und Wechselrichter passten perfekt zusammen, keine Kompatibilitätsprobleme. Lieferung nach Bayern in 5 Tagen."
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "author": "Petra W.",
+            "flag": "🇦🇹",
+            "date": "Jänner 2025",
+            "stars": 5,
+            "text": "Als Elektrikerin bestelle ich regelmäßig für Kunden. Die Partnerpreise machen einen spürbaren Unterschied. Support ist immer erreichbar."
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "author": "Martin R.",
+            "flag": "🇩🇪",
+            "date": "Dezember 2024",
+            "stars": 5,
+            "text": "Zweite Bestellung, wieder reibungslos. Kabelset und Dachhaken vollständig, Qualität einwandfrei. Klare Empfehlung für Installateure."
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "author": "Stefan G.",
+            "flag": "🇦🇹",
+            "date": "November 2024",
+            "stars": 5,
+            "text": "Hab das Montageset selbst montiert nach dem Videoguide. Alles passte auf Anhieb. Bei Fragen war das Team sofort per Telefon erreichbar."
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "author": "Daniela L.",
+            "flag": "🇦🇹",
+            "date": "Oktober 2024",
+            "stars": 5,
+            "text": "Übersichtliche Website, schnelle Abwicklung, faire Preise. Palette kam pünktlich und gut gesichert. Werde auch die Speicherpakete hier bestellen."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

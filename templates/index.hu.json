@@ -1,182 +1,57 @@
 {
   "sections": {
-    "hero": {
-      "type": "hero",
+    "catnav": {
+      "type": "category-nav",
+      "blocks": {
+        "cn-1": { "type": "item", "settings": { "icon": "panel-grid", "label": "Napelem modulok" } },
+        "cn-2": { "type": "item", "settings": { "icon": "inverter",   "label": "Inverterek" } },
+        "cn-3": { "type": "item", "settings": { "icon": "battery",    "label": "Tárolócsomagok" } },
+        "cn-4": { "type": "item", "settings": { "icon": "wrench",     "label": "Szerelőkészletek" } },
+        "cn-5": { "type": "item", "settings": { "icon": "bolt",       "label": "Kábel & Csatlakozók" } },
+        "cn-6": { "type": "item", "settings": { "icon": "plug",       "label": "Tartozékok" } }
+      },
+      "block_order": ["cn-1", "cn-2", "cn-3", "cn-4", "cn-5", "cn-6"],
+      "settings": {}
+    },
+    "pillars": {
+      "type": "value-pillars",
+      "blocks": {
+        "p-1": {
+          "type": "pillar",
+          "settings": {
+            "icon": "bolt",
+            "title": "Partner kedvezmény",
+            "description": "Regisztrált partnerek 3–9% kedvezményt kapnak minden rendelésre. Minimális rendelési összeg nélkül."
+          }
+        },
+        "p-2": {
+          "type": "pillar",
+          "settings": {
+            "icon": "star",
+            "title": "Piacvezető árak",
+            "description": "Közvetlenül az importőrtől — közvetítő felárak nélkül. Legjobb ár garancia minden márkára."
+          }
+        },
+        "p-3": {
+          "type": "pillar",
+          "settings": {
+            "icon": "phone",
+            "title": "Technikai support",
+            "description": "Telefon & e-mail support H–P, mérnökeink által. Minden vásárló számára ingyenes."
+          }
+        },
+        "t-1": { "type": "tier", "settings": { "from_label": "€ 500 felett", "discount": "3%" } },
+        "t-2": { "type": "tier", "settings": { "from_label": "€ 1.000 felett", "discount": "5%" } },
+        "t-3": { "type": "tier", "settings": { "from_label": "€ 2.500 felett", "discount": "7%" } },
+        "t-4": { "type": "tier", "settings": { "from_label": "€ 5.000 felett", "discount": "9%" } }
+      },
+      "block_order": ["p-1", "p-2", "p-3", "t-1", "t-2", "t-3", "t-4"],
       "settings": {
-        "layout": "split"
+        "cta_login": "Bejelentkezés",
+        "cta_register": "Fiók létrehozása",
+        "cta_note": "Nincs minimális rendelési összeg.",
+        "table_title": "PARTNER KEDVEZMÉNYEK"
       }
-    },
-    "trust-bar": {
-      "type": "trust-bar",
-      "blocks": {
-        "ja-solar": {
-          "type": "brand",
-          "settings": {
-            "name": "JA Solar",
-            "style": "sans-bold"
-          }
-        },
-        "longi": {
-          "type": "brand",
-          "settings": {
-            "name": "Longi",
-            "style": "serif"
-          }
-        },
-        "fronius": {
-          "type": "brand",
-          "settings": {
-            "name": "Fronius",
-            "style": "sans-semibold"
-          }
-        },
-        "huawei": {
-          "type": "brand",
-          "settings": {
-            "name": "Huawei",
-            "style": "sans-light"
-          }
-        },
-        "sma": {
-          "type": "brand",
-          "settings": {
-            "name": "SMA",
-            "style": "sans-black"
-          }
-        },
-        "goodwe": {
-          "type": "brand",
-          "settings": {
-            "name": "Goodwe",
-            "style": "sans-condensed"
-          }
-        },
-        "byd": {
-          "type": "brand",
-          "settings": {
-            "name": "BYD",
-            "style": "sans-bold"
-          }
-        },
-        "victron": {
-          "type": "brand",
-          "settings": {
-            "name": "Victron",
-            "style": "serif"
-          }
-        }
-      },
-      "block_order": [
-        "ja-solar",
-        "longi",
-        "fronius",
-        "huawei",
-        "sma",
-        "goodwe",
-        "byd",
-        "victron"
-      ],
-      "settings": {}
-    },
-    "featured-packages": {
-      "type": "featured-packages",
-      "settings": {}
-    },
-    "how-it-works": {
-      "type": "how-it-works",
-      "blocks": {
-        "step-1": {
-          "type": "step",
-          "settings": {
-            "icon": "panel",
-            "time": "~5 perc",
-            "title": "Csomag választása vagy konfigurálása",
-            "description": "Kezdj egy kész csomaggal vagy építsd össze saját rendszeredet. Mérnökeink ingyenesen ellenőrzik."
-          }
-        },
-        "step-2": {
-          "type": "step",
-          "settings": {
-            "icon": "shield",
-            "time": "< 24 óra",
-            "title": "Ingyenes tetőellenőrzés",
-            "description": "Tölts fel fotót és címet — 24 órán belül kiszámítjuk a dőlésszöget, árnyékolást és termelést."
-          }
-        },
-        "step-3": {
-          "type": "step",
-          "settings": {
-            "icon": "truck",
-            "time": "3–5 nap",
-            "title": "Szállítás Wr. Neustadtból",
-            "description": "Szállítás Ausztriában 3–5 munkanapon belül. Németországi szállítás igény szerint. Raklap egyenesen az ajtód elé."
-          }
-        },
-        "step-4": {
-          "type": "step",
-          "settings": {
-            "icon": "tools",
-            "time": "1–2 nap",
-            "title": "Barkácsolás vagy partnermontázs",
-            "description": "Kösd be saját magad videós útmutatónkkal — vagy megszervezzük a területeden lévő hitelesített szerelőket."
-          }
-        }
-      },
-      "block_order": [
-        "step-1",
-        "step-2",
-        "step-3",
-        "step-4"
-      ],
-      "settings": {}
-    },
-    "calculator": {
-      "type": "calculator",
-      "settings": {}
-    },
-    "why-us": {
-      "type": "why-us",
-      "blocks": {
-        "usp-1": {
-          "type": "usp",
-          "settings": {
-            "icon": "leaf",
-            "title": "Márkafüggetlen",
-            "description": "Nem kötődünk egyetlen gyártóhoz sem — azt ajánljuk, ami igazán illik a tetődre. 8 inverter-márka raktáron."
-          }
-        },
-        "usp-2": {
-          "type": "usp",
-          "settings": {
-            "icon": "truck",
-            "title": "Szállítás Ausztriából",
-            "description": "Központi raktár Bécsújhelyen. Nincs vám, nincs 6 hetes konténer-lottó. Raklapok az ajtódnál 3–5 munkanapon belül."
-          }
-        },
-        "usp-3": {
-          "type": "usp",
-          "settings": {
-            "icon": "shield",
-            "title": "25 év garancia",
-            "description": "Modulokra és inverterekre egyaránt. Mi intézzük a folyamatot — nem te egy shenzeni gyártóval."
-          }
-        },
-        "usp-4": {
-          "type": "usp",
-          "settings": {
-            "icon": "tools",
-            "title": "Barkácsolás vagy szerelő",
-            "description": "Szerelési videók saját elvégzéshez. Vagy megszervezzük a területedről a hitelesített villanyszerelőket fix áron."
-          }
-        }
-      },
-      "block_order": [
-        "usp-1",
-        "usp-2",
-        "usp-3",
-        "usp-4"
-      ],
-      "settings": {}
     },
     "category-grid": {
       "type": "category-grid",
@@ -215,93 +90,111 @@
           "type": "category",
           "settings": {
             "icon": "plug",
-            "name": "Wallbox és Kiegészítők",
-            "count_label": "60+ termék",
+            "name": "Wallbox & Tartozékok",
+            "count_label": "60+ cikk",
             "from_label": "€ 49-től",
             "brands": "go-e · KEBA · Wallbe · Victron"
           }
         }
       },
-      "block_order": [
-        "cat-1",
-        "cat-2",
-        "cat-3",
-        "cat-4"
-      ],
+      "block_order": ["cat-1", "cat-2", "cat-3", "cat-4"],
       "settings": {}
     },
-    "faq": {
-      "type": "faq",
+    "reviews": {
+      "type": "testimonials",
       "blocks": {
-        "faq-1": {
-          "type": "item",
+        "r-1": {
+          "type": "review",
           "settings": {
-            "question": "Megéri egy napelemes rendszer a jelenlegi villanyszámlák mellett?",
-            "answer": "<p>Igen — és egyre inkább. Az áramárak Ausztriában a 2023-as csúcsot követően is átlagosan 34 cent/kWh körül maradnak a háztartások számára. Egy tipikus 10 kWp-es rendszerrel, 60 % saját fogyasztással 6–8 év alatt térül meg. A nullaadó-kulcs (0 % ÁFA 20 kWp-ig) ezt tovább csökkenti.</p>"
+            "author": "Thomas M.",
+            "flag": "🇦🇹",
+            "date": "2025. március",
+            "stars": 5,
+            "text": "Nagyon gyors szállítás, minden tökéletesen csomagolva. A telefonos tanácsadás szakszerű és őszinte volt — még egy kisebb csomagot is ajánlottak."
           }
         },
-        "faq-2": {
-          "type": "item",
+        "r-2": {
+          "type": "review",
           "settings": {
-            "question": "Nem értek a technikához. Megrendelhetem így is?",
-            "answer": "<p>Pontosan erre valók a komplett csomagjaink. A modulok, inverterek, tartószerkezet és kábelek előre összehangolva — neked semmit sem kell kiszámolni. Az ingyenes tetőellenőrzés során mérnökeink átnézik a fotódat és megerősítik (vagy módosítják), ami illik.</p>"
+            "author": "Klaus B.",
+            "flag": "🇩🇪",
+            "date": "2025. február",
+            "stars": 5,
+            "text": "Verhetetlen ár-érték arány. A modulok és az inverter tökéletesen illenek össze. Bajorországba 5 nap alatt megérkezett."
           }
         },
-        "faq-3": {
-          "type": "item",
+        "r-3": {
+          "type": "review",
           "settings": {
-            "question": "Mi történik, ha 8 év múlva meghibásodik az inverter?",
-            "answer": "<p>Mi intézzük a garanciát helyetted — nem te egy valahol Ázsiában lévő gyártóval. 25 év termékgaranciát adunk a modulokra és 10–12 évet az inverterekre (20-ra meghosszabbítható). A cserekészülékek általában egy héten belül érkeznek a raktárunkból.</p>"
+            "author": "Petra W.",
+            "flag": "🇦🇹",
+            "date": "2025. január",
+            "stars": 5,
+            "text": "Villanyszerelőként rendszeresen rendelek ügyfeleknek. A partner árak érzékelhető különbséget jelentenek. A support mindig elérhető."
           }
         },
-        "faq-4": {
-          "type": "item",
+        "r-4": {
+          "type": "review",
           "settings": {
-            "question": "Szállítotok Magyarországra is?",
-            "answer": "<p>Igen, Magyarországra is szállítunk — 3–5 munkanappal hosszabb átfutási idővel és magyar ÁFA-kulccsal. A részletekért kérdezz közvetlenül az űrlapon keresztül.</p>"
+            "author": "Martin R.",
+            "flag": "🇩🇪",
+            "date": "2024. december",
+            "stars": 5,
+            "text": "Második rendelés, ismét zökkenőmentesen. Kábel és tetőhorgok hiánytalanul, kifogástalan minőség. Ajánlom telepítőknek."
           }
         },
-        "faq-5": {
-          "type": "item",
+        "r-5": {
+          "type": "review",
           "settings": {
-            "question": "Mit kell intéznem a hálózati szolgáltatónál?",
-            "answer": "<p>A termelő berendezés bejelentését — ezt vagy te intézed, vagy mi vállaljuk el € 190 átalányáron. Szükséges: mérőpontszám, inverter adatlap és megfelelőségi nyilatkozat.</p>"
+            "author": "Stefan G.",
+            "flag": "🇦🇹",
+            "date": "2024. november",
+            "stars": 5,
+            "text": "A videó útmutató alapján saját magam szereltem fel. Minden elsőre passzolt. Kérdés esetén a csapat azonnal elérhető volt."
           }
         },
-        "faq-6": {
-          "type": "item",
+        "r-6": {
+          "type": "review",
           "settings": {
-            "question": "Felszerelhetem a modulokat saját magam?",
-            "answer": "<p>A mechanikai szerelést igen — sok vásárlónk hétvégi projektként csinálja párban. Az elektromos csatlakozást azonban engedéllyel rendelkező villanyszerelőnek kell elvégeznie. Villanyszerelőket szervezünk € 490-től.</p>"
+            "author": "Daniela L.",
+            "flag": "🇦🇹",
+            "date": "2024. október",
+            "stars": 5,
+            "text": "Átlátható weboldal, gyors ügyintézés, kedvező árak. A raklap időben és biztonságosan érkezett. A tárolócsomagokat is itt fogom rendelni."
           }
         }
       },
-      "block_order": [
-        "faq-1",
-        "faq-2",
-        "faq-3",
-        "faq-4",
-        "faq-5",
-        "faq-6"
-      ],
+      "block_order": ["r-1", "r-2", "r-3", "r-4", "r-5", "r-6"],
+      "settings": {}
+    },
+    "featured": {
+      "type": "product-grid",
       "settings": {
-        "phone": "+43 1 234 56 78"
+        "eyebrow": "Ajánlott",
+        "title": "Ajánlott termékek",
+        "products_to_show": 6
       }
     },
-    "final-cta": {
-      "type": "final-cta",
+    "calculator": {
+      "type": "calculator",
       "settings": {}
+    },
+    "bestsellers": {
+      "type": "product-grid",
+      "settings": {
+        "eyebrow": "Bestseller",
+        "title": "Legjobban fogyó termékek",
+        "products_to_show": 6
+      }
     }
   },
   "order": [
-    "hero",
-    "trust-bar",
-    "featured-packages",
-    "how-it-works",
-    "calculator",
-    "why-us",
+    "catnav",
+    "pillars",
     "category-grid",
-    "faq",
-    "final-cta"
+    "reviews",
+    "featured",
+    "calculator",
+    "bestsellers"
   ]
 }

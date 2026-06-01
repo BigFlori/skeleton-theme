@@ -96,7 +96,10 @@
       "Bash(powershell -Command \"\\(Get-Content 'assets/sonnwerk.css' | Measure-Object -Line\\).Lines\")",
       "Bash(powershell -Command \"Remove-Item 'snippets/collection-breadcrumb.liquid','snippets/pdp-breadcrumb.liquid' -Force; Get-ChildItem 'snippets' -Filter '*breadcrumb*'\")",
       "Bash(powershell -Command \"Get-Content 'locales/en.default.json' | ConvertFrom-Json | Out-Null; Get-Content 'locales/hu.json' | ConvertFrom-Json | Out-Null; Get-Content 'locales/de.json' | ConvertFrom-Json | Out-Null; Write-Host 'JSON OK'\")",
-      "Bash(grep -nA 6 '\"search\":' c:/Users/Thurneer/Documents/Shopify/solar-theme/locales/hu.json c:/Users/Thurneer/Documents/Shopify/solar-theme/locales/de.json)"
+      "Bash(grep -nA 6 '\"search\":' c:/Users/Thurneer/Documents/Shopify/solar-theme/locales/hu.json c:/Users/Thurneer/Documents/Shopify/solar-theme/locales/de.json)",
+      "Bash(python3 -c \"import json; d=json.load\\(open\\('/home/fmolnar/Documents/Shopify/nrgedge/locales/en.default.json'\\)\\); print\\(json.dumps\\(d.get\\('sections', {}\\), indent=2\\)\\)\")",
+      "Bash(python3 -c \"import json; d=json.load\\(open\\('/home/fmolnar/Documents/Shopify/nrgedge/locales/hu.json'\\)\\); print\\(json.dumps\\(list\\(d.get\\('sections', {}\\).keys\\(\\)\\), indent=2\\)\\)\")",
+      "Bash(git -C /home/fmolnar/Documents/Shopify/nrgedge status --short)"
     ],
     "additionalDirectories": [
       "/home/fmolnar/Documents/Shopify/nrgedge/apps/discounts/extensions/volume-discount",

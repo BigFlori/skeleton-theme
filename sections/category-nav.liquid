@@ -1,0 +1,142 @@
+<nav class="sw-catnav full-width" aria-label="{{ 'sections.category_nav.aria_label' | t }}">
+  <div class="sw-catnav__scroller">
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'item' -%}
+        {%- assign cat_url = block.settings.collection.url | default: block.settings.url | default: '#' -%}
+        <a href="{{ cat_url }}" class="sw-catnav__item" {{ block.shopify_attributes }}>
+          <span class="sw-catnav__icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              {%- render 'icon', icon: block.settings.icon -%}
+            </svg>
+          </span>
+          <span class="sw-catnav__label">{{ block.settings.label }}</span>
+        </a>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</nav>
+
+{% stylesheet %}
+.sw-catnav {
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--line);
+}
+
+.sw-catnav__scroller {
+  display: flex;
+  align-items: stretch;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 0 max(16px, calc((100vw - 1280px) / 2));
+}
+
+.sw-catnav__scroller::-webkit-scrollbar {
+  display: none;
+}
+
+.sw-catnav__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 12px 22px;
+  text-decoration: none;
+  color: var(--ink-soft);
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s ease, border-color 0.15s ease;
+  flex-shrink: 0;
+}
+
+.sw-catnav__item:hover {
+  color: var(--accent-deep);
+  border-bottom-color: var(--accent);
+}
+
+.sw-catnav__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: currentColor;
+}
+
+.sw-catnav__label {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: inherit;
+  font-family: var(--font-mono, monospace);
+}
+
+@media (max-width: 640px) {
+  .sw-catnav__item {
+    padding: 10px 14px;
+  }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Category Nav",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Category",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "panel",      "label": "Solar panel" },
+            { "value": "panel-grid", "label": "Panel grid" },
+            { "value": "inverter",   "label": "Inverter" },
+            { "value": "battery",    "label": "Battery" },
+            { "value": "plug",       "label": "Plug / Wallbox" },
+            { "value": "bolt",       "label": "Cable / Bolt" },
+            { "value": "wrench",     "label": "Wrench / Tools" },
+            { "value": "sun",        "label": "Sun" },
+            { "value": "truck",      "label": "Truck" },
+            { "value": "shield",     "label": "Shield" },
+            { "value": "leaf",       "label": "Leaf" },
+            { "value": "compat",     "label": "Compatibility" }
+          ],
+          "default": "panel"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Solarmodule"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "URL (if no collection)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Category Nav",
+      "blocks": [
+        { "type": "item", "settings": { "icon": "panel-grid", "label": "Solarmodule" } },
+        { "type": "item", "settings": { "icon": "inverter",   "label": "Wechselrichter" } },
+        { "type": "item", "settings": { "icon": "battery",    "label": "Speicherpakete" } },
+        { "type": "item", "settings": { "icon": "wrench",     "label": "Montagesets" } },
+        { "type": "item", "settings": { "icon": "bolt",       "label": "Kabel & Stecker" } },
+        { "type": "item", "settings": { "icon": "plug",       "label": "Zubehör" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
