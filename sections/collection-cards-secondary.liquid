@@ -1,0 +1,141 @@
+{%- if section.blocks.size > 0 -%}
+  <section class="sw-coll-sec full-width">
+    <div class="container">
+      <div class="sw-coll-sec__grid">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'card' -%}
+            <div class="sw-coll-sec__slot" {{ block.shopify_attributes }}>
+              {%- render 'collection-card',
+                collection: block.settings.collection,
+                image: block.settings.image,
+                title: block.settings.label,
+                url: block.settings.url,
+                link_label: block.settings.link_label,
+                aspect_ratio: 'square'
+              -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+{% stylesheet %}
+.sw-coll-sec {
+  padding-top: var(--s-5);
+  padding-bottom: var(--s-5);
+}
+
+.sw-coll-sec__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 280px 280px;
+  gap: var(--s-3);
+}
+
+/* Card 1: left hero — 2 columns wide, spans both rows */
+.sw-coll-sec__slot:nth-child(1) {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+/* Card 4: bottom right — spans the remaining 2 columns */
+.sw-coll-sec__slot:nth-child(4) {
+  grid-column: span 2;
+}
+
+.sw-coll-sec__slot {
+  display: flex;
+}
+
+/* Override the snippet's aspect-ratio so the grid controls sizing */
+.sw-coll-sec__slot .collection-card {
+  flex: 1;
+  aspect-ratio: unset;
+}
+
+@media (max-width: 900px) {
+  .sw-coll-sec__grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+  }
+
+  /* Card 1: reset tall-left, span full width */
+  .sw-coll-sec__slot:nth-child(1) {
+    grid-row: auto;
+    grid-column: span 2;
+  }
+
+  /* Card 4: span full width */
+  .sw-coll-sec__slot:nth-child(4) {
+    grid-column: span 2;
+  }
+
+  /* Full-width cards: landscape */
+  .sw-coll-sec__slot:nth-child(1) .collection-card,
+  .sw-coll-sec__slot:nth-child(4) .collection-card {
+    aspect-ratio: 4 / 3;
+  }
+
+  /* Side-by-side cards: square */
+  .sw-coll-sec__slot:nth-child(2) .collection-card,
+  .sw-coll-sec__slot:nth-child(3) .collection-card {
+    aspect-ratio: 1 / 1;
+  }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Collection Cards (4)",
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Collection card",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "Falls back to the collection's featured image."
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Title override",
+          "info": "Leave empty to use the collection's title."
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Link label override",
+          "info": "Leave empty to use the translated default."
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "URL (fallback if no collection)"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Collection Cards (4)",
+      "blocks": [
+        { "type": "card", "settings": { "collection": "electrical-accessories" } },
+        { "type": "card", "settings": { "collection": "ev-chargers" } },
+        { "type": "card", "settings": { "collection": "mounting-systems" } },
+        { "type": "card", "settings": { "collection": "complete-systems" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

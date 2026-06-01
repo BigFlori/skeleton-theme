@@ -1,0 +1,118 @@
+{%- if section.blocks.size > 0 -%}
+  <section class="sw-coll-cards full-width">
+    <div class="container">
+      <div class="sw-coll-cards__grid">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'card' -%}
+            <div class="sw-coll-cards__slot" {{ block.shopify_attributes }}>
+              {%- render 'collection-card',
+                collection: block.settings.collection,
+                image: block.settings.image,
+                title: block.settings.label,
+                url: block.settings.url,
+                link_label: block.settings.link_label,
+                aspect_ratio: block.settings.aspect_ratio
+              -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+{% stylesheet %}
+.sw-coll-cards {
+  padding-top: var(--s-5);
+  padding-bottom: var(--s-5);
+}
+
+.sw-coll-cards__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s-3);
+}
+
+.sw-coll-cards__slot {
+  display: flex;
+}
+
+.sw-coll-cards__slot > .collection-card {
+  flex: 1;
+}
+
+@media (max-width: 900px) {
+  .sw-coll-cards__grid {
+    grid-template-columns: 1fr;
+    gap: var(--s-2);
+  }
+
+  .sw-coll-cards__slot .collection-card {
+    aspect-ratio: 16 / 9;
+  }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Collection Cards",
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Collection card",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "Falls back to the collection's featured image."
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Title override",
+          "info": "Leave empty to use the collection's title."
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Link label override",
+          "info": "Leave empty to use the translated default."
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "URL (fallback if no collection)"
+        },
+        {
+          "type": "select",
+          "id": "aspect_ratio",
+          "label": "Card shape",
+          "options": [
+            { "value": "portrait",  "label": "Portrait (3:4)" },
+            { "value": "square",    "label": "Square (1:1)" },
+            { "value": "landscape", "label": "Landscape (4:3)" }
+          ],
+          "default": "square"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "presets": [
+    {
+      "name": "Collection Cards",
+      "blocks": [
+        { "type": "card", "settings": { "collection": "solar-panels" } },
+        { "type": "card", "settings": { "collection": "inverters" } },
+        { "type": "card", "settings": { "collection": "battery-storage" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

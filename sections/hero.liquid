@@ -1,241 +1,177 @@
 {%- liquid
-  assign layout = section.settings.layout
   assign eyebrow = 'sections.hero.eyebrow' | t
   assign headline = 'sections.hero.headline' | t
   assign headline_italic = 'sections.hero.headline_italic' | t
   assign subcopy = 'sections.hero.subcopy' | t
   assign cta_primary_text = 'sections.hero.cta_primary' | t
-  assign cta_primary_url = section.settings.cta_primary_url
+  assign cta_primary_url = section.settings.cta_primary_url | default: '#'
   assign cta_ghost_text = 'sections.hero.cta_ghost' | t
-  assign cta_ghost_url = section.settings.cta_ghost_url
-  assign chip_label = 'sections.hero.chip_label' | t
-  assign chip_detail = 'sections.hero.chip_detail' | t
-  assign chip_price = 'sections.hero.chip_price' | t
+  assign cta_ghost_url = section.settings.cta_ghost_url | default: '#'
 -%}
 
-<section id="top" class="sw-hero sw-hero--{{ layout }}">
-  <div class="container{% if layout == 'centered' %} sw-hero__centered-wrap{% endif %}">
+<section id="top" class="sw-hero full-width">
+  {%- comment -%} Background image — editor override, falls back to bundled asset {%- endcomment -%}
+  <div class="sw-hero__bg" aria-hidden="true">
+    {%- if section.settings.hero_image != blank -%}
+      {{ section.settings.hero_image | image_url: width: 2400 | image_tag: class: 'sw-hero__bg-img', loading: 'eager', fetchpriority: 'high', sizes: '100vw', widths: '768, 1024, 1440, 1920, 2400', alt: '' }}
+    {%- else -%}
+      <img class="sw-hero__bg-img" src="{{ 'hero_image_webp.webp' | asset_url }}" alt="" loading="eager" fetchpriority="high">
+    {%- endif -%}
+    <div class="sw-hero__overlay"></div>
+  </div>
 
-    {%- if layout == 'split' or layout == 'left-heavy' -%}
-      {%- comment -%} SPLIT & LEFT-HEAVY: full-bleed headline first, then grid {%- endcomment -%}
+  <div class="sw-hero__inner">
+    <div class="container">
 
-      {%- if layout == 'left-heavy' -%}
-        <span class="eyebrow">{{ eyebrow }}</span>
-        <h1 class="display sw-hero__headline sw-hero__headline--xl">
-          {{- headline }} <em class="sw-hero__italic">{{ headline_italic }}</em>.
+      <div class="sw-hero__content">
+        {%- if eyebrow != blank -%}
+          <span class="eyebrow sw-hero__eyebrow">{{ eyebrow }}</span>
+        {%- endif -%}
+
+        <h1 class="display sw-hero__headline">
+          {{- headline }}
+          {%- if headline_italic != blank %} <em class="sw-hero__italic">{{ headline_italic }}</em>{% endif -%}
         </h1>
-      {%- endif -%}
 
-      <div class="sw-hero__grid">
-        <div class="sw-hero__content">
-          {%- if layout == 'split' -%}
-            <span class="eyebrow">{{ eyebrow }}</span>
-            <h1 class="display sw-hero__headline">
-              {{- headline }} <em class="sw-hero__italic">{{ headline_italic }}</em>.
-            </h1>
-          {%- endif -%}
-
+        {%- if subcopy != blank -%}
           <p class="sw-hero__sub">{{ subcopy }}</p>
+        {%- endif -%}
 
-          <div class="sw-hero__ctas">
+        <div class="sw-hero__ctas">
+          {%- if cta_primary_text != blank -%}
             <a href="{{ cta_primary_url }}" class="btn btn-primary sw-hero__cta-primary">
               {{ cta_primary_text }}
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 {%- render 'icon', icon: 'arrow-right' -%}
               </svg>
             </a>
-            <a href="{{ cta_ghost_url }}" class="btn btn-ghost">
-              {{ cta_ghost_text }}
-            </a>
-          </div>
-
-          {%- render 'hero-metrics' -%}
-        </div>
-
-        <div class="sw-hero__visual-wrap">
-          {%- render 'hero-visual', chip_label: chip_label, chip_detail: chip_detail, chip_price: chip_price, size: layout, image: section.settings.hero_image -%}
+          {%- endif -%}
+          {%- if cta_ghost_text != blank -%}
+            <a href="{{ cta_ghost_url }}" class="btn sw-hero__cta-ghost">{{ cta_ghost_text }}</a>
+          {%- endif -%}
         </div>
       </div>
 
-    {%- elsif layout == 'centered' -%}
-      {%- comment -%} CENTERED layout {%- endcomment -%}
-      <span class="eyebrow">{{ eyebrow }}</span>
-      <h1 class="display sw-hero__headline sw-hero__headline--centered">
-        {{- headline }} <em class="sw-hero__italic">{{ headline_italic }}</em>.
-      </h1>
-      <p class="sw-hero__sub sw-hero__sub--centered">{{ subcopy }}</p>
-      <div class="sw-hero__ctas sw-hero__ctas--centered">
-        <a href="{{ cta_primary_url }}" class="btn btn-primary sw-hero__cta-primary">
-          {{ cta_primary_text }}
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M5 12h14M12 5l7 7-7 7"/>
-          </svg>
-        </a>
-        <a href="{{ cta_ghost_url }}" class="btn btn-ghost">{{ cta_ghost_text }}</a>
-      </div>
-      <div class="sw-hero__visual-wrap sw-hero__visual-wrap--full">
-        {%- render 'hero-visual', chip_label: chip_label, chip_detail: chip_detail, chip_price: chip_price, size: 'medium', image: section.settings.hero_image -%}
-      </div>
-      {%- render 'hero-metrics' -%}
-
-    {%- endif -%}
-
+    </div>
   </div>
 </section>
 
 {% stylesheet %}
 /* ── Hero ── */
 .sw-hero {
-  padding-top: var(--s-5);
-  padding-bottom: var(--s-6);
-}
-
-.sw-hero__grid {
-  display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
-  gap: var(--s-5);
-  align-items: center;
-}
-
-.sw-hero--left-heavy .sw-hero__grid {
-  grid-template-columns: 1.2fr 1fr;
-  margin-top: var(--s-4);
-  align-items: end;
-}
-
-.sw-hero__content {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: var(--s-3);
+  justify-content: center;
+  min-height: 70vh;
+  overflow: hidden;
+  isolation: isolate;
 }
 
-/* Headline */
+/* Background image + overlay */
+.sw-hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.sw-hero__bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.sw-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    oklch(0.22 0.025 155 / 0.55) 0%,
+    oklch(0.22 0.025 155 / 0.2) 50%,
+    oklch(0.22 0.025 155 / 0.45) 100%
+  );
+}
+
+.sw-hero__inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding-top: var(--s-5);
+  padding-bottom: var(--s-5);
+}
+
+/* Content */
+.sw-hero__content {
+  max-width: 640px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+
+.sw-hero__eyebrow {
+  color: var(--sun-soft);
+}
+
 .sw-hero__headline {
-  font-size: clamp(48px, 7.5vw, 104px);
-  line-height: 0.98;
+  font-size: clamp(44px, 6vw, 84px);
+  line-height: 1;
   letter-spacing: -0.02em;
-  color: var(--ink);
+  color: var(--accent-ink);
   margin: 0;
-}
-
-.sw-hero__headline--xl {
-  font-size: clamp(64px, 11vw, 168px);
-  line-height: 0.92;
-  letter-spacing: -0.025em;
-  margin-top: var(--s-3);
-  margin-bottom: 0;
-}
-
-.sw-hero__headline--centered {
-  font-size: clamp(56px, 9vw, 132px);
-  line-height: 0.96;
-  letter-spacing: -0.02em;
-  max-width: 14ch;
+  text-shadow: 0 2px 24px oklch(0.15 0.02 155 / 0.35);
 }
 
 .sw-hero__italic {
   font-style: italic;
-  color: var(--accent-deep);
-}
-
-/* Centered layout specifics */
-.sw-hero--centered .container {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--s-3);
+  color: var(--sun);
 }
 
 .sw-hero__sub {
-  font-size: clamp(16px, 1.3vw, 19px);
-  color: var(--ink-soft);
-  max-width: 520px;
+  font-size: clamp(16px, 1.4vw, 19px);
   line-height: 1.55;
+  color: oklch(0.97 0.01 90 / 0.92);
+  max-width: 520px;
   margin: 0;
-}
-
-.sw-hero__sub--centered {
-  max-width: 620px;
+  text-shadow: 0 1px 12px oklch(0.15 0.02 155 / 0.4);
 }
 
 /* CTAs */
 .sw-hero__ctas {
   display: flex;
-  gap: 10px;
   flex-wrap: wrap;
+  gap: 12px;
   align-items: center;
-}
-
-.sw-hero__ctas--centered {
-  margin-top: 8px;
+  margin-top: var(--s-2);
 }
 
 .sw-hero__cta-primary {
   font-size: 16px;
-  padding: 16px 26px;
+  padding: 15px 26px;
+  box-shadow: 0 10px 30px oklch(0.22 0.025 155 / 0.35);
 }
 
-/* Visual */
-.sw-hero__visual-wrap {
-  position: relative;
+.sw-hero__cta-ghost {
+  font-size: 16px;
+  padding: 15px 26px;
+  color: var(--accent-ink);
+  background: oklch(1 0 0 / 0.08);
+  border: 1.5px solid oklch(1 0 0 / 0.7);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 }
 
-.sw-hero__visual-wrap--full {
-  width: 100%;
-  margin-top: var(--s-4);
-}
-
-/* Metrics strip */
-.sw-hero__metrics {
-  display: grid;
-  grid-template-columns: repeat(3, auto);
-  gap: var(--s-5);
-  margin-top: var(--s-4);
-  padding-top: var(--s-4);
-  border-top: 1px solid var(--line);
-}
-
-.sw-hero__metric-num {
-  font-family: var(--font-display);
-  font-size: 36px;
-  line-height: 1;
-  color: var(--ink);
-}
-
-.sw-hero__metric-label {
-  font-size: 13px;
-  color: var(--ink-soft);
-  margin-top: 6px;
-}
-
-.sw-hero__metric-sub {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--ink-mute);
-  margin-top: 2px;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+.sw-hero__cta-ghost:hover {
+  background: var(--accent-ink);
+  color: var(--accent-deep);
+  border-color: var(--accent-ink);
+  transform: translateY(-1px);
 }
 
 /* Responsive */
 @media (max-width: 900px) {
-  .sw-hero__grid,
-  .sw-hero--left-heavy .sw-hero__grid {
-    grid-template-columns: 1fr;
-  }
-  .sw-hero__visual-wrap {
-    order: -1;
-  }
-}
-
-@media (max-width: 600px) {
-  .sw-hero__metrics {
-    grid-template-columns: 1fr 1fr;
-    gap: var(--s-4) var(--s-3);
-  }
-  .sw-hero__metrics > *:last-child {
-    grid-column: 1 / -1;
+  .sw-hero__headline {
+    font-size: clamp(36px, 8vw, 56px);
   }
 }
 {% endstylesheet %}
@@ -245,24 +181,19 @@
   "name": "Hero",
   "settings": [
     {
-      "type": "select",
-      "id": "layout",
-      "label": "Layout",
-      "options": [
-        { "value": "split",      "label": "Split (default)" },
-        { "value": "centered",   "label": "Centered" },
-        { "value": "left-heavy", "label": "Left-heavy (big type)" }
-      ],
-      "default": "split"
-    },
-    {
       "type": "header",
-      "content": "Visual"
+      "content": "Background"
     },
     {
       "type": "image_picker",
       "id": "hero_image",
-      "label": "Hero image"
+      "label": "Hero image",
+      "info": "Leave empty to use the bundled hero photo."
+    },
+    {
+      "type": "header",
+      "content": "Copy",
+      "info": "Headline, subcopy and button labels are translated in the locale files under sections.hero.*"
     },
     {
       "type": "header",
@@ -275,7 +206,7 @@
     },
     {
       "type": "header",
-      "content": "Ghost CTA"
+      "content": "Secondary CTA"
     },
     {
       "type": "url",
@@ -285,10 +216,7 @@
   ],
   "presets": [
     {
-      "name": "Hero",
-      "settings": {
-        "layout": "split"
-      }
+      "name": "Hero"
     }
   ]
 }

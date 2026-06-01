@@ -99,7 +99,11 @@
       "Bash(grep -nA 6 '\"search\":' c:/Users/Thurneer/Documents/Shopify/solar-theme/locales/hu.json c:/Users/Thurneer/Documents/Shopify/solar-theme/locales/de.json)",
       "Bash(python3 -c \"import json; d=json.load\\(open\\('/home/fmolnar/Documents/Shopify/nrgedge/locales/en.default.json'\\)\\); print\\(json.dumps\\(d.get\\('sections', {}\\), indent=2\\)\\)\")",
       "Bash(python3 -c \"import json; d=json.load\\(open\\('/home/fmolnar/Documents/Shopify/nrgedge/locales/hu.json'\\)\\); print\\(json.dumps\\(list\\(d.get\\('sections', {}\\).keys\\(\\)\\), indent=2\\)\\)\")",
-      "Bash(git -C /home/fmolnar/Documents/Shopify/nrgedge status --short)"
+      "Bash(git -C /home/fmolnar/Documents/Shopify/nrgedge status --short)",
+      "PowerShell(try { Get-Content \"c:\\\\Users\\\\Thurneer\\\\Documents\\\\Shopify\\\\solar-theme\\\\templates\\\\index.json\" -Raw | ConvertFrom-Json | Out-Null; \"JSON OK\" } catch { \"JSON ERROR: $_\" })",
+      "PowerShell(foreach \\($f in @\\(\"templates\\\\index.json\",\"locales\\\\en.default.json\",\"locales\\\\de.json\",\"locales\\\\hu.json\"\\)\\) { try { Get-Content \"c:\\\\Users\\\\Thurneer\\\\Documents\\\\Shopify\\\\solar-theme\\\\$f\" -Raw | ConvertFrom-Json | Out-Null; \"$f : OK\" } catch { \"$f : ERROR $_\" } })",
+      "Bash(Remove-Item \"c:\\\\Users\\\\Thurneer\\\\Documents\\\\Shopify\\\\solar-theme\\\\sections\\\\value-pillars.liquid\" -Force)",
+      "Bash(Remove-Item \"c:\\\\Users\\\\Thurneer\\\\Documents\\\\Shopify\\\\solar-theme\\\\sections\\\\category-grid.liquid\" -Force)"
     ],
     "additionalDirectories": [
       "/home/fmolnar/Documents/Shopify/nrgedge/apps/discounts/extensions/volume-discount",

@@ -202,6 +202,11 @@
       "error_prefix": "Error: "
     }
   },
+  "snippets": {
+    "collection_card": {
+      "browse": "Browse collection"
+    }
+  },
   "collection": {
     "packages": {
       "eyebrow": "Featured · Curated bundles",
@@ -263,24 +268,17 @@
     }
   },
   "sections": {
+    "brands": {
+      "heading": "Brands we carry",
+      "aria_label": "Brands we carry"
+    },
     "hero": {
-      "eyebrow": "Austria · KWp Marketplace",
-      "headline": "The best solar for your",
-      "headline_italic": "own roof",
-      "subcopy": "We don't sell a brand — we sell the right one. Complete packages from JA Solar, Longi, Fronius, Huawei and SMA. Shipped from Austria, delivered in 3–5 business days.",
-      "cta_primary": "Secure your solar bundle",
-      "cta_ghost": "Calculate payback",
-      "chip_label": "Package „Family M“",
-      "chip_detail": "10.2 kWp · 24 Modules · Fronius Symo",
-      "chip_price": "€ 8,490 — available now",
-      "seal_text": "Ships from Austria",
-      "metric_systems_label": "Systems installed",
-      "metric_systems_sub": "since 2019",
-      "metric_shipping_num": "3–5 Days",
-      "metric_shipping_label": "Ships from",
-      "metric_warranty_num": "25 Years",
-      "metric_warranty_label": "Product warranty",
-      "metric_warranty_sub": "on modules"
+      "eyebrow": "Clean energy, delivered",
+      "headline": "Power your future with",
+      "headline_italic": "clean energy",
+      "subcopy": "Premium solar solutions for a sustainable home. Expertly installed, guaranteed performance.",
+      "cta_primary": "Shop all products",
+      "cta_ghost": "Get a free quote"
     },
     "trust_bar": {
       "label": "Authorized\nPartner of"
@@ -527,6 +525,10 @@
     },
     "product_grid": {
       "view_all": "View all"
+    },
+    "recommended_products": {
+      "default_eyebrow": "You might also like",
+      "default_title": "Recommended Products"
     }
   }
 }

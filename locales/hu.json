@@ -262,25 +262,23 @@
       "error_add_cart": "Nem sikerült a kosárba helyezni"
     }
   },
+  "snippets": {
+    "collection_card": {
+      "browse": "Kollekció megtekintése"
+    }
+  },
   "sections": {
+    "brands": {
+      "heading": "Ezeket a márkákat forgalmazzuk",
+      "aria_label": "Forgalmazott márkák"
+    },
     "hero": {
-      "eyebrow": "Ausztria · kWp piactér",
-      "headline": "A legjobb napelem a",
-      "headline_italic": "saját tetőre",
-      "subcopy": "Nem márkát adunk el — a megfelelőt. Komplett csomagok JA Solar, Longi, Fronius, Huawei és SMA gyártóktól. Szállítás Ausztriából, 3–5 munkanap alatt.",
-      "cta_primary": "Napelemcsomag foglalása",
-      "cta_ghost": "Megtérülés számítása",
-      "chip_label": "Csomag „Família M“",
-      "chip_detail": "10,2 kWp · 24 modul · Fronius Symo",
-      "chip_price": "€ 8 490 — azonnal elérhető",
-      "metric_shipping_num": "3–5 nap",
-      "metric_warranty_num": "25 év",
-      "seal_text": "Szállítás Ausztriából",
-      "metric_systems_label": "Telepített rendszer",
-      "metric_systems_sub": "2019 óta",
-      "metric_shipping_label": "Szállítás innen",
-      "metric_warranty_label": "Termékgarancia",
-      "metric_warranty_sub": "modulokra"
+      "eyebrow": "Tiszta energia, házhoz szállítva",
+      "headline": "Építse jövőjét",
+      "headline_italic": "tiszta energiával",
+      "subcopy": "Prémium napelemes megoldások fenntartható otthonokhoz. Szakszerű telepítés, garantált teljesítmény.",
+      "cta_primary": "Összes termék megtekintése",
+      "cta_ghost": "Kérjen ingyenes ajánlatot"
     },
     "trust_bar": {
       "label": "Hivatalos\npartner"
@@ -527,6 +525,10 @@
     },
     "product_grid": {
       "view_all": "Összes megtekintése"
+    },
+    "recommended_products": {
+      "default_eyebrow": "Ezt is megkedvelheti",
+      "default_title": "Ajánlott termékek"
     }
   }
 }

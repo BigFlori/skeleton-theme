@@ -1,6 +1,10 @@
 {%- liquid
-  assign grid_collection = section.settings.collection
-  assign limit = section.settings.products_to_show | default: 6
+  if section.settings.collection != blank
+    assign grid_collection = section.settings.collection
+  else
+    assign grid_collection = collections['recommended-products']
+  endif
+  assign limit = 8
 -%}
 
 <section class="sw-prodgrid full-width">
@@ -13,14 +17,6 @@
         {%- endif -%}
         <h2 class="display sw-prodgrid__headline">{{ section.settings.title }}</h2>
       </div>
-      {%- if grid_collection != blank -%}
-        <a href="{{ grid_collection.url }}" class="mono sw-prodgrid__view-all">
-          {{ 'sections.product_grid.view_all' | t }}
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            {%- render 'icon', icon: 'arrow-right' -%}
-          </svg>
-        </a>
-      {%- endif -%}
     </div>
 
     <div class="sw-prodgrid__grid">
@@ -74,25 +70,6 @@
   font-size: clamp(28px, 4vw, 52px);
   line-height: 1.05;
   margin: 10px 0 0;
-}
-
-.sw-prodgrid__view-all {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 11px;
-  color: var(--ink-soft);
-  text-decoration: none;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  white-space: nowrap;
-  transition: color 0.15s;
-  flex-shrink: 0;
-  padding-bottom: 4px;
-}
-
-.sw-prodgrid__view-all:hover {
-  color: var(--accent-deep);
 }
 
 .sw-prodgrid__grid {
@@ -272,15 +249,6 @@
       "type": "collection",
       "id": "collection",
       "label": "Collection"
-    },
-    {
-      "type": "range",
-      "id": "products_to_show",
-      "label": "Products to show",
-      "min": 2,
-      "max": 12,
-      "step": 2,
-      "default": 6
     }
   ],
   "presets": [
@@ -288,8 +256,7 @@
       "name": "Product Grid",
       "settings": {
         "eyebrow": "Empfohlen",
-        "title": "Empfohlene Produkte",
-        "products_to_show": 6
+        "title": "Empfohlene Produkte"
       }
     }
   ]

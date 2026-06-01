@@ -1,0 +1,164 @@
+{%- comment -%}
+  Reusable collection card — links to a collection, showing its image, title
+  and a "browse" link. Usable in any section or block.
+
+  Parameters:
+    - collection:  collection object (optional). Drives the image, title and URL
+                   unless explicitly overridden below.
+    - image:       image override (optional). Falls back to collection.featured_image.
+    - title:       title override (optional). Falls back to collection.title.
+    - url:         URL fallback (optional) used when no collection is given.
+    - link_label:  call-to-action label (optional, defaults to a localized string).
+    - badge:        badge text (optional). Rendered as a pill in the top-right corner.
+    - aspect_ratio: card shape (optional). 'portrait' (default) | 'square' | 'landscape'.
+    - loading:      img loading attr (optional, default 'lazy').
+
+  Usage:
+    {%- render 'collection-card', collection: block.settings.collection, badge: 'In Stock', aspect_ratio: 'square' -%}
+{%- endcomment -%}
+
+{%- liquid
+  assign card_title = title | default: collection.title
+  assign card_image = image | default: collection.featured_image
+  assign card_url = collection.url | default: url | default: '#'
+  assign card_link_label = link_label | default: 'snippets.collection_card.browse' | t
+  assign img_loading = loading | default: 'lazy'
+  assign ratio_class = 'collection-card--portrait'
+  if aspect_ratio == 'square'
+    assign ratio_class = 'collection-card--square'
+  elsif aspect_ratio == 'landscape'
+    assign ratio_class = 'collection-card--landscape'
+  endif
+-%}
+
+<a href="{{ card_url }}" class="collection-card {{ ratio_class }}">
+  {%- if card_image != blank -%}
+    {{
+      card_image
+      | image_url: width: 720
+      | image_tag:
+        class: 'collection-card__img',
+        alt: card_title,
+        loading: img_loading,
+        sizes: '(max-width: 900px) 100vw, 400px',
+        widths: '360, 540, 720'
+    }}
+  {%- else -%}
+    <div class="collection-card__img collection-card__img--empty"></div>
+  {%- endif -%}
+
+  <div class="collection-card__overlay" aria-hidden="true"></div>
+
+  {%- if badge != blank -%}
+    <span class="collection-card__badge">{{ badge }}</span>
+  {%- endif -%}
+
+  <div class="collection-card__body">
+    <h3 class="collection-card__title">{{ card_title }}</h3>
+    <span class="collection-card__link">
+      {{ card_link_label }}
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        {%- render 'icon', icon: 'arrow-right' -%}
+      </svg>
+    </span>
+  </div>
+</a>
+
+{% stylesheet %}
+.collection-card {
+  position: relative;
+  display: block;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 12px 40px oklch(0.1 0.02 155 / 0.25);
+  text-decoration: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.collection-card--portrait  { aspect-ratio: 3 / 4; }
+.collection-card--square    { aspect-ratio: 1 / 1; }
+.collection-card--landscape { aspect-ratio: 4 / 3; }
+
+.collection-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 24px 60px oklch(0.1 0.02 155 / 0.4);
+}
+
+.collection-card__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.collection-card__img--empty {
+  background: var(--accent-soft);
+}
+
+.collection-card:hover .collection-card__img {
+  transform: scale(1.1);
+}
+
+.collection-card__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    oklch(0.08 0.02 155 / 0.88) 0%,
+    oklch(0.08 0.02 155 / 0.5) 28%,
+    transparent 50%
+  );
+}
+
+.collection-card__badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 1;
+  padding: 4px 12px;
+  background: var(--sun);
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+  border-radius: 9999px;
+}
+
+.collection-card__body {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  padding: var(--s-3);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.collection-card__title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  line-height: 1.1;
+  color: oklch(1 0 0);
+  margin: 0;
+}
+
+.collection-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: oklch(1 0 0 / 0.85);
+  transition: gap 0.2s ease, color 0.2s ease;
+}
+
+.collection-card:hover .collection-card__link {
+  gap: 10px;
+  color: oklch(1 0 0);
+}
+{% endstylesheet %}

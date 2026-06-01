@@ -1,0 +1,187 @@
+<section class="sw-usp full-width">
+  <div class="container">
+    <div class="sw-usp__grid">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'item' -%}
+          <div class="sw-usp__item" {{ block.shopify_attributes }}>
+            <span class="sw-usp__icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                {%- render 'icon', icon: block.settings.icon -%}
+              </svg>
+            </span>
+            <div class="sw-usp__text">
+              <p class="sw-usp__title">{{ block.settings.title }}</p>
+              {%- if block.settings.subtext != blank -%}
+                <p class="sw-usp__sub">{{ block.settings.subtext }}</p>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+/* ── USP / separator strip ── */
+.sw-usp {
+  background: var(--bg-warm);
+  border-top: 1px solid var(--line-soft);
+  border-bottom: 1px solid var(--line-soft);
+  padding: var(--s-4) 0;
+}
+
+.sw-usp__grid {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  align-items: center;
+}
+
+.sw-usp__item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 0 var(--s-4);
+  text-align: left;
+}
+
+/* Vertical dividers between columns */
+.sw-usp__item + .sw-usp__item {
+  border-left: 1px solid var(--line);
+}
+
+.sw-usp__icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius);
+  background: var(--sun-soft);
+  color: var(--accent-deep);
+}
+
+.sw-usp__text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.sw-usp__title {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--ink);
+}
+
+.sw-usp__sub {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--ink-mute);
+}
+
+@media (max-width: 900px) {
+  .sw-usp {
+    padding: var(--s-3) 0;
+  }
+  .sw-usp__grid {
+    grid-auto-flow: row;
+    grid-auto-columns: auto;
+    gap: var(--s-3);
+  }
+  .sw-usp__item {
+    justify-content: flex-start;
+    padding: 0;
+  }
+  .sw-usp__item + .sw-usp__item {
+    border-left: none;
+    border-top: 1px solid var(--line);
+    padding-top: var(--s-3);
+  }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "USP Bar",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "USP",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "truck",        "label": "Truck / Delivery" },
+            { "value": "warehouse",    "label": "Warehouse" },
+            { "value": "shield-check", "label": "Shield (check)" },
+            { "value": "shield",       "label": "Shield" },
+            { "value": "star",         "label": "Star" },
+            { "value": "bolt",         "label": "Bolt" },
+            { "value": "leaf",         "label": "Leaf" },
+            { "value": "sun",          "label": "Sun" },
+            { "value": "phone",        "label": "Phone" },
+            { "value": "clock",        "label": "Clock" },
+            { "value": "check",        "label": "Check" },
+            { "value": "panel",        "label": "Solar panel" }
+          ],
+          "default": "truck"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Fast delivery"
+        },
+        {
+          "type": "text",
+          "id": "subtext",
+          "label": "Subtext",
+          "default": "Available for every product, within a few business days."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "USP Bar",
+      "blocks": [
+        {
+          "type": "item",
+          "settings": {
+            "icon": "truck",
+            "title": "Fast delivery",
+            "subtext": "Shipped from our own warehouse — 3–5 days across Austria & Germany."
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "shield-check",
+            "title": "Tier-1 brands only",
+            "subtext": "Bankable modules & inverters with full manufacturer warranty."
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "phone",
+            "title": "Free technical advice",
+            "subtext": "Talk to our engineers by phone & email, Mon–Fri."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
