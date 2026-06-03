@@ -274,9 +274,9 @@
     },
     "hero": {
       "eyebrow": "Saubere Energie, geliefert",
-      "headline": "Gestalten Sie Ihre Zukunft mit",
+      "headline": "Gestalte deine Zukunft mit",
       "headline_italic": "sauberer Energie",
-      "subcopy": "Premium-Solarlösungen für ein nachhaltiges Zuhause. Fachgerecht installiert, mit garantierter Leistung.",
+      "subcopy": "Premium-Solaranlagen für ein nachhaltiges Zuhause. Fachgerecht installiert, mit garantierter Leistung.",
       "cta_primary": "Alle Produkte ansehen",
       "cta_ghost": "Kostenloses Angebot"
     },
@@ -313,13 +313,13 @@
       "step_4_description": "Selbst anschließen mit unserem Videoguide — oder wir vermitteln zertifizierte Monteure in deiner Region."
     },
     "calculator": {
-      "eyebrow": "03 · Amortisationsrechner",
+      "eyebrow": "Amortisationsrechner",
       "consumption_label": "Jährlicher Stromverbrauch",
       "consumption_unit": "kWh / Jahr",
       "consumption_hint": "Ø 4-Personen-Haushalt: 4.500 kWh",
       "roof_label": "Nutzbare Dachfläche",
       "roof_unit": "m²",
-      "roof_hint": "Nach Süden/Ost/West — ohne Verschattung",
+      "roof_hint": "Süd-, Ost- oder Westausrichtung, ohne Verschattung",
       "extra_label": "Zusätzlicher Verbrauch",
       "toggle_ev": "E-Auto",
       "toggle_ev_sub": "+3.000 kWh",
@@ -333,7 +333,7 @@
       "per_year": "pro Jahr",
       "system_cost": "Systempreis (ca.)",
       "payback": "Amortisation",
-      "saved_per_year": "gespart / Jahr",
+      "saved_per_year": "Ersparnis / Jahr",
       "vat_note": "0 % USt · Nullsteuersatz in Österreich bis 20 kWp",
       "headline": "Was bringt Solar auf",
       "headline_italic": "deinem Dach",
@@ -393,7 +393,7 @@
       "cta_ghost": "Erst rechnen"
     },
     "footer": {
-      "tagline": "Unabhängiger Solar-Fachhandel aus Wiener Neustadt. Versand in ganz Österreich, Bayern & Süddeutschland.",
+      "tagline": "Unabhängiger Solar-Fachhandel aus Wiener Neustadt. Versand in ganz Österreich, Bayern und Süddeutschland.",
       "flags_label": "Liefergebiete: Österreich und Deutschland",
       "contact_label": "Kontaktinformationen",
       "contact_title": "Kontakt",
@@ -419,6 +419,7 @@
       "submit": "Nachricht senden",
       "success": "Angekommen — wir melden uns in Kürze",
       "privacy_note": "Mit dem Absenden der Nachricht stimmst du unserer Datenschutzerklärung zu. Deine Daten geben wir niemals weiter.",
+      "privacy_link": "Datenschutzerklärung",
       "field_name": "Name",
       "field_email": "E-Mail",
       "field_phone": "Telefon",
@@ -537,19 +538,19 @@
       "items": {
         "delivery": {
           "title": "Schnelle Lieferung",
-          "subtext": "Aus unserem eigenen Lager — 3–5 Tage in Österreich & Deutschland."
+          "subtext": "Aus unserem eigenen Lager — 3–5 Tage in Österreich und Deutschland."
         },
         "brands": {
           "title": "Nur Tier-1-Marken",
-          "subtext": "Bankfähige Module & Wechselrichter mit voller Herstellergarantie."
+          "subtext": "Zuverlässige Module und Wechselrichter mit voller Herstellergarantie."
         },
         "advice": {
           "title": "Kostenlose Fachberatung",
-          "subtext": "Sprechen Sie mit unseren Technikern per Telefon & E-Mail, Mo–Fr."
+          "subtext": "Sprich mit unseren Technikern per Telefon und E-Mail, Mo–Fr."
         },
         "warranty": {
           "title": "25 Jahre Garantie",
-          "subtext": "Auf Module & Wechselrichter. Wir übernehmen die Abwicklung — nicht Sie."
+          "subtext": "Auf Module und Wechselrichter. Wir übernehmen die Abwicklung — nicht du."
         },
         "warehouse": {
           "title": "Eigenes Lager",

@@ -114,7 +114,12 @@
 
           {%- comment -%} Footer: privacy note + submit {%- endcomment -%}
           <div class="sw-contact-form__footer">
-            <p class="mono sw-contact-form__privacy">{{ 'sections.contact_form.privacy_note' | t }}</p>
+            <p class="mono sw-contact-form__privacy">
+              {{ 'sections.contact_form.privacy_note' | t }}
+              {%- if shop.privacy_policy.url != blank -%}
+                <a href="{{ shop.privacy_policy.url }}" class="sw-contact-form__privacy-link">{{ 'sections.contact_form.privacy_link' | t }}</a>
+              {%- endif -%}
+            </p>
             <button type="submit" class="btn btn-primary sw-contact-form__submit">
               {{ 'sections.contact_form.submit' | t }}
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{%- render 'icon', icon: 'arrow-right' -%}</svg>
@@ -321,6 +326,17 @@
   color: var(--ink-mute);
   max-width: 320px;
   line-height: 1.5;
+}
+
+.sw-contact-form__privacy-link {
+  color: var(--ink-soft);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  white-space: nowrap;
+}
+
+.sw-contact-form__privacy-link:hover {
+  color: var(--accent-deep);
 }
 
 /* ── Field ── */

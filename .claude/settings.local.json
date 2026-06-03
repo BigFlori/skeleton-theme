@@ -105,7 +105,13 @@
       "Bash(Remove-Item \"c:\\\\Users\\\\Thurneer\\\\Documents\\\\Shopify\\\\solar-theme\\\\sections\\\\value-pillars.liquid\" -Force)",
       "Bash(Remove-Item \"c:\\\\Users\\\\Thurneer\\\\Documents\\\\Shopify\\\\solar-theme\\\\sections\\\\category-grid.liquid\" -Force)",
       "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d.get\\('sections', {}\\).keys\\(\\), indent=2, ensure_ascii=False\\)\\)\")",
-      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(list\\(d.get\\('sections', {}\\).keys\\(\\)\\)\\)\")"
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(list\\(d.get\\('sections', {}\\).keys\\(\\)\\)\\)\")",
+      "Skill(humanizer)",
+      "Skill(humanizer:*)",
+      "Bash(python3 -c \"import json; json.load\\(open\\('locales/hu.json'\\)\\); print\\('JSON OK'\\)\")",
+      "Bash(python3 -c \"import json; json.load\\(open\\('locales/de.json'\\)\\); print\\('JSON OK'\\)\")",
+      "Bash(python3 -c \"import json;json.load\\(open\\('locales/hu.json'\\)\\);print\\('hu.json OK'\\)\")",
+      "Bash(python3 -c 'import json;json.load\\(open\\('\\\\''locales/__TRACKED_VAR__.json'\\\\''\\)\\);print\\('\\\\''__TRACKED_VAR__.json OK'\\\\''\\)')"
     ],
     "additionalDirectories": [
       "/home/fmolnar/Documents/Shopify/nrgedge/apps/discounts/extensions/volume-discount",

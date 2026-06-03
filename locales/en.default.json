@@ -419,6 +419,7 @@
       "submit": "Send message",
       "success": "Got it — we'll be in touch shortly",
       "privacy_note": "By sending this message, you agree to our privacy policy. We'll never share your details with anyone.",
+      "privacy_link": "Privacy policy",
       "field_name": "Name",
       "field_email": "Email",
       "field_phone": "Phone",

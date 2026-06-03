@@ -152,7 +152,7 @@
       "heading_pre": "Kompatibilitás",
       "heading_mid": "az",
       "heading_em": "invertereddel.",
-      "description": "Válaszd ki a tervezett inverteredet — kiszámítjuk a feszültséget, a stringeket és a túlméretezést.",
+      "description": "Válaszd ki a tervezett inverteredet: kiszámítjuk a feszültséget, a stringeket és a túlméretezést.",
       "module_values": "Modul értékek · Vmp {{ vmp }} V · Voc {{ voc }} V · Imp {{ imp }} A · Isc {{ isc }} A",
       "select_label": "Inverter kiválasztása",
       "mppt": "MPPT-követők",
@@ -174,7 +174,7 @@
       "eyebrow": "Termékleírás",
       "heading_line1": "Mit",
       "heading_em": "kapsz?",
-      "subtitle": "A legfontosabb információk, jellemzők és részletek — minden, amit a termékről tudnod kell."
+      "subtitle": "A legfontosabb információk, jellemzők és részletek: minden, amit a termékről tudnod kell."
     },
     "youtube": {
       "eyebrow": "Videó bemutató",
@@ -274,11 +274,11 @@
     },
     "hero": {
       "eyebrow": "Tiszta energia, házhoz szállítva",
-      "headline": "Építse jövőjét",
+      "headline": "Építsd a jövőd",
       "headline_italic": "tiszta energiával",
-      "subcopy": "Prémium napelemes megoldások fenntartható otthonokhoz. Szakszerű telepítés, garantált teljesítmény.",
+      "subcopy": "Prémium napelemes rendszerek otthonra. Szakszerű telepítés, garantált teljesítmény.",
       "cta_primary": "Összes termék megtekintése",
-      "cta_ghost": "Kérjen ingyenes ajánlatot"
+      "cta_ghost": "Kérj ingyenes ajánlatot"
     },
     "trust_bar": {
       "label": "Hivatalos\npartner"
@@ -290,9 +290,9 @@
       "headline_2": "a tetőre.",
       "add_to_cart": "Kosárba",
       "to_configurator": "A konfigurátorhoz",
-      "description": "Mérnökeink válogatása — modulok, inverterek és tartószerkezetek egymáshoz hangolva. Nincs találgatás, nincs félrevásárlás. Minden ár 0 % ÁFÁ-val (Ausztriában nullaadó-kulcs).",
+      "description": "Mérnökeink válogatása: modulok, inverterek és tartószerkezetek egymáshoz hangolva. Nincs találgatás, nincs félrevásárlás. Minden ár 0 % ÁFÁ-val (Ausztriában nullaadó-kulcs).",
       "configurator_text": "Egyik sem passzol tökéletesen? Indítsd el a konfigurátort.",
-      "configurator_sub": "4 lépés a saját csomagodhoz — szerelővel vagy barkácsolva"
+      "configurator_sub": "4 lépés a saját csomagodhoz, szerelővel vagy barkácsolva"
     },
     "how_it_works": {
       "eyebrow": "02 · Ilyen egyszerű",
@@ -313,19 +313,19 @@
       "step_4_description": "Kösd be saját magad videós útmutatónk segítségével — vagy megszervezzük a környékeden dolgozó hitelesített szerelőket."
     },
     "calculator": {
-      "eyebrow": "03 · Megtérülésszámító",
+      "eyebrow": "Megtérülésszámító",
       "consumption_label": "Éves áramfogyasztás",
       "consumption_unit": "kWh / év",
       "consumption_hint": "Átl. 4 fős háztartás: 4 500 kWh",
       "roof_label": "Hasznosítható tetőterület",
       "roof_unit": "m²",
-      "roof_hint": "Dél / Kelet / Nyugat néző — árnyék nélkül",
+      "roof_hint": "Déli, keleti vagy nyugati tájolású, árnyék nélkül",
       "extra_label": "Többletfogyasztás",
       "toggle_ev": "Elektromos autó",
       "toggle_ev_sub": "+3 000 kWh",
       "toggle_hp": "Hőszivattyú",
       "toggle_hp_sub": "+4 000 kWh",
-      "cta": "Megfelelő csomag mutatása",
+      "cta": "Mutasd a megfelelő csomagot",
       "your_system": "A te rendszered",
       "recommended_size": "Javasolt rendszerméret",
       "annual_yield": "Éves termelés",
@@ -333,7 +333,8 @@
       "per_year": "évente",
       "system_cost": "Rendszer ára (kb.)",
       "payback": "Megtérülés",
-      "saved_per_year": "megtakarítva / év",
+      "payback_unit": "év",
+      "saved_per_year": "megtakarítás / év",
       "vat_note": "0 % ÁFA · Ausztriában 20 kWp-ig nullaadó-kulcs",
       "headline": "Mit hoz a napenergia a",
       "headline_italic": "te tetődre",
@@ -350,17 +351,17 @@
     },
     "why_us": {
       "usp_1_title": "Márkafüggetlen",
-      "usp_1_description": "Nem kötődünk egyetlen gyártóhoz sem — azt ajánljuk, ami igazán illik a tetődre. 8 inverter-márka raktáron.",
+      "usp_1_description": "Nem kötődünk egyetlen gyártóhoz sem, azt ajánljuk, ami igazán illik a tetődre. 8 inverter-márka raktáron.",
       "usp_2_title": "Szállítás Ausztriából",
       "usp_2_description": "Központi raktár Bécsújhelyen. Nincs vám, nincs 6 hetes konténer-lottó. Raklapok az ajtódnál 3–5 munkanapon belül.",
       "usp_3_title": "25 év garancia",
-      "usp_3_description": "Modulokra és inverterekre egyaránt. Mi intézzük a folyamatot — nem te egy shenzeni gyártóval.",
+      "usp_3_description": "Modulokra és inverterekre egyaránt. Mi intézzük a folyamatot, nem te egy shenzeni gyártóval.",
       "usp_4_title": "Barkácsolás vagy szerelő",
       "usp_4_description": "Szerelési videók saját elvégzéshez. Vagy megszervezzük a területedről a hitelesített villanyszerelőket fix áron.",
       "eyebrow": "Miért Sonnwerk",
       "headline": "Nincs gyártó.",
       "headline_italic": "A te oldaladon állunk.",
-      "subtext": "Más boltok egy márkát tolnak, mert haszonkulcs-megállapodásuk van. Mi melléd ülünk az asztalhoz — és akkor is megmondjuk, ha az olcsóbb modul a jobb választás.",
+      "subtext": "Más boltok egy márkát tolnak, mert haszonkulcs-megállapodásuk van. Mi melléd ülünk az asztalhoz, és akkor is megmondjuk, ha az olcsóbb modul a jobb választás.",
       "review_quote": "Három ajánlat után ők voltak az egyedüliek, akik lebeszéltek a nagyobb rendszerről. Ez bizalmat keltett.",
       "reviewer_name": "Martin H.",
       "reviewer_meta": "Családi ház · 9,6 kWp · Graz"
@@ -370,7 +371,7 @@
       "headline_line1": "Őszinte",
       "headline_line2": "válaszok.",
       "headline_italic": "Sallang nélkül.",
-      "subtext": "Nem találod, amit keresel? Hívj minket bátran — technikus válaszol, nem call center.",
+      "subtext": "Nem találod, amit keresel? Hívj minket bátran: technikus válaszol, nem call center.",
       "faq_1_question": "Megéri egy napelemes rendszer a jelenlegi villanyszámlák mellett?",
       "faq_1_answer": "<p>Igen — és egyre inkább. Az áramárak Ausztriában a 2023-as csúcsot követően is átlagosan 34 cent/kWh körül maradnak a háztartások számára. Egy tipikus 10 kWp-es rendszerrel, 60 % saját fogyasztással 6–8 év alatt térül meg. A nullaadó-kulcs (0 % ÁFA 20 kWp-ig) ezt tovább csökkenti.</p>",
       "faq_2_question": "Nem értek a technikához. Megrendelhetem így is?",
@@ -410,14 +411,15 @@
       "eyebrow": "Kapcsolat",
       "heading_line1": "Beszélj egy igazi napelemes",
       "heading_em": "szakértővel",
-      "subcopy": "Nincs call center, nincs végtelen chatbot-körözés. Írj egy üzenetet — egyik bécsújhelyi technikusunk egy munkanapon belül válaszol."
+      "subcopy": "Nincs call center, nincs vég nélküli chatbotozás. Írj egy üzenetet, és egyik bécsújhelyi szakértőnk egy munkanapon belül válaszol."
     },
     "contact_form": {
       "step": "Az üzeneted",
       "title": "Írj nekünk.",
       "submit": "Üzenet küldése",
-      "success": "Megkaptuk — hamarosan jelentkezünk",
-      "privacy_note": "Az üzenet elküldésével elfogadod adatvédelmi szabályzatunkat. Adataidat soha nem adjuk át harmadik félnek.",
+      "success": "Megkaptuk, hamarosan jelentkezünk.",
+      "privacy_note": "Az üzenet elküldésével elfogadod az adatvédelmi szabályzatot. Adataidat nem adjuk el és nem használjuk marketingcélra.",
+      "privacy_link": "Adatvédelmi szabályzat",
       "field_name": "Név",
       "field_email": "E-mail",
       "field_phone": "Telefon",
@@ -502,7 +504,7 @@
       "close": "Bezárás",
       "title_empty_html": "Még <em>üres</em>.",
       "empty_heading": "Még semmi itt.",
-      "empty_body": "Böngésszen komplett csomagjaink között, vagy válasszon egyedi komponenseket.",
+      "empty_body": "Böngészd komplett csomagjainkat, vagy válassz egyedi komponenseket.",
       "browse_cta": "Böngészés folytatása",
       "shipping_free_html": "<strong>Ingyenes szállítás</strong> elérve — köszönjük!",
       "shipping_progress_html": "Még <strong class=\"mono\">{{ remaining }}</strong> az ingyenes szállításig.",
@@ -529,30 +531,30 @@
       "title": "Ajánlott termékek"
     },
     "recommended_products": {
-      "default_eyebrow": "Ezt is megkedvelheti",
+      "default_eyebrow": "Ezt is megkedvelheted",
       "default_title": "Ajánlott termékek"
     },
     "usp": {
       "items": {
         "delivery": {
           "title": "Gyors szállítás",
-          "subtext": "Saját raktárunkból — 3–5 nap Ausztriában & Németországban."
+          "subtext": "Saját raktárunkból, 3–5 nap Ausztriában és Németországban."
         },
         "brands": {
           "title": "Csak Tier-1 márkák",
-          "subtext": "Bankálható modulok & inverterek teljes gyártói garanciával."
+          "subtext": "Megbízható modulok és inverterek, teljes gyártói garanciával."
         },
         "advice": {
           "title": "Ingyenes műszaki tanácsadás",
-          "subtext": "Mérnökeinkkel telefonon & e-mailben, hétfőtől péntekig."
+          "subtext": "Mérnökeink segítenek telefonon és e-mailben, hétfőtől péntekig."
         },
         "warranty": {
           "title": "25 éves garancia",
-          "subtext": "Modulokra & inverterre. Mi intézzük az ügyintézést."
+          "subtext": "Modulokra és inverterre. Az ügyintézést mi vállaljuk."
         },
         "warehouse": {
           "title": "Saját raktár",
-          "subtext": "Szállítás Bécsújhelyből — nincs vám, nincs késedelem."
+          "subtext": "Szállítás Bécsújhelyből: nincs vám, nincs késedelem."
         }
       }
     }
