@@ -57,31 +57,19 @@
 
 @media (max-width: 900px) {
   .sw-coll-sec__grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     grid-template-rows: auto;
+    gap: var(--s-2);
   }
 
-  /* Card 1: reset tall-left, span full width */
-  .sw-coll-sec__slot:nth-child(1) {
-    grid-row: auto;
-    grid-column: span 2;
-  }
-
-  /* Card 4: span full width */
+  .sw-coll-sec__slot:nth-child(1),
   .sw-coll-sec__slot:nth-child(4) {
-    grid-column: span 2;
+    grid-row: auto;
+    grid-column: auto;
   }
 
-  /* Full-width cards: landscape */
-  .sw-coll-sec__slot:nth-child(1) .collection-card,
-  .sw-coll-sec__slot:nth-child(4) .collection-card {
-    aspect-ratio: 4 / 3;
-  }
-
-  /* Side-by-side cards: square */
-  .sw-coll-sec__slot:nth-child(2) .collection-card,
-  .sw-coll-sec__slot:nth-child(3) .collection-card {
-    aspect-ratio: 1 / 1;
+  .sw-coll-sec__slot .collection-card {
+    aspect-ratio: 16 / 9;
   }
 }
 {% endstylesheet %}

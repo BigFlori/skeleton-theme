@@ -1,11 +1,9 @@
 <section class="sw-brands full-width" aria-label="{{ 'sections.brands.aria_label' | t }}">
-  {%- if section.settings.heading != blank -%}
-    <div class="container">
-      <div class="sw-brands__header">
-        <span class="eyebrow">{{ section.settings.heading }}</span>
-      </div>
+  <div class="container">
+    <div class="sw-brands__header">
+      <span class="eyebrow">{{ 'sections.brands.heading' | t }}</span>
     </div>
-  {%- endif -%}
+  </div>
 
   <div class="sw-brands__outer">
     <div class="sw-brands__track">
@@ -155,14 +153,7 @@
 {% schema %}
 {
   "name": "Brand Logos",
-  "settings": [
-    {
-      "type": "text",
-      "id": "heading",
-      "label": "Heading",
-      "default": "Brands we carry"
-    }
-  ],
+  "settings": [],
   "blocks": [
     {
       "type": "logo",

@@ -12,10 +12,8 @@
 
     <div class="sw-prodgrid__header">
       <div>
-        {%- if section.settings.eyebrow != blank -%}
-          <span class="eyebrow">{{ section.settings.eyebrow }}</span>
-        {%- endif -%}
-        <h2 class="display sw-prodgrid__headline">{{ section.settings.title }}</h2>
+        <span class="eyebrow">{{ 'sections.product_grid.eyebrow' | t }}</span>
+        <h2 class="display sw-prodgrid__headline">{{ 'sections.product_grid.title' | t }}</h2>
       </div>
     </div>
 
@@ -235,17 +233,6 @@
   "name": "Product Grid",
   "settings": [
     {
-      "type": "text",
-      "id": "eyebrow",
-      "label": "Eyebrow label"
-    },
-    {
-      "type": "text",
-      "id": "title",
-      "label": "Headline",
-      "default": "Empfohlene Produkte"
-    },
-    {
       "type": "collection",
       "id": "collection",
       "label": "Collection"
@@ -253,11 +240,7 @@
   ],
   "presets": [
     {
-      "name": "Product Grid",
-      "settings": {
-        "eyebrow": "Empfohlen",
-        "title": "Empfohlene Produkte"
-      }
+      "name": "Product Grid"
     }
   ]
 }

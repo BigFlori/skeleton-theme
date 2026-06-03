@@ -524,11 +524,37 @@
       "view_all": "Összes vélemény"
     },
     "product_grid": {
-      "view_all": "Összes megtekintése"
+      "view_all": "Összes megtekintése",
+      "eyebrow": "Kiemelt",
+      "title": "Ajánlott termékek"
     },
     "recommended_products": {
       "default_eyebrow": "Ezt is megkedvelheti",
       "default_title": "Ajánlott termékek"
+    },
+    "usp": {
+      "items": {
+        "delivery": {
+          "title": "Gyors szállítás",
+          "subtext": "Saját raktárunkból — 3–5 nap Ausztriában & Németországban."
+        },
+        "brands": {
+          "title": "Csak Tier-1 márkák",
+          "subtext": "Bankálható modulok & inverterek teljes gyártói garanciával."
+        },
+        "advice": {
+          "title": "Ingyenes műszaki tanácsadás",
+          "subtext": "Mérnökeinkkel telefonon & e-mailben, hétfőtől péntekig."
+        },
+        "warranty": {
+          "title": "25 éves garancia",
+          "subtext": "Modulokra & inverterre. Mi intézzük az ügyintézést."
+        },
+        "warehouse": {
+          "title": "Saját raktár",
+          "subtext": "Szállítás Bécsújhelyből — nincs vám, nincs késedelem."
+        }
+      }
     }
   }
 }

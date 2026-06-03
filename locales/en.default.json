@@ -337,7 +337,8 @@
       "system_cost": "System price (approx.)",
       "payback": "Payback",
       "saved_per_year": "saved / year",
-      "vat_note": "0 % VAT · Zero tax rate in Austria up to 20 kWp"
+      "vat_note": "0 % VAT · Zero tax rate in Austria up to 20 kWp",
+      "payback_unit": "years"
     },
     "why_us": {
       "usp_1_title": "Brand-independent",
@@ -348,7 +349,7 @@
       "usp_3_description": "On modules and inverters. We handle the process — not you with a manufacturer in Shenzhen.",
       "usp_4_title": "DIY or installer",
       "usp_4_description": "Installation videos for self-assembly. Or we arrange certified electricians from your area at a fixed price.",
-      "eyebrow":"Why Sonnwerk",
+      "eyebrow": "Why Sonnwerk",
       "headline": "No manufacturer.",
       "headline_italic": "Your advocate.",
       "subtext": "Other shops push a brand because they have margin deals. We sit on your side of the table — and we'll tell you when the cheaper module is the better one.",
@@ -524,11 +525,37 @@
       "view_all": "All reviews"
     },
     "product_grid": {
-      "view_all": "View all"
+      "view_all": "View all",
+      "eyebrow": "Featured",
+      "title": "Recommended Products"
     },
     "recommended_products": {
       "default_eyebrow": "You might also like",
       "default_title": "Recommended Products"
+    },
+    "usp": {
+      "items": {
+        "delivery": {
+          "title": "Fast delivery",
+          "subtext": "Shipped from our own warehouse — 3–5 days across Austria & Germany."
+        },
+        "brands": {
+          "title": "Tier-1 brands only",
+          "subtext": "Bankable modules & inverters with full manufacturer warranty."
+        },
+        "advice": {
+          "title": "Free technical advice",
+          "subtext": "Talk to our engineers by phone & email, Mon–Fri."
+        },
+        "warranty": {
+          "title": "25-year warranty",
+          "subtext": "On modules & inverters. We handle claims — not you with an Asian manufacturer."
+        },
+        "warehouse": {
+          "title": "Own warehouse",
+          "subtext": "Shipping from Wiener Neustadt — no customs, no delays."
+        }
+      }
     }
   }
 }

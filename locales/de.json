@@ -337,7 +337,8 @@
       "vat_note": "0 % USt · Nullsteuersatz in Österreich bis 20 kWp",
       "headline": "Was bringt Solar auf",
       "headline_italic": "deinem Dach",
-      "description": "Drei Schieberegler. Keine E-Mail, kein Anruf. Einfach ein ehrliches Bild der Zahlen."
+      "description": "Drei Schieberegler. Keine E-Mail, kein Anruf. Einfach ein ehrliches Bild der Zahlen.",
+      "payback_unit": "Jahre"
     },
     "category_grid": {
       "models": "Modelle",
@@ -524,11 +525,37 @@
       "view_all": "Alle Bewertungen"
     },
     "product_grid": {
-      "view_all": "Alle ansehen"
+      "view_all": "Alle ansehen",
+      "eyebrow": "Empfohlen",
+      "title": "Empfohlene Produkte"
     },
     "recommended_products": {
       "default_eyebrow": "Das könnte Ihnen gefallen",
       "default_title": "Empfohlene Produkte"
+    },
+    "usp": {
+      "items": {
+        "delivery": {
+          "title": "Schnelle Lieferung",
+          "subtext": "Aus unserem eigenen Lager — 3–5 Tage in Österreich & Deutschland."
+        },
+        "brands": {
+          "title": "Nur Tier-1-Marken",
+          "subtext": "Bankfähige Module & Wechselrichter mit voller Herstellergarantie."
+        },
+        "advice": {
+          "title": "Kostenlose Fachberatung",
+          "subtext": "Sprechen Sie mit unseren Technikern per Telefon & E-Mail, Mo–Fr."
+        },
+        "warranty": {
+          "title": "25 Jahre Garantie",
+          "subtext": "Auf Module & Wechselrichter. Wir übernehmen die Abwicklung — nicht Sie."
+        },
+        "warehouse": {
+          "title": "Eigenes Lager",
+          "subtext": "Versand aus Wiener Neustadt — kein Zoll, keine Verzögerungen."
+        }
+      }
     }
   }
 }

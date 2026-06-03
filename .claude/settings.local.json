@@ -103,7 +103,9 @@
       "PowerShell(try { Get-Content \"c:\\\\Users\\\\Thurneer\\\\Documents\\\\Shopify\\\\solar-theme\\\\templates\\\\index.json\" -Raw | ConvertFrom-Json | Out-Null; \"JSON OK\" } catch { \"JSON ERROR: $_\" })",
       "PowerShell(foreach \\($f in @\\(\"templates\\\\index.json\",\"locales\\\\en.default.json\",\"locales\\\\de.json\",\"locales\\\\hu.json\"\\)\\) { try { Get-Content \"c:\\\\Users\\\\Thurneer\\\\Documents\\\\Shopify\\\\solar-theme\\\\$f\" -Raw | ConvertFrom-Json | Out-Null; \"$f : OK\" } catch { \"$f : ERROR $_\" } })",
       "Bash(Remove-Item \"c:\\\\Users\\\\Thurneer\\\\Documents\\\\Shopify\\\\solar-theme\\\\sections\\\\value-pillars.liquid\" -Force)",
-      "Bash(Remove-Item \"c:\\\\Users\\\\Thurneer\\\\Documents\\\\Shopify\\\\solar-theme\\\\sections\\\\category-grid.liquid\" -Force)"
+      "Bash(Remove-Item \"c:\\\\Users\\\\Thurneer\\\\Documents\\\\Shopify\\\\solar-theme\\\\sections\\\\category-grid.liquid\" -Force)",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d.get\\('sections', {}\\).keys\\(\\), indent=2, ensure_ascii=False\\)\\)\")",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(list\\(d.get\\('sections', {}\\).keys\\(\\)\\)\\)\")"
     ],
     "additionalDirectories": [
       "/home/fmolnar/Documents/Shopify/nrgedge/apps/discounts/extensions/volume-discount",

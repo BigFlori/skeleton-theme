@@ -36,30 +36,9 @@
     "usp": {
       "type": "usp-bar",
       "blocks": {
-        "u-1": {
-          "type": "item",
-          "settings": {
-            "icon": "truck",
-            "title": "Fast delivery",
-            "subtext": "Shipped from our own warehouse — 3–5 days across Austria & Germany."
-          }
-        },
-        "u-2": {
-          "type": "item",
-          "settings": {
-            "icon": "shield-check",
-            "title": "Tier-1 brands only",
-            "subtext": "Bankable modules & inverters with full manufacturer warranty."
-          }
-        },
-        "u-3": {
-          "type": "item",
-          "settings": {
-            "icon": "phone",
-            "title": "Free technical advice",
-            "subtext": "Talk to our engineers by phone & email, Mon–Fri."
-          }
-        }
+        "u-1": { "type": "item", "settings": { "icon": "truck",        "content_key": "delivery" } },
+        "u-2": { "type": "item", "settings": { "icon": "shield-check", "content_key": "brands"   } },
+        "u-3": { "type": "item", "settings": { "icon": "phone",        "content_key": "advice"   } }
       },
       "block_order": ["u-1", "u-2", "u-3"],
       "settings": {}
@@ -133,10 +112,7 @@
     },
     "featured": {
       "type": "product-grid",
-      "settings": {
-        "eyebrow": "Featured",
-        "title": "Recommended Products"
-      }
+      "settings": {}
     },
     "calculator": {
       "type": "calculator",

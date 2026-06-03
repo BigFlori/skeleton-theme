@@ -9,11 +9,10 @@
                 {%- render 'icon', icon: block.settings.icon -%}
               </svg>
             </span>
+            {%- assign usp_key = block.settings.content_key -%}
             <div class="sw-usp__text">
-              <p class="sw-usp__title">{{ block.settings.title }}</p>
-              {%- if block.settings.subtext != blank -%}
-                <p class="sw-usp__sub">{{ block.settings.subtext }}</p>
-              {%- endif -%}
+              <p class="sw-usp__title">{{ 'sections.usp.items.' | append: usp_key | append: '.title' | t }}</p>
+              <p class="sw-usp__sub">{{ 'sections.usp.items.' | append: usp_key | append: '.subtext' | t }}</p>
             </div>
           </div>
         {%- endif -%}
@@ -137,16 +136,17 @@
           "default": "truck"
         },
         {
-          "type": "text",
-          "id": "title",
-          "label": "Title",
-          "default": "Fast delivery"
-        },
-        {
-          "type": "text",
-          "id": "subtext",
-          "label": "Subtext",
-          "default": "Available for every product, within a few business days."
+          "type": "select",
+          "id": "content_key",
+          "label": "Content",
+          "options": [
+            { "value": "delivery", "label": "Fast delivery" },
+            { "value": "brands",   "label": "Tier-1 brands only" },
+            { "value": "advice",   "label": "Free technical advice" },
+            { "value": "warranty", "label": "25-year warranty" },
+            { "value": "warehouse","label": "Own warehouse" }
+          ],
+          "default": "delivery"
         }
       ]
     }
@@ -156,30 +156,9 @@
     {
       "name": "USP Bar",
       "blocks": [
-        {
-          "type": "item",
-          "settings": {
-            "icon": "truck",
-            "title": "Fast delivery",
-            "subtext": "Shipped from our own warehouse — 3–5 days across Austria & Germany."
-          }
-        },
-        {
-          "type": "item",
-          "settings": {
-            "icon": "shield-check",
-            "title": "Tier-1 brands only",
-            "subtext": "Bankable modules & inverters with full manufacturer warranty."
-          }
-        },
-        {
-          "type": "item",
-          "settings": {
-            "icon": "phone",
-            "title": "Free technical advice",
-            "subtext": "Talk to our engineers by phone & email, Mon–Fri."
-          }
-        }
+        { "type": "item", "settings": { "icon": "truck",        "content_key": "delivery" } },
+        { "type": "item", "settings": { "icon": "shield-check", "content_key": "brands"   } },
+        { "type": "item", "settings": { "icon": "phone",        "content_key": "advice"   } }
       ]
     }
   ]
