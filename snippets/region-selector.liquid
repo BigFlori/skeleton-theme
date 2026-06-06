@@ -1,0 +1,407 @@
+{%- comment -%}
+  Unified region picker — language + country in one combined row.
+  Parameters:
+    - variant: 'header' | 'drawer' | 'footer'  (default: header)
+{%- endcomment -%}
+
+{%- liquid
+  assign rs_variant = variant | default: 'header'
+  assign rs_current_country  = localization.country
+  assign rs_current_language = localization.language
+  assign rs_has_choice = false
+  if localization.available_countries.size > 1 or localization.available_languages.size > 1
+    assign rs_has_choice = true
+  endif
+-%}
+
+{%- if rs_has_choice -%}
+
+  {%- if rs_variant == 'header' -%}
+
+    <div class="region-selector region-selector--header">
+      <button
+        type="button"
+        class="region-selector__trigger"
+        data-region-trigger
+        aria-haspopup="dialog"
+        aria-label="{{ 'localization.choose_region' | t }}"
+      >
+        {%- render 'flag', country: rs_current_country.iso_code -%}
+        <span class="region-selector__trigger-label">{{ rs_current_country.currency.iso_code }}</span>
+        <svg class="region-selector__trigger-chevron" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          {%- render 'icon', icon: 'chevron-down' -%}
+        </svg>
+      </button>
+    </div>
+
+    {%- comment -%} Global region modal — shared by header + footer triggers {%- endcomment -%}
+    <dialog
+      class="region-modal"
+      id="region-dialog"
+      aria-label="{{ 'localization.choose_region' | t }}"
+    >
+      <div class="region-modal__inner">
+        <header class="region-modal__header">
+          <p class="region-modal__title">{{ 'localization.choose_region' | t }}</p>
+          <button
+            type="button"
+            class="region-modal__close"
+            data-region-close
+            aria-label="{{ 'general.close' | t }}"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              {%- render 'icon', icon: 'close' -%}
+            </svg>
+          </button>
+        </header>
+        <div class="region-modal__list" role="listbox" aria-label="{{ 'localization.choose_region' | t }}">
+          {%- for country in localization.available_countries -%}
+            {%- assign country_lang = country.available_languages | first -%}
+            {%- assign rs_is_active = false -%}
+            {%- if country.iso_code == rs_current_country.iso_code -%}
+              {%- assign rs_is_active = true -%}
+            {%- endif -%}
+            <button
+              type="button"
+              class="region-modal__option{% if rs_is_active %} is-active{% endif %}"
+              role="option"
+              aria-selected="{{ rs_is_active }}"
+              data-region-option
+              data-country="{{ country.iso_code }}"
+              data-language="{{ country_lang.iso_code }}"
+            >
+              {%- render 'flag', country: country.iso_code -%}
+              <span class="region-modal__option-info">
+                <span class="region-modal__option-name">{{ country.name }}</span>
+                <span class="region-modal__option-meta">{{ country_lang.endonym_name }} · {{ country.currency.iso_code }}</span>
+              </span>
+              {%- if rs_is_active -%}
+                <svg class="region-modal__option-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  {%- render 'icon', icon: 'check-simple' -%}
+                </svg>
+              {%- endif -%}
+            </button>
+          {%- endfor -%}
+        </div>
+      </div>
+    </dialog>
+
+  {%- elsif rs_variant == 'drawer' -%}
+
+    <div class="region-selector region-selector--drawer">
+      <span class="sw-mobile-nav__lang-label">{{ 'localization.region' | t }}</span>
+      <div class="region-selector__drawer-list">
+        {%- for country in localization.available_countries -%}
+          {%- assign country_lang = country.available_languages | first -%}
+          {%- assign rs_is_active = false -%}
+          {%- if country.iso_code == rs_current_country.iso_code -%}
+            {%- assign rs_is_active = true -%}
+          {%- endif -%}
+          <button
+            type="button"
+            class="region-selector__drawer-option{% if rs_is_active %} is-active{% endif %}"
+            data-region-option
+            data-country="{{ country.iso_code }}"
+            data-language="{{ country_lang.iso_code }}"
+            aria-pressed="{{ rs_is_active }}"
+          >
+            {%- render 'flag', country: country.iso_code -%}
+            <span class="region-selector__drawer-name">{{ country.name }}</span>
+            <span class="region-selector__drawer-currency">{{ country.currency.iso_code }}</span>
+            {%- if rs_is_active -%}
+              <svg class="region-selector__drawer-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                {%- render 'icon', icon: 'check-simple' -%}
+              </svg>
+            {%- endif -%}
+          </button>
+        {%- endfor -%}
+      </div>
+    </div>
+
+  {%- elsif rs_variant == 'footer' -%}
+
+    <button
+      type="button"
+      class="region-selector__footer-btn"
+      data-region-trigger
+      aria-haspopup="dialog"
+      aria-label="{{ 'localization.choose_region' | t }}"
+    >
+      {%- render 'flag', country: rs_current_country.iso_code -%}
+      <span>{{ rs_current_country.name }}</span>
+      <span class="region-selector__footer-currency">{{ rs_current_country.currency.iso_code }}</span>
+    </button>
+
+  {%- endif -%}
+
+{%- endif -%}
+
+{% stylesheet %}
+/* ── Flag icon ── */
+.flag-icon {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.flag-icon svg {
+  display: block;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.08);
+}
+
+/* ── Header trigger ── */
+.region-selector--header {
+  position: relative;
+  display: none;
+}
+@media screen and (min-width: 750px) {
+  .region-selector--header { display: block; }
+}
+
+.region-selector__trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 10px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--bg-card);
+  color: var(--ink);
+  cursor: pointer;
+  font-size: 13px;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  white-space: nowrap;
+  transition: border-color .15s ease, background .15s ease, color .15s ease;
+  user-select: none;
+}
+.region-selector__trigger:hover {
+  border-color: var(--accent-deep);
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+}
+.region-selector__trigger-chevron {
+  opacity: 0.6;
+}
+
+/* ── Region modal ── */
+.region-modal {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  border: none;
+  border-radius: 16px;
+  padding: 0;
+  width: min(440px, calc(100vw - 32px));
+  max-height: min(560px, calc(100dvh - 80px));
+  overflow: hidden;
+  background: var(--bg-card);
+  box-shadow: 0 20px 60px -8px oklch(0.22 0.025 155 / 0.22), 0 0 0 1px var(--line);
+  animation: modal-in .2s ease;
+}
+.region-modal::backdrop {
+  background: oklch(0.22 0.025 155 / 0.45);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  animation: backdrop-in .2s ease;
+}
+.region-modal.is-closing {
+  animation: modal-out .18s ease forwards;
+}
+.region-modal.is-closing::backdrop {
+  animation: backdrop-out .18s ease forwards;
+}
+@keyframes modal-in {
+  from { opacity: 0; transform: scale(0.96) translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes modal-out {
+  from { opacity: 1; transform: none; }
+  to   { opacity: 0; transform: scale(0.96) translateY(6px); }
+}
+@keyframes backdrop-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes backdrop-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+.region-modal__inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-height: inherit;
+}
+
+.region-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px 14px;
+  border-bottom: 1px solid var(--line);
+  flex-shrink: 0;
+}
+.region-modal__title {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0;
+}
+.region-modal__close {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: transparent;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  color: var(--ink-mute);
+  flex-shrink: 0;
+  transition: border-color .15s ease, color .15s ease;
+}
+.region-modal__close:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+.region-modal__list {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.region-modal__option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  border: none;
+  background: transparent;
+  color: var(--ink);
+  font-size: 13px;
+  font-family: var(--font-sans);
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+  transition: background .12s ease, color .12s ease;
+}
+.region-modal__option:hover,
+.region-modal__option:focus-visible {
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+  outline: none;
+}
+.region-modal__option.is-active {
+  background: var(--accent-soft);
+}
+.region-modal__option-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.region-modal__option-name {
+  font-weight: 500;
+  line-height: 1.3;
+}
+.region-modal__option-meta {
+  font-size: 11px;
+  color: var(--ink-mute);
+  line-height: 1.3;
+}
+.region-modal__option.is-active .region-modal__option-meta {
+  color: var(--accent-deep);
+  opacity: 0.75;
+}
+.region-modal__option-check {
+  color: var(--accent-deep);
+  flex-shrink: 0;
+}
+
+/* ── Drawer inline list ── */
+.region-selector--drawer {
+  padding: 20px 26px;
+  border-top: 1px solid var(--line);
+  flex-shrink: 0;
+}
+.region-selector__drawer-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 12px;
+}
+.region-selector__drawer-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--bg-card);
+  color: var(--ink);
+  font-size: 14px;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color .15s ease, background .15s ease, color .15s ease;
+}
+.region-selector__drawer-option:hover {
+  border-color: var(--accent-deep);
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+}
+.region-selector__drawer-option.is-active {
+  border-color: var(--accent-deep);
+  background: var(--accent-deep);
+  color: var(--accent-ink);
+}
+.region-selector__drawer-name {
+  flex: 1;
+}
+.region-selector__drawer-currency {
+  font-size: 12px;
+  opacity: 0.7;
+}
+.region-selector__drawer-check {
+  flex-shrink: 0;
+}
+
+/* ── Footer compact trigger ── */
+.region-selector__footer-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink-soft);
+  font-size: 12px;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color .15s ease, color .15s ease;
+}
+.region-selector__footer-btn:hover {
+  border-color: var(--accent-deep);
+  color: var(--accent-deep);
+}
+.region-selector__footer-currency {
+  opacity: 0.6;
+  margin-left: 2px;
+}
+@media screen and (max-width: 749px) {
+  .region-selector__footer-btn { display: none; }
+}
+{% endstylesheet %}

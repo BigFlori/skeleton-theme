@@ -23,6 +23,41 @@
   endfor
 %}
 
+{%- comment -%} ── Geo-suggestion banner (shown by JS if visitor's country ≠ current market) ── {%- endcomment -%}
+{%- assign rs_geo = request.country -%}
+{%- if rs_geo and rs_geo.iso_code != localization.country.iso_code -%}
+  {%- assign rs_geo_market = nil -%}
+  {%- for mc in localization.available_countries -%}
+    {%- if mc.iso_code == rs_geo.iso_code -%}
+      {%- assign rs_geo_market = mc -%}
+      {%- break -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- if rs_geo_market -%}
+    {%- assign rs_geo_lang = rs_geo_market.available_languages | first -%}
+    <div
+      class="region-geo-banner"
+      id="region-geo-banner"
+      data-country="{{ rs_geo_market.iso_code }}"
+      data-language="{{ rs_geo_lang.iso_code }}"
+      hidden
+    >
+      <span class="region-geo-banner__text">
+        {%- render 'flag', country: rs_geo_market.iso_code -%}
+        {{ 'localization.suggestion_banner' | t: country: rs_geo.name }}
+      </span>
+      <div class="region-geo-banner__actions">
+        <button type="button" class="region-geo-banner__btn region-geo-banner__btn--confirm" data-region-geo-confirm>
+          {{ 'localization.confirm' | t }}
+        </button>
+        <button type="button" class="region-geo-banner__btn region-geo-banner__btn--dismiss" data-region-geo-dismiss>
+          {{ 'localization.dismiss' | t }}
+        </button>
+      </div>
+    </div>
+  {%- endif -%}
+{%- endif -%}
+
 <script type="application/ld+json">
   {
     "@context": "http://schema.org",
@@ -59,34 +94,7 @@
           </div>
         {% endif %}
 
-        {%- if localization.available_languages.size > 1 -%}
-          <div class="header__lang">
-            <details class="header__lang-details">
-              <summary class="header__lang-trigger" aria-label="{{ 'general.language' | t }}">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  {%- render 'icon', icon: 'globe' -%}
-                </svg>
-                <span class="header__lang-code">{{ localization.language.iso_code | upcase }}</span>
-                <svg class="header__lang-chevron" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  {%- render 'icon', icon: 'chevron-down' -%}
-                </svg>
-              </summary>
-              <div class="header__lang-dropdown">
-                {%- for language in localization.available_languages -%}
-                  {%- form 'localization' -%}
-                    <input type="hidden" name="language_code" value="{{ language.iso_code }}">
-                    <button
-                      type="submit"
-                      class="header__lang-option{% if language.iso_code == localization.language.iso_code %} header__lang-option--active{% endif %}"
-                    >
-                      {{ language.endonym_name }}
-                    </button>
-                  {%- endform -%}
-                {%- endfor -%}
-              </div>
-            </details>
-          </div>
-        {%- endif -%}
+        {%- render 'region-selector', variant: 'header' -%}
 
         <button
           type="button"
@@ -322,107 +330,70 @@
     line-height: 1;
   }
 
-  /* ── Language selector ── */
-  .header__lang {
-    position: relative;
-    display: none;
-  }
-
-  @media screen and (min-width: 750px) {
-    .header__lang { display: block; }
-  }
-
-  .header__lang-details {
-    position: relative;
-  }
-
-  .header__lang-trigger {
-    display: inline-flex;
+  /* ── Geo-suggestion banner ── */
+  .region-geo-banner {
+    width: 100%;
+    background: var(--accent-soft);
+    border-bottom: 1px solid oklch(0.7 0.1 155 / 0.35);
+    padding: 10px clamp(16px, 4vw, 32px);
+    display: flex;
     align-items: center;
-    gap: 5px;
-    padding: 7px 10px;
-    border-radius: 12px;
-    border: 1px solid var(--line);
-    background: var(--bg-card);
-    color: var(--ink);
-    cursor: pointer;
+    gap: 12px;
     font-size: 13px;
+    font-family: var(--font-sans);
+    color: var(--accent-deep);
+  }
+  .region-geo-banner__text {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    min-width: 0;
+  }
+  .region-geo-banner__actions {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .region-geo-banner__btn {
+    padding: 5px 12px;
+    border-radius: 999px;
+    border: 1px solid currentColor;
+    background: transparent;
+    color: inherit;
+    font-size: 12px;
     font-family: var(--font-sans);
     font-weight: 500;
-    list-style: none;
-    white-space: nowrap;
-    transition: border-color .15s ease, background .15s ease, color .15s ease;
-    user-select: none;
-  }
-
-  .header__lang-trigger::-webkit-details-marker { display: none; }
-
-  .header__lang-trigger:hover {
-    border-color: var(--accent-deep);
-    background: var(--accent-soft);
-    color: var(--accent-deep);
-  }
-
-  .header__lang-chevron {
-    transition: transform .2s ease;
-    opacity: 0.6;
-  }
-
-  .header__lang-details[open] .header__lang-chevron {
-    transform: rotate(180deg);
-  }
-
-  .header__lang-dropdown {
-    position: absolute;
-    top: calc(100% + 6px);
-    right: 0;
-    min-width: 140px;
-    background: var(--bg-card);
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    box-shadow: 0 8px 24px -4px oklch(0.22 0.025 155 / 0.15);
-    padding: 6px;
-    z-index: 50;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-
-  .header__lang-option {
-    width: 100%;
-    text-align: left;
-    padding: 8px 12px;
-    border: none;
-    background: transparent;
-    color: var(--ink);
-    font-size: 13px;
-    font-family: var(--font-sans);
-    border-radius: 6px;
     cursor: pointer;
-    transition: background .12s ease, color .12s ease;
+    white-space: nowrap;
+    transition: background .15s ease, color .15s ease;
+  }
+  .region-geo-banner__btn--confirm {
+    background: var(--accent-deep);
+    color: var(--accent-ink);
+    border-color: var(--accent-deep);
+  }
+  .region-geo-banner__btn--confirm:hover { opacity: 0.85; }
+  .region-geo-banner__btn--dismiss:hover {
+    background: var(--accent-deep);
+    color: var(--accent-ink);
   }
 
-  .header__lang-option:hover {
-    background: var(--accent-soft);
-    color: var(--accent-deep);
-  }
-
-  .header__lang-option--active {
-    font-weight: 600;
-    color: var(--accent-deep);
-  }
+  /* Hidden localization form */
+  #region-localization-form { display: none; }
 {% endstylesheet %}
 
 {%- render 'predictive-search' -%}
 {%- render 'mobile-nav-drawer', menu: mobile_menu -%}
+
+{%- comment -%} Single localization form — used by all region-selector variants via JS {%- endcomment -%}
+{%- form 'localization', id: 'region-localization-form' -%}
+  <input type="hidden" name="country_code" id="region-localization-country" value="{{ localization.country.iso_code }}">
+  <input type="hidden" name="language_code" id="region-localization-language" value="{{ localization.language.iso_code }}">
+{%- endform -%}
+
 <script src="{{ 'mobile-nav.js' | asset_url }}" defer></script>
-<script>
-  document.addEventListener('click', function(e) {
-    document.querySelectorAll('.header__lang-details[open]').forEach(function(el) {
-      if (!el.contains(e.target)) el.removeAttribute('open');
-    });
-  });
-</script>
+<script src="{{ 'region-selector.js' | asset_url }}" defer></script>
 
 {% schema %}
 {

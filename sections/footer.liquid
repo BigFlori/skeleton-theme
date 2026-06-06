@@ -144,6 +144,7 @@
       <div class="mono sw-footer__copy">
         &copy; {{ 'now' | date: '%Y' }} {{ section.settings.legal_name }}
       </div>
+      {%- render 'region-selector', variant: 'footer' -%}
       <div class="sw-footer__legal-links">
         {%- assign legal_menu = section.settings.menu_legal -%}
         {%- if legal_menu == blank -%}

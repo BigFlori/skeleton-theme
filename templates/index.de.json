@@ -1,103 +1,46 @@
 {
   "sections": {
-    "catnav": {
-      "type": "category-nav",
-      "blocks": {
-        "cn-1": { "type": "item", "settings": { "icon": "panel-grid", "label": "Solarmodule" } },
-        "cn-2": { "type": "item", "settings": { "icon": "inverter",   "label": "Wechselrichter" } },
-        "cn-3": { "type": "item", "settings": { "icon": "battery",    "label": "Speicherpakete" } },
-        "cn-4": { "type": "item", "settings": { "icon": "wrench",     "label": "Montagesets" } },
-        "cn-5": { "type": "item", "settings": { "icon": "bolt",       "label": "Kabel & Stecker" } },
-        "cn-6": { "type": "item", "settings": { "icon": "plug",       "label": "Zubehör" } }
-      },
-      "block_order": ["cn-1", "cn-2", "cn-3", "cn-4", "cn-5", "cn-6"],
-      "settings": {}
-    },
-    "pillars": {
-      "type": "value-pillars",
-      "blocks": {
-        "p-1": {
-          "type": "pillar",
-          "settings": {
-            "icon": "bolt",
-            "title": "Partner-Rabatt",
-            "description": "Registrierte Partner erhalten 3–9 % Rabatt auf alle Bestellungen. Ohne Mindestbestellwert."
-          }
-        },
-        "p-2": {
-          "type": "pillar",
-          "settings": {
-            "icon": "star",
-            "title": "Marktführende Preise",
-            "description": "Direkt vom Importeur — ohne Zwischenhändler. Bestpreisgarantie auf alle Marken."
-          }
-        },
-        "p-3": {
-          "type": "pillar",
-          "settings": {
-            "icon": "phone",
-            "title": "Technischer Support",
-            "description": "Telefon & E-Mail Support Mo–Fr durch unsere Techniker. Kostenlos für alle Kunden."
-          }
-        },
-        "t-1": { "type": "tier", "settings": { "from_label": "ab € 500", "discount": "3%" } },
-        "t-2": { "type": "tier", "settings": { "from_label": "ab € 1.000", "discount": "5%" } },
-        "t-3": { "type": "tier", "settings": { "from_label": "ab € 2.500", "discount": "7%" } },
-        "t-4": { "type": "tier", "settings": { "from_label": "ab € 5.000", "discount": "9%" } }
-      },
-      "block_order": ["p-1", "p-2", "p-3", "t-1", "t-2", "t-3", "t-4"],
+    "hero": {
+      "type": "hero",
       "settings": {
-        "cta_login": "Anmelden",
-        "cta_register": "Benutzerkonto erstellen",
-        "cta_note": "Keine Mindestbestellmenge. Jederzeit kündbar.",
-        "table_title": "PARTNER-RABATTE"
+        "cta_primary_url": "/collections/all-products"
       }
     },
-    "category-grid": {
-      "type": "category-grid",
+    "collection-cards": {
+      "type": "collection-cards",
       "blocks": {
-        "cat-1": {
-          "type": "category",
-          "settings": {
-            "icon": "panel",
-            "name": "Module",
-            "count_label": "42 Modelle",
-            "from_label": "ab € 89",
-            "brands": "JA · Longi · Trina · Meyer Burger"
-          }
-        },
-        "cat-2": {
-          "type": "category",
-          "settings": {
-            "icon": "inverter",
-            "name": "Wechselrichter",
-            "count_label": "28 Modelle",
-            "from_label": "ab € 690",
-            "brands": "Fronius · Huawei · SMA · Goodwe"
-          }
-        },
-        "cat-3": {
-          "type": "category",
-          "settings": {
-            "icon": "battery",
-            "name": "Speicher",
-            "count_label": "18 Modelle",
-            "from_label": "ab € 2.490",
-            "brands": "BYD · Huawei · Fronius · Pylontech"
-          }
-        },
-        "cat-4": {
-          "type": "category",
-          "settings": {
-            "icon": "plug",
-            "name": "Wallbox & Zubehör",
-            "count_label": "60+ Artikel",
-            "from_label": "ab € 49",
-            "brands": "go-e · KEBA · Wallbe · Victron"
-          }
-        }
+        "cc-1": { "type": "card", "settings": { "collection": "solar-panels", "aspect_ratio": "square" } },
+        "cc-2": { "type": "card", "settings": { "collection": "inverters", "aspect_ratio": "square" } },
+        "cc-3": { "type": "card", "settings": { "collection": "battery-storage", "aspect_ratio": "square" } }
       },
-      "block_order": ["cat-1", "cat-2", "cat-3", "cat-4"],
+      "block_order": ["cc-1", "cc-2", "cc-3"],
+      "settings": {}
+    },
+    "collection-cards-secondary": {
+      "type": "collection-cards-secondary",
+      "blocks": {
+        "cs-1": { "type": "card", "settings": { "collection": "electrical-accessories" } },
+        "cs-2": { "type": "card", "settings": { "collection": "ev-chargers" } },
+        "cs-3": { "type": "card", "settings": { "collection": "mounting-systems" } },
+        "cs-4": { "type": "card", "settings": { "collection": "complete-systems" } }
+      },
+      "block_order": ["cs-1", "cs-2", "cs-3", "cs-4"],
+      "settings": {}
+    },
+    "brands": {
+      "type": "brand-logos",
+      "blocks": {},
+      "block_order": [],
+      "settings": {}
+    },
+    "usp": {
+      "type": "usp-bar",
+      "blocks": {
+        "u-1": { "type": "item", "settings": { "icon": "truck",        "content_key": "delivery" } },
+        "u-2": { "type": "item", "settings": { "icon": "shield-check", "content_key": "brands"   } },
+        "u-3": { "type": "item", "settings": { "icon": "phone",        "content_key": "advice"   } }
+      },
+      "block_order": ["u-1", "u-2", "u-3"],
       "settings": {}
     },
     "reviews": {
@@ -169,32 +112,21 @@
     },
     "featured": {
       "type": "product-grid",
-      "settings": {
-        "eyebrow": "Empfohlen",
-        "title": "Empfohlene Produkte",
-        "products_to_show": 6
-      }
+      "settings": {}
     },
     "calculator": {
       "type": "calculator",
       "settings": {}
-    },
-    "bestsellers": {
-      "type": "product-grid",
-      "settings": {
-        "eyebrow": "Bestseller",
-        "title": "Meistverkaufte Produkte",
-        "products_to_show": 6
-      }
     }
   },
   "order": [
-    "catnav",
-    "pillars",
-    "category-grid",
+    "hero",
+    "usp",
+    "collection-cards",
+    "collection-cards-secondary",
+    "brands",
     "reviews",
     "featured",
-    "calculator",
-    "bestsellers"
+    "calculator"
   ]
 }

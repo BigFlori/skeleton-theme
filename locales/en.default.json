@@ -44,12 +44,20 @@
     "password": "Password",
     "enter": "Enter"
   },
+  "localization": {
+    "region": "Region",
+    "choose_region": "Choose region",
+    "suggestion_banner": "You seem to be browsing from {{ country }}. Switch?",
+    "confirm": "Switch",
+    "dismiss": "Stay"
+  },
   "general": {
     "header": "Main navigation",
     "menu": "Menu",
     "cart": "Cart",
     "account": "Account",
     "language": "Language",
+    "country_region": "Country/region",
     "items": "items",
     "skip_to_content": "Skip to content",
     "onboarding": {

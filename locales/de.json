@@ -44,12 +44,20 @@
     "password": "Passwort",
     "enter": "Eingeben"
   },
+  "localization": {
+    "region": "Region",
+    "choose_region": "Region wählen",
+    "suggestion_banner": "Sie browsen anscheinend aus {{ country }}. Wechseln?",
+    "confirm": "Wechseln",
+    "dismiss": "Bleiben"
+  },
   "general": {
     "header": "Hauptnavigation",
     "menu": "Menü",
     "cart": "Warenkorb",
     "account": "Konto",
     "language": "Sprache",
+    "country_region": "Land/Region",
     "items": "Artikel",
     "skip_to_content": "Zum Inhalt springen",
     "onboarding": {

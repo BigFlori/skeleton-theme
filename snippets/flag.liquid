@@ -1,0 +1,15 @@
+{%- liquid
+  assign fc = country | upcase
+-%}
+<span class="flag-icon" aria-hidden="true">
+  {%- case fc -%}
+    {%- when 'HU' -%}
+      <svg width="20" height="14" viewBox="0 0 20 14" xmlns="http://www.w3.org/2000/svg"><rect width="20" height="4.667" fill="#CE2939"/><rect y="4.667" width="20" height="4.667" fill="#fff"/><rect y="9.333" width="20" height="4.667" fill="#477050"/></svg>
+    {%- when 'AT' -%}
+      <svg width="20" height="14" viewBox="0 0 20 14" xmlns="http://www.w3.org/2000/svg"><rect width="20" height="14" fill="#ED2939"/><rect y="4.667" width="20" height="4.667" fill="#fff"/></svg>
+    {%- when 'DE' -%}
+      <svg width="20" height="14" viewBox="0 0 20 14" xmlns="http://www.w3.org/2000/svg"><rect width="20" height="4.667" fill="#000"/><rect y="4.667" width="20" height="4.667" fill="#D00"/><rect y="9.333" width="20" height="4.667" fill="#FFCE00"/></svg>
+    {%- else -%}
+      <svg width="20" height="14" viewBox="0 0 20 14" xmlns="http://www.w3.org/2000/svg"><rect width="20" height="14" fill="#003FA5"/><circle cx="10" cy="7" r="4" fill="none" stroke="#FFD700" stroke-width="1.5"/></svg>
+  {%- endcase -%}
+</span>

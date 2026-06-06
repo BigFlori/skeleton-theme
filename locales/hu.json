@@ -44,12 +44,20 @@
     "password": "Jelszó",
     "enter": "Belépés"
   },
+  "localization": {
+    "region": "Régió",
+    "choose_region": "Régió választása",
+    "suggestion_banner": "Úgy tűnik, {{ country }}-ból nézed az oldalt. Váltás?",
+    "confirm": "Igen",
+    "dismiss": "Maradok"
+  },
   "general": {
     "header": "Főnavigáció",
     "menu": "Menü",
     "cart": "Kosár",
     "account": "Fiók",
     "language": "Nyelv",
+    "country_region": "Ország/régió",
     "items": "termék",
     "skip_to_content": "Ugrás a tartalomra",
     "onboarding": {
