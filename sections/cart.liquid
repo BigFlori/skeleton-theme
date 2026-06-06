@@ -1,14 +1,6 @@
 ﻿{%- liquid
-  assign threshold       = section.settings.free_shipping_threshold | times: 100
-  assign threshold_money = threshold | money
-  assign fee             = section.settings.shipping_fee | times: 100
-  if cart.total_price >= threshold
-    assign shipping_free = true
-    assign grand_total   = cart.total_price
-  else
-    assign shipping_free = false
-    assign grand_total   = cart.total_price | plus: fee
-  endif
+  assign fee           = section.settings.shipping_fee | times: 100
+  assign grand_total   = cart.total_price | plus: fee
   assign has_unavailable = false
   for item in cart.items
     unless item.variant.available
@@ -24,7 +16,7 @@
 
 <div data-cart-full{% if cart.item_count == 0 %} hidden{% endif %}>
   {%- render 'cart-hero' -%}
-  {%- render 'cart-progress', threshold: threshold, shipping_free: shipping_free -%}
+  {%- render 'cart-progress' -%}
 
   <section class="sw-cart-body" aria-label="{{ 'general.cart' | t }}">
     <div class="container">
@@ -40,7 +32,7 @@
           {%- endfor -%}
         </div>
 
-        {%- render 'cart-summary', grand_total: grand_total, fee: fee, shipping_free: shipping_free, has_unavailable: has_unavailable -%}
+        {%- render 'cart-summary', grand_total: grand_total, fee: fee, has_unavailable: has_unavailable -%}
 
       </div>
     </div>
@@ -162,32 +154,6 @@
   background: var(--accent-deep);
   border-color: var(--accent-deep);
   color: var(--accent-ink);
-}
-
-/* ── Free shipping bar ── */
-.sw-free-ship-bar {
-  padding-bottom: var(--s-3);
-}
-.sw-free-ship-bar__track {
-  height: 6px;
-  background: var(--line);
-  border-radius: 999px;
-  overflow: hidden;
-  margin-bottom: 8px;
-}
-.sw-free-ship-bar__fill {
-  height: 100%;
-  background: var(--accent-deep);
-  border-radius: 999px;
-  transition: width 0.4s ease;
-}
-.sw-free-ship-bar__fill--done {
-  background: #22c55e;
-}
-.sw-free-ship-bar__label {
-  font-size: 13px;
-  color: var(--ink-mute);
-  margin: 0;
 }
 
 /* ── Cart body grid ── */
@@ -582,18 +548,13 @@
 
 <script>
 window.swCartConfig = {
-  threshold: {{ threshold }},
   fee: {{ fee }},
   moneyFormat: {{ shop.money_format | json }},
   strings: {
     each: {{ 'sections.cart.each' | t | json }},
     items: {{ 'sections.cart.items' | t | json }},
-    shippingFree: {{ 'sections.cart.shipping_free' | t | json }},
-    shippingFreeNote: {{ 'sections.cart.shipping_free_note' | t: amount: threshold_money | json }},
-    shippingPaidNote: {{ 'sections.cart.shipping_paid_note' | t | json }},
+    shippingNote: {{ 'sections.cart.shipping_paid_note' | t | json }},
     qtyMin: {{ 'sections.cart.qty_min' | t | json }},
-    freeShipUnlocked: {{ 'sections.cart.shipping_bar_unlocked' | t | json }},
-    freeShipProgress: {{ 'sections.cart.shipping_bar_progress' | t: amount: '__AMOUNT__' | json }},
     errorGeneric: {{ 'sections.cart.error_generic' | t | json }},
     upsellAdded: {{ 'sections.cart.upsell_added' | t | json }}
   }
@@ -606,13 +567,6 @@ window.swCartConfig = {
 {
   "name": "t:general.cart",
   "settings": [
-    {
-      "type": "number",
-      "id": "free_shipping_threshold",
-      "label": "Free shipping threshold",
-      "default": 2000,
-      "info": "Orders above this amount qualify for free shipping."
-    },
     {
       "type": "number",
       "id": "shipping_fee",

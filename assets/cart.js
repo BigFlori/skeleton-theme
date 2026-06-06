@@ -21,8 +21,7 @@
   }
 
   function updateCartTotals(cart) {
-    var shippingFree = cart.total_price >= cfg.threshold;
-    var grandTotal   = shippingFree ? cart.total_price : cart.total_price + cfg.fee;
+    var grandTotal = cart.total_price + cfg.fee;
 
     var countEl = document.querySelector('[data-cart-count]');
     if (countEl) countEl.textContent = cart.item_count + ' ' + cfg.strings.items;
@@ -33,30 +32,12 @@
     var grandTotalEl   = document.querySelector('[data-cart-grand-total]');
 
     if (subtotalEl)     subtotalEl.textContent     = formatMoney(cart.total_price);
-    if (shippingValEl)  shippingValEl.textContent  = shippingFree ? cfg.strings.shippingFree : formatMoney(cfg.fee);
-    if (shippingNoteEl) shippingNoteEl.textContent = shippingFree ? cfg.strings.shippingFreeNote : cfg.strings.shippingPaidNote;
+    if (shippingValEl)  shippingValEl.textContent  = formatMoney(cfg.fee);
+    if (shippingNoteEl) shippingNoteEl.textContent = cfg.strings.shippingNote;
     if (grandTotalEl)   grandTotalEl.textContent   = formatMoney(grandTotal);
 
     var liveEl = document.getElementById('sw-cart-live');
     if (liveEl) liveEl.textContent = cart.item_count + ' ' + cfg.strings.items + ' — ' + formatMoney(grandTotal);
-
-    var freeShipFill  = document.querySelector('[data-free-ship-fill]');
-    var freeShipLabel = document.querySelector('[data-free-ship-label]');
-    var freeShipTrack = freeShipFill && freeShipFill.closest('[role="progressbar"]');
-    if (freeShipFill) {
-      var pct = Math.min(100, Math.round(cart.total_price / cfg.threshold * 100));
-      freeShipFill.style.width = pct + '%';
-      if (freeShipTrack) freeShipTrack.setAttribute('aria-valuenow', pct);
-      freeShipFill.classList.toggle('sw-free-ship-bar__fill--done', shippingFree);
-      if (freeShipLabel) {
-        if (shippingFree) {
-          freeShipLabel.textContent = cfg.strings.freeShipUnlocked;
-        } else {
-          var rem = cfg.threshold - cart.total_price;
-          freeShipLabel.textContent = cfg.strings.freeShipProgress.replace('__AMOUNT__', formatMoney(rem));
-        }
-      }
-    }
   }
 
   function updateCartDOM(cart, lineIndex) {

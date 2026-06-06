@@ -1,5 +1,5 @@
 {%- comment -%}
-  Expects: grand_total, fee, shipping_free, has_unavailable (passed via render)
+  Expects: grand_total, fee, has_unavailable (passed via render)
   Globals used: cart, section
 {%- endcomment -%}
 
@@ -18,21 +18,10 @@
       <div class="sw-cart-summary__row">
         <dt>{{ 'sections.cart.shipping' | t }}</dt>
         <dd class="mono sw-cart-summary__dd--accent" data-cart-shipping-value>
-          {%- if shipping_free -%}
-            {{ 'sections.cart.shipping_free' | t }}
-          {%- else -%}
-            {{ fee | money }}
-          {%- endif -%}
+          {{ fee | money }}
         </dd>
         <div class="mono sw-cart-summary__sub" data-cart-shipping-note>
-          {%- liquid
-            assign threshold_money = section.settings.free_shipping_threshold | times: 100 | money
-          -%}
-          {%- if shipping_free -%}
-            {{ 'sections.cart.shipping_free_note' | t: amount: threshold_money }}
-          {%- else -%}
-            {{ 'sections.cart.shipping_paid_note' | t }}
-          {%- endif -%}
+          {{ 'sections.cart.shipping_paid_note' | t }}
         </div>
       </div>
       <div class="sw-cart-summary__row">

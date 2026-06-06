@@ -4,21 +4,6 @@
   JS lives in assets/cart-drawer.js.
 {% endcomment %}
 
-{%- liquid
-  assign threshold     = section.settings.free_shipping_threshold | times: 100
-  assign remaining     = threshold | minus: cart.total_price
-  if threshold == 0
-    assign shipping_free = true
-    assign progress_pct  = 100
-  elsif cart.total_price >= threshold
-    assign shipping_free = true
-    assign progress_pct  = 100
-  else
-    assign shipping_free = false
-    assign progress_pct  = cart.total_price | times: 100 | divided_by: threshold
-  endif
--%}
-
 {%- comment -%} ── Backdrop ── {%- endcomment -%}
 <div class="sw-cart-drawer-backdrop" data-cart-drawer-backdrop aria-hidden="true"></div>
 
@@ -72,51 +57,6 @@
       {{ 'sections.cart_drawer.browse_cta' | t }}
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{%- render 'icon', icon: 'arrow-right' -%}</svg>
     </button>
-  </div>
-
-  {%- comment -%} ── Free-shipping meter (outside scroll area) ── {%- endcomment -%}
-  <div class="sw-cart-drawer__meter-wrap" data-drawer-meter-wrap{% if cart.item_count == 0 %} hidden{% endif %}>
-    <div
-      class="sw-cart-drawer__meter{% if shipping_free %} sw-cart-drawer__meter--done{% endif %}"
-      data-drawer-meter-card
-    >
-      <div class="sw-cart-drawer__meter-row">
-        <div
-          class="sw-cart-drawer__meter-icon{% if shipping_free %} sw-cart-drawer__meter-icon--done{% endif %}"
-          aria-hidden="true"
-          data-drawer-meter-icon
-        >
-          {%- if shipping_free -%}
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{%- render 'icon', icon: 'check' -%}</svg>
-          {%- else -%}
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{%- render 'icon', icon: 'truck' -%}</svg>
-          {%- endif -%}
-        </div>
-        <span class="sw-cart-drawer__meter-text" data-drawer-meter-text>
-          {%- if shipping_free -%}
-            {{ 'sections.cart_drawer.shipping_free_html' | t }}
-          {%- else -%}
-            {%- assign remaining_money = remaining | money -%}
-            {{ 'sections.cart_drawer.shipping_progress_html' | t: remaining: remaining_money }}
-          {%- endif -%}
-        </span>
-      </div>
-      <div
-        class="sw-cart-drawer__meter-track"
-        role="progressbar"
-        aria-label="{{ 'sections.cart_drawer.shipping_progress_label' | t }}"
-        aria-valuemin="0"
-        aria-valuemax="100"
-        aria-valuenow="{{ progress_pct }}"
-        data-drawer-meter-track
-      >
-        <div
-          class="sw-cart-drawer__meter-fill"
-          data-drawer-meter-fill
-          style="width: {{ progress_pct }}%"
-        ></div>
-      </div>
-    </div>
   </div>
 
   {%- comment -%} ── Scrollable items area ── {%- endcomment -%}
@@ -308,16 +248,13 @@
 
 <script>
 window.swDrawerConfig = {
-  threshold: {{ threshold }},
   moneyFormat: {{ shop.money_format | json }},
   rootUrl: {{ routes.root_url | json }},
   strings: {
     items: {{ 'sections.cart.items' | t | json }},
     errorGeneric: {{ 'sections.cart.error_generic' | t | json }},
     cartLabel: {{ 'general.cart' | t | json }},
-    titleEmpty: {{ 'sections.cart_drawer.title_empty_html' | t | json }},
-    shippingFree: {{ 'sections.cart_drawer.shipping_free_html' | t | json }},
-    shippingProgress: {{ 'sections.cart_drawer.shipping_progress_html' | t: remaining: '__REMAINING__' | json }}
+    titleEmpty: {{ 'sections.cart_drawer.title_empty_html' | t | json }}
   }
 };
 </script>
@@ -434,57 +371,6 @@ window.swDrawerConfig = {
   line-height: 1.5;
 }
 .sw-cart-drawer__empty-cta { margin-top: 4px; }
-
-/* ── Free-shipping meter ── */
-.sw-cart-drawer__meter-wrap {
-  padding: 16px 26px 0;
-  flex-shrink: 0;
-}
-.sw-cart-drawer__meter {
-  padding: 14px 18px;
-  background: var(--sun-soft);
-  border-radius: 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.sw-cart-drawer__meter--done { background: var(--accent-soft); }
-.sw-cart-drawer__meter-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 13px;
-  color: var(--ink);
-}
-.sw-cart-drawer__meter-icon {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: var(--sun);
-  color: var(--ink);
-  display: grid;
-  place-items: center;
-  flex-shrink: 0;
-}
-.sw-cart-drawer__meter-icon--done {
-  background: var(--accent-deep);
-  color: var(--accent-ink);
-}
-.sw-cart-drawer__meter-track {
-  height: 4px;
-  background: oklch(1 0 0 / 0.5);
-  border-radius: 2px;
-  overflow: hidden;
-}
-.sw-cart-drawer__meter-fill {
-  height: 100%;
-  background: var(--ink);
-  border-radius: 2px;
-  transition: width .4s ease;
-}
-.sw-cart-drawer__meter--done .sw-cart-drawer__meter-fill {
-  background: var(--accent-deep);
-}
 
 /* ── Scrollable items area ── */
 .sw-cart-drawer__items-wrap {
@@ -694,13 +580,6 @@ window.swDrawerConfig = {
 {
   "name": "Cart Drawer",
   "settings": [
-    {
-      "type": "number",
-      "id": "free_shipping_threshold",
-      "label": "Free shipping threshold",
-      "default": 2000,
-      "info": "Amount in your store's primary currency. Orders above this qualify for free shipping (displayed using shop money format)."
-    },
     {
       "type": "product",
       "id": "drawer_upsell_product",
