@@ -1,0 +1,8 @@
+{
+  "name": "solar-theme",
+  "private": true,
+  "scripts": {
+    "dev": "shopify theme dev --ignore \"**/*.tmp.*\"",
+    "check": "shopify theme check && python check_translations.py"
+  }
+}

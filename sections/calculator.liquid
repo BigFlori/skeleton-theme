@@ -142,7 +142,7 @@
 
         <div class="sw-calc__bottom-grid">
           <div class="sw-calc__metric sw-calc__metric--small">
-            <div class="display sw-calc__metric-val" data-out="cost">&euro;&nbsp;4.324</div>
+            <div class="display sw-calc__metric-val" data-out="cost">{{ 432400 | money_without_trailing_zeros }}</div>
             <p class="mono sw-calc__metric-label">{{ 'sections.calculator.system_cost' | t }}</p>
           </div>
           <div class="sw-calc__metric sw-calc__metric--small">
@@ -169,6 +169,11 @@
   </div>
 </section>
 
+<script>
+window.swCalculatorConfig = {
+  moneyFormat: {{ shop.money_format | json }}
+};
+</script>
 <script src="{{ 'calculator.js' | asset_url }}" defer></script>
 
 {% stylesheet %}

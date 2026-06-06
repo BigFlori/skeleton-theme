@@ -6,6 +6,9 @@
     var calc = scope.querySelector('[data-calculator]');
     if (!calc) return;
 
+    var cfg = window.swCalculatorConfig || {};
+    function formatMoney(amount) { return SwUtils.formatMoney(amount * 100, cfg.moneyFormat); }
+
     var sliderConsumption = calc.querySelector('[data-input="consumption"]');
     var sliderRoof        = calc.querySelector('[data-input="roof"]');
     var toggleEV          = calc.querySelector('[data-toggle="ev"]');
@@ -66,7 +69,7 @@
       if (outKwp)     outKwp.textContent     = kwp;
       if (outYield)   outYield.textContent   = fmt.format(yearlyYield);
       if (outSaving)  outSaving.textContent  = fmt.format(saving);
-      if (outCost)    outCost.textContent    = '€ ' + fmt.format(cost);
+      if (outCost)    outCost.textContent    = formatMoney(cost);
       if (outPayback) outPayback.textContent = payback;
       if (outCo2)     outCo2.textContent     = fmt.format(co2);
       if (ctaBtn)     ctaBtn.href = (ctaBtn.dataset.href || '#pakete') + '?min_kwp=' + kwp;

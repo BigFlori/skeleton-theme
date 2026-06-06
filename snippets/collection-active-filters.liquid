@@ -25,7 +25,7 @@
     {%- endfor -%}
 
     {%- if collection.handle == 'all' -%}
-      <a href="/collections/all-products" class="coll-clear-all mono">{{ 'collection.filters.clear_all' | t }}</a>
+      <a href="{{ collections['all-products'].url }}" class="coll-clear-all mono">{{ 'collection.filters.clear_all' | t }}</a>
     {%- else -%}
       <a href="{{ collection.url }}" class="coll-clear-all mono">{{ 'collection.filters.clear_all' | t }}</a>
     {%- endif -%}

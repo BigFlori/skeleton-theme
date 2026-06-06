@@ -15,7 +15,7 @@
     {%- if section.settings.hero_image != blank -%}
       {{ section.settings.hero_image | image_url: width: 2400 | image_tag: class: 'sw-hero__bg-img', loading: 'eager', fetchpriority: 'high', sizes: '100vw', widths: '768, 1024, 1440, 1920, 2400', alt: '' }}
     {%- else -%}
-      <img class="sw-hero__bg-img" src="{{ 'hero_image_webp.webp' | asset_url }}" alt="" loading="eager" fetchpriority="high">
+      <img class="sw-hero__bg-img" src="{{ 'hero_image_webp.webp' | asset_url }}" alt="" width="1344" height="768" loading="eager" fetchpriority="high">
     {%- endif -%}
     <div class="sw-hero__overlay"></div>
   </div>

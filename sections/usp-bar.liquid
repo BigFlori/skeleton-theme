@@ -11,8 +11,10 @@
             </span>
             {%- assign usp_key = block.settings.content_key -%}
             <div class="sw-usp__text">
+              {% # theme-check-disable TranslationKeyExists %}
               <p class="sw-usp__title">{{ 'sections.usp.items.' | append: usp_key | append: '.title' | t }}</p>
               <p class="sw-usp__sub">{{ 'sections.usp.items.' | append: usp_key | append: '.subtext' | t }}</p>
+              {% # theme-check-enable TranslationKeyExists %}
             </div>
           </div>
         {%- endif -%}

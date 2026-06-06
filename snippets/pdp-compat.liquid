@@ -27,7 +27,6 @@
 {%- if auto_filter -%}
   {%- for inv in inverters -%}
     {%- assign max_per_str_cold = inv.max_dc_voltage | divided_by: panel_cold_voc | floor -%}
-    {%- assign total_max = max_per_str_cold | times: inv.mppt_count | times: inv.strings_per_mppt -%}
     {%- assign optimal = inv.power | times: 1.1 | divided_by: panel_kwp | divided_by: 1000 | floor -%}
 
     {%- assign mppt_v_min = inv.mppt_min_voltage | default: 0 -%}
@@ -71,7 +70,6 @@
           {%- for inv in inverters -%}
             {%- if auto_filter -%}
               {%- assign max_per_str_cold = inv.max_dc_voltage | divided_by: panel_cold_voc | floor -%}
-              {%- assign total_max = max_per_str_cold | times: inv.mppt_count | times: inv.strings_per_mppt -%}
               {%- assign optimal = inv.power | times: 1.1 | divided_by: panel_kwp | divided_by: 1000 | floor -%}
               {%- assign mppt_v_min = inv.mppt_min_voltage | default: 0 -%}
               {%- if mppt_v_min > 0 -%}

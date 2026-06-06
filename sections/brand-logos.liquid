@@ -17,23 +17,23 @@
 
         <div class="sw-brands__item"{% if pass > 1 %} aria-hidden="true"{% endif %}>
           <img src="{{ 'JA_SOLAR/JA_SOLAR_idEWD3SSud_1.svg' | asset_url }}"
-               alt="{% if pass == 1 %}JA Solar{% endif %}" loading="lazy">
+               alt="{% if pass == 1 %}JA Solar{% endif %}" width="453" height="80" loading="lazy">
         </div>
         <div class="sw-brands__item"{% if pass > 1 %} aria-hidden="true"{% endif %}>
           <img src="{{ 'Huawei/Huawei_idfUUSTrcr_0.svg' | asset_url }}"
-               alt="{% if pass == 1 %}Huawei{% endif %}" loading="lazy">
+               alt="{% if pass == 1 %}Huawei{% endif %}" width="818" height="179" loading="lazy">
         </div>
         <div class="sw-brands__item"{% if pass > 1 %} aria-hidden="true"{% endif %}>
           <img src="{{ 'Sungrow/Sungrow_idIZ3cdahY_1.svg' | asset_url }}"
-               alt="{% if pass == 1 %}Sungrow{% endif %}" loading="lazy">
+               alt="{% if pass == 1 %}Sungrow{% endif %}" width="1552" height="340" loading="lazy">
         </div>
         <div class="sw-brands__item"{% if pass > 1 %} aria-hidden="true"{% endif %}>
           <img src="{{ 'solplanet_logo.png' | asset_url }}"
-               alt="{% if pass == 1 %}Solplanet{% endif %}" loading="lazy">
+               alt="{% if pass == 1 %}Solplanet{% endif %}" width="157" height="40" loading="lazy">
         </div>
         <div class="sw-brands__item"{% if pass > 1 %} aria-hidden="true"{% endif %}>
           <img src="{{ 'trinasolar_logo.png' | asset_url }}"
-               alt="{% if pass == 1 %}Trina Solar{% endif %}" loading="lazy">
+               alt="{% if pass == 1 %}Trina Solar{% endif %}" width="499" height="118" loading="lazy">
         </div>
 
         {%- for block in section.blocks -%}
@@ -41,6 +41,7 @@
             <div class="sw-brands__item"{% if pass > 1 %} aria-hidden="true"{% else %} {{ block.shopify_attributes }}{% endif %}>
               <img src="{{ block.settings.logo | image_url: height: 72 }}"
                    alt="{% if pass == 1 %}{{ block.settings.name | default: block.settings.logo.alt }}{% endif %}"
+                   width="{{ block.settings.logo.width }}" height="{{ block.settings.logo.height }}"
                    loading="lazy">
             </div>
           {%- endif -%}

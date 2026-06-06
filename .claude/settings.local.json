@@ -111,7 +111,16 @@
       "Bash(python3 -c \"import json; json.load\\(open\\('locales/hu.json'\\)\\); print\\('JSON OK'\\)\")",
       "Bash(python3 -c \"import json; json.load\\(open\\('locales/de.json'\\)\\); print\\('JSON OK'\\)\")",
       "Bash(python3 -c \"import json;json.load\\(open\\('locales/hu.json'\\)\\);print\\('hu.json OK'\\)\")",
-      "Bash(python3 -c 'import json;json.load\\(open\\('\\\\''locales/__TRACKED_VAR__.json'\\\\''\\)\\);print\\('\\\\''__TRACKED_VAR__.json OK'\\\\''\\)')"
+      "Bash(python3 -c 'import json;json.load\\(open\\('\\\\''locales/__TRACKED_VAR__.json'\\\\''\\)\\);print\\('\\\\''__TRACKED_VAR__.json OK'\\\\''\\)')",
+      "Bash(node -e \"const d=require\\('./locales/en.default.json'\\); console.log\\(JSON.stringify\\(d.sections.cart_drawer, null, 2\\)\\)\")",
+      "Bash(xxd)",
+      "Bash(shopify theme *)",
+      "Bash(ls -d scripts tools bin)",
+      "Bash(ls *.py)",
+      "Bash(python check_translations.py)",
+      "Bash(PYTHONIOENCODING=utf-8 python check_translations.py)",
+      "Bash(ls package.json)",
+      "Bash(cat package.json)"
     ],
     "additionalDirectories": [
       "/home/fmolnar/Documents/Shopify/nrgedge/apps/discounts/extensions/volume-discount",
