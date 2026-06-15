@@ -2,51 +2,77 @@
   'use strict';
 
   var drawer = document.getElementById('sw-mobile-nav');
+  if (!drawer) return;
+
   var backdrop = document.querySelector('[data-mobile-nav-backdrop]');
   var trigger = document.querySelector('[data-mobile-nav-trigger]');
 
-  if (!drawer) return;
-
-  // Stack of open sub-panel ids (root is always the base layer, not tracked).
+  // Stack of open sub-panel ids; deepest is last. Root ("root") is the
+  // implicit base and is never pushed onto the stack.
   var stack = [];
 
   function panelById(id) {
     return drawer.querySelector('[data-panel-id="' + id + '"]');
   }
 
-  // Reset drill-down to the root level (used on open/close).
-  function resetPanels() {
-    drawer
-      .querySelectorAll('.sw-mobile-nav__panel.is-active:not(.sw-mobile-nav__panel--root)')
-      .forEach(function (p) { p.classList.remove('is-active'); });
-    drawer
-      .querySelectorAll('[data-panel-target][aria-expanded="true"]')
-      .forEach(function (b) { b.setAttribute('aria-expanded', 'false'); });
-    stack = [];
+  // Single source of truth: derive every panel's position from `stack`.
+  //   • top of stack (or root when empty) → on-screen          (is-active)
+  //   • ancestors of the top              → slid partly left   (is-parent)
+  //   • everything else                   → parked off-screen right (default)
+  // The off-screen/parent panels are marked `inert` so their content can't be
+  // focused or read by assistive tech while hidden behind the active panel.
+  function render() {
+    var topId = stack.length ? stack[stack.length - 1] : 'root';
+
+    drawer.querySelectorAll('.sw-mobile-nav__panel').forEach(function (panel) {
+      var id = panel.getAttribute('data-panel-id');
+      var isTop = id === topId;
+      var inPath = id === 'root' || stack.indexOf(id) !== -1;
+
+      // Root keeps its own resting position (translateX 0) via --root, so it
+      // only ever toggles is-parent; sub-panels toggle is-active.
+      panel.classList.toggle('is-active', isTop && id !== 'root');
+      panel.classList.toggle('is-parent', inPath && !isTop);
+
+      if (isTop) {
+        panel.removeAttribute('inert');
+      } else {
+        panel.setAttribute('inert', '');
+      }
+    });
+
+    drawer.querySelectorAll('[data-panel-target]').forEach(function (btn) {
+      var open = stack.indexOf(btn.getAttribute('data-panel-target')) !== -1;
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
   }
 
-  function openPanel(id, openerBtn) {
+  // Drill one level deeper: the parent slides left while the target panel
+  // slides in from the right and covers it.
+  function openPanel(id, opener) {
     var panel = panelById(id);
-    if (!panel) return;
-    panel.classList.add('is-active');
-    if (openerBtn) openerBtn.setAttribute('aria-expanded', 'true');
-    stack.push(id);
+    if (!panel || stack.indexOf(id) !== -1) return;
     panel.scrollTop = 0;
+    stack.push(id);
+    render();
     var back = panel.querySelector('[data-panel-back]');
-    if (back) back.focus();
+    if (back) back.focus({ preventScroll: true });
   }
 
-  // Slide back one level (deepest active panel).
+  // Step back one level: the deepest panel slides out to the right while its
+  // parent slides back into place.
   function popPanel() {
     if (!stack.length) return;
     var id = stack.pop();
-    var panel = panelById(id);
-    if (panel) panel.classList.remove('is-active');
+    render();
     var opener = drawer.querySelector('[data-panel-target="' + id + '"]');
-    if (opener) {
-      opener.setAttribute('aria-expanded', 'false');
-      opener.focus();
-    }
+    if (opener) opener.focus({ preventScroll: true });
+  }
+
+  // Collapse everything back to root (used on open/close).
+  function resetPanels() {
+    stack = [];
+    render();
   }
 
   function open() {
@@ -55,7 +81,7 @@
     if (backdrop) backdrop.classList.add('is-open');
     document.body.classList.add('is-scroll-locked');
     var closeBtn = drawer.querySelector('[data-mobile-nav-close]');
-    if (closeBtn) closeBtn.focus();
+    if (closeBtn) closeBtn.focus({ preventScroll: true });
   }
 
   function close() {
@@ -63,9 +89,9 @@
     drawer.setAttribute('aria-hidden', 'true');
     if (backdrop) backdrop.classList.remove('is-open');
     document.body.classList.remove('is-scroll-locked');
-    if (trigger) trigger.focus();
-    // Reset only after the drawer has fully slid away, so the inner
-    // panels don't visibly snap back to root during the close.
+    if (trigger) trigger.focus({ preventScroll: true });
+    // Reset only after the drawer has fully slid away, so the inner panels
+    // don't visibly snap back to root during the close.
     setTimeout(resetPanels, 450);
   }
 
@@ -99,4 +125,7 @@
       close();
     }
   });
+
+  // Park every sub-panel off-screen and inert before the drawer is opened.
+  render();
 })();

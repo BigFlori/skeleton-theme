@@ -68,9 +68,6 @@
                 {% if link.current %}aria-current="page"{% endif %}
               >
                 <span class="sw-mobile-nav__link-text">{{ link.title }}</span>
-                <svg class="sw-mobile-nav__link-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  {%- render 'icon', icon: 'arrow-right' -%}
-                </svg>
               </a>
             {%- endif -%}
           </li>
@@ -97,21 +94,25 @@
         {%- assign p1 = forloop.index -%}
         <div class="sw-mobile-nav__panel" data-panel-id="p-{{ p1 }}" data-panel-parent="root">
           <button type="button" class="sw-mobile-nav__back" data-panel-back>
-            <svg class="sw-mobile-nav__back-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <svg class="sw-mobile-nav__back-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               {%- render 'icon', icon: 'chevron-right' -%}
             </svg>
-            <span>{{ link.title }}</span>
+            <span>{{ 'navigation.back' | t }}</span>
           </button>
+          <h2 class="sw-mobile-nav__panel-title">{{ link.title }}</h2>
           <ul class="sw-mobile-nav__list" role="list">
-            {%- comment -%} Link to the parent category page itself {%- endcomment -%}
+            {%- comment -%} Highlighted link to the parent category page itself {%- endcomment -%}
             {%- unless link.url == '#' or link.url == 'javascript:void(0)' -%}
-              <li class="sw-mobile-nav__item">
+              <li class="sw-mobile-nav__item sw-mobile-nav__item--all">
                 <a
                   href="{{ link.url }}"
-                  class="sw-mobile-nav__sub-link sw-mobile-nav__sub-link--parent{% if link.current %} sw-mobile-nav__sub-link--active{% endif %}"
+                  class="sw-mobile-nav__all{% if link.current %} sw-mobile-nav__all--active{% endif %}"
                   {% if link.current %}aria-current="page"{% endif %}
                 >
-                  {{ 'navigation.all_in' | t: category: link.title }}
+                  <span class="sw-mobile-nav__link-text">{{ 'navigation.all_in' | t: category: link.title }}</span>
+                  <svg class="sw-mobile-nav__all-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    {%- render 'icon', icon: 'arrow-right' -%}
+                  </svg>
                 </a>
               </li>
             {%- endunless -%}
@@ -136,9 +137,6 @@
                     {% if child.current %}aria-current="page"{% endif %}
                   >
                     <span class="sw-mobile-nav__link-text">{{ child.title }}</span>
-                    <svg class="sw-mobile-nav__link-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                      {%- render 'icon', icon: 'arrow-right' -%}
-                    </svg>
                   </a>
                 {%- endif -%}
               </li>
@@ -151,20 +149,24 @@
           {%- if child.links.size > 0 -%}
             <div class="sw-mobile-nav__panel" data-panel-id="p-{{ p1 }}-{{ forloop.index }}" data-panel-parent="p-{{ p1 }}">
               <button type="button" class="sw-mobile-nav__back" data-panel-back>
-                <svg class="sw-mobile-nav__back-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <svg class="sw-mobile-nav__back-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   {%- render 'icon', icon: 'chevron-right' -%}
                 </svg>
-                <span>{{ child.title }}</span>
+                <span>{{ 'navigation.back' | t }}</span>
               </button>
+              <h2 class="sw-mobile-nav__panel-title">{{ child.title }}</h2>
               <ul class="sw-mobile-nav__list" role="list">
                 {%- unless child.url == '#' or child.url == 'javascript:void(0)' -%}
-                  <li class="sw-mobile-nav__item">
+                  <li class="sw-mobile-nav__item sw-mobile-nav__item--all">
                     <a
                       href="{{ child.url }}"
-                      class="sw-mobile-nav__sub-link sw-mobile-nav__sub-link--parent{% if child.current %} sw-mobile-nav__sub-link--active{% endif %}"
+                      class="sw-mobile-nav__all{% if child.current %} sw-mobile-nav__all--active{% endif %}"
                       {% if child.current %}aria-current="page"{% endif %}
                     >
-                      {{ 'navigation.all_in' | t: category: child.title }}
+                      <span class="sw-mobile-nav__link-text">{{ 'navigation.all_in' | t: category: child.title }}</span>
+                      <svg class="sw-mobile-nav__all-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        {%- render 'icon', icon: 'arrow-right' -%}
+                      </svg>
                     </a>
                   </li>
                 {%- endunless -%}
@@ -176,9 +178,6 @@
                       {% if grandchild.current %}aria-current="page"{% endif %}
                     >
                       <span class="sw-mobile-nav__link-text">{{ grandchild.title }}</span>
-                      <svg class="sw-mobile-nav__link-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        {%- render 'icon', icon: 'arrow-right' -%}
-                      </svg>
                     </a>
                   </li>
                 {%- endfor -%}
@@ -284,9 +283,17 @@
   overflow: hidden;
 }
 
-/* Each level is a full-size panel; sub-panels slide in from the right.
-   Inactive panels are hidden (visibility) so they can't be tabbed to or
-   bleed through, and the hide is delayed until the slide-out finishes. */
+/* Each level is a full-size panel. Resting positions, all driven from JS via
+   the stack (see mobile-nav.js):
+     • active panel  → translateX(0)      on screen
+     • parent panels → translateX(-25%)   slid partly left (iOS-style parallax)
+     • the rest      → translateX(100%)   parked off-screen right
+   Drilling in slides the parent left while the child slides in over it; going
+   back reverses it. Panels stay rendered the whole time — only the transform
+   animates — so the slide fires reliably. Interactivity/focus of hidden panels
+   is handled with the `inert` attribute (not CSS visibility, which used to kill
+   the animation when toggled in the same frame as the transform). The
+   viewport's overflow:hidden clips the parked panels. */
 .sw-mobile-nav__panel {
   position: absolute;
   inset: 0;
@@ -296,57 +303,65 @@
   overflow-y: auto;
   overscroll-behavior: contain;
   transform: translateX(100%);
-  visibility: hidden;
   will-change: transform;
   backface-visibility: hidden;
-  transition:
-    transform .3s cubic-bezier(.2,.8,.2,1),
-    visibility 0s linear .3s;
+  transition: transform .32s cubic-bezier(.2,.8,.2,1);
 }
 .sw-mobile-nav__panel.is-active {
   transform: translateX(0);
-  visibility: visible;
-  transition:
-    transform .3s cubic-bezier(.2,.8,.2,1),
-    visibility 0s linear 0s;
 }
-/* Root is the base layer and never slides away. */
+/* Ancestor of the active panel — slid partly left so it parallaxes behind the
+   incoming child (higher specificity than --root, so root parallaxes too). */
+.sw-mobile-nav__panel.is-parent {
+  transform: translateX(-25%);
+}
+/* Root's resting position when it is itself the active level. */
 .sw-mobile-nav__panel--root {
   transform: translateX(0);
-  visibility: visible;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .sw-mobile-nav__panel { transition: none; }
 }
 
-/* ── Back bar (slide up one level) ── */
+/* ── Back bar (step up one level) ── */
 .sw-mobile-nav__back {
   position: sticky;
   top: 0;
   z-index: 2;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 4px;
   width: 100%;
-  padding: 15px 26px;
-  background: var(--bg-card);
+  padding: 18px 26px 6px;
+  background: var(--bg);
   border: none;
-  border-bottom: 1px solid var(--line);
   cursor: pointer;
   color: var(--accent-deep);
   font-family: var(--font-sans);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
   text-align: left;
   flex-shrink: 0;
-  transition: background .15s ease;
+  transition: opacity .15s ease;
 }
-.sw-mobile-nav__back:hover { background: var(--accent-soft); }
+.sw-mobile-nav__back:hover { opacity: 0.7; }
 .sw-mobile-nav__back-icon {
   transform: scaleX(-1);
+  flex-shrink: 0;
+  margin-left: -4px;
+}
+
+/* ── Panel title (category name) ── */
+.sw-mobile-nav__panel-title {
+  margin: 0;
+  padding: 18px 26px 16px;
+  font-family: var(--font-sans);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--ink);
+  border-bottom: 1px solid var(--line);
   flex-shrink: 0;
 }
 
@@ -356,6 +371,10 @@
   margin: 0;
   padding: 8px 0;
   flex: 1;
+}
+/* Small breathing room below the title divider before the first row. */
+.sw-mobile-nav__panel:not(.sw-mobile-nav__panel--root) .sw-mobile-nav__list {
+  padding-top: 12px;
 }
 .sw-mobile-nav__item {
   border-bottom: 1px solid var(--line-soft, var(--line));
@@ -399,42 +418,45 @@
   flex: 1;
   min-width: 0;
 }
-.sw-mobile-nav__link-arrow,
 .sw-mobile-nav__drill-arrow {
   color: var(--ink-mute);
   flex-shrink: 0;
   transition: color .15s ease, transform .15s ease;
 }
-.sw-mobile-nav__link:hover .sw-mobile-nav__link-arrow,
 .sw-mobile-nav__drill:hover .sw-mobile-nav__drill-arrow {
   color: var(--accent-deep);
   transform: translateX(3px);
 }
 
-/* ── "All in …" parent link ── */
-.sw-mobile-nav__sub-link {
-  display: block;
-  padding: 13px 26px;
-  font-size: 15px;
-  font-family: var(--font-sans);
-  color: var(--ink);
+/* ── Highlighted "All in …" row (first row of a sub-panel) ── */
+.sw-mobile-nav__all {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 17px 26px;
+  background: color-mix(in oklab, var(--ink) 5%, transparent);
+  color: var(--accent-deep);
   text-decoration: none;
-  transition: background .12s ease, color .12s ease;
-}
-.sw-mobile-nav__sub-link:hover {
-  background: var(--accent-soft);
-  color: var(--accent-deep);
-}
-.sw-mobile-nav__sub-link--active {
-  color: var(--accent-deep);
+  font-family: var(--font-sans);
+  font-size: 16px;
   font-weight: 600;
+  transition: background .15s ease;
 }
-.sw-mobile-nav__sub-link--parent {
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--ink-mute);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+.sw-mobile-nav__all:hover {
+  background: color-mix(in oklab, var(--ink) 9%, transparent);
+}
+.sw-mobile-nav__all--active {
+  background: var(--accent-soft);
+}
+.sw-mobile-nav__all-arrow {
+  color: var(--accent-deep);
+  flex-shrink: 0;
+  transition: transform .15s ease;
+}
+.sw-mobile-nav__all:hover .sw-mobile-nav__all-arrow {
+  transform: translateX(3px);
 }
 
 /* ── Account section ── */

@@ -67,7 +67,8 @@
     }
   },
   "navigation": {
-    "all_in": "{{ category }} — összes"
+    "all_in": "{{ category }} — összes",
+    "back": "Vissza"
   },
   "search": {
     "title": "Keresés",

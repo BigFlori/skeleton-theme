@@ -67,7 +67,8 @@
     }
   },
   "navigation": {
-    "all_in": "All in {{ category }}"
+    "all_in": "All in {{ category }}",
+    "back": "Back"
   },
   "search": {
     "title": "Search",
