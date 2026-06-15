@@ -60,10 +60,14 @@
     "country_region": "Country/region",
     "items": "items",
     "skip_to_content": "Skip to content",
+    "close": "Close",
     "onboarding": {
       "product_title": "Example product title",
       "product_vendor": "Example vendor"
     }
+  },
+  "navigation": {
+    "all_in": "All in {{ category }}"
   },
   "search": {
     "title": "Search",
@@ -98,7 +102,8 @@
       "products": "Products",
       "articles": "Articles",
       "pages": "Pages",
-      "view_all": "View all results"
+      "view_all": "View all results",
+      "search_for": "Search „{{ terms }}”"
     }
   },
   "breadcrumb": {
@@ -276,6 +281,13 @@
     }
   },
   "sections": {
+    "header": {
+      "mega_menu": {
+        "view_all": "View all",
+        "previous": "Previous",
+        "next": "Next"
+      }
+    },
     "brands": {
       "heading": "Brands we carry",
       "aria_label": "Brands we carry"

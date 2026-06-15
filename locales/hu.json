@@ -60,10 +60,14 @@
     "country_region": "Ország/régió",
     "items": "termék",
     "skip_to_content": "Ugrás a tartalomra",
+    "close": "Bezárás",
     "onboarding": {
       "product_title": "Példa termék neve",
       "product_vendor": "Példa gyártó"
     }
+  },
+  "navigation": {
+    "all_in": "{{ category }} — összes"
   },
   "search": {
     "title": "Keresés",
@@ -98,7 +102,8 @@
       "products": "Termékek",
       "articles": "Cikkek",
       "pages": "Oldalak",
-      "view_all": "Összes találat"
+      "view_all": "Összes találat",
+      "search_for": "„{{ terms }}” keresése"
     }
   },
   "breadcrumb": {
@@ -276,6 +281,13 @@
     }
   },
   "sections": {
+    "header": {
+      "mega_menu": {
+        "view_all": "Összes megtekintése",
+        "previous": "Előző",
+        "next": "Következő"
+      }
+    },
     "brands": {
       "heading": "Ezeket a márkákat forgalmazzuk",
       "aria_label": "Forgalmazott márkák"

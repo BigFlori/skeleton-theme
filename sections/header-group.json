@@ -14,6 +14,13 @@
     "header_section": {
       "type": "header",
       "blocks": {
+        "header-topbar": {
+          "type": "_header-topbar",
+          "static": true,
+          "settings": {
+            "message": ""
+          }
+        },
         "header-logo": {
           "type": "_header-logo",
           "static": true,
@@ -34,11 +41,10 @@
         }
       },
       "settings": {
-        "logo_position": "left",
-        "menu_position": "center",
         "section_width": "page-width",
-        "section_height": "standard",
-        "enable_sticky_header": true
+        "enable_sticky_header": true,
+        "enable_inline_search": true,
+        "enable_top_bar": true
       }
     }
   },

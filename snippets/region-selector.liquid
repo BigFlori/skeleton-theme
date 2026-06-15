@@ -1,7 +1,9 @@
 {%- comment -%}
   Unified region picker — language + country in one combined row.
   Parameters:
-    - variant: 'header' | 'drawer' | 'footer'  (default: header)
+    - variant: 'header' | 'topbar' | 'drawer' | 'footer' | 'modal'  (default: header)
+  Note: 'modal' renders the shared <dialog> once at top level — render it outside any
+  wrapper that can become display:none, otherwise showModal() will freeze the page.
 {%- endcomment -%}
 
 {%- liquid
@@ -16,25 +18,45 @@
 
 {%- if rs_has_choice -%}
 
-  {%- if rs_variant == 'header' -%}
+  {%- if rs_variant == 'header' or rs_variant == 'topbar' -%}
 
-    <div class="region-selector region-selector--header">
-      <button
-        type="button"
-        class="region-selector__trigger"
-        data-region-trigger
-        aria-haspopup="dialog"
-        aria-label="{{ 'localization.choose_region' | t }}"
-      >
-        {%- render 'flag', country: rs_current_country.iso_code -%}
-        <span class="region-selector__trigger-label">{{ rs_current_country.currency.iso_code }}</span>
-        <svg class="region-selector__trigger-chevron" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          {%- render 'icon', icon: 'chevron-down' -%}
-        </svg>
-      </button>
-    </div>
+    {%- if rs_variant == 'topbar' -%}
+      <div class="region-selector region-selector--topbar">
+        <button
+          type="button"
+          class="region-selector__topbar-trigger"
+          data-region-trigger
+          aria-haspopup="dialog"
+          aria-label="{{ 'localization.choose_region' | t }}"
+        >
+          {%- render 'flag', country: rs_current_country.iso_code -%}
+          <span class="region-selector__topbar-label">{{ rs_current_country.currency.iso_code }}</span>
+          <svg class="region-selector__topbar-chevron" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            {%- render 'icon', icon: 'chevron-down' -%}
+          </svg>
+        </button>
+      </div>
+    {%- else -%}
+      <div class="region-selector region-selector--header">
+        <button
+          type="button"
+          class="region-selector__trigger"
+          data-region-trigger
+          aria-haspopup="dialog"
+          aria-label="{{ 'localization.choose_region' | t }}"
+        >
+          {%- render 'flag', country: rs_current_country.iso_code -%}
+          <span class="region-selector__trigger-label">{{ rs_current_country.currency.iso_code }}</span>
+          <svg class="region-selector__trigger-chevron" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            {%- render 'icon', icon: 'chevron-down' -%}
+          </svg>
+        </button>
+      </div>
+    {%- endif -%}
 
-    {%- comment -%} Global region modal — shared by header + footer triggers {%- endcomment -%}
+  {%- elsif rs_variant == 'modal' -%}
+
+    {%- comment -%} Global region modal — rendered once at top level so it's never inside a display:none wrapper {%- endcomment -%}
     <dialog
       class="region-modal"
       id="region-dialog"
@@ -90,32 +112,20 @@
 
     <div class="region-selector region-selector--drawer">
       <span class="sw-mobile-nav__lang-label">{{ 'localization.region' | t }}</span>
-      <div class="region-selector__drawer-list">
-        {%- for country in localization.available_countries -%}
-          {%- assign country_lang = country.available_languages | first -%}
-          {%- assign rs_is_active = false -%}
-          {%- if country.iso_code == rs_current_country.iso_code -%}
-            {%- assign rs_is_active = true -%}
-          {%- endif -%}
-          <button
-            type="button"
-            class="region-selector__drawer-option{% if rs_is_active %} is-active{% endif %}"
-            data-region-option
-            data-country="{{ country.iso_code }}"
-            data-language="{{ country_lang.iso_code }}"
-            aria-pressed="{{ rs_is_active }}"
-          >
-            {%- render 'flag', country: country.iso_code -%}
-            <span class="region-selector__drawer-name">{{ country.name }}</span>
-            <span class="region-selector__drawer-currency">{{ country.currency.iso_code }}</span>
-            {%- if rs_is_active -%}
-              <svg class="region-selector__drawer-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                {%- render 'icon', icon: 'check-simple' -%}
-              </svg>
-            {%- endif -%}
-          </button>
-        {%- endfor -%}
-      </div>
+      <button
+        type="button"
+        class="region-selector__drawer-trigger"
+        data-region-trigger
+        aria-haspopup="dialog"
+        aria-label="{{ 'localization.choose_region' | t }}"
+      >
+        {%- render 'flag', country: rs_current_country.iso_code -%}
+        <span class="region-selector__drawer-trigger-name">{{ rs_current_country.name }}</span>
+        <span class="region-selector__drawer-trigger-currency">{{ rs_current_country.currency.iso_code }}</span>
+        <svg class="region-selector__drawer-trigger-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          {%- render 'icon', icon: 'chevron-down' -%}
+        </svg>
+      </button>
     </div>
 
   {%- elsif rs_variant == 'footer' -%}
@@ -183,6 +193,37 @@
 }
 .region-selector__trigger-chevron {
   opacity: 0.6;
+}
+
+/* ── Top bar trigger (minimal, borderless) ── */
+.region-selector--topbar {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+}
+.region-selector__topbar-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 8px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--ink-mute);
+  cursor: pointer;
+  font-size: 12px;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  white-space: nowrap;
+  transition: color .15s ease, background .15s ease;
+  user-select: none;
+}
+.region-selector__topbar-trigger:hover {
+  color: var(--accent-deep);
+  background: var(--accent-soft);
+}
+.region-selector__topbar-chevron {
+  opacity: 0.55;
 }
 
 /* ── Region modal ── */
@@ -328,24 +369,20 @@
   flex-shrink: 0;
 }
 
-/* ── Drawer inline list ── */
+/* ── Drawer trigger (opens shared region modal) ── */
 .region-selector--drawer {
   padding: 20px 26px;
   border-top: 1px solid var(--line);
   flex-shrink: 0;
 }
-.region-selector__drawer-list {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-top: 12px;
-}
-.region-selector__drawer-option {
+.region-selector__drawer-trigger {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 14px;
-  border-radius: 10px;
+  width: 100%;
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
   border: 1px solid var(--line);
   background: var(--bg-card);
   color: var(--ink);
@@ -356,24 +393,25 @@
   text-align: left;
   transition: border-color .15s ease, background .15s ease, color .15s ease;
 }
-.region-selector__drawer-option:hover {
+.region-selector__drawer-trigger:hover {
   border-color: var(--accent-deep);
   background: var(--accent-soft);
   color: var(--accent-deep);
 }
-.region-selector__drawer-option.is-active {
-  border-color: var(--accent-deep);
-  background: var(--accent-deep);
-  color: var(--accent-ink);
-}
-.region-selector__drawer-name {
+.region-selector__drawer-trigger-name {
   flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-.region-selector__drawer-currency {
+.region-selector__drawer-trigger-currency {
   font-size: 12px;
-  opacity: 0.7;
+  color: var(--ink-mute);
+  flex-shrink: 0;
 }
-.region-selector__drawer-check {
+.region-selector__drawer-trigger-chevron {
+  opacity: 0.55;
   flex-shrink: 0;
 }
 

@@ -1,0 +1,503 @@
+{%- comment -%}
+  mega-menu.liquid
+  Receives: link — top-level nav link with link.links (sub-categories)
+  Layout: sidebar (sub-link list + view-all) on the left, product showcase on the right.
+  Showcase pulls products from the top-level link's collection (link.object when link.type == 'collection_link').
+{%- endcomment -%}
+
+{%- liquid
+  assign mm_collection = nil
+  if link.type == 'collection_link' and link.object != blank
+    assign mm_collection = link.object
+  endif
+-%}
+
+<div
+  class="mega-menu{% if mm_collection == nil %} mega-menu--no-showcase{% endif %}"
+  role="region"
+  aria-label="{{ link.title }}"
+  data-mega-menu
+>
+  <div class="mega-menu__inner">
+    <aside class="mega-menu__sidebar">
+      <p class="mega-menu__sidebar-title">
+        <a href="{{ link.url }}" class="mega-menu__sidebar-title-link">{{ link.title }}</a>
+      </p>
+
+      {%- if link.links.size > 0 -%}
+        <ul class="mega-menu__sidebar-list" role="list">
+          {%- for child in link.links -%}
+            <li>
+              <a
+                href="{{ child.url }}"
+                class="mega-menu__sidebar-link{% if child.current %} mega-menu__sidebar-link--active{% endif %}"
+                {% if child.current %}aria-current="page"{% endif %}
+              >
+                {{ child.title }}
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      <a href="{{ link.url }}" class="mega-menu__view-all">
+        {{ 'sections.header.mega_menu.view_all' | t }}
+      </a>
+    </aside>
+
+    {%- if mm_collection != nil and mm_collection.products.size > 0 -%}
+      <div class="mega-menu__showcase">
+        <div class="mega-menu__track" data-mega-carousel-track>
+          {%- for product in mm_collection.products limit: 10 -%}
+            <div class="mega-menu__slide">
+              {%- render 'collection-product-card', product: product -%}
+            </div>
+          {%- endfor -%}
+        </div>
+
+        <div class="mega-menu__carousel-controls" data-mega-carousel-controls>
+          <button
+            type="button"
+            class="mega-menu__carousel-btn mega-menu__carousel-btn--prev"
+            data-mega-carousel-prev
+            aria-label="{{ 'sections.header.mega_menu.previous' | t }}"
+            disabled
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              {%- render 'icon', icon: 'chevron-right' -%}
+            </svg>
+          </button>
+          <button
+            type="button"
+            class="mega-menu__carousel-btn mega-menu__carousel-btn--next"
+            data-mega-carousel-next
+            aria-label="{{ 'sections.header.mega_menu.next' | t }}"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              {%- render 'icon', icon: 'chevron-right' -%}
+            </svg>
+          </button>
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  .mega-menu {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    z-index: 50;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-top: none;
+    border-radius: 0 0 20px 20px;
+    box-shadow: 0 12px 24px -12px oklch(0.22 0.025 155 / 0.14);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-8px) scale(0.992);
+    transform-origin: top center;
+    /* visibility delayed so the panel stays interactive during the fade-out */
+    transition:
+      opacity .22s cubic-bezier(.2, .8, .2, 1),
+      transform .28s cubic-bezier(.2, .8, .2, 1),
+      visibility 0s linear .28s;
+  }
+
+  .header-menu__item--has-children:hover .mega-menu,
+  .header-menu__item--has-children.is-open .mega-menu {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+    transition:
+      opacity .35s cubic-bezier(.2, .8, .2, 1),
+      transform .4s cubic-bezier(.2, .8, .2, 1),
+      visibility 0s linear 0s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mega-menu {
+      transition: none;
+      transform: none;
+    }
+    .header-menu__item--has-children:hover .mega-menu,
+    .header-menu__item--has-children.is-open .mega-menu {
+      transition: none;
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+
+    /* Sidebar: title + each link slide in from the left with stagger */
+    .mega-menu__sidebar-title,
+    .mega-menu__sidebar-list > li,
+    .mega-menu__view-all {
+      opacity: 0;
+      transform: translateX(-10px);
+      transition:
+        opacity .35s cubic-bezier(.2, .8, .2, 1),
+        transform .35s cubic-bezier(.2, .8, .2, 1);
+    }
+
+    .header-menu__item--has-children:hover .mega-menu__sidebar-title,
+    .header-menu__item--has-children:hover .mega-menu__sidebar-list > li,
+    .header-menu__item--has-children:hover .mega-menu__view-all,
+    .header-menu__item--has-children.is-open .mega-menu__sidebar-title,
+    .header-menu__item--has-children.is-open .mega-menu__sidebar-list > li,
+    .header-menu__item--has-children.is-open .mega-menu__view-all {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .mega-menu__sidebar-title { transition-delay: 70ms; }
+    .mega-menu__sidebar-list > li:nth-child(1) { transition-delay: 110ms; }
+    .mega-menu__sidebar-list > li:nth-child(2) { transition-delay: 145ms; }
+    .mega-menu__sidebar-list > li:nth-child(3) { transition-delay: 180ms; }
+    .mega-menu__sidebar-list > li:nth-child(4) { transition-delay: 215ms; }
+    .mega-menu__sidebar-list > li:nth-child(5) { transition-delay: 250ms; }
+    .mega-menu__sidebar-list > li:nth-child(6) { transition-delay: 285ms; }
+    .mega-menu__sidebar-list > li:nth-child(7) { transition-delay: 320ms; }
+    .mega-menu__sidebar-list > li:nth-child(n + 8) { transition-delay: 355ms; }
+    .mega-menu__view-all { transition-delay: 390ms; }
+
+    /* Showcase slides: lift up + fade in, staggered left → right */
+    .mega-menu__slide {
+      opacity: 0;
+      transform: translateY(14px);
+      transition:
+        opacity .4s cubic-bezier(.2, .8, .2, 1),
+        transform .4s cubic-bezier(.2, .8, .2, 1);
+    }
+    .header-menu__item--has-children:hover .mega-menu__slide,
+    .header-menu__item--has-children.is-open .mega-menu__slide {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .mega-menu__slide:nth-child(1) { transition-delay: 140ms; }
+    .mega-menu__slide:nth-child(2) { transition-delay: 195ms; }
+    .mega-menu__slide:nth-child(3) { transition-delay: 250ms; }
+    .mega-menu__slide:nth-child(4) { transition-delay: 305ms; }
+    .mega-menu__slide:nth-child(5) { transition-delay: 360ms; }
+    .mega-menu__slide:nth-child(n + 6) { transition-delay: 415ms; }
+
+    /* Carousel control buttons fade in after the cards */
+    .mega-menu__carousel-controls {
+      opacity: 0;
+      transition: opacity .3s ease .45s;
+    }
+    .header-menu__item--has-children:hover .mega-menu__carousel-controls,
+    .header-menu__item--has-children.is-open .mega-menu__carousel-controls {
+      opacity: 1;
+    }
+  }
+
+  .mega-menu__inner {
+    max-width: 1440px;
+    margin-inline: auto;
+    padding: 24px clamp(16px, 4vw, 32px) 28px;
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 28px;
+    align-items: start;
+  }
+
+  .mega-menu--no-showcase .mega-menu__inner {
+    grid-template-columns: 1fr;
+  }
+
+  /* ── Sidebar ── */
+  .mega-menu__sidebar {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding-right: 16px;
+    border-right: 1px solid var(--line);
+    min-height: 100%;
+  }
+
+  .mega-menu--no-showcase .mega-menu__sidebar {
+    border-right: none;
+    padding-right: 0;
+  }
+
+  .mega-menu__sidebar-title {
+    margin: 0 0 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .mega-menu__sidebar-title-link {
+    font-size: 15px;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    color: var(--ink);
+    text-decoration: none;
+    transition: color .15s ease;
+  }
+
+  .mega-menu__sidebar-title-link:hover {
+    color: var(--accent-deep);
+  }
+
+  .mega-menu__sidebar-list {
+    list-style: none;
+    margin: 0 0 18px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .mega-menu__sidebar-link {
+    display: block;
+    padding: 7px 10px;
+    margin-inline: -10px;
+    font-size: 14px;
+    font-family: var(--font-sans);
+    color: var(--ink);
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background .12s ease, color .12s ease;
+    line-height: 1.3;
+  }
+
+  .mega-menu__sidebar-link:hover {
+    background: var(--accent-soft);
+    color: var(--accent-deep);
+  }
+
+  .mega-menu__sidebar-link--active {
+    color: var(--accent-deep);
+    font-weight: 600;
+  }
+
+  .mega-menu__view-all {
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+    color: var(--accent-deep);
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: opacity .15s ease;
+  }
+
+  .mega-menu__view-all:hover {
+    opacity: 0.8;
+  }
+
+  /* ── Showcase / carousel ── */
+  .mega-menu__showcase {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .mega-menu__track {
+    --mm-cols: 5;
+    --mm-gap: 14px;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: calc((100% - (var(--mm-cols) - 1) * var(--mm-gap)) / var(--mm-cols));
+    gap: var(--mm-gap);
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+  }
+
+  .mega-menu__track::-webkit-scrollbar { display: none; }
+
+  .mega-menu__slide {
+    scroll-snap-align: start;
+    min-width: 0;
+  }
+
+  .mega-menu__carousel-controls {
+    display: flex;
+    justify-content: flex-end;
+    gap: 6px;
+  }
+
+  .mega-menu__carousel-btn {
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: var(--bg-card);
+    color: var(--ink);
+    cursor: pointer;
+    transition: border-color .15s ease, background .15s ease, color .15s ease, opacity .15s ease;
+  }
+
+  .mega-menu__carousel-btn:hover:not(:disabled) {
+    border-color: var(--accent-deep);
+    color: var(--accent-deep);
+    background: var(--accent-soft);
+  }
+
+  .mega-menu__carousel-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .mega-menu__carousel-btn--prev svg {
+    transform: rotate(180deg);
+  }
+
+  /* ── prod-card styles (mirrored from product-grid/collection sections) ──
+     Needed because the header is rendered on every page; we cannot rely on
+     a product section being present to ship the card CSS. */
+  .mega-menu__showcase .prod-card {
+    position: relative;
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    transition: border-color .2s ease, transform .2s ease;
+    cursor: pointer;
+  }
+  .mega-menu__showcase .prod-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .mega-menu__showcase .prod-card__overlay-link {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    z-index: 1;
+  }
+  .mega-menu__showcase .prod-card__img-wrap {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    border-radius: calc(var(--radius-lg) - 6px);
+    overflow: hidden;
+    margin-bottom: 10px;
+    background: var(--bg-warm);
+  }
+  .mega-menu__showcase .prod-card__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .mega-menu__showcase .prod-card__disc-badge {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background: var(--sale);
+    color: oklch(0.98 0.01 90);
+    font-size: 10px;
+    font-weight: 500;
+    padding: 3px 6px;
+    border-radius: 4px;
+    z-index: 2;
+  }
+  .mega-menu__showcase .prod-card__atc-btn {
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+    background: var(--ink);
+    color: oklch(0.96 0.01 90);
+    border: none;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    text-decoration: none;
+    z-index: 2;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity .2s ease, transform .2s ease;
+  }
+  .mega-menu__showcase .prod-card__atc-btn--select { background: var(--accent-deep); }
+  .mega-menu__showcase .prod-card:hover .prod-card__atc-btn {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .mega-menu__showcase .prod-card__vendor {
+    font-size: 10px;
+    color: var(--ink-mute);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 4px;
+  }
+  .mega-menu__showcase .prod-card__title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.3;
+    margin: 0 0 6px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .mega-menu__showcase .prod-card__spec {
+    font-size: 11px;
+    color: var(--ink-mute);
+    margin-bottom: 6px;
+  }
+  .mega-menu__showcase .prod-card__footer {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: auto;
+  }
+  .mega-menu__showcase .prod-card__price-block {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+  .mega-menu__showcase .prod-card__price {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .mega-menu__showcase .prod-card__old-price {
+    font-size: 11px;
+    color: var(--ink-mute);
+    text-decoration: line-through;
+  }
+  .mega-menu__showcase .prod-card__stock {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10px;
+    letter-spacing: 0.04em;
+  }
+  .mega-menu__showcase .prod-card__stock-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    display: inline-block;
+  }
+
+  /* Fewer columns at narrower nav widths */
+  @media (max-width: 1200px) {
+    .mega-menu__track { --mm-cols: 4; }
+  }
+  @media (max-width: 980px) {
+    .mega-menu__track { --mm-cols: 3; }
+  }
+{% endstylesheet %}
