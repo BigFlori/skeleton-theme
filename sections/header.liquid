@@ -86,6 +86,33 @@
   {%- comment -%} ── ② Main bar: logo · search · actions ── {%- endcomment -%}
   <div class="header__row header__row--main">
     <div class="header__main-inner">
+      <div class="header__col-mobile-left">
+        <button
+          type="button"
+          class="sw-mobile-nav-trigger"
+          data-mobile-nav-trigger
+          aria-label="{{ 'general.menu' | t | default: 'Menu' }}"
+          aria-expanded="false"
+          aria-controls="sw-mobile-nav"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            {%- render 'icon', icon: 'hamburger' -%}
+          </svg>
+        </button>
+        <button
+          type="button"
+          class="sw-mobile-search-trigger"
+          data-search-trigger
+          aria-label="{{ 'search.title' | t }}"
+          aria-controls="sw-search-drawer"
+          aria-expanded="false"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            {%- render 'icon', icon: 'search' -%}
+          </svg>
+        </button>
+      </div>
+
       <div class="header__col-logo">
         {{ logo }}
       </div>
@@ -185,18 +212,6 @@
           </span>
         </a>
 
-        <button
-          type="button"
-          class="sw-mobile-nav-trigger"
-          data-mobile-nav-trigger
-          aria-label="{{ 'general.menu' | t | default: 'Menu' }}"
-          aria-expanded="false"
-          aria-controls="sw-mobile-nav"
-        >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            {%- render 'icon', icon: 'hamburger' -%}
-          </svg>
-        </button>
       </div>
     </div>
   </div>
@@ -854,9 +869,29 @@
     color: var(--accent-ink);
   }
 
-  /* Hamburger trigger */
-  .sw-mobile-nav-trigger {
+  /* Mobile-left column — only visible on mobile, contains hamburger + search */
+  .header__col-mobile-left {
     display: none;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  @media screen and (max-width: 749px) {
+    .header__col-mobile-left {
+      display: flex;
+    }
+
+    /* Center logo within its 1fr column on mobile */
+    .header__col-logo {
+      justify-content: center;
+    }
+  }
+
+  /* Hamburger and mobile-search triggers — shared button style */
+  .sw-mobile-nav-trigger,
+  .sw-mobile-search-trigger {
+    display: flex;
     align-items: center;
     justify-content: center;
     width: 36px;
@@ -869,14 +904,10 @@
     flex-shrink: 0;
     transition: border-color .15s ease, background .15s ease;
   }
-  .sw-mobile-nav-trigger:hover {
+  .sw-mobile-nav-trigger:hover,
+  .sw-mobile-search-trigger:hover {
     border-color: var(--ink);
     background: var(--accent-soft);
-  }
-  @media screen and (max-width: 749px) {
-    .sw-mobile-nav-trigger {
-      display: flex;
-    }
   }
 
   /* Hidden localization form */
