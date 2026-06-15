@@ -18,6 +18,12 @@ A PDP snippetek (`pdp-*.liquid`) metaobjectekből és metafieldekből olvasnak, 
 |----------------------------------|---------------------------|-----------|
 | `custom.default_inverters`       | Metaobject reference list | pdp-compat (fallback, ha nincs curated) |
 
+## Collection / Page metafields
+
+| Namespace + key                  | Típus                     | Használja |
+|----------------------------------|---------------------------|-----------|
+| `custom.nav_icon`                | Single line text          | nav-icon (navbar menüpont-ikonok) |
+
 ---
 
 ## `datasheet` metaobject
@@ -103,6 +109,43 @@ Product Type → Collection globális hozzárendelés. Egy entry / product type.
 ```
 
 > A `product_type` mező értéke **pontosan** egyezzen a termék Product Type mezőjével (case-sensitive).
+
+---
+
+## `custom.nav_icon` metafield (navbar ikonok)
+
+**Admin:** Settings → Custom data → Collections (és Pages) → Add definition
+**Liquid:** `link.object.metafields.custom.nav_icon.value` (a [snippets/nav-icon.liquid](snippets/nav-icon.liquid) olvassa)
+
+Navlink → ikon hozzárendelés. Az ikonnevet **közvetlenül a kollekcióra (vagy oldalra)** tett
+metafield tárolja. A navbar (desktop top-level sáv és mobil drawer gyökér szint) ezt használja.
+
+| Definition | Namespace + key   | Típus            | Példa |
+|------------|-------------------|------------------|-------|
+| Collections | `custom.nav_icon` | Single line text | `ev-charger` |
+| Pages       | `custom.nav_icon` | Single line text | `package` |
+
+**Miért metafield és nem handle-alapú map?** A bolt többnyelvű, és a kollekció **handle nyelvenként
+eltérhet** → a string-párosítás törne. A metafield magára az **erőforrásra** köt (`link.object`),
+ami minden nyelven ugyanaz, ezért nyelvfüggetlen. A merchant egyszer, a kollekció admin-oldalán állítja be.
+
+**Korlát:** a **custom URL-es** menüpontok mögött nincs erőforrás, így nem kaphatnak metafieldet →
+ezekre nem jelenik meg ikon. (Oldal-linkekre a Pages `custom.nav_icon` megoldja.)
+
+**Elérhető ikonnevek** (bővíthető az icon.liquid-ban): `panel`, `panel-grid`, `inverter`,
+`battery`, `plug`, `mounting`, `package`, `grid`, `ev-charger`, `bolt`, `bolt-ev`, `leaf`, `truck`, `shield`,
+`wrench`, `sun`, `globe`, `warehouse`, `star`, `cart`, `shopping-bag` … (lásd a teljes
+listát az [icon.liquid](snippets/icon.liquid) `when` ágaiban).
+
+**Használat Liquidben:**
+
+```liquid
+{%- render 'nav-icon', link: link, variant: 'inline' -%}  {%- comment -%} desktop {%- endcomment -%}
+{%- render 'nav-icon', link: link, variant: 'chip' -%}    {%- comment -%} mobil drawer {%- endcomment -%}
+```
+
+> Ismeretlen `icon` névnél az `icon.liquid` semmit nem renderel, a `nav-icon` snippet pedig
+> üres metafield esetén nem ír ki semmit → nincs üres placeholder / layout-eltolás.
 
 ---
 

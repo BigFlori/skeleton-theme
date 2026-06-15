@@ -17,11 +17,19 @@
   endif
 
   assign mobile_menu = nil
+  assign mobile_utility_menu = nil
   for block in section.blocks
     if block.type == '_header-menu'
       assign mobile_menu = block.settings.menu
     endif
+    if block.type == '_header-topbar'
+      assign mobile_utility_menu = block.settings.utility_menu
+    endif
   endfor
+  # Topbar's utility menu falls back to the "topbar-menu" handle, mirroring the block itself
+  unless mobile_utility_menu.links.size > 0
+    assign mobile_utility_menu = linklists['topbar-menu']
+  endunless
 %}
 
 {%- comment -%} ── Geo-suggestion banner ── {%- endcomment -%}
@@ -915,7 +923,7 @@
 {% endstylesheet %}
 
 {%- render 'predictive-search' -%}
-{%- render 'mobile-nav-drawer', menu: mobile_menu -%}
+{%- render 'mobile-nav-drawer', menu: mobile_menu, utility_menu: mobile_utility_menu -%}
 {%- render 'region-selector', variant: 'modal' -%}
 
 {%- comment -%} Single localization form — used by all region-selector variants via JS {%- endcomment -%}

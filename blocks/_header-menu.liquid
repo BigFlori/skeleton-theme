@@ -29,6 +29,7 @@
             data-mega-menu-trigger
           {% endif %}
         >
+          {%- render 'nav-icon', link: link, variant: 'inline' -%}
           <span class="header-menu__link-title">{{- link.title -}}</span>
           {%- if link.links.size > 0 -%}
             <svg class="header-menu__caret" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -92,6 +93,23 @@
     color: var(--accent-deep);
     font-weight: 600;
     border-bottom-color: var(--accent-deep);
+  }
+
+  /* Configurable per-link icon (nav_icon_map metaobject) — sits before title.
+     Inherits the link's text color so it tracks hover/active states. */
+  .header-menu__link .nav-icon--inline {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    color: var(--ink-mute);
+    transition: color .15s ease;
+  }
+
+  .header-menu__link:hover .nav-icon--inline,
+  .header-menu__item--has-children:hover .header-menu__link .nav-icon--inline,
+  .header-menu__item--has-children.is-open .header-menu__link .nav-icon--inline,
+  .header-menu__link--active .nav-icon--inline {
+    color: var(--accent-deep);
   }
 
   .header-menu__caret {

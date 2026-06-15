@@ -1,0 +1,40 @@
+{%- comment -%}
+  nav-icon.liquid
+  Renders a configured icon for a navigation link. The icon name is read from
+  the linked resource's `custom.nav_icon` metafield (collection or page), so it
+  is locale-independent — translated handles/URLs do not affect the match.
+  Outputs nothing when no icon is set (no empty placeholder / layout shift).
+
+  Params:
+    link    — a menu link object (required)
+    variant — 'inline' (default) | 'chip'
+    size    — icon px size (optional; sensible default per variant)
+
+  Custom-URL links (no underlying resource) can't carry a metafield, so they
+  render no icon. See METAOBJECTS.md → `custom.nav_icon`.
+{%- endcomment -%}
+
+{%- liquid
+  assign nav_icon_name = ''
+  if link.object != blank
+    assign nav_icon_name = link.object.metafields.custom.nav_icon.value
+  endif
+-%}
+
+{%- if nav_icon_name != blank -%}
+  {%- liquid
+    assign icon_size = size
+    if icon_size == blank
+      if variant == 'chip'
+        assign icon_size = 18
+      else
+        assign icon_size = 17
+      endif
+    endif
+  -%}
+  <span class="nav-icon nav-icon--{{ variant | default: 'inline' }}" aria-hidden="true">
+    <svg width="{{ icon_size }}" height="{{ icon_size }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      {%- render 'icon', icon: nav_icon_name -%}
+    </svg>
+  </span>
+{%- endif -%}

@@ -4,11 +4,18 @@
   // ── Mega-menu: desktop open/close ─────────────────────────────────────────
 
   var menuItems = document.querySelectorAll('.header-menu__item--has-children');
+  // Left→right order of the mega-menu items, used to pick the slide direction.
+  var itemsArr = Array.prototype.slice.call(menuItems);
 
   // Small grace period before the panel closes once the cursor leaves it, so a
   // brief slip outside the hover area (or crossing the gap to the panel) doesn't
   // snap it shut. Re-entering within this window cancels the close.
   var CLOSE_DELAY = 180; // ms
+  // Duration of the directional slide animations in mega-menu.liquid; the
+  // .mega-switching / .is-leaving classes must stay on this long so the slide
+  // isn't cut short.
+  var SWAP_MS = 340; // ms
+  var switchResetTimer = null;
   // Only wire pointer hover on devices that actually hover (skip touch).
   var canHover = !window.matchMedia || window.matchMedia('(hover: hover)').matches;
 
@@ -22,14 +29,40 @@
       var closeTimer = null;
       item.addEventListener('mouseenter', function () {
         if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
-        closeAll();
-        openItem(item);
+        // If a different mega-menu is already open, slide directly between the
+        // two panels: the old content slides out one way while the new content
+        // slides in from the other. Direction follows the items' left→right
+        // order — moving to a later item slides forward, earlier slides back.
+        var openEl = document.querySelector('.header-menu__item--has-children.is-open');
+        var nav = item.closest('.header-menu');
+        if (openEl && openEl !== item && nav) {
+          var forward = itemsArr.indexOf(item) > itemsArr.indexOf(openEl);
+          clearLeaving();
+          nav.classList.remove('mega-dir-fwd', 'mega-dir-back');
+          nav.classList.add('mega-switching', forward ? 'mega-dir-fwd' : 'mega-dir-back');
+          // Outgoing panel keeps rendering (via .is-leaving) so it can slide out.
+          openEl.classList.add('is-leaving');
+          closeItem(openEl);
+          openItem(item);
+          // Hold the swap classes until the slide finishes, then reset so the
+          // next fresh open (from no panel) animates in normally.
+          if (switchResetTimer) clearTimeout(switchResetTimer);
+          switchResetTimer = setTimeout(resetSwitchState, SWAP_MS);
+        } else {
+          closeAll();
+          openItem(item);
+        }
       });
       item.addEventListener('mouseleave', function () {
         if (closeTimer) clearTimeout(closeTimer);
         closeTimer = setTimeout(function () {
-          closeItem(item);
           closeTimer = null;
+          // If this is the only panel still open, the menu is fully closing —
+          // clear the swap state first so the normal exit transition applies
+          // instead of being suppressed by .mega-switching.
+          var open = document.querySelectorAll('.header-menu__item--has-children.is-open');
+          if (open.length === 1 && open[0] === item) resetSwitchState();
+          closeItem(item);
         }, CLOSE_DELAY);
       });
     }
@@ -90,7 +123,24 @@
   }
 
   function closeAll() {
+    resetSwitchState();
     menuItems.forEach(closeItem);
+  }
+
+  // Drop the transient slide-out marker from any panel currently leaving.
+  function clearLeaving() {
+    menuItems.forEach(function (el) { el.classList.remove('is-leaving'); });
+  }
+
+  // Fully clear the directional-swap state (pending timer, nav direction
+  // classes, leaving markers) so the menu is back to its idle resting state.
+  function resetSwitchState() {
+    if (switchResetTimer) { clearTimeout(switchResetTimer); switchResetTimer = null; }
+    clearLeaving();
+    menuItems.forEach(function (el) {
+      var nav = el.closest('.header-menu');
+      if (nav) nav.classList.remove('mega-switching', 'mega-dir-fwd', 'mega-dir-back');
+    });
   }
 
   function focusFirstLink(item) {

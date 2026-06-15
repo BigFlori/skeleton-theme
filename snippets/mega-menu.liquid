@@ -131,6 +131,106 @@
     }
   }
 
+  /* ── Directional parallax swap between two open mega-menus ──
+     JS sets .mega-switching + a direction (.mega-dir-fwd / .mega-dir-back) on
+     the nav, marks the outgoing item .is-leaving, and opens the new one. The
+     panel boxes stay anchored; their sidebar + showcase layers slide sideways
+     so the old content exits one way as the new content enters from the other.
+     The showcase travels further than the sidebar for a parallax depth cue.
+     --mm-sign drives the direction: +1 = forward (moved right), -1 = back. */
+  .header-menu.mega-dir-fwd  { --mm-sign: 1; }
+  .header-menu.mega-dir-back { --mm-sign: -1; }
+
+  /* Boxes don't fade/move during a swap; clip the sliding layers to the panel. */
+  .header-menu.mega-switching .mega-menu {
+    overflow: hidden;
+    transition: none !important;
+  }
+
+  /* Hold the outgoing panel on screen (non-interactive) for its slide-out.
+     The box fades to 0 over the back half of the swap (forwards) so it is
+     already invisible when JS strips .is-leaving at SWAP_MS — otherwise the
+     box would revert to the base .mega-menu opacity transition and fade out
+     *after* the swap. Right→left that outgoing panel sits later in the DOM, so
+     it paints on top of the incoming one and that late fade reads as a flicker. */
+  .header-menu .header-menu__item--has-children.is-leaving .mega-menu {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: none;
+    transform: none;
+    overflow: hidden;
+    z-index: 49;
+    transition: none;
+    animation: mega-leaving-box-fade .34s cubic-bezier(.2, .8, .2, 1) forwards;
+  }
+
+  @keyframes mega-leaving-box-fade {
+    0%, 55% { opacity: 1; }
+    100%    { opacity: 0; }
+  }
+
+  /* Freeze inner content at its open state so only the layer slide reads — no
+     per-item stagger replay, no fade-back on the outgoing panel. */
+  .header-menu.mega-switching .mega-menu__sidebar-title,
+  .header-menu.mega-switching .mega-menu__sidebar-list > li,
+  .header-menu.mega-switching .mega-menu__view-all,
+  .header-menu.mega-switching .mega-menu__slide,
+  .header-menu.mega-switching .mega-menu__carousel-controls,
+  .header-menu .is-leaving .mega-menu__sidebar-title,
+  .header-menu .is-leaving .mega-menu__sidebar-list > li,
+  .header-menu .is-leaving .mega-menu__view-all,
+  .header-menu .is-leaving .mega-menu__slide,
+  .header-menu .is-leaving .mega-menu__carousel-controls {
+    opacity: 1;
+    transform: none;
+    transition: none !important;
+  }
+
+  /* Incoming layers slide in from the hovered direction. */
+  .header-menu.mega-switching .header-menu__item--has-children.is-open .mega-menu__sidebar {
+    --mm-dist: 40px;
+    --mm-from: calc(var(--mm-sign, 1) * var(--mm-dist));
+    animation: mega-slide-in .34s cubic-bezier(.2, .8, .2, 1);
+  }
+  .header-menu.mega-switching .header-menu__item--has-children.is-open .mega-menu__showcase {
+    --mm-dist: 64px;
+    --mm-from: calc(var(--mm-sign, 1) * var(--mm-dist));
+    animation: mega-slide-in .34s cubic-bezier(.2, .8, .2, 1);
+  }
+
+  /* Outgoing layers slide out the opposite way (fill held so no end flash). */
+  .header-menu .is-leaving .mega-menu__sidebar {
+    --mm-dist: 40px;
+    --mm-to: calc(var(--mm-sign, 1) * var(--mm-dist) * -1);
+    animation: mega-slide-out .34s cubic-bezier(.2, .8, .2, 1) forwards;
+  }
+  .header-menu .is-leaving .mega-menu__showcase {
+    --mm-dist: 64px;
+    --mm-to: calc(var(--mm-sign, 1) * var(--mm-dist) * -1);
+    animation: mega-slide-out .34s cubic-bezier(.2, .8, .2, 1) forwards;
+  }
+
+  @keyframes mega-slide-in {
+    from { opacity: 0; transform: translateX(var(--mm-from, 0)); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes mega-slide-out {
+    from { opacity: 1; transform: translateX(0); }
+    to   { opacity: 0; transform: translateX(var(--mm-to, 0)); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .header-menu.mega-switching .mega-menu__sidebar,
+    .header-menu.mega-switching .mega-menu__showcase,
+    .header-menu .is-leaving .mega-menu__sidebar,
+    .header-menu .is-leaving .mega-menu__showcase {
+      animation: none !important;
+    }
+    .header-menu .header-menu__item--has-children.is-leaving .mega-menu {
+      display: none;
+    }
+  }
+
   @media (prefers-reduced-motion: no-preference) {
 
     /* Sidebar: title + each link slide in from the left with stagger */
