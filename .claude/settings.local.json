@@ -123,7 +123,9 @@
       "Bash(cat package.json)",
       "Read(//c/Users/Thurneer/.claude/plugins/marketplaces/shopify-ai-toolkit/skills/shopify-liquid/**)",
       "Bash(node scripts/search_docs.mjs \"group_by filter\" --model claude-sonnet-4-6 --client-name claude-code --client-version 1.0)",
-      "Bash(node scripts/search_docs.mjs \"map filter where filter dot notation nested property\" --model claude-sonnet-4-6 --client-name claude-code --client-version 1.0)"
+      "Bash(node scripts/search_docs.mjs \"map filter where filter dot notation nested property\" --model claude-sonnet-4-6 --client-name claude-code --client-version 1.0)",
+      "Bash(python3 check_translations.py)",
+      "WebFetch(domain:shopify.dev)"
     ],
     "additionalDirectories": [
       "/home/fmolnar/Documents/Shopify/nrgedge/apps/discounts/extensions/volume-discount",

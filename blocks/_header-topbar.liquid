@@ -1,0 +1,171 @@
+{% liquid
+  assign s = block.settings
+  assign utility_menu = s.utility_menu
+  # Fall back to the menu with handle "topbar-menu" when none is configured
+  unless utility_menu.links.size > 0
+    assign utility_menu = linklists['topbar-menu']
+  endunless
+%}
+
+<div
+  class="header-topbar"
+  {{ block.shopify_attributes }}
+>
+  <div class="header-topbar__inner">
+    {%- comment -%} Left: region selector (minimal topbar variant) {%- endcomment -%}
+    <div class="header-topbar__region">
+      {%- render 'region-selector', variant: 'topbar' -%}
+    </div>
+
+    {%- comment -%} Center: message / CTA (optional) {%- endcomment -%}
+    <div class="header-topbar__message">
+      {%- if s.cta_url != blank -%}
+        <a href="{{ s.cta_url }}" class="header-topbar__cta">{{ s.message }}</a>
+      {%- elsif s.message != blank -%}
+        <span>{{ s.message }}</span>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Right: utility links {%- endcomment -%}
+    {%- if utility_menu.links.size > 0 -%}
+      <ul class="header-topbar__utility" role="list">
+        {%- for link in utility_menu.links -%}
+          <li>
+            <a
+              href="{{ link.url }}"
+              class="header-topbar__utility-link{% if link.current %} header-topbar__utility-link--active{% endif %}"
+              {% if link.current %}aria-current="page"{% endif %}
+            >
+              {{ link.title }}
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  .header-topbar {
+    width: 100%;
+  }
+
+  .header-topbar__inner {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    max-width: 1440px;
+    margin-inline: auto;
+    padding: 7px clamp(16px, 4vw, 32px);
+    font-size: 12px;
+    font-family: var(--font-sans);
+  }
+
+  /* Match the page width setting like the main bar */
+  [data-section-width='page-width'] .header-topbar__inner {
+    max-width: 1280px;
+  }
+
+  /* Region selector: hidden on mobile */
+  .header-topbar__region {
+    display: none;
+    align-items: center;
+    flex-shrink: 0;
+    margin-left: -8px; /* offset borderless trigger padding to align with grid */
+  }
+
+  @media screen and (min-width: 750px) {
+    .header-topbar__region {
+      display: flex;
+    }
+  }
+
+  /* Center message */
+  .header-topbar__message {
+    flex: 1;
+    text-align: center;
+    color: var(--ink-mute);
+    min-width: 0;
+  }
+
+  .header-topbar__cta {
+    color: var(--accent-deep);
+    text-decoration: none;
+    font-weight: 500;
+    transition: opacity .15s ease;
+  }
+
+  .header-topbar__cta:hover {
+    opacity: 0.75;
+  }
+
+  /* Utility links: hidden on mobile */
+  .header-topbar__utility {
+    display: none;
+    align-items: center;
+    gap: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex-shrink: 0;
+  }
+
+  @media screen and (min-width: 750px) {
+    .header-topbar__utility {
+      display: flex;
+    }
+  }
+
+  .header-topbar__utility-link {
+    display: inline-block;
+    padding: 3px 10px;
+    color: var(--ink-mute);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color .15s ease;
+    border-left: 1px solid var(--line);
+  }
+
+  .header-topbar__utility li:first-child .header-topbar__utility-link {
+    border-left: none;
+  }
+
+  .header-topbar__utility-link:hover {
+    color: var(--ink);
+  }
+
+  .header-topbar__utility-link--active {
+    color: var(--accent-deep);
+    font-weight: 500;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Top bar",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "message",
+      "label": "Message / CTA text",
+      "info": "Leave empty to hide the centre message."
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "CTA link (optional)"
+    },
+    {
+      "type": "header",
+      "content": "Utility links"
+    },
+    {
+      "type": "link_list",
+      "id": "utility_menu",
+      "label": "Utility link menu",
+      "info": "Optional. If left empty, the menu with handle \"topbar-menu\" is used automatically (e.g. Kivitelezés, Cégünkről, Kapcsolat)."
+    }
+  ]
+}
+{% endschema %}

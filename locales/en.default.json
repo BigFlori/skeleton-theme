@@ -60,10 +60,16 @@
     "country_region": "Country/region",
     "items": "items",
     "skip_to_content": "Skip to content",
+    "close": "Close",
+    "greeting": "Hi, {{ name }}!",
     "onboarding": {
       "product_title": "Example product title",
       "product_vendor": "Example vendor"
     }
+  },
+  "navigation": {
+    "all_in": "All in {{ category }}",
+    "back": "Back"
   },
   "search": {
     "title": "Search",
@@ -71,6 +77,8 @@
     "title_em": "looking for?",
     "eyebrow": "Search",
     "placeholder": "Search modules, inverters, packages…",
+    "typewriter_prefix": "Search by ",
+    "typewriter_placeholders": "Search by product name – SigenStor EC 4.6 SP||Search by part number – SST10K-AT||Search by type – Huawei SUN2000-10KTL||Search by category – Inverters||Search by brand – Sigenergy||Search by power – 10 kW",
     "submit": "Search",
     "close": "Close search",
     "clear": "Clear",
@@ -98,7 +106,15 @@
       "products": "Products",
       "articles": "Articles",
       "pages": "Pages",
-      "view_all": "View all results"
+      "view_all": "View all results",
+      "search_for": "Search „{{ terms }}”",
+      "no_results_for": "No matches for „{{ terms }}”",
+      "empty_lead": "Try the following:",
+      "empty_tip_spelling": "Check the spelling",
+      "empty_tip_fewer": "Use fewer keywords",
+      "empty_tip_general": "Search with a more general term",
+      "empty_contact_html": "If you can't find the product, {{ link }}.",
+      "empty_contact_link": "contact us"
     }
   },
   "breadcrumb": {
@@ -276,6 +292,13 @@
     }
   },
   "sections": {
+    "header": {
+      "mega_menu": {
+        "view_all": "View all",
+        "previous": "Previous",
+        "next": "Next"
+      }
+    },
     "brands": {
       "heading": "Brands we carry",
       "aria_label": "Brands we carry"

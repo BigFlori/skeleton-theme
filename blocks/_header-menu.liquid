@@ -4,28 +4,49 @@
   assign font_size = block_settings.type_font_primary_size | default: '0.875rem'
   assign font_family_id = block_settings.type_font_primary_link | default: 'body'
   assign text_case = block_settings.type_case_primary_link | default: 'none'
+  assign nav_alignment = block_settings.nav_alignment | default: 'center'
+  if nav_alignment == 'left'
+    assign menu_justify = 'flex-start'
+  else
+    assign menu_justify = 'center'
+  endif
 %}
 
 <nav
   class="header-menu"
   aria-label="{{ 'general.header' | t }}"
   style="
-    --menu-top-level-font-size: {{ font_size }};
-    --menu-top-level-font-family: var(--font-{{ font_family_id }}--family, inherit);
-    --menu-top-level-font-case: {{ text_case }};
+    --menu-font-size: {{ font_size }};
+    --menu-font-family: var(--font-{{ font_family_id }}--family, inherit);
+    --menu-text-case: {{ text_case }};
+    --menu-justify: {{ menu_justify }};
   "
   {{ block.shopify_attributes }}
 >
-  <ul class="menu-list menu-list__list" role="list">
+  <ul class="header-menu__list" role="list">
     {%- for link in menu.links -%}
-      <li class="menu-list__list-item">
+      <li class="header-menu__item{% if link.links.size > 0 %} header-menu__item--has-children{% endif %}">
         <a
           href="{{ link.url }}"
-          class="menu-list__link{% if link.current %} menu-list__link--active{% endif %}"
+          class="header-menu__link{% if link.current %} header-menu__link--active{% endif %}"
           {% if link.current %}aria-current="page"{% endif %}
+          {% if link.links.size > 0 %}
+            aria-expanded="false"
+            aria-haspopup="true"
+            data-mega-menu-trigger
+          {% endif %}
         >
-          <span class="menu-list__link-title">{{- link.title -}}</span>
+          {%- render 'nav-icon', link: link, variant: 'inline' -%}
+          <span class="header-menu__link-title">{{- link.title -}}</span>
+          {%- if link.links.size > 0 -%}
+            <svg class="header-menu__caret" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              {%- render 'icon', icon: 'chevron-down' -%}
+            </svg>
+          {%- endif -%}
         </a>
+        {%- if link.links.size > 0 -%}
+          {%- render 'mega-menu', link: link -%}
+        {%- endif -%}
       </li>
     {%- endfor -%}
   </ul>
@@ -35,45 +56,88 @@
   .header-menu {
     height: 100%;
     display: flex;
-    align-items: center;
+    align-items: stretch;
+    width: 100%;
   }
 
-  .menu-list {
+  .header-menu__list {
     display: flex;
-    align-items: center;
-    gap: 4px;
+    align-items: stretch;
+    justify-content: var(--menu-justify, center);
+    gap: 0;
     margin: 0;
     padding: 0;
     list-style: none;
+    width: 100%;
   }
 
-  .menu-list__list-item {
+  .header-menu__item {
+    display: flex;
+    align-items: stretch;
     flex-shrink: 0;
+    position: static;
   }
 
-  .menu-list__link {
+  .header-menu__link {
     display: inline-flex;
     align-items: center;
-    padding: 8px 14px;
+    gap: 5px;
+    padding: 12px 14px;
     color: var(--ink);
     text-decoration: none;
-    font-size: var(--menu-top-level-font-size, 0.875rem);
-    font-family: var(--menu-top-level-font-family, inherit);
-    text-transform: var(--menu-top-level-font-case, none);
-    border-radius: 8px;
-    transition: color 0.2s ease, background 0.2s ease;
+    font-size: var(--menu-font-size, 0.875rem);
+    font-family: var(--menu-font-family, inherit);
+    text-transform: var(--menu-text-case, none);
+    font-weight: 500;
+    transition: color .15s ease, background .15s ease;
     white-space: nowrap;
+    border-bottom: 2px solid transparent;
   }
 
-  .menu-list__link:hover {
+  .header-menu__link:hover {
     color: var(--accent-deep);
-    background: var(--accent-soft);
-    text-decoration: none;
+    border-bottom-color: var(--accent-deep);
   }
 
-  .menu-list__link--active {
+  .header-menu__link--active {
+    color: var(--accent-deep);
     font-weight: 600;
+    border-bottom-color: var(--accent-deep);
+  }
+
+  /* Configurable per-link icon (nav_icon_map metaobject) — sits before title.
+     Inherits the link's text color so it tracks hover/active states. */
+  .header-menu__link .nav-icon--inline {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    color: var(--ink-mute);
+    transition: color .15s ease;
+  }
+
+  .header-menu__link:hover .nav-icon--inline,
+  .header-menu__item--has-children:hover .header-menu__link .nav-icon--inline,
+  .header-menu__item--has-children.is-open .header-menu__link .nav-icon--inline,
+  .header-menu__link--active .nav-icon--inline {
     color: var(--accent-deep);
+  }
+
+  .header-menu__caret {
+    transition: transform .2s ease;
+    color: var(--ink-mute);
+  }
+
+  /* Caret rotates when mega-menu is open */
+  .header-menu__item--has-children.is-open .header-menu__caret,
+  .header-menu__item--has-children:hover .header-menu__caret {
+    transform: rotate(-180deg);
+    color: var(--accent-deep);
+  }
+
+  .header-menu__item--has-children:hover .header-menu__link,
+  .header-menu__item--has-children.is-open .header-menu__link {
+    color: var(--accent-deep);
+    border-bottom-color: var(--accent-deep);
   }
 {% endstylesheet %}
 
@@ -87,6 +151,20 @@
       "id": "menu",
       "label": "Navigation menu",
       "default": "main-menu"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "nav_alignment",
+      "label": "Menu alignment",
+      "options": [
+        { "value": "center", "label": "Center" },
+        { "value": "left", "label": "Left" }
+      ],
+      "default": "center"
     },
     {
       "type": "header",

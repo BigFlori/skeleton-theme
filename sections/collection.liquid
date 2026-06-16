@@ -140,13 +140,13 @@ window.swCollectionConfig = {
 /* ── Sidebar ── */
 .coll-sidebar {
   position: sticky;
-  top: 80px;
+  top: var(--sticky-top);
   align-self: start;
   background: var(--bg-card);
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   padding: 22px;
-  max-height: calc(100vh - 100px);
+  max-height: calc(100vh - var(--header-height, 112px) - 32px);
   overflow-y: auto;
   scrollbar-width: thin;
 }
@@ -445,6 +445,7 @@ window.swCollectionConfig = {
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   padding: 14px;
+  margin-top: 3px;
   display: flex;
   flex-direction: column;
   transition: border-color .2s ease, transform .2s ease;

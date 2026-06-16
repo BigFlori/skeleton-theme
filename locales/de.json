@@ -60,10 +60,16 @@
     "country_region": "Land/Region",
     "items": "Artikel",
     "skip_to_content": "Zum Inhalt springen",
+    "close": "Schließen",
+    "greeting": "Hallo, {{ name }}!",
     "onboarding": {
       "product_title": "Beispiel-Produkttitel",
       "product_vendor": "Beispiel-Hersteller"
     }
+  },
+  "navigation": {
+    "all_in": "Alle in {{ category }}",
+    "back": "Zurück"
   },
   "search": {
     "title": "Suche",
@@ -71,6 +77,8 @@
     "title_em": "suchst du?",
     "eyebrow": "Suche",
     "placeholder": "Module, Wechselrichter, Pakete…",
+    "typewriter_prefix": "Suche nach ",
+    "typewriter_placeholders": "Suche nach Produktname – SigenStor EC 4.6 SP||Suche nach Artikelnummer – SST10K-AT||Suche nach Typ – Huawei SUN2000-10KTL||Suche nach Kategorie – Wechselrichter||Suche nach Marke – Sigenergy||Suche nach Leistung – 10 kW",
     "submit": "Suchen",
     "close": "Suche schließen",
     "clear": "Löschen",
@@ -98,7 +106,15 @@
       "products": "Produkte",
       "articles": "Artikel",
       "pages": "Seiten",
-      "view_all": "Alle Ergebnisse anzeigen"
+      "view_all": "Alle Ergebnisse anzeigen",
+      "search_for": "„{{ terms }}” suchen",
+      "no_results_for": "Keine Treffer für „{{ terms }}”",
+      "empty_lead": "Versuche Folgendes:",
+      "empty_tip_spelling": "Überprüfe die Schreibweise",
+      "empty_tip_fewer": "Verwende weniger Stichwörter",
+      "empty_tip_general": "Suche mit einem allgemeineren Begriff",
+      "empty_contact_html": "Wenn du das Produkt nicht findest, {{ link }}.",
+      "empty_contact_link": "schreib uns"
     }
   },
   "breadcrumb": {
@@ -276,6 +292,13 @@
     }
   },
   "sections": {
+    "header": {
+      "mega_menu": {
+        "view_all": "Alle anzeigen",
+        "previous": "Zurück",
+        "next": "Weiter"
+      }
+    },
     "brands": {
       "heading": "Diese Marken führen wir",
       "aria_label": "Geführte Marken"

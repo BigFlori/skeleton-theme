@@ -82,14 +82,25 @@
   window.swPredictiveSearchConfig = {
     routes: {
       suggest: {{ routes.predictive_search_url | json }},
-      search: {{ routes.search_url | json }}
+      search: {{ routes.search_url | json }},
+      contact: {{ '/pages/contact' | json }}
     },
     strings: {
       products: {{ 'search.predictive.products' | t | json }},
       articles: {{ 'search.predictive.articles' | t | json }},
       pages: {{ 'search.predictive.pages' | t | json }},
       view_all: {{ 'search.predictive.view_all' | t | json }},
+      search_for: {{ 'search.predictive.search_for' | t | json }},
       no_results: {{ 'search.predictive.no_results' | t | json }},
+      no_results_for: {{ 'search.predictive.no_results_for' | t | json }},
+      empty_lead: {{ 'search.predictive.empty_lead' | t | json }},
+      empty_tips: [
+        {{ 'search.predictive.empty_tip_spelling' | t | json }},
+        {{ 'search.predictive.empty_tip_fewer' | t | json }},
+        {{ 'search.predictive.empty_tip_general' | t | json }}
+      ],
+      empty_contact_html: {{ 'search.predictive.empty_contact_html' | t | json }},
+      empty_contact_link: {{ 'search.predictive.empty_contact_link' | t | json }},
       error: {{ 'search.predictive.error' | t | json }},
       loading: {{ 'search.predictive.loading' | t | json }},
       hint: {{ 'search.predictive.hint' | t | json }}

@@ -23,4 +23,4 @@ dist/
 build/
 *.wasm
 generated/
-/example-project
+/.idea/
