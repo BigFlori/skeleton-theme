@@ -1,0 +1,309 @@
+{%- comment -%}
+  Recently viewed products — localStorage-driven, single-row scrollable carousel.
+
+  Two render paths:
+    1. Normal page load (search.performed == false):
+       renders the (hidden) shell + config + script. The track is empty;
+       recently-viewed-products.js fills it client-side.
+    2. Section Rendering API fetch via the Search API
+       (GET /search?q=id:… OR id:…&section_id=…&resources[type]=product →
+       search.performed == true): renders just the product slides, which the
+       script extracts and injects into the shell on the page.
+{%- endcomment -%}
+
+{%- if search.performed -%}
+  {%- for item in search.results -%}
+    {%- if item.object_type == 'product' -%}
+      <div class="sw-rv__slide" data-product-id="{{ item.id }}">
+        {%- render 'collection-product-card', product: item -%}
+      </div>
+    {%- endif -%}
+  {%- endfor -%}
+{%- else -%}
+  <section class="sw-rv full-width" data-recently-viewed hidden>
+    <div class="container">
+      <div class="sw-rv__header">
+        <div>
+          <span class="eyebrow">{{ 'sections.recently_viewed.eyebrow' | t }}</span>
+          <h2 class="display sw-rv__headline">{{ 'sections.recently_viewed.title' | t }}</h2>
+        </div>
+
+        <div class="sw-rv__controls" data-rv-carousel-controls>
+          <button
+            type="button"
+            class="sw-rv__carousel-btn sw-rv__carousel-btn--prev"
+            data-rv-carousel-prev
+            aria-label="{{ 'sections.recently_viewed.previous' | t }}"
+            disabled
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              {%- render 'icon', icon: 'chevron-right' -%}
+            </svg>
+          </button>
+          <button
+            type="button"
+            class="sw-rv__carousel-btn sw-rv__carousel-btn--next"
+            data-rv-carousel-next
+            aria-label="{{ 'sections.recently_viewed.next' | t }}"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              {%- render 'icon', icon: 'chevron-right' -%}
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="sw-rv__track" data-rv-carousel-track></div>
+    </div>
+  </section>
+
+  <script>
+    window.swRecentlyViewedConfig = {
+      sectionId: {{ section.id | json }},
+      searchUrl: {{ routes.search_url | json }},
+      maxItems:  {{ section.settings.max_items | default: 8 }}
+    };
+  </script>
+  <script src="{{ 'recently-viewed-products.js' | asset_url }}" defer></script>
+{%- endif -%}
+
+{% stylesheet %}
+.sw-rv {
+  padding: var(--s-5) 0;
+  background: var(--bg);
+}
+.sw-rv[hidden] { display: none; }
+
+.sw-rv + .sw-rv,
+.sw-prodgrid + .sw-rv,
+.sw-rv + .sw-prodgrid {
+  border-top: 1px solid var(--line);
+}
+
+.sw-rv__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  margin-bottom: var(--s-4);
+  flex-wrap: wrap;
+}
+
+.sw-rv__headline {
+  font-size: clamp(28px, 4vw, 52px);
+  line-height: 1.05;
+  margin: 10px 0 0;
+}
+
+/* ── Scrollable track (single row, mirrors mega-menu carousel) ── */
+.sw-rv__track {
+  --rv-cols: 4;
+  --rv-gap: 16px;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: calc((100% - (var(--rv-cols) - 1) * var(--rv-gap)) / var(--rv-cols));
+  gap: var(--rv-gap);
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  padding-bottom: 4px;
+  /* Reserve height so revealing the empty shell does not collapse layout
+     before the cards are fetched. */
+  min-height: 340px;
+}
+.sw-rv__track::-webkit-scrollbar { display: none; }
+
+.sw-rv__slide {
+  scroll-snap-align: start;
+  min-width: 0;
+}
+
+/* ── Carousel controls ── */
+.sw-rv__controls {
+  display: flex;
+  gap: 6px;
+}
+.sw-rv__carousel-btn {
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--bg-card);
+  color: var(--ink);
+  cursor: pointer;
+  transition: border-color .15s ease, background .15s ease, color .15s ease, opacity .15s ease;
+}
+.sw-rv__carousel-btn:hover:not(:disabled) {
+  border-color: var(--accent-deep);
+  color: var(--accent-deep);
+  background: var(--accent-soft);
+}
+.sw-rv__carousel-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.sw-rv__carousel-btn--prev svg { transform: rotate(180deg); }
+
+/* ── prod-card styles (mirrored from product-grid) ──
+   Shipped here so the section renders correctly on the PDP without relying
+   on a product-grid/collection section being present on the page. */
+.sw-rv .prod-card {
+  position: relative;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  transition: border-color .2s ease, transform .2s ease;
+  cursor: pointer;
+}
+.sw-rv .prod-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+
+.sw-rv .prod-card__overlay-link {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  z-index: 1;
+}
+.sw-rv .prod-card__img-wrap {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border-radius: calc(var(--radius-lg) - 6px);
+  overflow: hidden;
+  margin-bottom: 14px;
+  background: var(--bg-warm);
+}
+.sw-rv .prod-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.sw-rv .prod-card__disc-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: var(--sale);
+  color: oklch(0.98 0.01 90);
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 7px;
+  border-radius: 4px;
+  letter-spacing: 0.02em;
+  z-index: 2;
+}
+.sw-rv .prod-card__atc-btn {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  background: var(--ink);
+  color: oklch(0.96 0.01 90);
+  border: none;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  z-index: 2;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity .2s ease, transform .2s ease, background .15s ease;
+}
+.sw-rv .prod-card__atc-btn--select { background: var(--accent-deep); }
+.sw-rv .prod-card:hover .prod-card__atc-btn { opacity: 1; transform: translateY(0); }
+.sw-rv .prod-card__atc-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.sw-rv .prod-card__vendor {
+  font-size: 10px;
+  color: var(--ink-mute);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 4px;
+}
+.sw-rv .prod-card__title {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.3;
+  min-height: 39px;
+}
+.sw-rv .prod-card__spec {
+  font-size: 11px;
+  color: var(--ink-mute);
+  margin-top: 4px;
+  margin-bottom: 8px;
+  letter-spacing: 0.02em;
+}
+.sw-rv .prod-card__footer {
+  padding-top: 8px;
+  border-top: 1px dashed var(--line);
+  margin-top: auto;
+}
+.sw-rv .prod-card__price-block {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.sw-rv .prod-card__price { font-size: 22px; line-height: 1; }
+.sw-rv .prod-card__old-price {
+  font-size: 11px;
+  color: var(--ink-mute);
+  text-decoration: line-through;
+}
+.sw-rv .prod-card__stock {
+  font-size: 10px;
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  letter-spacing: 0.02em;
+}
+.sw-rv .prod-card__stock-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: inline-block;
+}
+
+@media (max-width: 960px) {
+  .sw-rv__track { --rv-cols: 2.4; }
+}
+@media (max-width: 540px) {
+  .sw-rv__track { --rv-cols: 1.5; --rv-gap: 10px; }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Recently Viewed",
+  "settings": [
+    {
+      "type": "range",
+      "id": "max_items",
+      "label": "Maximum products",
+      "min": 4,
+      "max": 12,
+      "step": 1,
+      "default": 8
+    }
+  ],
+  "presets": [
+    {
+      "name": "Recently Viewed"
+    }
+  ]
+}
+{% endschema %}

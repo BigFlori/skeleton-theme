@@ -41,6 +41,8 @@ window.PDP_CONFIG = {
   vmp:            0,
   coldVoc:        0,
   {%- endif %}
+  productId:      {{ product.id | json }},
+  productHandle:  {{ product.handle | json }},
   productTitle:   {{ product.title | json }},
   variants:       {{ product.variants | json }},
   discountTiers:  [],
