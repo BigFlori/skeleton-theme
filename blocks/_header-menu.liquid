@@ -4,6 +4,12 @@
   assign font_size = block_settings.type_font_primary_size | default: '0.875rem'
   assign font_family_id = block_settings.type_font_primary_link | default: 'body'
   assign text_case = block_settings.type_case_primary_link | default: 'none'
+  assign nav_alignment = block_settings.nav_alignment | default: 'center'
+  if nav_alignment == 'left'
+    assign menu_justify = 'flex-start'
+  else
+    assign menu_justify = 'center'
+  endif
 %}
 
 <nav
@@ -13,6 +19,7 @@
     --menu-font-size: {{ font_size }};
     --menu-font-family: var(--font-{{ font_family_id }}--family, inherit);
     --menu-text-case: {{ text_case }};
+    --menu-justify: {{ menu_justify }};
   "
   {{ block.shopify_attributes }}
 >
@@ -50,15 +57,18 @@
     height: 100%;
     display: flex;
     align-items: stretch;
+    width: 100%;
   }
 
   .header-menu__list {
     display: flex;
     align-items: stretch;
+    justify-content: var(--menu-justify, center);
     gap: 0;
     margin: 0;
     padding: 0;
     list-style: none;
+    width: 100%;
   }
 
   .header-menu__item {
@@ -141,6 +151,20 @@
       "id": "menu",
       "label": "Navigation menu",
       "default": "main-menu"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "nav_alignment",
+      "label": "Menu alignment",
+      "options": [
+        { "value": "center", "label": "Center" },
+        { "value": "left", "label": "Left" }
+      ],
+      "default": "center"
     },
     {
       "type": "header",

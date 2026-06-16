@@ -140,6 +140,7 @@ Globális téma-opciók?
 4. **Kontextus átadás**: Aláhúzásos blockok `closest.product`, `closest.collection` változókon kapják a szülő kontextust.
 5. **Fordítás**: Minden felhasználónak látható szöveg `t:names.xxx` / `t:settings.xxx` kulcson keresztül megy a locales-be.
 6. **"Összes termék" kollekció**: A bolt NEM a Shopify alapértelmezett `all` handle-jét használja, hanem egy kézzel létrehozott `all-products` handle-ű kollekciót. Minden "összes termék" linkhez (breadcrumb, nav, footer, "view all" CTA, stb.) használd: `{{ collections['all-products'].url }}` — NE `routes.all_products_collection_url`-t és NE `/collections/all`-t.
+7. **Sticky elemek `top` értéke**: Soha ne hardkódolj `top: Xpx` értéket sticky elemeknél — mindig `top: var(--sticky-top)` (definiálva: `sonnwerk.css` → `calc(var(--header-height) + 16px)`).
 
 ---
 

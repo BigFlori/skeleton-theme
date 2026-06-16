@@ -81,6 +81,14 @@ html {
   scrollbar-gutter: stable;
   background: var(--gutter-bg, var(--bg));
   transition: background .18s ease;
+  /* Anchor links and scrollIntoView() land below the sticky header automatically */
+  scroll-padding-top: var(--header-height, 112px);
+}
+
+/* Global offset for any sticky sidebar/panel so it never disappears under the header.
+   Use `top: var(--sticky-top)` instead of hardcoded pixel values. */
+:root {
+  --sticky-top: calc(var(--header-height, 112px) + 16px);
 }
 
 /* Generic scroll-lock + dark gutter while any overlay is open.

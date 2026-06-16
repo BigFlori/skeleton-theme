@@ -140,9 +140,7 @@ window.swCollectionConfig = {
 /* ── Sidebar ── */
 .coll-sidebar {
   position: sticky;
-  /* Offset by the full sticky header height (main bar + nav bar = --header-height)
-     plus a small gap, so the panel never slides under the bottom nav bar. */
-  top: calc(var(--header-height, 112px) + 16px);
+  top: var(--sticky-top);
   align-self: start;
   background: var(--bg-card);
   border: 1px solid var(--line);
