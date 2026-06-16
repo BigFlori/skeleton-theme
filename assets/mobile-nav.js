@@ -126,6 +126,51 @@
     }
   });
 
+  // ── Focus trap ──
+  // The drawer is aria-modal, so Tab must stay inside it while open. Off-screen
+  // and ancestor panels are marked `inert`, so their controls are naturally
+  // excluded; we additionally filter out anything hidden or inside an inert
+  // subtree, then wrap focus at the two ends.
+  var FOCUSABLE = [
+    'a[href]', 'button:not([disabled])', 'input:not([disabled])',
+    'select:not([disabled])', 'textarea:not([disabled])',
+    '[tabindex]:not([tabindex="-1"])'
+  ].join(',');
+
+  function getFocusable() {
+    return Array.prototype.filter.call(
+      drawer.querySelectorAll(FOCUSABLE),
+      function (el) {
+        if (el.closest('[inert]')) return false;
+        // Visible (not display:none / detached)?
+        return !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length);
+      }
+    );
+  }
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Tab' || !drawer.classList.contains('is-open')) return;
+    var focusable = getFocusable();
+    if (!focusable.length) { e.preventDefault(); return; }
+    var first = focusable[0];
+    var last = focusable[focusable.length - 1];
+    var active = document.activeElement;
+
+    // Focus escaped the drawer (e.g. into page chrome) — pull it back in.
+    if (!drawer.contains(active)) {
+      e.preventDefault();
+      (e.shiftKey ? last : first).focus({ preventScroll: true });
+      return;
+    }
+    if (e.shiftKey && active === first) {
+      e.preventDefault();
+      last.focus({ preventScroll: true });
+    } else if (!e.shiftKey && active === last) {
+      e.preventDefault();
+      first.focus({ preventScroll: true });
+    }
+  });
+
   // Park every sub-panel off-screen and inert before the drawer is opened.
   render();
 })();

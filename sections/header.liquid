@@ -146,6 +146,8 @@
               class="header__inline-search-input"
               autocomplete="off"
               data-predictive-search-input
+              data-placeholder-prefix="{{ 'search.typewriter_prefix' | t | escape }}"
+              data-placeholders="{{ 'search.typewriter_placeholders' | t | escape }}"
             >
             <button type="submit" class="header__inline-search-btn" aria-label="{{ 'search.title' | t }}">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -185,18 +187,23 @@
         {%- endunless -%}
 
         {%- if shop.customer_accounts_enabled -%}
-          <a
-            href="{{ routes.account_url }}"
-            class="header__account"
-            aria-label="{{ 'general.account' | t }}"
-          >
-            <span class="header__account-icon" aria-hidden="true">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                {%- render 'icon', icon: 'user' -%}
-              </svg>
-            </span>
-            <span class="header__account-label">{{ 'general.account' | t }}</span>
-          </a>
+          <div class="header__account-wrapper{% if customer %} header__account-wrapper--signed-in{% endif %}">
+            {%- if customer -%}
+              <span class="header__account-greeting">{{ 'general.greeting' | t: name: customer.first_name }}</span>
+            {%- endif -%}
+            <shopify-account menu="{{ section.settings.customer_account_menu }}">
+              {%- unless customer -%}
+                <span slot="signed-out-avatar" class="header__account">
+                  <span class="header__account-icon">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      {%- render 'icon', icon: 'user' -%}
+                    </svg>
+                  </span>
+                  <span class="header__account-label">{{ 'general.account' | t }}</span>
+                </span>
+              {%- endunless -%}
+            </shopify-account>
+          </div>
         {%- endif -%}
 
         <a
@@ -735,8 +742,52 @@
     }
   }
 
-  .header__account {
+  .header__account-wrapper {
     display: none;
+    align-items: center;
+    gap: 8px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .header__account-wrapper {
+      display: flex;
+    }
+  }
+
+  /* Bejelentkezve: köszöntő szöveg az avatar mellett (az avatar a kattintható elem).
+     Nincs gap, mert az avatar-képnek alapból van saját paddingje. */
+  .header__account-wrapper--signed-in {
+    gap: 0;
+  }
+
+  .header__account-greeting {
+    font-size: 13px;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    white-space: nowrap;
+    color: var(--ink);
+  }
+
+  shopify-account {
+    --shopify-account-dialog-position-top: var(--header-height);
+    --shopify-account-color-background: var(--bg-card);
+    --shopify-account-color-text: var(--ink);
+    --shopify-account-color-accent: var(--accent-deep);
+    --shopify-account-color-accent-text: var(--bg);
+    --shopify-account-font-body: var(--font-sans);
+    --shopify-account-font-body-weight: 400;
+    --shopify-account-font-heading: var(--font-sans);
+    --shopify-account-font-heading-weight: 600;
+    --shopify-account-radius-base: 12px;
+    --shopify-account-radius-button: 10px;
+    --shopify-account-radius-input: 10px;
+    --shopify-account-signed-in-avatar-size: 32px;
+    --shopify-account-signed-in-avatar-color-background: var(--accent-deep);
+    --shopify-account-signed-in-avatar-color-text: var(--bg);
+  }
+
+  .header__account {
+    display: inline-flex;
     align-items: center;
     gap: 7px;
     height: 36px;
@@ -748,14 +799,28 @@
     font-size: 13px;
     font-family: var(--font-sans);
     font-weight: 500;
-    text-decoration: none;
+    cursor: pointer;
     transition: border-color .15s ease, background .15s ease, color .15s ease;
   }
 
-  .header__account:hover {
+  shopify-account:hover .header__account {
     border-color: var(--accent-deep);
     background: var(--accent-soft);
     color: var(--accent-deep);
+  }
+
+  .header__account-avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--accent-deep);
+    color: var(--bg);
+    font-size: 11px;
+    font-weight: 700;
+    flex-shrink: 0;
   }
 
   .header__account-icon {
@@ -768,36 +833,41 @@
     white-space: nowrap;
   }
 
-  @media screen and (min-width: 750px) {
-    .header__account {
-      display: inline-flex;
-    }
-  }
-
   .header__cart {
     display: inline-flex;
     align-items: center;
     gap: 7px;
     text-decoration: none;
-    color: var(--bg);
+    color: var(--ink);
     padding: 0 12px;
     height: 36px;
     border-radius: 12px;
-    border: 1px solid var(--ink);
-    background: var(--ink);
+    border: 1px solid var(--line);
+    background: var(--bg-card);
     font-size: 13px;
     font-family: var(--font-sans);
     font-weight: 500;
-    transition: opacity .15s ease, transform .15s ease;
+    transition: border-color .15s ease, background .15s ease, color .15s ease;
   }
 
   .header__cart:hover {
-    opacity: 0.88;
+    border-color: var(--ink);
+    background: var(--accent-soft);
   }
 
   @media screen and (min-width: 750px) {
     .header__cart {
       padding: 0 16px;
+      color: var(--bg);
+      border-color: var(--ink);
+      background: var(--ink);
+      transition: opacity .15s ease, transform .15s ease;
+    }
+
+    .header__cart:hover {
+      opacity: 0.88;
+      border-color: var(--ink);
+      background: var(--ink);
     }
   }
 
@@ -935,7 +1005,6 @@
 <script src="{{ 'mobile-nav.js' | asset_url }}" defer></script>
 <script src="{{ 'region-selector.js' | asset_url }}" defer></script>
 <script src="{{ 'header.js' | asset_url }}" defer></script>
-
 {% schema %}
 {
   "name": "Header",
@@ -981,6 +1050,20 @@
       "id": "enable_top_bar",
       "label": "Show top bar",
       "default": false
+    },
+    {
+      "type": "header",
+      "content": "Account"
+    },
+    {
+      "type": "paragraph",
+      "content": "Manage your customer accounts settings in your store admin."
+    },
+    {
+      "type": "link_list",
+      "id": "customer_account_menu",
+      "label": "Menu",
+      "default": "customer-account-main-menu"
     }
   ]
 }

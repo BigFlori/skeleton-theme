@@ -205,12 +205,21 @@
     {%- comment -%} Account + region on one compact row {%- endcomment -%}
     <div class="sw-mobile-nav__footer-bar">
       {%- if shop.customer_accounts_enabled -%}
-        <a href="{{ routes.account_url }}" class="sw-mobile-nav__account-link">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            {%- render 'icon', icon: 'user' -%}
-          </svg>
-          <span>{{ 'general.account' | t }}</span>
-        </a>
+        <div class="sw-mobile-nav__account-wrapper{% if customer %} sw-mobile-nav__account-wrapper--signed-in{% endif %}">
+          {%- if customer -%}
+            <span class="sw-mobile-nav__account-greeting">{{ 'general.greeting' | t: name: customer.first_name }}</span>
+          {%- endif -%}
+          <shopify-account class="sw-mobile-nav__account-shopify">
+            {%- unless customer -%}
+              <span slot="signed-out-avatar" class="sw-mobile-nav__account-link">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  {%- render 'icon', icon: 'user' -%}
+                </svg>
+                <span>{{ 'general.account' | t }}</span>
+              </span>
+            {%- endunless -%}
+          </shopify-account>
+        </div>
       {%- endif -%}
 
       {%- render 'region-selector', variant: 'drawer' -%}
@@ -409,6 +418,9 @@
 .sw-mobile-nav__item:first-child {
   border-top: none;
 }
+.sw-mobile-nav__item:last-child {
+  border-bottom: none;
+}
 
 /* Shared row appearance for links and drill buttons */
 .sw-mobile-nav__link,
@@ -417,7 +429,7 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: 18px 26px;
+  padding: 13px 26px;
   color: var(--ink);
   text-decoration: none;
   font-size: 17px;
@@ -551,6 +563,37 @@
   gap: 10px;
   padding: 12px 26px;
 }
+.sw-mobile-nav__account-shopify {
+  --shopify-account-dialog-position-top: 0;
+  --shopify-account-color-background: var(--bg-card);
+  --shopify-account-color-text: var(--ink);
+  --shopify-account-color-accent: var(--accent-deep);
+  --shopify-account-color-accent-text: var(--bg);
+  --shopify-account-font-body: var(--font-sans);
+  --shopify-account-font-body-weight: 400;
+  --shopify-account-font-heading: var(--font-sans);
+  --shopify-account-font-heading-weight: 600;
+  --shopify-account-radius-base: 12px;
+  --shopify-account-radius-button: 10px;
+  --shopify-account-radius-input: 10px;
+  --shopify-account-signed-in-avatar-size: 32px;
+  --shopify-account-signed-in-avatar-color-background: var(--accent-deep);
+  --shopify-account-signed-in-avatar-color-text: var(--bg);
+}
+/* Bejelentkezve: köszöntő szöveg az avatar mellett (az avatar a kattintható elem).
+   Nincs gap, mert az avatar-képnek alapból van saját paddingje. */
+.sw-mobile-nav__account-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+}
+.sw-mobile-nav__account-greeting {
+  font-size: 13px;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  white-space: nowrap;
+  color: var(--ink);
+}
 .sw-mobile-nav__account-link {
   display: inline-flex;
   align-items: center;
@@ -560,18 +603,17 @@
   border: 1px solid var(--line);
   background: var(--bg-card);
   color: var(--ink);
-  text-decoration: none;
   font-size: 13px;
   font-family: var(--font-sans);
   font-weight: 500;
+  cursor: pointer;
   transition: border-color .15s ease, background .15s ease, color .15s ease;
 }
-.sw-mobile-nav__account-link:hover {
+.sw-mobile-nav__account-shopify:hover .sw-mobile-nav__account-link {
   border-color: var(--accent-deep);
   background: var(--accent-soft);
   color: var(--accent-deep);
 }
-
 /* Region selector (drawer variant) compacted to a pill that sits inline with
    the account button: drop the stacked label and full-width framing. */
 .sw-mobile-nav__footer-bar .region-selector--drawer {

@@ -61,6 +61,7 @@
     "items": "termék",
     "skip_to_content": "Ugrás a tartalomra",
     "close": "Bezárás",
+    "greeting": "Szia, {{ name }}!",
     "onboarding": {
       "product_title": "Példa termék neve",
       "product_vendor": "Példa gyártó"
@@ -76,6 +77,8 @@
     "title_em": "keresel?",
     "eyebrow": "Keresés",
     "placeholder": "Modulok, inverterek, csomagok…",
+    "typewriter_prefix": "Keress ",
+    "typewriter_placeholders": "Keress terméknévre – SigenStor EC 4.6 SP||Keress cikkszámra – SST10K-AT||Keress típusra – Huawei SUN2000-10KTL||Keress kategóriára – Inverterek||Keress márkára – Sigenergy||Keress teljesítményre – 10 kW",
     "submit": "Keresés",
     "close": "Keresés bezárása",
     "clear": "Törlés",
@@ -104,7 +107,14 @@
       "articles": "Cikkek",
       "pages": "Oldalak",
       "view_all": "Összes találat",
-      "search_for": "„{{ terms }}” keresése"
+      "search_for": "„{{ terms }}” keresése",
+      "no_results_for": "Nincs találat erre: „{{ terms }}”",
+      "empty_lead": "Próbáld a következőt:",
+      "empty_tip_spelling": "Ellenőrizd a helyesírást",
+      "empty_tip_fewer": "Használj kevesebb kulcsszót",
+      "empty_tip_general": "Keress általánosabb kifejezéssel",
+      "empty_contact_html": "Ha nem találod a terméket, {{ link }}.",
+      "empty_contact_link": "írj nekünk"
     }
   },
   "breadcrumb": {

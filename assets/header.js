@@ -192,26 +192,22 @@
   // ── Inline search: typewriter placeholder ────────────────────────────────
 
   var searchInput = document.getElementById('header-search-input');
-  if (searchInput) {
-    var placeholders = (searchInput.dataset.placeholders || '').split('||').map(function (s) { return s.trim(); }).filter(Boolean);
-
-    if (placeholders.length === 0) {
-      placeholders = [
-        'Keress terméknévre – SigenStor EC 4.6 SP',
-        'Keress cikkszámra – SST10K-AT',
-        'Keress típusra – Huawei SUN2000-10KTL',
-        'Keress kategóriára – Inverterek',
-        'Keress márkára – Sigenergy',
-        'Keress teljesítményre – 10 kW'
-      ];
-    }
-
+  // Phrases are localized and supplied via data-placeholders (pipe-separated).
+  // With no phrases there's nothing to animate, so the typewriter is skipped and
+  // the input keeps its plain placeholder — no hardcoded language fallback.
+  var placeholders = searchInput
+    ? (searchInput.dataset.placeholders || '').split('||').map(function (s) { return s.trim(); }).filter(Boolean)
+    : [];
+  if (searchInput && placeholders.length) {
     var TYPE_MIN = 55;    // ms — base delay between keystrokes
     var TYPE_JITTER = 65; // ms — random extra delay to feel human
     var HOLD_MS = 1600;   // pause after a phrase is fully typed
     var ERASE_MS = 28;    // delay between deletions (faster than typing)
     var PAUSE_MS = 280;   // gap between phrases
-    var PREFIX = 'Keress '; // stays fixed, only the suffix is typed
+    // The static prefix (e.g. "Search by ") stays visible; only the suffix is
+    // typed. Localized via data-placeholder-prefix on the input. With an empty
+    // prefix the whole phrase is typed (indexOf('') === 0 matches everything).
+    var PREFIX = searchInput.dataset.placeholderPrefix || '';
 
     // Build {suffix, full} pairs so the static prefix is always visible.
     var phrases = placeholders.map(function (p) {
@@ -305,7 +301,7 @@
     var cfg = window.swPredictiveSearchConfig || {};
     var routes = cfg.routes || {};
     var strings = cfg.strings || {};
-    var contactUrl = '/pages/contact';
+    var contactUrl = routes.contact || '/pages/contact';
 
     var DEBOUNCE_MS = 200;
     var MIN_CHARS = 2;
@@ -369,23 +365,36 @@
 
     function renderEmpty(q) {
       currentState = 'empty';
-      var tips = [
-        'Ellenőrizd a helyesírást',
-        'Használj kevesebb kulcsszót',
-        'Keress általánosabb kifejezéssel'
-      ];
+      // Title: prefer the templated "no results for {{ terms }}" string, falling
+      // back to the bare no_results label when the template isn't provided.
+      var title = strings.no_results_for
+        ? strings.no_results_for.replace('{{ terms }}', q).replace('{{terms}}', q)
+        : (strings.no_results || 'No results');
+      var tips = strings.empty_tips || [];
       var tipsHtml = tips.map(function (t) {
         return '<li>' + escapeHtml(t) + '</li>';
       }).join('');
+      // Contact line: the locale template carries a {{ link }} marker that we
+      // replace with the anchor. The template text is trusted (locale-authored);
+      // only the link label is escaped.
+      var contactHtml = '';
+      if (strings.empty_contact_html) {
+        var linkLabel = escapeHtml(strings.empty_contact_link || 'contact us');
+        var anchor = '<a href="' + escapeHtml(contactUrl) + '">' + linkLabel + '</a>';
+        contactHtml = '<li>' +
+          escapeHtml(strings.empty_contact_html)
+            .replace('{{ link }}', anchor)
+            .replace('{{link}}', anchor) +
+          '</li>';
+      }
+      var leadHtml = strings.empty_lead
+        ? '<div class="header__inline-search-empty__lead">' + escapeHtml(strings.empty_lead) + '</div>'
+        : '';
       resultsEl.innerHTML =
         '<div class="header__inline-search-empty">' +
-        '<div class="header__inline-search-empty__title">' +
-          escapeHtml((strings.no_results || 'No results') + ' a(z) „' + q + '" keresésre') +
-        '</div>' +
-        '<div class="header__inline-search-empty__lead">Próbáld a következőt:</div>' +
-        '<ul class="header__inline-search-empty__list">' + tipsHtml +
-          '<li>Ha nem találod a terméket, <a href="' + escapeHtml(contactUrl) + '">írj nekünk</a>.</li>' +
-        '</ul>' +
+        '<div class="header__inline-search-empty__title">' + escapeHtml(title) + '</div>' +
+        leadHtml +
+        '<ul class="header__inline-search-empty__list">' + tipsHtml + contactHtml + '</ul>' +
         '</div>';
     }
 
@@ -531,5 +540,85 @@
         else items[idx - 1].focus();
       }
     });
+  })();
+
+  // ── Account dialog: anchor under its trigger (desktop only) ────────────────
+  // <shopify-account> exposes only --shopify-account-dialog-position-top as a
+  // public knob; there is no right/left variable, so horizontal alignment isn't
+  // supported by its API. To right-align the popover under the avatar on desktop
+  // we reach into the (open) shadow root and nudge the fixed-positioned sheet.
+  // Mobile keeps the component's default placement.
+  (function () {
+    var account = document.querySelector('shopify-account');
+    if (!account) return;
+    var desktop = window.matchMedia('(min-width: 750px)');
+    var observer = null;
+
+    // The <shopify-account> web component is registered asynchronously from
+    // Shopify's CDN, so when this deferred script runs its custom element may not
+    // be upgraded yet and account.shadowRoot can still be null. Bailing here used
+    // to leave the popover at the component's default (screen-right) placement on
+    // some loads — a race that made the alignment work only intermittently.
+    // Instead, wait for the element to define and its shadow root to attach.
+    function whenReady(cb) {
+      var tries = 0;
+      (function poll() {
+        if (account.shadowRoot) { cb(account.shadowRoot); return; }
+        if (tries++ > 120) return; // ~2s at 60fps → give up rather than spin
+        requestAnimationFrame(poll);
+      })();
+    }
+
+    var ready = window.customElements && customElements.whenDefined
+      ? customElements.whenDefined('shopify-account')
+      : Promise.resolve();
+    ready.then(function () { whenReady(setup); });
+
+    function setup(root) {
+
+    // The sheet is the fixed-positioned element in the shadow DOM. The <dialog>/
+    // [popover] node itself isn't always the positioned one (it can sit inside a
+    // fixed wrapper), so match on position:fixed and only prefer the dialog when
+    // it is itself the fixed element.
+    function findSheet() {
+      var candidate = root.querySelector('dialog, [popover]');
+      if (candidate && getComputedStyle(candidate).position === 'fixed') return candidate;
+      var nodes = root.querySelectorAll('*');
+      for (var i = 0; i < nodes.length; i++) {
+        if (getComputedStyle(nodes[i]).position === 'fixed') return nodes[i];
+      }
+      return candidate || null;
+    }
+
+    function align() {
+      if (!desktop.matches) return;
+      var sheet = findSheet();
+      if (!sheet) return;
+      var r = account.getBoundingClientRect();
+      var right = Math.round(window.innerWidth - r.right) + 'px';
+      // Skip if already aligned, so our own writes don't retrigger the observer.
+      if (sheet.style.right === right && sheet.style.left === 'auto') return;
+      sheet.style.left = 'auto';
+      sheet.style.right = right;
+      sheet.style.transform = 'none';
+    }
+
+    // Vertical offset stays on the public variable. Recompute on each open so a
+    // changed header height (or scroll before the sheet mounts) can't leave the
+    // popover detached from the trigger.
+    function placeTop() {
+      var r = account.getBoundingClientRect();
+      account.style.setProperty('--shopify-account-dialog-position-top', Math.round(r.bottom + 8) + 'px');
+    }
+    placeTop();
+
+    // The sheet mounts/animates open lazily, so watch the shadow DOM and realign.
+    observer = new MutationObserver(align);
+    observer.observe(root, { childList: true, subtree: true, attributes: true });
+    account.addEventListener('pointerdown', function () {
+      requestAnimationFrame(function () { placeTop(); align(); });
+    });
+    desktop.addEventListener('change', align);
+    }
   })();
 })();
