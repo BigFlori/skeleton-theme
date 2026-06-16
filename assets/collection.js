@@ -67,84 +67,9 @@
   }
 
   // ── Add-to-cart ───────────────────────────────────────────────────────────
-
-  var toastTimer = null;
-
-  function showToast(msg) {
-    var toast = document.getElementById('sw-drawer-toast');
-    if (!toast) return;
-    clearTimeout(toastTimer);
-    toast.textContent = msg;
-    toast.hidden = false;
-    requestAnimationFrame(function () {
-      requestAnimationFrame(function () {
-        toast.classList.add('sw-toast--visible');
-      });
-    });
-    toastTimer = setTimeout(function () {
-      toast.classList.remove('sw-toast--visible');
-      setTimeout(function () { toast.hidden = true; }, 220);
-    }, 3000);
-  }
-
-  function updateBadge(count) {
-    document.querySelectorAll('[data-cart-drawer-count]').forEach(function (el) {
-      el.textContent = count;
-      el.hidden = count === 0;
-    });
-  }
-
-  async function addToCart(variantId, productTitle) {
-    try {
-      var res = await fetch('/cart/add.js', {
-        method: 'POST',
-        credentials: 'same-origin',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({ id: parseInt(variantId, 10), quantity: 1 }),
-      });
-
-      if (!res.ok) {
-        var err = await res.json();
-        throw new Error((err && (err.description || err.message)) || strings.errorAddCart || 'Could not add to cart');
-      }
-
-      // Fetch updated cart count
-      var cartRes = await fetch('/cart.js', { credentials: 'same-origin' });
-      if (cartRes.ok) {
-        var cart = await cartRes.json();
-        updateBadge(cart.item_count);
-      }
-
-      // Dispatch event for cart-drawer.js to refresh + open the drawer
-      document.dispatchEvent(new CustomEvent('cart:item-added'));
-
-    } catch (err) {
-      showToast(err.message || strings.errorGeneric || 'Something went wrong');
-    }
-  }
-
-  function initAddToCart() {
-    document.addEventListener('click', function (e) {
-      var btn = e.target.closest('[data-atc-id]');
-      if (!btn) return;
-
-      e.preventDefault();
-      e.stopPropagation();
-
-      var variantId    = btn.dataset.atcId;
-      var productTitle = btn.dataset.atcTitle || 'Product';
-
-      if (!variantId) return;
-
-      btn.disabled = true;
-      btn.classList.add('is-loading');
-
-      addToCart(variantId, productTitle).finally(function () {
-        btn.disabled = false;
-        btn.classList.remove('is-loading');
-      });
-    });
-  }
+  // The [data-atc-id] click handler now lives in the globally-loaded
+  // assets/cart-atc.js (so product cards work on every page, incl. the PDP
+  // recently-viewed carousel). Nothing to wire up here.
 
   // ── Sort select submit ────────────────────────────────────────────────────
 
@@ -202,7 +127,6 @@
     initFilterSections();
     initShowMore();
     initAutoSubmit();
-    initAddToCart();
     initSortSubmit();
     initFiltersDrawer();
   });

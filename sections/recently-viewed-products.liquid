@@ -119,6 +119,45 @@
   min-width: 0;
 }
 
+/* ── Loading skeleton (shown while cards are fetched) ── */
+.sw-rv__skel {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 14px;
+}
+.sw-rv__skel-img {
+  aspect-ratio: 1 / 1;
+  border-radius: calc(var(--radius-lg) - 6px);
+  margin-bottom: 14px;
+}
+.sw-rv__skel-line {
+  height: 12px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+.sw-rv__skel-line--sm { width: 40%; height: 9px; }
+.sw-rv__skel-line--price { width: 55%; height: 20px; margin-top: 14px; margin-bottom: 0; }
+.sw-rv__skel-img,
+.sw-rv__skel-line {
+  background: linear-gradient(
+    100deg,
+    var(--bg-warm) 30%,
+    color-mix(in oklab, var(--ink) 6%, var(--bg-warm)) 50%,
+    var(--bg-warm) 70%
+  );
+  background-size: 200% 100%;
+  animation: sw-rv-shimmer 1.3s ease-in-out infinite;
+}
+@keyframes sw-rv-shimmer {
+  from { background-position: 200% 0; }
+  to   { background-position: -200% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sw-rv__skel-img,
+  .sw-rv__skel-line { animation: none; }
+}
+
 /* ── Carousel controls ── */
 .sw-rv__controls {
   display: flex;

@@ -118,6 +118,8 @@
       }
       var cart = await res.json();
       lastCartFingerprint = cartFingerprint(cart);
+      // Mark the global cart drawer stale so it refreshes on next open.
+      document.dispatchEvent(new CustomEvent('cart:changed'));
       if (newQty === 0) {
         var lineEl  = document.querySelector('[data-line="' + lineIndex + '"]');
         var focusEl = getFocusTargetAfterRemoval(lineIndex);
@@ -191,6 +193,7 @@
       var cartRes = await fetch('/cart.js', { headers: { 'Accept': 'application/json' } });
       var cart = await cartRes.json();
       lastCartFingerprint = cartFingerprint(cart);
+      document.dispatchEvent(new CustomEvent('cart:changed'));
       updateCartTotals(cart);
       showToast(cfg.strings.upsellAdded);
     } catch (err) {

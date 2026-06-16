@@ -213,10 +213,17 @@
     </div>
     <div class="mono sw-cart-drawer__vat-note">{{ 'sections.cart_drawer.vat_note' | t }}</div>
 
-    <a href="{{ routes.checkout }}" class="btn btn-primary sw-cart-drawer__checkout">
-      {{ 'sections.cart.checkout_btn' | t }}
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{%- render 'icon', icon: 'arrow-right' -%}</svg>
-    </a>
+    {%- comment -%}
+      A checkoutra nincs `routes.checkout` route — a helyes mód a kosár-form
+      `name="checkout"` submit gombja, ami a Shopify checkoutra irányít át
+      (locale/market-tudatosan). Lásd snippets/cart-summary.liquid.
+    {%- endcomment -%}
+    {%- form 'cart', cart, class: 'sw-cart-drawer__checkout-form' -%}
+      <button type="submit" name="checkout" class="btn btn-primary sw-cart-drawer__checkout">
+        {{ 'sections.cart.checkout_btn' | t }}
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{%- render 'icon', icon: 'arrow-right' -%}</svg>
+      </button>
+    {%- endform -%}
     <button
       type="button"
       class="btn btn-ghost sw-cart-drawer__continue"
@@ -253,6 +260,7 @@ window.swDrawerConfig = {
   strings: {
     items: {{ 'sections.cart.items' | t | json }},
     errorGeneric: {{ 'sections.cart.error_generic' | t | json }},
+    errorAddCart: {{ 'collection.toast.error_add_cart' | t | json }},
     cartLabel: {{ 'general.cart' | t | json }},
     titleEmpty: {{ 'sections.cart_drawer.title_empty_html' | t | json }}
   }
@@ -544,6 +552,7 @@ window.swDrawerConfig = {
 .sw-cart-drawer__subtotal-label { font-size: 13px; color: var(--ink-soft); }
 .sw-cart-drawer__subtotal-amount { font-size: 28px; line-height: 1; }
 .sw-cart-drawer__vat-note { font-size: 10px; color: var(--ink-mute); margin-bottom: 14px; }
+.sw-cart-drawer__checkout-form { margin: 0; }
 .sw-cart-drawer__checkout {
   display: flex;
   width: 100%;

@@ -5,7 +5,6 @@
   var drawerEl = document.getElementById('sw-cart-drawer');
   var backdropEl = document.querySelector('[data-cart-drawer-backdrop]');
   var toastEl = document.getElementById('sw-drawer-toast');
-  var mutating = false;
   var cartDirty = false;
 
   if (!drawerEl || !cfg) return;
@@ -18,7 +17,7 @@
     if (backdropEl) backdropEl.classList.add('is-open');
     document.body.style.overflow = 'hidden';
     var closeBtn = drawerEl.querySelector('[data-cart-drawer-close]');
-    if (closeBtn) closeBtn.focus();
+    if (closeBtn) closeBtn.focus({ preventScroll: true });
   }
 
   function closeDrawer() {
@@ -27,7 +26,7 @@
     if (backdropEl) backdropEl.classList.remove('is-open');
     document.body.style.overflow = '';
     var trigger = document.querySelector('[data-cart-drawer-trigger]');
-    if (trigger) trigger.focus();
+    if (trigger) trigger.focus({ preventScroll: true });
   }
 
   function showToast(msg) { SwUtils.toast(toastEl, msg); }
@@ -70,13 +69,8 @@
     if (footer) footer.hidden = isEmpty;
   }
 
-  function setLineLoading(lineIndex, on) {
-    var el = drawerEl.querySelector('[data-drawer-line="' + lineIndex + '"]');
-    if (el) el.classList.toggle('sw-cart-drawer__line--loading', on);
-  }
-
-  function getLineQty(lineIndex) {
-    var el = drawerEl.querySelector('[data-drawer-qty-val="' + lineIndex + '"]');
+  function getLineQty(lineEl) {
+    var el = lineEl && lineEl.querySelector('[data-drawer-qty-val]');
     return el ? (parseInt(el.textContent, 10) || 1) : 1;
   }
 
@@ -99,10 +93,45 @@
 
   // ── Cart AJAX ─────────────────────────────────────────────────────────────
 
-  async function changeQty(lineIndex, newQty) {
-    if (mutating) return;
-    mutating = true;
-    setLineLoading(lineIndex, true);
+  // Mutations run through one promise chain so overlapping requests can't race
+  // on line indices. Rapid +/- clicks update the displayed quantity optimistically
+  // and coalesce into ONE request with the final absolute quantity — instead of
+  // being silently dropped while a request is in flight. Pending state is anchored
+  // to the line ELEMENT (not its index), so it survives index reshuffles on removal.
+  var queue = Promise.resolve();
+  var DEBOUNCE_MS = 300;
+
+  function enqueue(task) {
+    queue = queue.then(task, task);
+    return queue;
+  }
+
+  function queueQtyChange(lineEl, newQty) {
+    if (!lineEl) return;
+    // Optimistic display so successive clicks accumulate from the latest value.
+    // Don't dim here — that blocks further clicks (pointer-events: none) and
+    // defeats the coalescing. Dimming happens once the request actually fires.
+    var qtyEl = lineEl.querySelector('[data-drawer-qty-val]');
+    if (qtyEl) qtyEl.textContent = newQty;
+    lineEl._swTarget = newQty;
+    clearTimeout(lineEl._swTimer);
+    lineEl._swTimer = setTimeout(function () {
+      var target = lineEl._swTarget;
+      enqueue(function () { return commitQty(lineEl, target); });
+    }, DEBOUNCE_MS);
+  }
+
+  function removeLine(lineEl) {
+    if (!lineEl) return;
+    clearTimeout(lineEl._swTimer);               // cancel any pending qty change
+    lineEl.classList.add('sw-cart-drawer__line--loading');
+    enqueue(function () { return commitQty(lineEl, 0); });
+  }
+
+  async function commitQty(lineEl, newQty) {
+    if (!lineEl.isConnected) return;             // line already removed/refreshed
+    var lineIndex = parseInt(lineEl.dataset.drawerLine, 10);
+    lineEl.classList.add('sw-cart-drawer__line--loading');
 
     try {
       var res = await fetch('/cart/change.js', {
@@ -124,8 +153,7 @@
       var cart = await res.json();
 
       if (newQty === 0) {
-        var lineEl = drawerEl.querySelector('[data-drawer-line="' + lineIndex + '"]');
-        if (lineEl) lineEl.remove();
+        lineEl.remove();
         reindexLines(lineIndex);
 
         if (cart.item_count === 0) {
@@ -136,15 +164,16 @@
           updateDrawerTotals(cart);
         }
       } else {
+        // Reconcile from server truth (it may have capped the quantity).
         var item = cart.items[lineIndex - 1];
-        var qtyEl = drawerEl.querySelector('[data-drawer-qty-val="' + lineIndex + '"]');
+        var qtyEl = lineEl.querySelector('[data-drawer-qty-val]');
         if (qtyEl) qtyEl.textContent = item ? item.quantity : newQty;
 
         if (item) {
-          var totalEl = drawerEl.querySelector('[data-drawer-line-total="' + lineIndex + '"]');
+          var totalEl = lineEl.querySelector('[data-drawer-line-total]');
           if (totalEl) totalEl.textContent = formatMoney(item.line_price);
 
-          var eachEl = drawerEl.querySelector('[data-drawer-line-each="' + lineIndex + '"]');
+          var eachEl = lineEl.querySelector('[data-drawer-line-each]');
           if (eachEl) {
             if (item.quantity > 1) {
               eachEl.textContent = item.quantity + ' × ' + formatMoney(item.price);
@@ -155,14 +184,13 @@
           }
         }
         updateDrawerTotals(cart);
-        setLineLoading(lineIndex, false);
+        lineEl.classList.remove('sw-cart-drawer__line--loading');
       }
     } catch (err) {
       console.error('[sw-drawer]', err.message);
-      setLineLoading(lineIndex, false);
+      lineEl.classList.remove('sw-cart-drawer__line--loading');
       showToast(err.message || cfg.strings.errorGeneric);
-    } finally {
-      mutating = false;
+      refreshDrawerContent();                    // revert optimistic UI to truth
     }
   }
 
@@ -236,22 +264,23 @@
 
     var dec = e.target.closest('[data-drawer-dec]');
     if (dec) {
-      var li = parseInt(dec.dataset.drawerDec, 10);
-      var qty = getLineQty(li);
-      changeQty(li, qty <= 1 ? 0 : qty - 1);
+      var lineDec = dec.closest('[data-drawer-line]');
+      var qty = getLineQty(lineDec);
+      if (qty <= 1) removeLine(lineDec);
+      else queueQtyChange(lineDec, qty - 1);
       return;
     }
 
     var inc = e.target.closest('[data-drawer-inc]');
     if (inc) {
-      var liInc = parseInt(inc.dataset.drawerInc, 10);
-      changeQty(liInc, getLineQty(liInc) + 1);
+      var lineInc = inc.closest('[data-drawer-line]');
+      queueQtyChange(lineInc, getLineQty(lineInc) + 1);
       return;
     }
 
     var rem = e.target.closest('[data-drawer-remove]');
     if (rem) {
-      changeQty(parseInt(rem.dataset.drawerRemove, 10), 0);
+      removeLine(rem.closest('[data-drawer-line]'));
       return;
     }
 

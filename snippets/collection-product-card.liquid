@@ -54,13 +54,20 @@
     {%- if product.available -%}
       {%- if product.variants.size == 1 -%}
         <button
+          type="button"
           class="prod-card__atc-btn"
           data-atc-id="{{ v.id }}"
           data-atc-title="{{ product.title | escape }}"
           aria-label="{{ 'collection.card.add_to_cart_aria' | t: title: product.title }}"
         >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{%- render 'icon', icon: 'shopping-bag' -%}</svg>
-          {{ 'collection.card.add_to_cart' | t }}
+          <span class="prod-card__atc-label">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{%- render 'icon', icon: 'shopping-bag' -%}</svg>
+            {{ 'collection.card.add_to_cart' | t }}
+          </span>
+          <span class="prod-card__atc-loader">
+            <svg class="prod-card__atc-spinner" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{%- render 'icon', icon: 'spinner' -%}</svg>
+            {{ 'collection.card.add_to_cart' | t }}…
+          </span>
         </button>
       {%- else -%}
         <a

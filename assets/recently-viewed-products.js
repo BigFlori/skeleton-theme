@@ -61,7 +61,28 @@
 
   // Reveal the shell now that we know there is history — reserves layout space
   // (track has a min-height) so the IntersectionObserver has a box to observe.
+  // Fill it with skeleton placeholders so the revealed box does not read as
+  // empty while the cards are being fetched.
   section.hidden = false;
+  renderSkeletons(displayIds.length);
+
+  function renderSkeletons(count) {
+    var frag = document.createDocumentFragment();
+    for (var i = 0; i < count; i++) {
+      var slide = document.createElement('div');
+      slide.className = 'sw-rv__slide sw-rv__slide--skeleton';
+      slide.setAttribute('aria-hidden', 'true');
+      slide.innerHTML =
+        '<div class="sw-rv__skel">' +
+          '<div class="sw-rv__skel-img"></div>' +
+          '<div class="sw-rv__skel-line sw-rv__skel-line--sm"></div>' +
+          '<div class="sw-rv__skel-line"></div>' +
+          '<div class="sw-rv__skel-line sw-rv__skel-line--price"></div>' +
+        '</div>';
+      frag.appendChild(slide);
+    }
+    track.appendChild(frag);
+  }
 
   function loadProducts() {
     if (loaded) return;

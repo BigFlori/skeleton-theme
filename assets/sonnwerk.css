@@ -404,3 +404,44 @@ html:has(body.is-scroll-locked) {
 .rte > :first-child { margin-top: 0; }
 .shopify-policy__body > :last-child,
 .rte > :last-child { margin-bottom: 0; }
+
+/* ==========================================================================
+   Product card — add-to-cart loading state
+   Global (the card snippet is shared across collection / product-grid /
+   recently-viewed / mega-menu). Dots inherit currentColor so they adapt to
+   every button variant. JS (cart-atc.js) toggles `.is-loading` on click.
+   ========================================================================== */
+.prod-card__atc-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+.prod-card__atc-loader {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  white-space: nowrap;
+}
+.prod-card__atc-spinner { flex: none; }
+.prod-card__atc-btn.is-loading .prod-card__atc-label { display: none; }
+.prod-card__atc-btn.is-loading .prod-card__atc-loader { display: inline-flex; }
+/* While loading the button is disabled (set in cart-atc.js) but must NOT look
+   muted — override the per-section `:disabled { opacity: .6 }` rules.
+   `!important` needed because `.sw-rv .prod-card__atc-btn:disabled` ties on
+   specificity and wins on source order. */
+.prod-card__atc-btn.is-loading[disabled] { opacity: 1 !important; cursor: progress; }
+
+.prod-card__atc-spinner {
+  animation: sw-atc-spin 0.7s linear infinite;
+}
+
+@keyframes sw-atc-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .prod-card__atc-spinner { animation-duration: 1.4s; }
+}

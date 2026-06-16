@@ -52,5 +52,12 @@
     {% section 'cart-drawer' %}
 
     <script src="{{ 'cart-drawer.js' | asset_url }}" defer></script>
+    {%- comment -%}
+      Global add-to-cart handler for [data-atc-id] product-card buttons.
+      Loaded here (not per-section) so cards work on every page, incl. the PDP
+      recently-viewed carousel. Depends on the cart-drawer section above for the
+      toast element + swDrawerConfig strings.
+    {%- endcomment -%}
+    <script src="{{ 'cart-atc.js' | asset_url }}" defer></script>
   </body>
 </html>
