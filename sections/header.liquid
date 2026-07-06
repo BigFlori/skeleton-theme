@@ -243,12 +243,21 @@
 <div class="mega-menu-backdrop" aria-hidden="true"></div>
 
 {% stylesheet %}
-  body {
-    /* Main bar (②) and nav bar (③) share one height so they always match */
+  :root {
+    /* Main bar (②) and nav bar (③) share one height so they always match.
+       Defined on :root (not body) so html-level rules like scroll-padding-top
+       resolve the real value instead of their fallback. */
     --header-bar-height: 56px;
     --header-main-height: var(--header-bar-height);
     --header-nav-height: var(--header-bar-height);
-    --header-height: calc(var(--header-bar-height) * 2);
+    /* Mobile: nav bar (③) is hidden, so only the main bar counts */
+    --header-height: var(--header-bar-height);
+  }
+
+  @media screen and (min-width: 750px) {
+    :root {
+      --header-height: calc(var(--header-bar-height) * 2);
+    }
   }
 
   .header {

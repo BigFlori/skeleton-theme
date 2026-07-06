@@ -3,9 +3,16 @@
     "main": {
       "type": "main-product-solar-module",
       "settings": {}
+    },
+    "recently_viewed": {
+      "type": "recently-viewed-products",
+      "settings": {
+        "max_items": 8
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "recently_viewed"
   ]
 }
