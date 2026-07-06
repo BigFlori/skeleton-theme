@@ -1,6 +1,5 @@
 ﻿{%- liquid
-  assign fee           = section.settings.shipping_fee | times: 100
-  assign grand_total   = cart.total_price | plus: fee
+  assign grand_total   = cart.total_price
   assign has_unavailable = false
   for item in cart.items
     unless item.variant.available
@@ -32,7 +31,7 @@
           {%- endfor -%}
         </div>
 
-        {%- render 'cart-summary', grand_total: grand_total, fee: fee, has_unavailable: has_unavailable -%}
+        {%- render 'cart-summary', grand_total: grand_total, has_unavailable: has_unavailable -%}
 
       </div>
     </div>
@@ -548,12 +547,10 @@
 
 <script>
 window.swCartConfig = {
-  fee: {{ fee }},
   moneyFormat: {{ shop.money_format | json }},
   strings: {
     each: {{ 'sections.cart.each' | t | json }},
     items: {{ 'sections.cart.items' | t | json }},
-    shippingNote: {{ 'sections.cart.shipping_paid_note' | t | json }},
     qtyMin: {{ 'sections.cart.qty_min' | t | json }},
     errorGeneric: {{ 'sections.cart.error_generic' | t | json }},
     upsellAdded: {{ 'sections.cart.upsell_added' | t | json }}
@@ -567,12 +564,6 @@ window.swCartConfig = {
 {
   "name": "t:general.cart",
   "settings": [
-    {
-      "type": "number",
-      "id": "shipping_fee",
-      "label": "Standard shipping fee",
-      "default": 49
-    },
     {
       "type": "number",
       "id": "low_stock_threshold",

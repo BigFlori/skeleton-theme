@@ -503,7 +503,7 @@
       "summary_title": "Rendelés összegzése",
       "subtotal": "Részösszeg",
       "shipping": "Szállítás",
-      "shipping_paid_note": "normál szállítás",
+      "shipping_at_checkout": "a checkoutnál kerül kiszámításra",
       "vat": "ÁFA (0 %, Ausztria ≤ 20 kWp)",
       "vat_note": "Nullaadó-kulcs alkalmazva",
       "total": "Összesen",
@@ -553,6 +553,12 @@
       "view_all": "Összes megtekintése",
       "eyebrow": "Kiemelt",
       "title": "Ajánlott termékek"
+    },
+    "recently_viewed": {
+      "eyebrow": "Nemrég megtekintett",
+      "title": "Nemrég megtekintett termékek",
+      "previous": "Előző",
+      "next": "Következő"
     },
     "recommended_products": {
       "default_eyebrow": "Ezt is megkedvelheted",

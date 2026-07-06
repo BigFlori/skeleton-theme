@@ -25,6 +25,7 @@ window.PDP_CONFIG = {
   basePriceCents:    {{ current_variant.price }},
   compareAtCents:    {% if current_variant.compare_at_price %}{{ current_variant.compare_at_price }}{% else %}null{% endif %},
   currencyCode:      {{ shop.currency | json }},
+  shopLocale:        {{ request.locale.iso_code | json }},
   {%- if is_solar %}
   {%- assign ds = product.metafields.custom.datasheet.value -%}
   {%- assign voc_val = ds.voc | default: 38.9 -%}

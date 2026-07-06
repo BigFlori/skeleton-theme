@@ -503,7 +503,7 @@
       "summary_title": "Order summary",
       "subtotal": "Subtotal",
       "shipping": "Shipping",
-      "shipping_paid_note": "standard delivery",
+      "shipping_at_checkout": "calculated at checkout",
       "vat": "VAT (0 %, Austria ≤ 20 kWp)",
       "vat_note": "Nullsteuersatz applied",
       "total": "Total",

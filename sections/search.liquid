@@ -62,6 +62,7 @@
 
     {%- if has_terms and search.performed -%}
 
+      {%- assign safe_terms = search.terms | escape -%}
       {%- if search.results_count == 0 -%}
         <div class="sw-search__empty">
           <div class="sw-search__empty-icon" aria-hidden="true">
@@ -70,7 +71,7 @@
             </svg>
           </div>
           <h2 class="display sw-search__empty-title">{{ 'search.empty.title' | t }}</h2>
-          <p class="sw-search__empty-body">{{ 'search.empty.body_html' | t: terms: search.terms }}</p>
+          <p class="sw-search__empty-body">{{ 'search.empty.body_html' | t: terms: safe_terms }}</p>
           <div class="sw-search__empty-actions">
             <a href="{{ collections['all-products'].url }}" class="btn btn-primary">
               {{ 'search.empty.browse_all' | t }}
@@ -85,7 +86,7 @@
 
           <div class="sw-search__meta">
             <span class="mono sw-search__count">
-              {{ 'search.results_count' | t: count: search.results_count, terms: search.terms }}
+              {{ 'search.results_count' | t: count: search.results_count, terms: safe_terms }}
             </span>
           </div>
 

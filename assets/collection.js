@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  if (window.swCollectionInited) return;
+  window.swCollectionInited = true;
+
   var cfg     = window.swCollectionConfig || {};
   var strings = cfg.strings || {};
 

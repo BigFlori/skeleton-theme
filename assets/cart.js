@@ -21,20 +21,16 @@
   }
 
   function updateCartTotals(cart) {
-    var grandTotal = cart.total_price + cfg.fee;
+    var grandTotal = cart.total_price;
 
     var countEl = document.querySelector('[data-cart-count]');
     if (countEl) countEl.textContent = cart.item_count + ' ' + cfg.strings.items;
 
-    var subtotalEl     = document.querySelector('[data-cart-subtotal]');
-    var shippingValEl  = document.querySelector('[data-cart-shipping-value]');
-    var shippingNoteEl = document.querySelector('[data-cart-shipping-note]');
-    var grandTotalEl   = document.querySelector('[data-cart-grand-total]');
+    var subtotalEl   = document.querySelector('[data-cart-subtotal]');
+    var grandTotalEl = document.querySelector('[data-cart-grand-total]');
 
-    if (subtotalEl)     subtotalEl.textContent     = formatMoney(cart.total_price);
-    if (shippingValEl)  shippingValEl.textContent  = formatMoney(cfg.fee);
-    if (shippingNoteEl) shippingNoteEl.textContent = cfg.strings.shippingNote;
-    if (grandTotalEl)   grandTotalEl.textContent   = formatMoney(grandTotal);
+    if (subtotalEl)   subtotalEl.textContent   = formatMoney(cart.total_price);
+    if (grandTotalEl) grandTotalEl.textContent = formatMoney(grandTotal);
 
     var liveEl = document.getElementById('sw-cart-live');
     if (liveEl) liveEl.textContent = cart.item_count + ' ' + cfg.strings.items + ' — ' + formatMoney(grandTotal);

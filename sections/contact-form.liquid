@@ -40,7 +40,7 @@
                 type="text"
                 name="contact[name]"
                 class="sw-field__input"
-                value="{{ form.name }}"
+                value="{{ form.name | escape }}"
                 placeholder="{{ 'sections.contact_form.placeholder_name' | t }}"
                 autocomplete="name"
                 required
@@ -56,7 +56,7 @@
                 type="email"
                 name="contact[email]"
                 class="sw-field__input"
-                value="{{ form.email }}"
+                value="{{ form.email | escape }}"
                 placeholder="{{ 'sections.contact_form.placeholder_email' | t }}"
                 autocomplete="email"
                 required
@@ -76,7 +76,7 @@
                 type="tel"
                 name="contact[phone]"
                 class="sw-field__input"
-                value="{{ form.phone }}"
+                value="{{ form.phone | escape }}"
                 placeholder="{{ 'sections.contact_form.placeholder_phone' | t }}"
                 autocomplete="tel"
               >
@@ -109,7 +109,7 @@
               placeholder="{{ 'sections.contact_form.placeholder_message' | t }}"
               rows="5"
               required
-            >{{ form.body }}</textarea>
+            >{{ form.body | escape }}</textarea>
           </div>
 
           {%- comment -%} Footer: privacy note + submit {%- endcomment -%}

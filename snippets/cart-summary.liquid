@@ -1,5 +1,5 @@
 {%- comment -%}
-  Expects: grand_total, fee, has_unavailable (passed via render)
+  Expects: grand_total, has_unavailable (passed via render)
   Globals used: cart, section
 {%- endcomment -%}
 
@@ -17,12 +17,9 @@
       </div>
       <div class="sw-cart-summary__row">
         <dt>{{ 'sections.cart.shipping' | t }}</dt>
-        <dd class="mono sw-cart-summary__dd--accent" data-cart-shipping-value>
-          {{ fee | money }}
+        <dd class="mono sw-cart-summary__dd--accent">
+          {{ 'sections.cart.shipping_at_checkout' | t }}
         </dd>
-        <div class="mono sw-cart-summary__sub" data-cart-shipping-note>
-          {{ 'sections.cart.shipping_paid_note' | t }}
-        </div>
       </div>
       <div class="sw-cart-summary__row">
         <dt>{{ 'sections.cart.vat' | t }}</dt>

@@ -73,10 +73,11 @@
     var qty = 1;
 
     var CURRENCY_CODE = cfg.currencyCode || 'EUR';
+    var SHOP_LOCALE = cfg.shopLocale || undefined;
     var PRICE_FRACTION_DIGITS = SUBUNIT_TO_UNIT === 1 ? 0 : 2;
     var priceFormatter;
     try {
-      priceFormatter = new Intl.NumberFormat(undefined, {
+      priceFormatter = new Intl.NumberFormat(SHOP_LOCALE, {
         style: 'currency',
         currency: CURRENCY_CODE,
         maximumFractionDigits: PRICE_FRACTION_DIGITS,

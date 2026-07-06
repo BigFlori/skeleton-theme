@@ -503,7 +503,7 @@
       "summary_title": "Bestellübersicht",
       "subtotal": "Zwischensumme",
       "shipping": "Versand",
-      "shipping_paid_note": "Standardversand",
+      "shipping_at_checkout": "wird beim Checkout berechnet",
       "vat": "USt. (0 %, Österreich ≤ 20 kWp)",
       "vat_note": "Nullsteuersatz angewendet",
       "total": "Gesamt",
