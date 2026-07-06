@@ -9,7 +9,6 @@
 {%- liquid
   assign rs_variant = variant | default: 'header'
   assign rs_current_country  = localization.country
-  assign rs_current_language = localization.language
   assign rs_has_choice = false
   if localization.available_countries.size > 1 or localization.available_languages.size > 1
     assign rs_has_choice = true

@@ -15,10 +15,12 @@
       {{ settings.type_primary_font | font_url | preload_tag: as: 'font', crossorigin: 'anonymous' }}
     {% endunless %}
 
-    {%- comment -%} Sonnwerk: Google Fonts — Crimson Pro + Geist + Geist Mono {%- endcomment -%}
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400;1,600&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap">
+    {%- comment -%}
+      Sonnwerk: Crimson Pro + Geist + Geist Mono are self-hosted (see
+      snippets/css-variables.liquid for the @font-face rules) and served from
+      the Shopify CDN — no external Google Fonts request.
+    {%- endcomment -%}
+    {{ 'geist.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
 
     {% # Load and preload the critical CSS %}
     {{ 'critical.css' | asset_url | stylesheet_tag: preload: true }}

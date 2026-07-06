@@ -5,6 +5,55 @@
   {{ settings.type_primary_font | font_modify: 'weight', 'bold' | font_modify: 'style', 'italic' | font_face: font_display: 'swap' }}
   {{ settings.type_primary_font | font_modify: 'style', 'italic' | font_face: font_display: 'swap' }}
 
+  {% comment %}
+    Sonnwerk: Crimson Pro, Geist, Geist Mono — self-hosted from the Shopify CDN
+    (assets/*.woff2) instead of Google Fonts, to avoid the render-blocking
+    external stylesheet and the GDPR exposure of visitor IPs to Google without
+    consent (relevant for the de locale).
+  {% endcomment %}
+  @font-face {
+    font-family: 'Geist';
+    src: url({{ 'geist.woff2' | asset_url }}) format('woff2');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Geist';
+    src: url({{ 'geist-italic.woff2' | asset_url }}) format('woff2');
+    font-weight: 100 900;
+    font-style: italic;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Geist Mono';
+    src: url({{ 'geist-mono.woff2' | asset_url }}) format('woff2');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Geist Mono';
+    src: url({{ 'geist-mono-italic.woff2' | asset_url }}) format('woff2');
+    font-weight: 100 900;
+    font-style: italic;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Crimson Pro';
+    src: url({{ 'crimson-pro.woff2' | asset_url }}) format('woff2');
+    font-weight: 200 900;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Crimson Pro';
+    src: url({{ 'crimson-pro-italic.woff2' | asset_url }}) format('woff2');
+    font-weight: 200 900;
+    font-style: italic;
+    font-display: swap;
+  }
+
   :root {
     --font-primary--family: {{ settings.type_primary_font.family }}, {{ settings.type_primary_font.fallback_families }};
     --font-primary--style: {{ settings.type_primary_font.style }};
